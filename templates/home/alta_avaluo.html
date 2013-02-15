@@ -1,0 +1,105 @@
+{% extends "home/base.html" %}
+{% load listutil %}
+ {% load crispy_forms_tags %}
+
+ {% block style %}
+ 
+     <style type="text/css" title="currentStyle">
+	@import "{{ STATIC_URL }}CSS/smoothness/jquery-ui-1.8.24.custom.css";
+    </style>
+
+
+    
+    <style>
+      div.ui-datepicker{
+	font-size:10px;
+      }
+    </style>
+ 
+ {% endblock %}
+ 
+ {% block script %}
+	
+    <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/jquery-ui-1.8.24.custom.min.js"></script> 
+    <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/jquery-datepicker-es.js"></script>
+    
+    <script type="text/javascript"> 
+	
+	$(document).ready( function() {
+    var now = new Date();
+    var month = (now.getMonth() + 1);               
+    var day = now.getDate();
+    if(month < 10) 
+        month = "0" + month;
+    if(day < 10) 
+        day = "0" + day;
+    var today = day + '/' + month + '/' + now.getFullYear() ;
+    $('#id_Solicitud').val(today);
+	});
+
+    $(function() {
+
+	  $('#id_Solicitud').datepicker({ autoSize: true });
+	  
+	 
+	$(":input").blur(function() {
+	if(this.id != 'id_Observaciones') {
+	  this.value = this.value.toUpperCase();
+	  }
+	});
+	  
+    });
+	
+    </script>
+	
+		<script>
+	  $(function(){
+		$('form.uniForm').uniform();
+	  });
+	</script>
+ {% endblock %}      
+
+{% block content %}
+  <h2>Alta Avalúo - Entrada</h2>
+
+      {% if forma.errors %}
+        <p style="color: red;">
+            Porfavor completa los campos faltantes.
+        </p>
+    {% endif %}
+  
+  
+  <div style="width:80%">
+  
+	{% crispy forma %}	
+<!--
+  <form action="/SIAV/alta_avaluo/" method="post">
+      <table>
+	{% for row in forma|columns:2 %}{% csrf_token %}
+	    <tr>
+	    {% for item in row %}
+	      {% if item.label != "Observaciones"%}
+			{% if item.label != "Avaluo id" %}
+		  <td>{{ item.errors }}{{ item.label }}:{{item}}</td>
+		  	{% endif %}
+	      {% endif %}
+	    {% endfor %}
+	    </tr>
+    {% endfor %}
+    </table>
+    <table>
+      <tr>
+	<td>{{ item.errors }}{{forma.Observaciones.label}}:</td>
+      </tr>
+      <tr>
+	<td>{{forma.Observaciones}}</td>
+      </tr>
+    </table>
+    <input type="submit" value="Enviar" />
+    </form>
+	!-->
+   <br>
+   </div>
+
+  
+{% endblock %}

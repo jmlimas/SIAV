@@ -1,0 +1,81 @@
+{% extends "home/base.html" %}
+
+
+  {% block style %}
+    
+    <style type="text/css">
+      html { height: 100% }
+      body { height: 100%; margin: 0px; padding: 0px }
+      #map_canvas { height: 100% }
+    </style>
+    
+  {% endblock %}
+
+
+   {% block script %}
+   
+
+  <script type="text/javascript"
+      src="https://maps.google.com/maps/api/js?sensor=true">
+  </script>   
+
+  <script type="text/javascript">
+
+
+    function initialize() {
+      var latlng = new google.maps.LatLng(25.6885, -100.3100);
+      var myOptions = {
+	zoom: 8,
+	center: latlng,
+	mapTypeId: google.maps.MapTypeId.ROADMAP
+      };
+      var map = new google.maps.Map(document.getElementById("map_canvas"),
+	  myOptions);
+    }
+    
+    
+/*
+    function initialize() {
+      if (GBrowserIsCompatible()) {
+	var map = new GMap2(document.getElementById("map_canvas"));
+    {% if Band %}
+	map.setCenter(new GLatLng({{Band.latitude}}, 
+    {{Band.longitude}}), 12);
+    {% else %}
+	map.setCenter(new GLatLng(53.800651, -1.454), 8);
+    {% endif %}
+	map.setUIToDefault();
+	var mgr = new MarkerManager(map);
+	var lBandMarkers = [];
+    {% for band in Bands %}
+    {% if band.latitude %}
+    {% if band.longitude %}
+	lPoint{{band.id}} = new GLatLng({{band.latitude}}, {{band.longitude}});
+	lMarker{{band.id}} = new GMarker(lPoint{{band.id}}, {title: "{{band.name}}"});
+	GEvent.addListener(lMarker{{band.id}}, "click", function() {
+	    var myHtml = "<b>{{band.name}}</b><br/>{% if band.rehearsal_night_1 %}Rehearsals {{band.rehearsal_nights}}{%endif%}<br/>[<a href='/bands/{{band.slug}}/'>Contest&nbsp;Results</a>] [<a target='_blank' href='{{band.website}}'>Band&nbsp;Website</a>]";
+	    map.openInfoWindowHtml(lPoint{{band.id}}, myHtml);
+	});
+	lBandMarkers.push(lMarker{{band.id}});
+    {% endif %}     
+    {% endif %}
+    {% endfor %}
+	mgr.addMarkers(lBandMarkers, 0);
+	mgr.refresh();
+      }
+    }
+    
+*/
+  </script>
+
+  
+  {% endblock %}
+ 
+ 
+  {% block content %}
+    
+   <div id="map_canvas" style="width: 80%; height: 70%"></div>
+   
+   
+  {% endblock %}
+

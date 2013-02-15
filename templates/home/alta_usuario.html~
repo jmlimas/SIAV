@@ -1,0 +1,39 @@
+{% extends "home/base.html" %}
+{% load listutil %}
+
+{% block content %}
+
+  <form method="post" action=".">{% csrf_token %}
+  <table>
+	    
+	    
+	    <tr>
+		  <td><h2>Datos :</h2></td>
+	    </tr>
+	    <tr>
+		  <td>{{ form.Nombre.errors }}{{ form.Nombre.label }}:{{form.Nombre}}</td>
+		  <td>{{ form.Correo.errors }}{{ form.Correo.label }}:{{form.Correo}}</td>
+	    </tr>
+	    <tr>
+		  <td></td>
+	    </tr>
+	    <tr>
+		  <td><h2>Usuario :</h2></td>
+	    </tr>
+		<tr>
+		<td>{{ form.Usuario.errors }}{{ form.Usuario.label }}:{{form.Usuario}}</td>
+		</tr>
+	    <tr>
+		  
+		  <td>{{ form.Contrasena.errors }}{{ form.Contrasena.label }}:{{form.Contrasena}}</td>
+		  <td>{{ form.Repetir_Contrasena.errors }}{{ form.Repetir_Contrasena.label }}:{{form.Repetir_Contrasena}}</td>
+	    </tr>
+	    <tr>
+		  
+		  <td>{{ form.Grupo.errors }}{{ form.Grupo.label }}:{{form.Grupo}}</td>
+	    </tr>
+    <tr><td>&nbsp;</td><td><input type="submit" value="Crear Usuario" /></td></tr>
+  </table>
+  </form>
+
+{% endblock %}

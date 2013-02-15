@@ -1,0 +1,17 @@
+## tags.py
+@register.simple_tag
+def active(request, pattern):
+    import re
+    if re.search(pattern, request.path):
+        return 'active'
+    return ''
+
+
+<!-- navigation -->
+
+{% load tags %}
+<div id="navigation">
+    <a class="{% active request "^/$" %}" href="/">Home</a>
+    <a class="{% active request "^/services/" %}" href="/services/">Services</a>
+    <a class="{% active request "^/contact/" %}" href="/contact/">Contact</a>
+</div>

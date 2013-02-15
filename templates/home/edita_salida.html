@@ -1,0 +1,113 @@
+{% extends "home/base.html" %}
+{% load listutil %}
+{% load crispy_forms_tags %}
+
+
+ {% block style %}
+ 
+     <style type="text/css" title="currentStyle">
+	@import "{{ STATIC_URL }}CSS/smoothness/jquery-ui-1.8.24.custom.css";
+    </style>
+    
+    <style>
+      div.ui-datepicker{
+	font-size:10px;
+      }
+    </style>
+	
+	 <style type="text/css">
+      html { height: 100% }
+      body { height: 100%; margin: 0px; padding: 0px }
+      #map_canvas { height: 100% }
+    </style>
+ 
+ {% endblock %}
+
+ {% block script %}
+ 
+    
+    <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/jquery-ui-1.8.24.custom.min.js"></script> 
+    <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/jquery-datepicker-es.js"></script>
+    
+    <script type="text/javascript"> 
+    $(function() {
+	  
+  
+	  $('#id_Solicitud').datepicker({ autoSize: true });
+	  $('#id_Salida').datepicker({ autoSize: true });
+	  
+		$(":input").blur(function() {
+		  if(this.id != 'id_Observaciones') {
+		  this.value = this.value.toUpperCase();
+		  }
+		});
+		  
+    });
+    </script>
+	
+ {% endblock %}     
+ 
+
+{% block content %}
+  <h2>Salida de Avaluo</h2>
+
+      {% if forma.errors %}
+        <p style="color: red;">
+            Porfavor corrige los errores debajo.
+        </p>
+    {% endif %}
+  
+  
+  <div style="width:80%">
+	<table id="datos_texto">
+		<tr>
+			<td>Avaluo Id : {{ avaluo.avaluo_id }}</td>
+			<td>Folio K : {{ folio_k}}</td>
+			<td>Referencia : {{ avaluo.Referencia}}</td>
+		</tr>
+		<tr>
+			<td>Cliente : {{ avaluo.Cliente }}</td>
+			<td>Departamento : {{ avaluo.Depto}}</td>
+			<td>Fecha Solicitud : {{ avaluo.Solicitud }}</td>
+		</tr>
+		<tr>
+			<td>Colonia : {{ avaluo.Colonia }}</td>
+			<td>Municipio : {{ avaluo.Municipio }}</td>
+			<td>Estado : {{ avaluo.Estado}}</td>
+
+		</tr>
+
+	</table>
+   		{% crispy form %}	
+      <!--
+    <form action="/SIAV/edita_salida/{{ avaluo.avaluo_id }}/" method="POST">
+      <table>
+	{% for row in form|columns:2 %}{% csrf_token %}
+	    <tr>
+	    {% for item in row %}
+	      {% if item.label != "Observaciones" %} 
+		  <td>{{ item.errors }}{{ item.label }}:{{item}}</td>
+	      {% endif %}  
+	    {% endfor %}
+	    </tr>
+    {% endfor %}
+    </table>
+    <table>
+      <tr>
+	<td>{{ item.errors }}{{form.Observaciones.label}}:</td>
+      </tr>
+      <tr>
+	<td>{{form.Observaciones}}</td>
+      </tr>
+    </table>
+    <input type="submit" value="Enviar" />
+    </form>
+      !-->
+
+	<br>
+   </div>
+   <br>
+
+
+  
+{% endblock %}

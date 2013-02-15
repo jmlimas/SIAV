@@ -1,0 +1,30 @@
+{% extends "home/base.html" %}
+{% load listutil %}
+
+{% block content %}
+  <h2>Alta Valuador</h2>
+
+    {% if forma.errors %}
+        <p style="color: red;">
+            Porfavor corrige los errores debajo.
+        </p>
+    {% endif %}
+  
+  <div style="width:80%">
+    <form action="/alta_valuador/" method="post">
+      <table>
+	{% for row in forma|columns:2 %}{% csrf_token %}
+	    <tr>
+	    {% for item in row %}
+		<td>{{ item.label }}:{{item}}</td>
+	    {% endfor %}
+	    </tr>
+    {% endfor %}
+    </table>
+    <input type="submit" value="Enviar" />
+    </form>
+    <br>
+   </div>
+
+  
+{% endblock %}

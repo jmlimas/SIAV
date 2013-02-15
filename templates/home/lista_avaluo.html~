@@ -1,0 +1,40 @@
+{% extends "home/base.html" %}
+
+ 
+ {% block script %}
+ 
+    <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/picnet.table.filter.min.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function(){
+	    $('#avaluos_table').tableFilter();
+    });  
+    </script>
+
+ {% endblock %}      
+
+{% block content %}
+  <h2>Lista de Avalúos</h2>
+
+  <table id='avaluos_table'>
+	  <thead>
+		  <tr><th>ID</th><th>Calle</th><th filter-type='ddl'>Municipio</th><th filter-type='ddl'>Servicio</th><th filter-type='ddl'>Cliente</th><th filter='false'>Opciones</th></tr>
+	  </thead>
+	  <tbody>
+		  <tr><td>SAN17170</td><td>Paseo de los Olivos</td><td>MONTERREY</td><td>ACTIVO</td><td>BANCOMER</td><td>Editar</td></tr>
+		  <tr><td>Value 1</td><td>Value 2</td><td>SANTIAGO</td><td>DETENIDO</td><td>Value 6</td><td>Editar</td></tr>
+		  <tr><td>Value 1</td><td>Value 2</td><td>GUADUALUPE</td><td>ACTIVO</td><td>Value 6</td><td>Editar</td></tr>
+		  {% for a in avaluos %}
+		  <tr>
+		      <td> {{a.avaluo_id}} </td>
+		      <td> {{a.Calle}} </td>
+		      <td> {{a.Municipio}} </td>
+		      <td> {{a.Servicio}} </td>
+		      <td> {{a.Cliente}} </td>
+		      <td> <a href="/actualiza_avaluo/{{a.avaluo_id}}">Editar</a></td>
+		  </tr>
+		  {% endfor %}
+	  </tbody>
+  </table>
+
+  
+{% endblock %}

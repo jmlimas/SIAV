@@ -1,0 +1,119 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Reporte de Visita</title>
+<style type="text/css">
+@media print{@page {size: portrait}}
+
+.myTable tr td p strong {
+	font-size: 16px;
+}
+.myTable tr td p strong {
+	font-size: 36px;
+	font-style: italic;
+}
+.myTable {
+	font-weight: bold;
+	font-size: 12px;
+	text-align: center;
+}
+.myTable1 {	font-weight: bold;
+	font-size: 12px;
+}
+.myTable2 {	font-weight: bold;
+	font-size: 12px;
+	text-align: center;
+}
+</style>
+</head>
+
+<body>
+<style type="text/css">
+table.myTable { border-collapse:collapse; }
+table.myTable td, table.myTable th { border:3px solid black;padding:5px; }
+</style>
+<!-- Be sure to place the above styles (i.e. everything between the <style></style> tags) into the document 'head' (i.e. between the <head></head> tags. Everything below goes inside the <body></body> tags) -->
+<table width="783" height="467" class="myTable">
+<tr align="justify">
+<td align="center" width="453"><div><img src="{{STATIC_URL}}CSS/images/logo.png" width="68" height="67" style="float: left; font-size: 9px;" /></div>
+  <p class="title"><span class="myTable" style="text-align: center"><strong style=""> Reporte de Visita </strong>({{avaluo.Tipo}})</span>
+  <p><span class="myTable" style="text-align: center">Fecha:
+    <input type="text" name="1" id="1" /> 
+    Hora:
+    <input type="text" name="14" id="14" />
+  </span>
+  <p class="myTable">Contacto:
+    <input name="12" type="text" id="12" size="52" />
+  </p>
+  <p class="myTable">Telefonos:
+    
+    <input name="122" type="text" id="122" size="51" />
+  </p></td>
+</tr>
+<tr>
+<td align="center"><p><span><span class="myTable">
+  Avaluo Id:
+      <input name="132" type="text" id="132" value="{{avaluo.avaluo_id}}" size="3" />
+Folio K :
+    <input name="13" type="text" id="13" value=" {{avaluo.FolioK}}" size="18" />
+    Cliente:
+    <input name="13222" type="text" id="13222" value=" {{avaluo.Cliente}}" size="18" />
+    <input name="1322" type="text" id="1322" value=" {{avaluo.Servicio}}" size="27" />
+</span></span></p>
+  <p><span class="myTable"><span class="myTable">Calle: 
+    <input name="134" type="text" id="134" value=" {{avaluo.Calle}}" size="27" />
+    Num:
+<input name="1323" type="text" id="1323" value="{{avaluo.NumInt}}" size="2" />
+    NumI:
+    <input name="1324" type="text" id="1324" value="{{avaluo.NumExt}}" size="2" />
+  Colonia:
+  <input name="1342" type="text" id="1342" value=" {{avaluo.Colonia}}" size="16" />
+  Municipio:
+  <input name="13422" type="text" id="13422" value=" {{avaluo.Municipio}}" size="10" />
+  </span></span></p>
+  <p><span class="myTable"><span class="myTable">Observaciones:</span></span></p>
+  <p>
+    <span class="myTable"><span class="myTable">
+    <a href="visita_nave.html">visita_nave</a><input name="133" type="text" id="133" value="{{avaluo.Observaciones}}" size="80" />
+    </span></span></p></td>
+</tr>
+<tr>
+<td align=""><p><span class="myTable1">Urbanización</span>:
+  <p>Subterraneas:<span class="myTable1">
+    <input type="checkbox" name="checkbox22" id="checkbox26" />
+  </span></p>
+  <p>Aereas:<span class="myTable1">
+    <input type="checkbox" name="checkbox23" id="checkbox27" />
+  </span></p>
+  <p>Agua:<span class="myTable1">
+    <input type="checkbox" name="checkbox24" id="checkbox28" />
+  </span></p>
+  <p>Cablevision:<span class="myTable1">
+    <input type="checkbox" name="checkbox25" id="checkbox29" />
+  </span></p>
+  <p>Electricidad:<span class="myTable1">
+    <input type="checkbox" name="checkbox26" id="checkbox30" />
+  </span></p>
+  <p>Pavimento:<span class="myTable1">
+    <input type="checkbox" name="checkbox27" id="checkbox31" />
+  </span></p>
+  <p>Gas Natural:<span class="myTable1">
+    <input type="checkbox" name="checkbox28" id="checkbox32" />
+  </span></p>
+  <p>Pavimento:<span class="myTable1">
+    <input type="checkbox" name="checkbox29" id="checkbox33" />
+  </span></p>
+  <p>
+  <p>&nbsp;</p></td>
+</tr>
+<tr align="center">
+  <td><p>Valor en Caseta : <span class="myTable2">
+    <input name="134222" type="text" id="134222" value="$" size="13" />
+  </span></p>
+    <p>&nbsp;</p></td>
+</tr>
+</table>
+
+</body>
+</html>

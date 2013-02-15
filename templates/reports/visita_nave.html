@@ -1,0 +1,341 @@
+﻿<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Reporte de Visita</title>
+<style type="text/css">
+@media print{@page {size: portrait}}
+
+.myTable tr td p strong {
+	font-size: 10px;
+}
+.myTable tr td p strong {
+	font-size: 25px;
+	font-style: italic;
+}
+.myTable {
+	font-weight: bold;
+	font-size: 11px;
+}
+.myTable1 {	font-weight: bold;
+	font-size: 12px;
+}
+.myTable2 {	font-weight: bold;
+	font-size: 11px;
+}
+</style>
+</head>
+
+<body>
+<style type="text/css">
+table.myTable { border-collapse:collapse; }
+table.myTable td, table.myTable th { border:3px solid black;padding:5px;
+border-spacing:8px; }
+</style>
+<style type="text/css">
+table.myTable2 { border-collapse:collapse; }
+table.myTable2 td, table.myTable2 th { border:1px groove black;padding:5px;
+border-spacing:10px; }
+</style>
+<!-- Be sure to place the above styles (i.e. everything between the <style></style> tags) into the document 'head' (i.e. between the <head></head> tags. Everything below goes inside the <body></body> tags) -->
+<table width="801" height="699" class="myTable">
+<tr align="justify">
+<td width="728" height="120" align="center"><div><img src="{{STATIC_URL}}CSS/images/logo.png" width="59" height="58" style="float: left; font-size: 9px;" /></div>
+  <p class="title"><span class="myTable" style="text-align: center"><strong style=""> Reporte de Visita </strong>({{avaluo.Tipo}})</span>
+  <p class="title">
+  <span class="myTable" style="text-align: center">Fecha:
+    <input type="text" name="1" id="1" /> 
+    Hora:
+    <input type="text" name="14" id="14" />
+    <span class="myTable2" style="text-align: center">
+        <input name="1222" type="text" id="1222" style="position: absolute; float: right; left: 634px; top: 81px; width: 33px;" value="        °" size="3" />
+    
+        <input name="1222" type="text" id="1222" style="position: absolute; float: right; left: 678px; top: 81px; width: 33px;" value="        '" size="3" />
+        
+                <input name="1222" type="text" id="1222" style="position: absolute; float: right; left: 722px; top: 81px; width: 33px;" value="        &quot;" size="3" />
+                
+        <input name="1222" type="text" id="1222" style="position: absolute; float: right; left: 634px; top: 114px; width: 33px;" value="        °" size="3" />
+    
+        <input name="1222" type="text" id="1222" style="position: absolute; float: right; left: 678px; top: 114px; width: 33px;" value="        '" size="3" />
+        
+                <input name="1222" type="text" id="1222" style="position: absolute; float: right; left: 722px; top: 114px; width: 33px;" value="        &quot;" size="3" />
+                
+    
+    </span><br>
+  </span>     
+    Contacto:
+  <input name="12" type="text" id="12" size="51" />
+  <br>
+      Telefonos:
+      <input name="122" type="text" id="122" size="51" />
+  </td>
+</tr>
+<tr>
+<td height="68" align="center"><p><span><span class="myTable">Avaluo Id:
+      <input name="132" type="text" id="132" value="{{avaluo.avaluo_id}}" size="3" />
+Folio K :
+    <input name="13" type="text" id="13" value=" {{avaluo.FolioK}}" size="18" />
+    Cliente:
+    <input name="13222" type="text" id="13222" value=" {{avaluo.Cliente}}" size="18" /> 
+    <input name="1322" type="text" id="1322" value=" {{avaluo.Servicio}}" size="27" />
+</span></span><br><span class="myTable"><span class="myTable">Calle: 
+    <input name="134" type="text" id="134" value=" {{avaluo.Calle}}" size="27" />
+    Num:
+<input name="1323" type="text" id="1323" value="{{avaluo.NumInt}}" size="2" />
+    NumI:
+    <input name="1324" type="text" id="1324" value="{{avaluo.NumExt}}" size="2" />
+  Colonia:
+  <input name="1342" type="text" id="1342" value=" {{avaluo.Colonia}}" size="16" />
+  Municipio:
+  <input name="13422" type="text" id="13422" value=" {{avaluo.Municipio}}" size="10" />
+  </span></span><br><span class="myTable"><span class="myTable">Observaciones:</span></span><span class="myTable"><span class="myTable">
+    <input name="133" type="text" id="133" value="{{avaluo.Observaciones}}" size="80" />
+  </span></span></p></td>
+</tr>
+<tr>
+<td height="487" align=""><table class="myTable2" width="632" border="1" cellpadding="0.0" cellspacing="0.0">
+  <tr style="border-width:3px">
+    <th width="150">OBRA NEGRA</th>
+    <th width="80">TIPO 1</th>
+    <th width="78">TIPO 2</th>
+    <th width="78">TIPO 3</th>
+    <th width="78">TIPO 4</th>
+    <th width="97">TIPO 5A</th>
+    </tr>
+  <tr>
+    <td>Cimentación:</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    </tr>
+  <tr>
+    <td>Estructura:</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    </tr>
+  <tr>
+    <td>Muros:</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    </tr>
+  <tr>
+    <td>Entrepisos:</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    </tr>
+  <tr>
+    <td>Techos:</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    </tr>
+  <tr>
+    <td>Azoteas:</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    </tr>
+  <tr>
+    <td>Bardas:</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    </tr>
+</table>
+  <br>
+  <table class="myTable2" width="726" border="1" cellpadding="0.3" cellspacing="0.3">
+    <tr>
+    <th colspan="6" height="15">ACABADOS</th>
+    <th width="91">TIPO 5B</th>
+  </tr>
+  <tr>
+    <td width="165">Ap.Interiores:</td>
+    <td width="88">&nbsp;</td>
+    <td width="85">&nbsp;</td>
+    <td width="85">&nbsp;</td>
+    <td width="85">&nbsp;</td>
+    <td width="129">&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>Ap.Exteriores:</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>Plafones:</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>Lambrines:</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>Pisos:</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>Zoclos:</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>Pinturas:</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>R Expeciales</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+</table>
+<br>
+<table width="726" class="myTable2" border="1" cellpadding="0.0" cellspacing="0.0">
+  <tr>
+    <th colspan="6" columnspan="3" height="15">CARPINTERÍA,CERRAJERÍA Y HERRERIA</th>
+    <th width="91">TIPO 5B</th>
+  </tr>
+  <tr>
+    <td width="165">Ap.Interiores:</td>
+    <td width="88">&nbsp;</td>
+    <td width="85">&nbsp;</td>
+    <td width="85">&nbsp;</td>
+    <td width="86">&nbsp;</td>
+    <td width="110">&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>Ap.Exteriores:</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>Plafones:</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>Lambrines:</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>Pisos:</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>Zoclos:</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>Pinturas:</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>R Expeciales</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+</table>
+<p><span class="myTable2"><span class="myTabl2e">Sub Estación:
+      <span class="myTable1">
+      <input name="13423" type="text" id="13423" value="                       kVa" size="16" />
+      </span> Patio de Maniobras:
+      <span class="myTable1">
+      <input name="134232" type="text" id="134232" value="                         m²" size="16" />
+      </span> Aire Acond.:<span class="myTable1">
+      <input name="1342322" type="text" id="1342322" value="                         m²" size="16" />
+      </span></span></span><span class="myTable1"><br>Cisterna:
+      <input name="1342323" type="text" id="1342323" value="                         m³" size="16" />&
+      
+Caseta de Vigilancia:
+      <input name="1342324" type="text" id="1342324" value="                         m²" size="16" />
+Sanitarios Ecológicos:
+<input type="checkbox" name="checkbox21" id="checkbox25" />
+    </span></p></td>
+</tr>
+</table>
+
+</body>
+</html>

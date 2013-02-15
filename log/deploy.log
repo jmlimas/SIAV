@@ -1,0 +1,72 @@
+
+
+02/01/2013 22:58:12 --== Deploy begin ==-- 
+
+Downloading/unpacking django-debug-toolbar (from -r requirements.txt (line 1))
+  Running setup.py egg_info for package django-debug-toolbar
+    
+    no previously-included directories found matching 'example'
+Requirement already satisfied (use --upgrade to upgrade): south in c:\python27\lib\site-packages (from -r requirements.txt (line 2))
+Requirement already satisfied (use --upgrade to upgrade): django-crispy-forms in c:\users\gustavo\documents\my web sites\siav\python_modules\lib\site-packages (from -r requirements.txt (line 3))
+Installing collected packages: django-debug-toolbar
+  Running setup.py install for django-debug-toolbar
+    
+    no previously-included directories found matching 'example'
+Successfully installed django-debug-toolbar
+Cleaning up...
+Traceback (most recent call last):
+  File "manage.py", line 14, in <module>
+    execute_manager(settings)
+  File "C:\python27\lib\site-packages\django\core\management\__init__.py", line 436, in execute_manager
+    setup_environ(settings_mod)
+  File "C:\python27\lib\site-packages\django\core\management\__init__.py", line 419, in setup_environ
+    project_module = import_module(project_name)
+  File "C:\python27\lib\site-packages\django\utils\importlib.py", line 35, in import_module
+    __import__(name)
+  File "C:\Users\Gustavo\Documents\My Web Sites\SIAV\..\SIAV\__init__.py", line 1, in <module>
+    from django.contrib.auth.models import Group as DjangoGroup
+  File "C:\python27\lib\site-packages\django\contrib\auth\models.py", line 7, in <module>
+    from django.db import models
+  File "C:\python27\lib\site-packages\django\db\__init__.py", line 14, in <module>
+    if not settings.DATABASES:
+  File "C:\python27\lib\site-packages\django\utils\functional.py", line 276, in __getattr__
+    self._setup()
+  File "C:\python27\lib\site-packages\django\conf\__init__.py", line 42, in _setup
+    self._wrapped = Settings(settings_module)
+  File "C:\python27\lib\site-packages\django\conf\__init__.py", line 139, in __init__
+    logging_config_func(self.LOGGING)
+  File "C:\python27\lib\logging\config.py", line 776, in dictConfig
+    dictConfigClass(config).configure()
+  File "C:\python27\lib\logging\config.py", line 562, in configure
+    'filter %r: %s' % (name, e))
+ValueError: Unable to configure filter 'require_debug_false': Cannot resolve 'django.utils.log.RequireDebugFalse': No module named RequireDebugFalse
+Traceback (most recent call last):
+  File "manage.py", line 14, in <module>
+    execute_manager(settings)
+  File "C:\python27\lib\site-packages\django\core\management\__init__.py", line 436, in execute_manager
+    setup_environ(settings_mod)
+  File "C:\python27\lib\site-packages\django\core\management\__init__.py", line 419, in setup_environ
+    project_module = import_module(project_name)
+  File "C:\python27\lib\site-packages\django\utils\importlib.py", line 35, in import_module
+    __import__(name)
+  File "C:\Users\Gustavo\Documents\My Web Sites\SIAV\..\SIAV\__init__.py", line 1, in <module>
+    from django.contrib.auth.models import Group as DjangoGroup
+  File "C:\python27\lib\site-packages\django\contrib\auth\models.py", line 7, in <module>
+    from django.db import models
+  File "C:\python27\lib\site-packages\django\db\__init__.py", line 14, in <module>
+    if not settings.DATABASES:
+  File "C:\python27\lib\site-packages\django\utils\functional.py", line 276, in __getattr__
+    self._setup()
+  File "C:\python27\lib\site-packages\django\conf\__init__.py", line 42, in _setup
+    self._wrapped = Settings(settings_module)
+  File "C:\python27\lib\site-packages\django\conf\__init__.py", line 139, in __init__
+    logging_config_func(self.LOGGING)
+  File "C:\python27\lib\logging\config.py", line 776, in dictConfig
+    dictConfigClass(config).configure()
+  File "C:\python27\lib\logging\config.py", line 562, in configure
+    'filter %r: %s' % (name, e))
+ValueError: Unable to configure filter 'require_debug_false': Cannot resolve 'django.utils.log.RequireDebugFalse': No module named RequireDebugFalse
+
+
+02/01/2013 22:58:26 --== Deploy finished ==-- 
+

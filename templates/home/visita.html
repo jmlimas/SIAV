@@ -1,0 +1,61 @@
+{% extends "home/base.html" %}
+{% load dayssince %}
+
+ 
+ {% block script %}
+ 
+    <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/picnet.table.filter.min.js"></script>
+	<script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/show_hide.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function(){
+	    $('#avaluos_table').tableFilter();
+    });  
+	
+	$(document).ready(function(){
+ 
+   $('.show_hide').showHide({
+        speed: 1000,  // speed you want the toggle to happen
+        easing: '',  // the animation effect you want. Remove this line if you dont want an effect and if you haven't included jQuery UI
+        changeText: 1, // if you dont want the button text to change, set this to 0
+        showText: 'View',// the button text to show when a div is closed
+        hideText: 'Close' // the button text to show when a div is open
+ 
+    });
+ 
+	});
+
+    </script>
+
+ {% endblock %}      
+
+{% block content %}
+  <h1>Visita</h1>
+  <br>
+
+  <table id='avaluos_table'>
+	  <thead>
+		  <tr><th style="width:40px">Folio K</th><th style="width:40px" filter='false' >Ref.</th><th filter-type='ddl'>Cliente</th><th>Calle</th><th filter='false'>Ext.</th><th filter='false'>Int.</th><th style="width:100px" filter-type='ddl'>Colonia</th><th filter-type='ddl'>Municipio</th><th filter-type='ddl'>Prioridad</th><th style="width:10px" filter-type='ddl'>Status</th><th filter='false'>Dias</th><th filter='false'>Opciones</th></tr>
+	  </thead>
+	  <tbody>
+		  {% for a in avaluos %}
+		  <tr>
+		      <td> {{a.FolioK}} </td>
+			  <td style="width:100px;"> {{a.Referencia}} </td>
+			  <td> {{a.Cliente}} </td>
+		      <td> {{a.Calle}} </td>
+			  <td style="width:3px;"> {{a.NumExt}} </td>
+			  <td style="width:10px;"> {{a.NumInt}} </td>
+			  <td style="width:10px;"> {{a.Colonia}} </td>
+		      <td> {{a.Municipio}} </td>
+		      <td style="width:3px;"> {{a.Prioridad}} </td>
+		      <td> {{a.Estatus}} </td>
+			  <td> {{ a.Solicitud|dayssince }}</td>			  
+
+		      <td> <a href="/SIAV/edita_visita/{{a.avaluo_id}}">Visita</a></td>
+		  </tr>
+		  {% endfor %}
+	  </tbody>
+  </table>
+
+  
+{% endblock %}

@@ -1,0 +1,36 @@
+
+<!DOCTYPE html>
+  <html lang="en">
+    <head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    
+    <!-- Common CSS Styles -->
+
+    <style type="text/css" title="currentStyle">
+	@import "{{ STATIC_URL }}CSS/Style.css";
+	@import "{{ STATIC_URL }}CSS/table_style.css";
+    </style>
+    
+    {% block style %}{% endblock %}
+    
+    <!-- Common JS Libraries -->
+    <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/jquery-1.8.2.min.js"></script>
+    
+    {% block script %}{% endblock %}
+    
+    </head>
+    
+    <body  onload="initialize()">
+	
+      <div class="box1">
+	<div>
+	  <h1>  <img src="{{ STATIC_URL }}CSS/images/logo.png" id="logo" />  Valuadores del Norte S.C.</h2>
+	  x
+	  {% block content %}{% endblock %}
+	  
+	</div> 
+      </div>
+      
+    </body>
+
+  </html>

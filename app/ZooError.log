@@ -1,0 +1,5 @@
+[05/12/2012 23:43:45] v1.1.58.270	ZooApplication I/O Error (500):
+ Job:JobFastCgi[#1] - /app 
+
+LastError:La operación de E/S se anuló por una salida de subproceso o por una solicitud de aplicación.
+ (995)
