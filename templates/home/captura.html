@@ -1,13 +1,35 @@
 {% extends "home/base.html" %}
+
 {% load dayssince %}
- 
- {% block script %}
+
+ {% block captura %}active{% endblock %}
+
+
+{% block script %}
  
     <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/picnet.table.filter.min.js"></script>
     <script type="text/javascript">
     $(document).ready(function(){
-	    $('#avaluos_table').tableFilter();
+        $('#avaluos_table').tableFilter();
+
+
+    var rowCount = { p: $('#avaluos_table tr:visible').length - 2 };
+
+
+
+    $('#avaluos_table').change(function () {
+        rowCount.p = $('#avaluos_table tr:visible').length - 2 ;
     });
+
+    rowCount.watch("p", function () {
+        $("#cantidad_tabla").hide().html(rowCount.p).fadeIn('fast');
+        console.log("rowCount. changed from + oldval +  to  + newval");
+
+    });
+
+
+    });
+
 
     </script>
 
@@ -15,23 +37,10 @@
 {% block content %}
 
   <h1>Servicios en Proceso</h1>
-  <h2>{{cantidad}} Servicios </h2>
-	<!--<div class="pagination">
-	
-		<span class="step-links">
-			{% if avaluos.has_previous %}
-				<a href="?page={{ avaluos.previous_page_number }}">Anterior</a>
-			{% endif %}
+  <hr /> 
 
-			<span class="current">
-				Pagina {{ avaluos.number }} de {{ avaluos.paginator.num_pages }}.
-			</span>
-
-			{% if avaluos.has_next %}
-				<a href="?page={{ avaluos.next_page_number }}">Siguiente</a>
-			{% endif %}
-		</span>
-	</div>	!-->	
+  <h2>{{cantidad.0}} Servicios </h2>
+  <h2><span id="cantidad_tabla"></span>Servicios en Tabla</h2>
   <table id='avaluos_table'>
 	  <thead>
 		  <tr><th style="width:40px">Folio K</th><th style="width:40px" filter='false' >Ref.</th><th filter-type='ddl'>Cliente</th><th>Calle</th><th filter='false'>Ext.</th><th filter='false'>Int.</th><th style="width:100px" filter-type='ddl'>Colonia</th><th filter-type='ddl'>Municipio</th><th filter-type='ddl'>Prioridad</th><th style="width:10px" filter-type='ddl'>Status</th><th filter='false'>Dias</th><th filter='false'>Opciones</th></tr>
@@ -45,7 +54,7 @@
 		      <td> {{a.Calle}} </td>
 			  <td style="width:3px;"> {{a.NumExt}} </td>
 			  <td style="width:10px;"> {{a.NumInt}} </td>
-			  <td style="width:10px;"> {{a.Colonia}} </td>
+			  <td style="width:200px;"> {{a.Colonia}} </td>
 		      <td> {{a.Municipio}} </td>
 		      <td style="width:3px;"> {{a.Prioridad}} </td>
 		      <td> {{a.Estatus}} </td>

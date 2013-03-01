@@ -49,6 +49,9 @@ border-spacing:10px; }
     Hora:
     <input type="text" name="14" id="14" />
     <span class="myTable2" style="text-align: center">
+    
+        <label style="position: absolute; left: 612px; top: 87px;">N.</label>
+        <label style="position: absolute; left: 612px; top: 120px;">W.</label>
         <input name="1222" type="text" id="1222" style="position: absolute; float: right; left: 634px; top: 81px; width: 33px;" value="        °" size="3" />
     
         <input name="1222" type="text" id="1222" style="position: absolute; float: right; left: 678px; top: 81px; width: 33px;" value="        '" size="3" />
@@ -72,13 +75,16 @@ border-spacing:10px; }
   </td>
 </tr>
 <tr>
-<td height="68" align="center"><p><span><span class="myTable">Avaluo Id:
-      <input name="132" type="text" id="132" value="{{avaluo.avaluo_id}}" size="3" />
-Folio K :
-    <input name="13" type="text" id="13" value=" {{avaluo.FolioK}}" size="18" />
+<td height="68" align="center"><p><span><span class="myTable">Avl.Id:
+        <input name="132" type="text" id="132" value="{{avaluo.avaluo_id}}" size="3" />
+      <span class="myTable1"> Ref:
+      <input name="1343" type="text" id="1343" value=" {{avaluo.Referencia}}" size="20" />
+      </span>
+FolioK:
+    <input name="13" type="text" id="13" value=" {{folio_k}}" size="13" />
     Cliente:
-    <input name="13222" type="text" id="13222" value=" {{avaluo.Cliente}}" size="18" /> 
-    <input name="1322" type="text" id="1322" value=" {{avaluo.Servicio}}" size="27" />
+    <input name="13222" type="text" id="13222" value=" {{avaluo.Cliente}}" size="13" /> 
+    <input name="1322" type="text" id="1322" value=" {{avaluo.Servicio}}" size="16" />
 </span></span><br><span class="myTable"><span class="myTable">Calle: 
     <input name="134" type="text" id="134" value=" {{avaluo.Calle}}" size="27" />
     Num:
@@ -327,7 +333,7 @@ Folio K :
       </span> Aire Acond.:<span class="myTable1">
       <input name="1342322" type="text" id="1342322" value="                         m²" size="16" />
       </span></span></span><span class="myTable1"><br>Cisterna:
-      <input name="1342323" type="text" id="1342323" value="                         m³" size="16" />&
+      <input name="1342323" type="text" id="1342323" value="                         m³" size="16" />
       
 Caseta de Vigilancia:
       <input name="1342324" type="text" id="1342324" value="                         m²" size="16" />

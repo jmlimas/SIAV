@@ -1,6 +1,11 @@
 {% extends "home/base.html" %}
+
 {% load listutil %}
+
 {% load crispy_forms_tags %}
+
+{% block salida %}active{% endblock %}
+
 
 
  {% block style %}
@@ -15,11 +20,7 @@
       }
     </style>
 	
-	 <style type="text/css">
-      html { height: 100% }
-      body { height: 100%; margin: 0px; padding: 0px }
-      #map_canvas { height: 100% }
-    </style>
+
  
  {% endblock %}
 
@@ -49,7 +50,7 @@
  
 
 {% block content %}
-  <h2>Salida de Avaluo</h2>
+  <h1>Salida de Avaluo</h1>
 
       {% if forma.errors %}
         <p style="color: red;">
@@ -58,8 +59,7 @@
     {% endif %}
   
   
-  <div style="width:80%">
-	<table id="datos_texto">
+	<table class="table table-condensed" id="datos_texto">
 		<tr>
 			<td>Avaluo Id : {{ avaluo.avaluo_id }}</td>
 			<td>Folio K : {{ folio_k}}</td>
@@ -78,34 +78,10 @@
 		</tr>
 
 	</table>
-   		{% crispy form %}	
-      <!--
-    <form action="/SIAV/edita_salida/{{ avaluo.avaluo_id }}/" method="POST">
-      <table>
-	{% for row in form|columns:2 %}{% csrf_token %}
-	    <tr>
-	    {% for item in row %}
-	      {% if item.label != "Observaciones" %} 
-		  <td>{{ item.errors }}{{ item.label }}:{{item}}</td>
-	      {% endif %}  
-	    {% endfor %}
-	    </tr>
-    {% endfor %}
-    </table>
-    <table>
-      <tr>
-	<td>{{ item.errors }}{{form.Observaciones.label}}:</td>
-      </tr>
-      <tr>
-	<td>{{form.Observaciones}}</td>
-      </tr>
-    </table>
-    <input type="submit" value="Enviar" />
-    </form>
-      !-->
 
+
+   		{% crispy form %}	
 	<br>
-   </div>
    <br>
 
 

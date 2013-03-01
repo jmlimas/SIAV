@@ -1,6 +1,13 @@
 {% extends "home/base.html" %}
+
 {% load listutil %}
- {% load crispy_forms_tags %}
+
+{% load crispy_forms_tags %}
+
+{% block consulta_master %}active{% endblock %}
+
+
+
 
  {% block style %}
  
@@ -8,8 +15,6 @@
 	@import "{{ STATIC_URL }}CSS/smoothness/jquery-ui-1.8.24.custom.css";
     </style>
 
-
-    
     <style>
       div.ui-datepicker{
 	font-size:10px;
@@ -27,20 +32,25 @@
 	
 	$(document).ready( function() {
     var now = new Date();
-    var month = (now.getMonth() + 1);               
+    var month = (now.getMonth());               
     var day = now.getDate();
+    var year = now.getFullYear()
     if(month < 10) 
         month = "0" + month;
     if(day < 10) 
         day = "0" + day;
     var today = day + '/' + month + '/' + now.getFullYear() ;
-    // $('#id_Solicitud').val(today);
+
+    $('#id_Mes>option:eq(' + month + ')').prop('selected', true);
+    $("#id_Anio").val(year);
 	});
 
     $(function() {
 
 	  $('#id_Solicitud').datepicker({ autoSize: true });
 	  $('#id_Inicial').datepicker({ autoSize: true });
+	  $('#id_Visita').datepicker({ autoSize: true });
+	  $('#id_Salida').datepicker({ autoSize: true });
 	  $('#id_Final').datepicker({ autoSize: true });
 
 	$(":input").blur(function() {
@@ -53,27 +63,76 @@
 	
     </script>
 	
-		<script>
-	  $(function(){
-		$('form.uniForm').uniform();
-	  });
-	</script>
+	<script type="text/javascript"> 
+    $(function() {
+	  
+		$('#slickbox').hide();
+		 // toggles the slickbox on clicking the noted link  
+		  $('#slick-toggle').click(function() {	
+			$('#slickbox').toggle(400);
+			initialize();
+			return false;
+		  });
+			
+    });
+    </script>
+	
+	<script type="text/javascript"
+      src="https://maps.google.com/maps/api/js?sensor=true">
+	</script>   
+	
+  <script type="text/javascript">
+
+       var latsign = 1;
+            if( {{avaluo.LatitudG}} < 0){
+                latsign = -1;
+            }
+            var lonsign = 1;
+            if( {{avaluo.LongitudG}} < 0){
+                lonsign = -1;
+            }
+            var declat = Math.round(
+                 Math.abs( Math.round({{avaluo.LatitudG}}* 1000000.00)) +
+                 (Math.abs(Math.round({{avaluo.LatitudM}}* 1000000.00))/60) +
+                 (Math.abs(Math.round({{avaluo.LatitudS}}* 1000000.00))/3600)
+            ) * latsign/1000000;
+
+            var declon = Math.round(
+                 Math.abs( Math.round(({{avaluo.LongitudG}})* 1000000.00)) +
+                 (Math.abs(Math.round(({{avaluo.LongitudM}})* 1000000.00))/60) +
+                 (Math.abs(Math.round(({{avaluo.LongitudS}})* 1000000.00))/3600)
+            ) * lonsign/1000000;
+
+ </script>
+	
+	
+ <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/mapas.js"></script>
+	
  {% endblock %}      
 
 {% block content %}
-  <h2>Consulta de Administrador</h2>
+  <h1>Consulta de Administrador</h1>
+  <div id="controls" style="display:block;">
+	<input class="btn btn-primary button white" type="button" id="slick-toggle" value="Mapas" />
+		<div id="slickbox" >
+			<div id="map_canvas" style="width: 700px; height: 500px;"  ></div>
+		</div>
+		 <div id="file-uploader" style="float:right">		
+			<noscript>			
+				<p>Please enable JavaScript to use file uploader.</p>
+				<!-- or put a simple form for upload here -->
+			</noscript>         
+		</div>
+	</div>
 
       {% if forma.errors %}
         <p style="color: red;">
             Porfavor completa los campos faltantes.
         </p>
     {% endif %}
-  
-  
-  <div style="width:80%">
+
 	{% crispy forma %}	
    <br>
-   </div>
 
   
 {% endblock %}

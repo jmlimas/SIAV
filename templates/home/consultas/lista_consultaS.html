@@ -1,0 +1,52 @@
+{% extends "home/base.html" %}
+
+{% load dayssince %}
+
+{% block alta %}active{% endblock %}
+
+{% block consulta_sencilla %}active{% endblock %}
+
+
+ 
+ {% block script %}
+ 
+    <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/picnet.table.filter.min.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function(){
+	    $('#avaluos_table').tableFilter();
+    });  
+    </script>
+
+ {% endblock %}      
+
+{% block content %}
+  <h1 style="text-align:center">Consulta Administrador</h1>
+  <h2>{{cantidad}} Servicios </h2> 
+  <br>
+
+<table id='avaluos_table'>
+	  <thead>
+		  <tr><th style="width:40px">Folio K</th><th style="width:40px" filter='false' >Ref.</th><th filter-type='ddl'>Cliente</th><th>Calle</th><th filter='false'>Ext.</th><th filter='false'>Int.</th><th style="width:100px" filter-type='ddl'>Colonia</th><th filter-type='ddl'>Municipio</th><th filter-type='ddl'>Prioridad</th><th style="width:10px" filter-type='ddl'>Status</th><th filter='false'>Dias</th><th filter='false'>Opciones</th></tr>
+	  </thead>
+	  <tbody>
+		  {% for a in avaluos %}
+		  <tr>
+			  <td> {{a.FolioK}} </td>
+		      <td> {{a.Referencia}} </td>
+			  <td> {{a.Cliente}} </td>
+		      <td> {{a.Calle}} </td>
+			  <td style="width:3px;"> {{a.NumExt}} </td>
+			  <td style="width:10px;"> {{a.NumInt}} </td>
+			  <td style="width:200px;"> {{a.Colonia}} </td>
+		      <td> {{a.Municipio}} </td>
+		      <td style="width:3px;"> {{a.Prioridad}} </td>
+		      <td> {{a.Estatus}} </td>
+              <td> {{ a.Solicitud|dayssince }}</td>	
+		      <td> <a href="/SIAV/respuesta_consulta_sencilla/{{a.avaluo_id}}">Editar</a></td>
+		  </tr>
+		  {% endfor %}
+	  </tbody>
+  </table>
+
+  
+{% endblock %}

@@ -58,18 +58,21 @@ MUNICIPIOS = (
     ('REYNOSA','REYNOSA'),
     ('MIGUEL ALEMAN','MIGUEL ALEMAN'),
     ('RIO BRAVO','RIO BRAVO'),
+    ('GARCIA','GARCIA'),
     ('APODACA','APODACA'),
     ('SAN FERNANDO','SAN FERNANDO'),
     ('VALLE HERMOSO','VALLE HERMOSO'),
     ('MATAMOROS','MATAMOROS'),
     ('EL CARMEN','EL CARMEN'),
+    ('PESQUERIA','PESQUERIA'),
+    ('ZUAZUA','ZUAZUA'),
     ('CIENEGA DE FLORES','CIENEGA DE FLORES'),
     ('CD. VICTORIA','CD. VICTORIA'),
     ('SAN NICOLAS','SAN NICOLAS'),
     ('ESCOBEDO','ESCOBEDO'),
     ('LINARES','LINARES'),
     ('MONTEMORELOS','MONTEMORELOS'),
-    ('GARCIA','GARCIA'),
+
 )
 
 ESTATUS = (
@@ -96,6 +99,30 @@ GRUPO = (
     ('Limitados','Limitados'),
 )
 
+MESES = (
+    ('01','ENERO'),
+    ('02','FEBRERO'),
+    ('03','MARZO'),
+    ('04','ABRIL'),
+    ('05','MAYO'),
+    ('06','JUNIO'),
+    ('07','JULIO'),
+    ('08','AGOSTO'),
+    ('09','SEPTIEMBRE'),
+    ('10','OCTUBRE'),
+    ('11','NOVIEMBRE'),
+    ('12','DICIEMBRE'),
+)
+
+ANIOS = (
+    ('2010','2010'),
+    ('2011','2011'),
+    ('2012','2012'),
+    ('2013','2013'),
+    ('2014','2014'),
+)
+
+
 class AltaAvaluo(ModelForm):
 
     #FolioK = forms.CharField(error_messages=my_default_errors,label="Folio K",required = False)
@@ -112,6 +139,8 @@ class AltaAvaluo(ModelForm):
     Prioridad = forms.ChoiceField(error_messages=my_default_errors,choices=PRIORIDAD)
     Solicitud = forms.DateField( label="Fecha Solicitud",widget=forms.DateInput(format = '%d/%m/%Y'), input_formats=['%d/%m/%Y']) 
     Observaciones = forms.CharField(widget=forms.Textarea,required = False)
+    Valuador = forms.ModelChoiceField(queryset=Valuador.objects.filter(is_active='True'))
+
 
     class Meta:
       model = Avaluo
@@ -149,7 +178,7 @@ class AltaAvaluo(ModelForm):
                 , css_class='span3'),css_class='row-fluid'),
                 'Observaciones',
             ButtonHolder(
-                Submit('submit', 'Enviar', css_class='button white')
+                Submit('submit', 'Enviar', css_class='btn-success')
             ))
         super(AltaAvaluo, self).__init__(*args, **kwargs)
 
@@ -204,13 +233,14 @@ class VisitaAvaluo(ModelForm):
                 'Observaciones',
 
             ButtonHolder(
-                Submit('submit', 'Enviar', css_class='button white')
+                Submit('submit', 'Enviar', css_class='btn-success')
             ))
         super(VisitaAvaluo, self).__init__(*args, **kwargs)
 
 class CapturaAvaluo(ModelForm):
   
     Calle = forms.CharField(error_messages=my_default_errors)
+    Calle = forms.CharField(error_messages=my_default_errors,required="True")
     NumExt = forms.CharField(error_messages=my_default_errors,label="Num. Ext.",required = False)
     NumInt = forms.CharField(error_messages=my_default_errors,label="Num. Int.",required = False)
     Colonia = forms.CharField(error_messages=my_default_errors)
@@ -224,15 +254,16 @@ class CapturaAvaluo(ModelForm):
     Solicitud = forms.DateField( label="Fecha Solicitud",widget=forms.DateInput(format = '%d/%m/%Y'), input_formats=['%d/%m/%Y']) 
     Mterreno = forms.DecimalField(required = False)
     Mconstruccion = forms.DecimalField(required = False)
-    LatitudG = forms.DecimalField(required = False,label="Lat.Grad.")
-    LatitudM = forms.DecimalField(required = False,label="Lat.Min.")
-    LatitudS = forms.DecimalField(required = False,label="Lat.Seg.")
-    LongitudG = forms.DecimalField(required = False,label="Long.Grad.")
-    LongitudM = forms.DecimalField(required = False,label="Long.Min.")
-    LongitudS = forms.DecimalField(required = False,label="Long.Seg.")
+    LatitudG = forms.DecimalField(required = False,label="Long.Grad.")
+    LatitudM = forms.DecimalField(required = False,label="Long.Min.")
+    LatitudS = forms.DecimalField(required = False,label="Long.Seg.")
+    LongitudG = forms.DecimalField(required = False,label="Lat.Grad.")
+    LongitudM = forms.DecimalField(required = False,label="Lat.Min.")
+    LongitudS = forms.DecimalField(required = False,label="Lat.Seg.")
     Gastos = forms.DecimalField(required = False)
     Importe = forms.DecimalField(required = False)
     Observaciones = forms.CharField(widget=forms.Textarea,required = False)
+    Valuador = forms.ModelChoiceField(queryset=Valuador.objects.filter(is_active='True'))
     
     class Meta:
       model = Avaluo
@@ -279,20 +310,22 @@ class CapturaAvaluo(ModelForm):
                 'Observaciones',
 
             ButtonHolder(
-                Submit('submit', 'Enviar', css_class='button white')
+                Submit('submit', 'Enviar', css_class='btn-success')
             ))
         super(CapturaAvaluo, self).__init__(*args, **kwargs)    
 
 class SalidaAvaluo(ModelForm):
+    Referencia = forms.CharField(error_messages=my_default_errors,required = True)
     Mterreno = forms.DecimalField(error_messages=my_default_errors,required = True)
     Mconstruccion = forms.DecimalField(error_messages=my_default_errors,required = True)
     Observaciones = forms.CharField(error_messages=my_default_errors,widget=forms.Textarea,required = False)
     Salida = forms.DateField(error_messages=my_default_errors,label="Fecha Salida",widget=forms.DateInput(format = '%d/%m/%Y'), input_formats=['%d/%m/%Y']) 
+    Importe = forms.DecimalField(required = True)
 
     class Meta:
       model = Avaluo
       #exclude = ('Salida','Visita','Pagado','Cliente','Depto','Factura','FolioK')
-      fields = ('Mterreno','Mconstruccion','Observaciones','Salida') 
+      fields = ('Mterreno','Mconstruccion','Observaciones','Salida','Importe','Referencia') 
 
     def __init__(self, *args, **kwargs):
         self.helper = FormHelper()
@@ -303,16 +336,18 @@ class SalidaAvaluo(ModelForm):
             Div(
             Div(
                 'Edita Avaluo - Salida',
+                'Referencia',
                 'Salida',
                 css_class='span3'),
             Div('Solicitud',
                 'Mterreno',
                 'Mconstruccion',
+                css_class='span3'),
+            Div('Importe',
                 css_class='span3'),css_class='row-fluid'),
                 'Observaciones',
-
             ButtonHolder(
-                Submit('submit', 'Enviar', css_class='button white')
+                Submit('submit', 'Enviar', css_class='btn-success')
             ))
         super(SalidaAvaluo, self).__init__(*args, **kwargs)  
         
@@ -346,9 +381,9 @@ class FormaConsultaMaster(ModelForm):
     Gastos = forms.DecimalField(required = False)
     Importe = forms.DecimalField(required = False)
     Observaciones = forms.CharField(widget=forms.Textarea,required = False)
-    Inicial = forms.DateField(error_messages=my_default_errors,widget=forms.DateInput(format = '%d/%m/%Y'), input_formats=['%d/%m/%Y'],required = False)
-    Final = forms.DateField(error_messages=my_default_errors, widget=forms.DateInput(format = '%d/%m/%Y'), input_formats=['%d/%m/%Y'],required = False)
-    
+    Mes = forms.ChoiceField(error_messages=my_default_errors,choices=MESES,required=False)
+    Anio = forms.ChoiceField(error_messages=my_default_errors,choices=ANIOS,required=False)
+  
     class Meta:
       model = Avaluo
       exclude = ('Salida','Pagado','Cliente','Depto','Factura','Prioridad')
@@ -360,6 +395,11 @@ class FormaConsultaMaster(ModelForm):
         self.helper.form_method = 'post'
         self.helper.layout = Layout(
             Div(
+            Div(Fieldset
+                ('Fecha:',
+                'Mes',
+                'Anio'),
+                css_class='span3'),
             Div(
                 'Edita Avaluo - Captura',
                 'FolioK',
@@ -367,46 +407,17 @@ class FormaConsultaMaster(ModelForm):
                 'Calle',
                 'NumExt',
                 'NumInt',
-                'Colonia',
-
                 css_class='span3'),
             Div(
+                'Colonia',
                 'Municipio',
                 'Estado',
                 'Servicio',
                 'Tipo',
-                css_class='span3'),
-                """
-                'Servicio',
-                'Tipo',
-                'Estatus',
-                'Valuador'
-                ,css_class='span3'),
-            Div(
-                'LatitudG',
-                'LatitudM',
-                'LatitudS',
-                'LongitudG',
-                'LongitudM',
-                'LongitudS'
-                ,css_class='span3'),
-            """,
-            Div(Fieldset
-                ('Fechas',
-                 'Inicial',
-                'Final'),
-                #'Mterreno',
-                #'Mconstruccion',
-                #'Valor',
-                #'Gastos',
-                #'Visita',
-                #'Importe'
                 css_class='span3'),css_class='row-fluid'),
-                #'Observaciones',
-
             ButtonHolder(
                 Submit('Buscar', 'Buscar', css_class='button white'),
-                Submit('Guardar', 'Guardar', css_class='button white')
+                #Submit('Guardar', 'Guardar', css_class='btn-success')
             ))
         super(FormaConsultaMaster, self).__init__(*args, **kwargs)         
         
@@ -420,7 +431,94 @@ class RespuestaConsultaMaster(ModelForm):
     Colonia = forms.CharField(error_messages=my_default_errors,required = False)
     Municipio = forms.CharField(error_messages=my_default_errors,required = False)
     Estado = forms.ChoiceField(error_messages=my_default_errors,choices=ESTADOS,required = False)
-    Servicio = forms.ChoiceField(error_messages=my_default_errors,choices=SERVICIOS,label="Tipo Servicio",required = False)
+    Servicio = forms.CharField(error_messages=my_default_errors,required = False,label="Tipo.Servicio")
+    #Tipo = forms.ModelChoiceField(required=False, queryset=Tipo.objects.all())
+    Estatus = forms.ChoiceField(error_messages=my_default_errors,choices=ESTATUS,required = False)
+    Valuador = forms.ModelChoiceField(required=False, queryset=Valuador.objects.all())
+    Prioridad = forms.ChoiceField(error_messages=my_default_errors,choices=PRIORIDAD,required = False)
+    Referencia = forms.CharField(error_messages=my_default_errors,required = False)
+    Solicitud = forms.DateField( label="Fecha Solicitud",widget=forms.DateInput(format = '%d/%m/%Y'), input_formats=['%d/%m/%Y'],required = False) 
+    Visita = forms.DateField( label="Fecha Visita",widget=forms.DateInput(format = '%d/%m/%Y'), input_formats=['%d/%m/%Y'],required = False) 
+    Salida = forms.DateField( label="Fecha Salida",widget=forms.DateInput(format = '%d/%m/%Y'), input_formats=['%d/%m/%Y'],required = False) 
+    Mterreno = forms.DecimalField(required = False)
+    Mconstruccion = forms.DecimalField(required = False)
+    LatitudG = forms.DecimalField(required = False,label="Lat.Grad.")
+    LatitudM = forms.DecimalField(required = False,label="Lat.Min.")
+    LatitudS = forms.DecimalField(required = False,label="Lat.Seg.")
+    LongitudG = forms.DecimalField(required = False,label="Long.Grad.")
+    LongitudM = forms.DecimalField(required = False,label="Long.Min.")
+    LongitudS = forms.DecimalField(required = False,label="Long.Seg.")
+    Valor = forms.DecimalField(required = False)
+    Gastos = forms.DecimalField(required = False)
+    Importe = forms.DecimalField(required = False)
+    Observaciones = forms.CharField(widget=forms.Textarea,required = False)
+    Factura = forms.CharField(error_messages=my_default_errors,required = False)
+    Pagado = forms.BooleanField(required=False)
+    class Meta:
+      model = Avaluo
+      exclude = ('Cliente','Depto','Prioridad')
+
+    def __init__(self, *args, **kwargs):
+        self.helper = FormHelper()
+        self.helper.form_id = 'id-RespuestaConsultaMaster'
+        self.helper.form_class = 'blueForms'
+        self.helper.form_method = 'post'
+        self.helper.layout = Layout(
+            Div(
+            Div(
+                'Edita Avaluo - Captura',
+                'FolioK',
+                'Referencia',
+                'Calle',
+                'NumExt',
+                'NumInt',
+                'Colonia',
+                'Tipo',
+                css_class='span3'),
+            Div(
+                'Municipio',
+                'Estado',
+                'Servicio',
+                'Estatus',
+                'Valuador',
+                'Visita',
+                'Factura'
+                ,css_class='span3'),  
+            Div(
+                'LatitudG',
+                'LatitudM',
+                'LatitudS',
+                'LongitudG',
+                'LongitudM',
+                'LongitudS',
+                'Pagado'
+                ,css_class='span3'),
+            Div('Salida',
+                'Mterreno',
+                'Mconstruccion',
+                'Valor',
+                'Gastos',
+                'Solicitud',
+                'Importe'
+                ,css_class='span3'),css_class='row-fluid'),
+                'Observaciones',
+
+            ButtonHolder(
+                #Submit('Buscar', 'Buscar', css_class='button white'),
+                Submit('Guardar', 'Guardar', css_class='btn-success')
+            ))
+        super(RespuestaConsultaMaster, self).__init__(*args, **kwargs)      
+        
+class FormaConsultaSencilla(ModelForm):
+  
+    FolioK = forms.CharField(error_messages=my_default_errors,required = False)
+    Calle = forms.CharField(error_messages=my_default_errors,required = False)
+    NumExt = forms.CharField(error_messages=my_default_errors,label="Num. Ext.",required = False)
+    NumInt = forms.CharField(error_messages=my_default_errors,label="Num. Int.",required = False)
+    Colonia = forms.CharField(error_messages=my_default_errors,required = False)
+    Municipio = forms.CharField(error_messages=my_default_errors,required = False)
+    Estado = forms.CharField(error_messages=my_default_errors,required = False)
+    Servicio = forms.CharField(error_messages=my_default_errors,required = False,label="Tipo.Servicio")
     Tipo = forms.ModelChoiceField(required=False, queryset=Tipo.objects.all())
     Estatus = forms.ChoiceField(error_messages=my_default_errors,choices=ESTATUS,required = False)
     Valuador = forms.ModelChoiceField(required=False, queryset=Valuador.objects.all())
@@ -440,18 +538,25 @@ class RespuestaConsultaMaster(ModelForm):
     Gastos = forms.DecimalField(required = False)
     Importe = forms.DecimalField(required = False)
     Observaciones = forms.CharField(widget=forms.Textarea,required = False)
-    
+    Mes = forms.ChoiceField(error_messages=my_default_errors,choices=MESES,required=False)
+    Anio = forms.ChoiceField(error_messages=my_default_errors,choices=ANIOS,required=False)
     class Meta:
       model = Avaluo
       exclude = ('Salida','Pagado','Cliente','Depto','Factura','Prioridad')
 
     def __init__(self, *args, **kwargs):
         self.helper = FormHelper()
-        self.helper.form_id = 'id-RespuestaConsultaMaster'
+        self.helper.form_id = 'id-FormaConsultaSencilla'
         self.helper.form_class = 'blueForms'
         self.helper.form_method = 'post'
+        #self.helper.form_action = 'lista_consulta_sencilla'
         self.helper.layout = Layout(
             Div(
+            Div(Fieldset
+                ('Fecha:',
+                 'Mes',
+                 'Anio'),
+                css_class='span3'),
             Div(
                 'Edita Avaluo - Captura',
                 'FolioK',
@@ -459,39 +564,19 @@ class RespuestaConsultaMaster(ModelForm):
                 'Calle',
                 'NumExt',
                 'NumInt',
-                'Colonia',
-
                 css_class='span3'),
             Div(
+                'Colonia',
                 'Municipio',
                 'Estado',
                 'Servicio',
                 'Tipo',
-                'Estatus',
-                'Valuador'
-                ,css_class='span3'),  
-            Div(
-                'LatitudG',
-                'LatitudM',
-                'LatitudS',
-                'LongitudG',
-                'LongitudM',
-                'LongitudS',css_class='span3'),
-            Div('Solicitud',
-                'Mterreno',
-                'Mconstruccion',
-                'Valor',
-                'Gastos',
-                'Visita',
-                'Importe'
-                ,css_class='span3'),css_class='row-fluid'),
-                'Observaciones',
-
+                css_class='span3'),css_class='row-fluid'),
             ButtonHolder(
-                Submit('Buscar', 'Buscar', css_class='button white'),
-                Submit('Guardar', 'Guardar', css_class='button white')
+                Submit('Buscar', 'Buscar', css_class='btn-success'),
             ))
-        super(RespuestaConsultaMaster, self).__init__(*args, **kwargs)         
+        super(FormaConsultaSencilla, self).__init__(*args, **kwargs)         
+           
           
     
 class AltaValuador(ModelForm):
@@ -523,5 +608,42 @@ class AltaUsuario(forms.Form):
       # are required by default so we don't need to worry about validation
       pass
     return self.cleaned_data
-      
-      
+
+
+class FacturaForm(ModelForm):
+    Factura = forms.CharField(error_messages=my_default_errors,label="")
+
+    class Meta:
+      model = Avaluo
+      fields = ('avaluo_id','Factura')
+
+    def __init__(self, *args, **kwargs):
+        self.helper = FormHelper()
+        self.helper.form_id = 'id-FacturaForm'
+        self.helper.form_class = 'blueForms'
+        self.helper.form_method = 'POST'
+        self.helper.form_tag = False
+        self.helper.layout = Layout(
+            Div(Div('Factura',
+                css_class='span3'),css_class='row-fluid'),)
+        super(FacturaForm, self).__init__(*args, **kwargs)     
+
+
+
+class CobrarForm(ModelForm):
+    Pagado = forms.BooleanField(required=False,label="")
+
+    class Meta:
+      model = Avaluo
+      fields = ('avaluo_id','Pagado')
+
+    def __init__(self, *args, **kwargs):
+        self.helper = FormHelper()
+        self.helper.form_id = 'id-CobrarForm'
+        self.helper.form_class = 'blueForms'
+        self.helper.form_method = 'POST'
+        self.helper.form_tag = False
+        self.helper.layout = Layout(
+            Div(Div('Pagado',
+                css_class='span3'),css_class='row-fluid'),)
+        super(CobrarForm, self).__init__(*args, **kwargs)     

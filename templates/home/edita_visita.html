@@ -1,6 +1,11 @@
 {% extends "home/base.html" %}
+
 {% load listutil %}
+
 {% load crispy_forms_tags %}
+
+{% block captura %}active{% endblock %}
+
 
 
  {% block style %}
@@ -14,13 +19,6 @@
 	font-size:10px;
       }
     </style>
-	
-	 <style type="text/css">
-      html { height: 100% }
-      body { height: 100%; margin: 0px; padding: 0px }
-      #map_canvas { height: 100% }
-    </style>
- 
  {% endblock %}
 
  {% block script %}
@@ -28,88 +26,143 @@
     
     <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/jquery-ui-1.8.24.custom.min.js"></script> 
     <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/jquery-datepicker-es.js"></script>
+    <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/fileuploader.js"></script>
     
+    <script>        
+        function createUploader(){            
+            var uploader = new qq.FileUploader( {
+                action: "{% url app.uploads.ajax_upload avaluo.avaluo_id %}",
+                element: $('#file-uploader')[0],
+                multiple: true,
+                onComplete: function( id, fileName, responseJSON ) {
+                    if( responseJSON.success )
+                        alert( "success!" ) ;
+                    else
+                        alert( "upload failed!" ) ;
+                },
+                onAllComplete: function( uploads ) {
+                    // uploads is an array of maps
+                    // the maps look like this: { file: FileObject, response: JSONServerResponse }
+                    alert( "All complete!" ) ;
+                },
+                params: {
+                    'csrf_token': '{{ csrf_token }}',
+                    'csrf_name': 'csrfmiddlewaretoken',
+                    'csrf_xname': 'X-CSRFToken',
+                },
+            } ) ;
+        }         
+
+ 
+    </script>  
+	
     <script type="text/javascript"> 
-    $(function() {
+        $(function() {
+
+            // in your app create uploader as soon as the DOM is ready
+            // don't wait for the window to load  
+            window.onload = createUploader;    
 	  
   
-	  $('#id_Visita').datepicker({ autoSize: true });
+            $('#id_Solicitud').datepicker({ autoSize: true });
+            $('#id_Visita').datepicker({ autoSize: true });
 	  
-		$(":input").blur(function() {
-		  if(this.id != 'id_Observaciones') {
-		  this.value = this.value.toUpperCase();
-		  }
-		});
-		  
-    });
+            $(":input").blur(function() {
+                if(this.id != 'id_Observaciones') {
+                    this.value = this.value.toUpperCase();
+                }
+            });
+		
+            $('#slickbox').hide();
+            // toggles the slickbox on clicking the noted link  
+            $('#slick-toggle').click(function() {	
+                $('#slickbox').toggle(400);
+                initialize();
+                return false;
+            });
+
+            $('#id_NumInt').attr('disabled','disabled'); 
+            $('input').blur(function () {
+                if ($('#id_NumExt').val()) {
+                    $('#id_NumInt').removeAttr('disabled');   
+                }else{
+                    $('#id_NumInt').attr('disabled','disabled');   
+                }
+            });
+			
+        });
+
+        
+
+	
     </script>
+	
+	<script type="text/javascript"
+      src="https://maps.google.com/maps/api/js?sensor=true">
+	</script>   
+	
+  <script type="text/javascript">
+
+      var latsign = 1;
+      if( {{avaluo.LatitudG}} < 0){
+          latsign = -1;
+      }
+      var lonsign = 1;
+      if( {{avaluo.LongitudG}} < 0){
+          lonsign = -1;
+      }
+      var declat = Math.round(
+           Math.abs( Math.round({{avaluo.LatitudG}}* 1000000.00)) +
+           (Math.abs(Math.round({{avaluo.LatitudM}}* 1000000.00))/60) +
+           (Math.abs(Math.round({{avaluo.LatitudS}}* 1000000.00))/3600)
+      ) * latsign/1000000;
+
+      var declon = Math.round(
+           Math.abs( Math.round(({{avaluo.LongitudG}})* 1000000.00)) +
+           (Math.abs(Math.round(({{avaluo.LongitudM}})* 1000000.00))/60) +
+           (Math.abs(Math.round(({{avaluo.LongitudS}})* 1000000.00))/3600)
+      ) * lonsign/1000000;
+
+ </script>
+ 
+ <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/mapas.js"></script>
 
  {% endblock %}     
  
-
 {% block content %}
-  <h1>Reporte de Visita</h1>
-  <br>
-
-      {% if forma.errors %}
-        <p style="color: red;">
-            Porfavor corrige los errores debajo.
-        </p>
-    {% endif %}
+  <h1 style="text-align:center">Servicio por Visitar</h1>
+	<div id="controls" style="display:block;">
+	<input class="btn btn-primary button white" type="button" id="slick-toggle" value="Mapas" />
+		<div id="slickbox" >
+			<div id="map_canvas" style="width: 700px; height: 500px;"  ></div>
+		</div>
+		 <div id="file-uploader" style="float:right;">		
+			<noscript>			
+				<p>Please enable JavaScript to use file uploader.</p>
+				<!-- or put a simple form for upload here -->
+			</noscript>         
+		</div>
+	</div>
   
-  
-  <div style="width:80%">
-	<a href="/SIAV/show_visita_pdf/{{avaluo.avaluo_id}}/">Reporte de Visita</a>
-	<table id="datos_texto">
+   <div>
+	<table class="table table-condensed" id="datos_texto">
 		<tr>
 			<td>Avaluo Id : {{ avaluo.avaluo_id }}</td>
-			<td>Folio K : {{ folio_k}}</td>
-			<td>Referencia : {{ avaluo.Referencia}}</td>
+			<td>Folio K : {{ folio_k }}</td>
+			<td>Tipo de Servicio: {{ avaluo.Servicio }}</td>
+
 		</tr>
 		<tr>
 			<td>Cliente : {{ avaluo.Cliente }}</td>
 			<td>Departamento : {{ avaluo.Depto}}</td>
 			<td>Fecha Solicitud : {{ avaluo.Solicitud }}</td>
 		</tr>
-		<tr>
-			<td>Colonia : {{ avaluo.Colonia }}</td>
-			<td>Municipio : {{ avaluo.Municipio }}</td>
-			<td>Estado : {{ avaluo.Estado}}</td>
-
-		</tr>
-
 	</table>
 	
-		{% crispy form %}	
-	<!--
-    <form action="/SIAV/edita_visita/{{avaluo.avaluo_id}}/" method="POST">
-      <table>
-	{% for row in form|columns:3 %}{% csrf_token %}
-	    <tr>
-	    {% for item in row %}
-	      {% if item.label != "Observaciones" %} 
-		  <td>{{ item.errors }}{{ item.label }}:{{item}}</td>
-	      {% endif %}  
-	    {% endfor %}
-	    </tr>
-    {% endfor %}
-    </table>
-    <table>
-      <tr>
-	<td>{{ item.errors }}{{form.Observaciones.label}}:</td>
-      </tr>
-      <tr>
-	<td>{{form.Observaciones}}</td>
-      </tr>
-    </table>
-    <input type="submit" value="Enviar" />
-    </form>
-		!-->
+	{% crispy form %}	
 
 	<br>
    </div>
    <br>
 
-
-  
 {% endblock %}

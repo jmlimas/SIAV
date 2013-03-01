@@ -1,6 +1,11 @@
 {% extends "home/base.html" %}
+
 {% load listutil %}
- {% load crispy_forms_tags %}
+
+{% load crispy_forms_tags %}
+
+{% block alta %}active{% endblock %}
+{% block inicio %}active{% endblock %}
 
  {% block style %}
  
@@ -47,59 +52,32 @@
 	  this.value = this.value.toUpperCase();
 	  }
 	});
+
+	$('#id_NumInt').attr('disabled', 'disabled');
+	$('input').blur(function () {
+	    if ($('#id_NumExt').val()) {
+	        $('#id_NumInt').removeAttr('disabled');
+	    } else {
+	        $('#id_NumInt').attr('disabled', 'disabled');
+	    }
+	});
 	  
     });
 	
     </script>
 	
-		<script>
-	  $(function(){
-		$('form.uniForm').uniform();
-	  });
-	</script>
  {% endblock %}      
 
 {% block content %}
-  <h2>Alta Avalúo - Entrada</h2>
-
+  <h1>Alta Avalúo</h1>
+    <br />
       {% if forma.errors %}
         <p style="color: red;">
             Porfavor completa los campos faltantes.
         </p>
     {% endif %}
   
-  
-  <div style="width:80%">
-  
 	{% crispy forma %}	
-<!--
-  <form action="/SIAV/alta_avaluo/" method="post">
-      <table>
-	{% for row in forma|columns:2 %}{% csrf_token %}
-	    <tr>
-	    {% for item in row %}
-	      {% if item.label != "Observaciones"%}
-			{% if item.label != "Avaluo id" %}
-		  <td>{{ item.errors }}{{ item.label }}:{{item}}</td>
-		  	{% endif %}
-	      {% endif %}
-	    {% endfor %}
-	    </tr>
-    {% endfor %}
-    </table>
-    <table>
-      <tr>
-	<td>{{ item.errors }}{{forma.Observaciones.label}}:</td>
-      </tr>
-      <tr>
-	<td>{{forma.Observaciones}}</td>
-      </tr>
-    </table>
-    <input type="submit" value="Enviar" />
-    </form>
-	!-->
    <br>
-   </div>
-
   
 {% endblock %}

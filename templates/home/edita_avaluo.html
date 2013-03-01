@@ -1,6 +1,10 @@
 {% extends "home/base.html" %}
+
 {% load listutil %}
+
 {% load crispy_forms_tags %}
+
+{% block captura %}active{% endblock %}
 
 
 
@@ -15,13 +19,6 @@
 	font-size:10px;
       }
     </style>
-	
-	 <style type="text/css">
-      html { height: 100% }
-      body { height: 100%; margin: 0px; padding: 0px }
-      #map_canvas { height: 100% }
-    </style>
- 
  {% endblock %}
 
  {% block script %}
@@ -30,64 +27,74 @@
     <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/jquery-ui-1.8.24.custom.min.js"></script> 
     <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/jquery-datepicker-es.js"></script>
     <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/fileuploader.js"></script>
+    
     <script>        
         function createUploader(){            
-		  var uploader = new qq.FileUploader( {
-			action: "{% url app.uploads.ajax_upload avaluo.avaluo_id %}",
-			element: $('#file-uploader')[0],
-			multiple: true,
-			onComplete: function( id, fileName, responseJSON ) {
-			  if( responseJSON.success )
-				alert( "success!" ) ;
-			  else
-				alert( "upload failed!" ) ;
-			},
-			onAllComplete: function( uploads ) {
-			  // uploads is an array of maps
-			  // the maps look like this: { file: FileObject, response: JSONServerResponse }
-			  alert( "All complete!" ) ;
-			},
-			params: {
-			  'csrf_token': '{{ csrf_token }}',
-			  'csrf_name': 'csrfmiddlewaretoken',
-			  'csrf_xname': 'X-CSRFToken',
-			},
-		  } ) ;
-}         
-        
-        
-        // in your app create uploader as soon as the DOM is ready
-        // don't wait for the window to load  
-        window.onload = createUploader;     
-		
+            var uploader = new qq.FileUploader( {
+                action: "{% url app.uploads.ajax_upload avaluo.FolioK %}",
+                element: $('#file-uploader')[0],
+                multiple: true,
+                onComplete: function( id, fileName, responseJSON ) {
+                    if( responseJSON.success )
+                        alert( "success!" ) ;
+                    else
+                        alert( "upload failed!" ) ;
+                },
+                onAllComplete: function( uploads ) {
+                    // uploads is an array of maps
+                    // the maps look like this: { file: FileObject, response: JSONServerResponse }
+                    alert( "All complete!" ) ;
+                },
+                params: {
+                    'csrf_token': '{{ csrf_token }}',
+                    'csrf_name': 'csrfmiddlewaretoken',
+                    'csrf_xname': 'X-CSRFToken',
+                },
+            } ) ;
+        }         
 
+ 
     </script>  
 	
     <script type="text/javascript"> 
-    $(function() {
+        $(function() {
+
+            // in your app create uploader as soon as the DOM is ready
+            // don't wait for the window to load  
+            window.onload = createUploader;    
 	  
   
-	  $('#id_Solicitud').datepicker({ autoSize: true });
-	   $('#id_Visita').datepicker({ autoSize: true });
+            $('#id_Solicitud').datepicker({ autoSize: true });
+            $('#id_Visita').datepicker({ autoSize: true });
 	  
-		$(":input").blur(function() {
-		  if(this.id != 'id_Observaciones') {
-		  this.value = this.value.toUpperCase();
-		  }
-		});
+            $(":input").blur(function() {
+                if(this.id != 'id_Observaciones') {
+                    this.value = this.value.toUpperCase();
+                }
+            });
 		
-		$('#slickbox').hide();
-		 // toggles the slickbox on clicking the noted link  
-		  $('#slick-toggle').click(function() {	
-			$('#slickbox').toggle(400);
-			initialize();
-			return false;
-		  });
-			
-    });
-	
-	
+            $('#slickbox').hide();
+            // toggles the slickbox on clicking the noted link  
+            $('#slick-toggle').click(function() {	
+                $('#slickbox').toggle(400);
+                initialize();
+                return false;
+            });
 
+            $('#id_NumInt').attr('disabled','disabled'); 
+            $('input').blur(function () {
+                if ($('#id_NumExt').val()) {
+                    $('#id_NumInt').removeAttr('disabled');   
+                }else{
+                    $('#id_NumInt').attr('disabled','disabled');   
+                }
+            });
+			
+        });
+
+        
+
+	
     </script>
 	
 	<script type="text/javascript"
@@ -96,56 +103,29 @@
 	
   <script type="text/javascript">
 
-       var latsign = 1;
-            if( {{avaluo.LatitudG}} < 0){
-                latsign = -1;
-            }
-            var lonsign = 1;
-            if( {{avaluo.LongitudG}} < 0){
-                lonsign = -1;
-            }
-            var declat = Math.round(
-                 Math.abs( Math.round({{avaluo.LatitudG}}* 1000000.00)) +
-                 (Math.abs(Math.round({{avaluo.LatitudM}}* 1000000.00))/60) +
-                 (Math.abs(Math.round({{avaluo.LatitudS}}* 1000000.00))/3600)
-            ) * latsign/1000000;
+      var latsign = 1;
+      if( {{avaluo.LatitudG}} < 0){
+          latsign = -1;
+      }
+      var lonsign = 1;
+      if( {{avaluo.LongitudG}} < 0){
+          lonsign = -1;
+      }
+      var declat = Math.round(
+           Math.abs( Math.round({{avaluo.LatitudG}}* 1000000.00)) +
+           (Math.abs(Math.round({{avaluo.LatitudM}}* 1000000.00))/60) +
+           (Math.abs(Math.round({{avaluo.LatitudS}}* 1000000.00))/3600)
+      ) * latsign/1000000;
 
-            var declon = Math.round(
-                 Math.abs( Math.round(({{avaluo.LongitudG}})* 1000000.00)) +
-                 (Math.abs(Math.round(({{avaluo.LongitudM}})* 1000000.00))/60) +
-                 (Math.abs(Math.round(({{avaluo.LongitudS}})* 1000000.00))/3600)
-            ) * lonsign/1000000;
-
-  
-  
- function initialize() {
-
-    var latlng = new google.maps.LatLng(declat,declon);
-   var myOptions = {
-      zoom: 14,
-      center: latlng,
-      mapTypeId: google.maps.MapTypeId.ROADMAP
-    };
-    var map = new google.maps.Map(document.getElementById("map_canvas"),
-        myOptions);
-  
-
-	 function addMarker(location) {
-        marker = new google.maps.Marker({
-            position: location,
-            map: map
-        });
-    }
-	  
-	}
-	
-	    // Function for adding a marker to the page.
-
-	
-	
-	
+      var declon = Math.round(
+           Math.abs( Math.round(({{avaluo.LongitudG}})* 1000000.00)) +
+           (Math.abs(Math.round(({{avaluo.LongitudM}})* 1000000.00))/60) +
+           (Math.abs(Math.round(({{avaluo.LongitudS}})* 1000000.00))/3600)
+      ) * lonsign/1000000;
 
  </script>
+ 
+ <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/mapas.js"></script>
 
  {% endblock %}     
  
@@ -156,23 +136,16 @@
 		<div id="slickbox" >
 			<div id="map_canvas" style="width: 700px; height: 500px;"  ></div>
 		</div>
-		 <div id="file-uploader" style="float:right">		
+		 <div id="file-uploader" style="float:right;">		
 			<noscript>			
 				<p>Please enable JavaScript to use file uploader.</p>
 				<!-- or put a simple form for upload here -->
 			</noscript>         
 		</div>
 	</div>
-
-      {% if forma.errors %}
-        <p style="color: red;">
-            Porfavor corrige los errores debajo.
-        </p>
-    {% endif %}
   
- 
-   <div style="width:80%">
-	<table id="datos_texto">
+   <div>
+	<table class="table table-condensed" id="datos_texto">
 		<tr>
 			<td>Avaluo Id : {{ avaluo.avaluo_id }}</td>
 			<td>Folio K : {{ folio_k }}</td>
@@ -186,34 +159,8 @@
 		</tr>
 	</table>
 	
-			{% crispy form %}	
+	{% crispy form %}	
 
-	<!--
-	
-    <form action="/SIAV/actualiza_avaluo/{{ avaluo.avaluo_id }}/" method="POST">
-      <table>
-	{% for row in form|columns:3 %}{% csrf_token %}
-	    <tr>
-	    {% for item in row %}
-	      {% if item.label != "Observaciones" %} 
-		  <td>{{ item.errors }}{{ item.label }}:{{item}}</td>
-	      {% endif %}  
-	    {% endfor %}
-	    </tr>
-    {% endfor %}
-    </table>
-    <table>
-      <tr>
-	<td>{{ item.errors }}{{form.Observaciones.label}}:</td>
-      </tr>
-      <tr>
-	<td>{{form.Observaciones}}</td>
-      </tr>
-    </table>
-    <input type="submit" value="Enviar" />
-    </form>
-	!-->
-	
 	<br>
    </div>
    <br>

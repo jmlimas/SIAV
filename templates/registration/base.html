@@ -1,35 +1,83 @@
 
 <!DOCTYPE html>
-  <html lang="en">
-    <head>
-    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+<html lang="es">
+  <head>
+    <meta charset="utf-8">
+    <title>Sign in &middot; Twitter Bootstrap</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
     
     <!-- Common CSS Styles -->
 
     <style type="text/css" title="currentStyle">
-	@import "{{ STATIC_URL }}CSS/Style.css";
+	/*
+    @import "{{ STATIC_URL }}CSS/Style.css";
 	@import "{{ STATIC_URL }}CSS/table_style.css";
+    */
+    @import "{{ STATIC_URL }}CSS/bootstrap.css";
+    @import "{{ STATIC_URL }}CSS/bootstrap-responsive.css";
+    </style>
+
+    <style type="text/css">
+      body {
+        padding-top: 40px;
+        padding-bottom: 40px;
+        background-color: #f5f5f5;
+      }
+
+      .form-signin {
+        max-width: 300px;
+        padding: 19px 29px 29px;
+        margin: 0 auto 20px;
+        background-color: #fff;
+        border: 1px solid #e5e5e5;
+        -webkit-border-radius: 5px;
+           -moz-border-radius: 5px;
+                border-radius: 5px;
+        -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+           -moz-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+                box-shadow: 0 1px 2px rgba(0,0,0,.05);
+      }
+      .form-signin .form-signin-heading,
+      .form-signin .checkbox {
+        margin-bottom: 10px;
+      }
+      .form-signin input[type="text"],
+      .form-signin input[type="password"] {
+        font-size: 16px;
+        height: auto;
+        margin-bottom: 15px;
+        padding: 7px 9px;
+      }
+
     </style>
     
     {% block style %}{% endblock %}
     
     <!-- Common JS Libraries -->
     <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/jquery-1.8.2.min.js"></script>
-    
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#id_username').attr("placeholder", "Usuario");
+            $('#id_password').attr("placeholder", "Contrasena");
+
+        });
+    </script>
+
     {% block script %}{% endblock %}
     
     </head>
     
-    <body  onload="initialize()">
+    <body>
 	
-      <div class="box1">
-	<div>
-	  <h1>  <img src="{{ STATIC_URL }}CSS/images/logo.png" id="logo" />  VALUADORES DEL NORTE S.C.</h1>
-	  {% block content %}{% endblock %}
-	  
-	</div> 
-      </div>
-      
-    </body>
+	    <div class="container">
+	          <h1>  <img src="{{ STATIC_URL }}CSS/images/logo.png" id="logo" />  VALUADORES DEL NORTE S.C.</h1>
+        </div>
+
+	      {% block content %}{% endblock %}
+
+	</body>
 
   </html>

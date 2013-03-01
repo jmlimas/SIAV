@@ -30,6 +30,7 @@ class Valuador(models.Model):
     Nombre = models.CharField(null=True, max_length=255)
     Apellido = models.CharField(null=True, max_length=255)
     Correo = models.CharField(null=True, max_length=255)
+    is_active = models.BooleanField(null=False)
     
     def __unicode__(self):
 	if self.Nombre is None:
@@ -107,9 +108,9 @@ class Avaluo(models.Model):
     LongitudM = models.DecimalField(null=True,max_digits=12, decimal_places=3)
     LongitudS = models.DecimalField(null=True,max_digits=12, decimal_places=3)
     Visita = models.DateField(null=True)
-    Valor = models.DecimalField(null=True, max_digits=10, decimal_places=0)
-    Gastos = models.DecimalField(null=True, max_digits=10, decimal_places=2)
-    Importe = models.DecimalField(null=True, max_digits=10, decimal_places=2)
+    Valor = models.DecimalField(null=True, max_digits=15, decimal_places=2)
+    Gastos = models.DecimalField(null=True, max_digits=15, decimal_places=2)
+    Importe = models.DecimalField(null=True, max_digits=15, decimal_places=2)
     Salida = models.DateField(null=True)
     Factura = models.CharField(null=True, max_length=30)
     Pagado = models.NullBooleanField(null=True)

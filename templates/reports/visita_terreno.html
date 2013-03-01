@@ -15,7 +15,7 @@
 }
 .myTable {
 	font-weight: bold;
-	font-size: 12px;
+	font-size: 14px;
 	text-align: center;
 }
 .myTable1 {	font-weight: bold;
@@ -34,9 +34,9 @@ table.myTable { border-collapse:collapse; }
 table.myTable td, table.myTable th { border:3px solid black;padding:5px; }
 </style>
 <!-- Be sure to place the above styles (i.e. everything between the <style></style> tags) into the document 'head' (i.e. between the <head></head> tags. Everything below goes inside the <body></body> tags) -->
-<table width="783" height="467" class="myTable">
+<table width="783" height="735" class="myTable">
 <tr align="justify">
-<td align="center" width="453"><div><img src="{{STATIC_URL}}CSS/images/logo.png" width="68" height="67" style="float: left; font-size: 9px;" /></div>
+<td width="453" height="185" align="center"><div><img src="{{STATIC_URL}}CSS/images/logo.png" width="68" height="67" style="float: left; font-size: 9px;" /></div>
   <p class="title"><span class="myTable" style="text-align: center"><strong style=""> Reporte de Visita </strong>({{avaluo.Tipo}})</span>
   <p><span class="myTable" style="text-align: center">Fecha:
     <input type="text" name="1" id="1" /> 
@@ -47,22 +47,46 @@ table.myTable td, table.myTable th { border:3px solid black;padding:5px; }
     <input name="12" type="text" id="12" size="52" />
   </p>
   <p class="myTable">Telefonos:
-    
+    <label style="position: absolute; left: 603px; top: 122px;">N.</label>
+        <label style="position: absolute; left: 603px; top: 155px;">W.</label>
+        
+           <label style="position: absolute; left: 757px; top: 121px;">Alt.</label>
+        
     <input name="122" type="text" id="122" size="51" />
-  </p></td>
+  </p>
+  
+  
+      <input name="1222" type="text" id="1222" style="position: absolute; float: right; left: 628px; top: 117px; width: 33px;" value="       °" size="2" />
+    
+      <input name="1222" type="text" id="1222" style="position: absolute; float: right; left: 672px; top: 117px; width: 33px;" value="       '" size="2" />
+        
+      <input name="1222" type="text" id="1222" style="position: absolute; float: right; left: 716px; top: 117px; width: 33px;" value="      &quot;" size="2" />
+                
+      <input name="1222" type="text" id="1222" style="position: absolute; float: right; left: 628px; top: 150px; width: 33px;" value="       °" size="2" />
+    
+        <input name="1222" type="text" id="1222" style="position: absolute; float: right; left: 672px; top: 150px; width: 33px;" value="       '" size="2" />
+        
+                <input name="1222" type="text" id="1222" style="position: absolute; float: right; left: 716px; top: 150px; width: 33px;" value="       &quot;" size="2" />
+  
+                  <input name="1222" type="text" id="1222" style="position: absolute; float: right; left: 756px; top: 150px; width: 26px;" value="       &quot;" size="2" />
+  
+  
+  </td>
 </tr>
 <tr>
-<td align="center"><p><span><span class="myTable">
-  Avaluo Id:
-      <input name="132" type="text" id="132" value="{{avaluo.avaluo_id}}" size="3" />
-Folio K :
-    <input name="13" type="text" id="13" value=" {{avaluo.FolioK}}" size="18" />
+<td height="142" align="center"><p><span><span class="myTable">
+  Avl.Id:
+          <input name="132" type="text" id="132" value="{{avaluo.avaluo_id}}" size="3" />
+      <span class="myTable1"> Ref:
+      <input name="1343" type="text" id="1343" value=" {{avaluo.Referencia}}" size="20" />
+      </span>FolioK:
+      <input name="13" type="text" id="13" value=" {{folio_k}}" size="13" />
     Cliente:
-    <input name="13222" type="text" id="13222" value=" {{avaluo.Cliente}}" size="18" />
-    <input name="1322" type="text" id="1322" value=" {{avaluo.Servicio}}" size="27" />
+    <input name="13222" type="text" id="13222" value=" {{avaluo.Cliente}}" size="13" />
+    <input name="1322" type="text" id="1322" value=" {{avaluo.Servicio}}" size="16" />
 </span></span></p>
   <p><span class="myTable"><span class="myTable">Calle: 
-    <input name="134" type="text" id="134" value=" {{avaluo.Calle}}" size="27" />
+    <input name="134" type="text" id="134" value=" {{avaluo.Calle}}" size="23" />
     Num:
 <input name="1323" type="text" id="1323" value="{{avaluo.NumInt}}" size="2" />
     NumI:
@@ -75,44 +99,80 @@ Folio K :
   <p><span class="myTable"><span class="myTable">Observaciones:</span></span></p>
   <p>
     <span class="myTable"><span class="myTable">
-    <a href="visita_nave.html">visita_nave</a><input name="133" type="text" id="133" value="{{avaluo.Observaciones}}" size="80" />
+    <input name="133" type="text" id="133" value="{{avaluo.Observaciones}}" size="80" />
     </span></span></p></td>
 </tr>
 <tr>
-<td align=""><p><span class="myTable1">Urbanización</span>:
+
+
+<td height="286" align="">
+
+<div style="background-color: #FFF; float: right; line-height: 10px; position: absolute; width: 256px; border: solid; left: 528px; top: 423px; height: 431px;" >
+  <p><span class="myTable"><span class="myTable">Check-list</span></span>:</p>
+    <p>A. VALOR DE VENTA EN CASETA<span class="myTable1">
+      <input name="18242" type="text" id="18242" value="$" size="13" />
+    </span></p>
+    <p>B.FOLIO SERVICIO ANTECEDENTE <span class="myTable1"></span><span class="myTable1">
+      <input name="18243" type="text" id="18243" size="13" />
+    </span></p>
+    <p>1.Verificar Municipio,Colonia,Calle:<span class="myTable1">
+    <input type="checkbox" name="checkbox30" id="checkbox34" />
+    </span></p>
+    <p>2.Verificar Lote y Manzana:<span class="myTable1">
+      <input type="checkbox" name="checkbox30" id="checkbox35" />
+    </span></p>
+    <p>3.Verificar Medidas y Colindancias:<span class="myTable1">
+      <input type="checkbox" name="checkbox31" id="checkbox36" />
+    </span></p>
+    <p>4.Verificar carga de Fotografías: <span class="myTable1">
+      <input type="checkbox" name="checkbox32" id="checkbox37" />
+    </span></p>
+    <p>5.Superficie del Terreno:<span class="myTable1">
+      <input name="182432" type="text" id="182432" size="8" maxlength="8" />
+    </span></p>
+    <p>6.Superficie Construcción:</p>
+    <p>T1<span class="myTable1">
+      <input name="182433" type="text" id="182433" size="13" />
+    </span></p>
+    <p>T2<span class="myTable1">
+      <input name="182434" type="text" id="182434" size="13" />
+    </span></p>
+</div>
+
+
+<p><span class="myTable1">Urbanización</span>:
   <p>Subterraneas:<span class="myTable1">
     <input type="checkbox" name="checkbox22" id="checkbox26" />
-  </span></p>
-  <p>Aereas:<span class="myTable1">
+  </span>&nbsp;Aereas:<span class="myTable1">
     <input type="checkbox" name="checkbox23" id="checkbox27" />
   </span></p>
   <p>Agua:<span class="myTable1">
-    <input type="checkbox" name="checkbox24" id="checkbox28" />
-  </span></p>
-  <p>Cablevision:<span class="myTable1">
+    <input type="checkbox" name="checkbox24" id="checkbox28" /> 
+   </span>Cablevision:<span class="myTable1">
     <input type="checkbox" name="checkbox25" id="checkbox29" />
   </span></p>
   <p>Electricidad:<span class="myTable1">
     <input type="checkbox" name="checkbox26" id="checkbox30" />
-  </span></p>
-  <p>Pavimento:<span class="myTable1">
+</span>Pavimento:<span class="myTable1">
     <input type="checkbox" name="checkbox27" id="checkbox31" />
   </span></p>
   <p>Gas Natural:<span class="myTable1">
     <input type="checkbox" name="checkbox28" id="checkbox32" />
-  </span></p>
-  <p>Pavimento:<span class="myTable1">
+</span>Vigilancia:<span class="myTable1">
     <input type="checkbox" name="checkbox29" id="checkbox33" />
   </span></p>
+  <p>&nbsp;</p>
+  <p>&nbsp;</p>
+  <p>&nbsp;</p>
+  <p>&nbsp;</p>
+  <p>&nbsp;</p>
+  <p>&nbsp;</p>
+  <p>&nbsp;</p>
+  <p>&nbsp;</p>
   <p>
   <p>&nbsp;</p></td>
 </tr>
-<tr align="center">
-  <td><p>Valor en Caseta : <span class="myTable2">
-    <input name="134222" type="text" id="134222" value="$" size="13" />
-  </span></p>
-    <p>&nbsp;</p></td>
-</tr>
+
 </table>
 
 </body>

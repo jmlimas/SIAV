@@ -15,9 +15,8 @@ urlpatterns = patterns('',
     # Uncomment the next line to enable the admin:
 
      # Upload files Urls                  
-     url( r'^SIAV/ajax_upload/(\d+)/$', 'app.uploads.ajax_upload', name="ajax_upload" ),
-     url( r'^SIAV/upload_page/$', 'app.uploads.upload_page', name="upload_page" ),
-                       
+     url( r'^SIAV/ajax_upload/(\w*\d+)/$', 'app.uploads.ajax_upload', name="ajax_upload" ),
+                            
      url(r'^SIAV/admin/', include(admin.site.urls)),
      
      url(r'^SIAV/$', 'app.views.home', name = 'home'),
@@ -27,9 +26,11 @@ urlpatterns = patterns('',
      
      #url(r'^$', 'app.views.lista_avaluo', name = 'lista_avaluo'),
 
-     url(r'^SIAV/consulta_master/?(\d+)/?$', 'app.views.consulta_master', name = 'consulta_master2'),
+     url(r'^SIAV/guarda_master/?(\d+)/?$', 'app.views.guarda_master', name = 'guarda_master'),
      url(r'^SIAV/consulta_master/', 'app.views.consulta_master', name = 'consulta_master'),
-     
+
+     url(r'^SIAV/consulta_sencilla/', 'app.views.consulta_sencilla', name = 'consulta_sencilla'),
+     url(r'^SIAV/respuesta_consulta_sencilla/?(\d+)/?$', 'app.views.respuesta_consulta_sencilla', name = 'respuesta_consulta_sencilla'),
 
      url(r'^SIAV/alta_avaluo/', 'app.views.alta_avaluo', name = 'alta_avaluo'),
      url(r'^SIAV/actualiza_avaluo/(\d+)/$','app.views.actualiza_avaluo', name = 'actualiza_avaluo'),
@@ -50,6 +51,10 @@ urlpatterns = patterns('',
      url(r'^SIAV/lista_valuador/', 'app.views.lista_valuador', name = 'lista_valuador'),
 	 
      url(r'^SIAV/mapas/', 'app.views.mapas', name = 'mapas'),
+
+     url(r'^SIAV/facturar/', 'app.views.facturar', name = 'facturar'),
+
+     url(r'^SIAV/cobrar/', 'app.views.cobrar', name = 'cobrar'),
      
      url(r'^SIAV/submitted/', 'app.views.submitted', name = 'submitted'),
                        

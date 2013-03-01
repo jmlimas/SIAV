@@ -6,12 +6,13 @@ import os
 
 
 # Create your views here.
-
+"""
 def upload_page( request ):
   ctx = RequestContext( request, {
     'csrf_token': get_token( request ),
   } )
   return render_to_response('home/selecciona_estado.html', ctx )
+"""
 
 def save_upload( uploaded, filename, raw_data,  avaluo_id):
   ''' 

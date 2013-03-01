@@ -1,0 +1,152 @@
+{% extends "home/base.html" %}
+
+{% load listutil %}
+
+{% load crispy_forms_tags %}
+
+
+
+
+ {% block style %}
+ 
+     <style type="text/css" title="currentStyle">
+	@import "{{ STATIC_URL }}CSS/smoothness/jquery-ui-1.8.24.custom.css";
+    </style>
+    
+    <style>
+      div.ui-datepicker{
+	font-size:10px;
+      }
+    </style>
+	
+ 
+ {% endblock %}
+
+ {% block script %}
+  
+    <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/jquery-ui-1.8.24.custom.min.js"></script> 
+    <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/jquery-datepicker-es.js"></script>
+
+	
+    <script type="text/javascript"> 
+        $(function() {
+	  
+  
+            $('#id_Solicitud').datepicker({ autoSize: true });
+            $('#id_Visita').datepicker({ autoSize: true });
+	  
+            $(":input").blur(function() {
+                if(this.id != 'id_Observaciones') {
+                    this.value = this.value.toUpperCase();
+                }
+            });
+
+                </script>
+	<script type="text/javascript"> 
+	    $(function(){
+	        $('form.uniForm').uniform();
+	    });
+	  
+	    $(function() {
+	  
+	        $('#slickbox').hide();
+	        // toggles the slickbox on clicking the noted link  
+	        $('#slick-toggle').click(function() {	
+	            $('#slickbox').toggle(400);
+	            initialize();
+	            return false;
+	        });
+			
+	    });
+    </script>
+	
+	<script type="text/javascript"
+      src="https://maps.google.com/maps/api/js?sensor=true">
+	</script>   
+	
+  <script type="text/javascript">
+
+      var latsign = 1;
+      if( {{avaluo.LatitudG}} < 0){
+          latsign = -1;
+      }
+      var lonsign = 1;
+      if( {{avaluo.LongitudG}} < 0){
+          lonsign = -1;
+      }
+      var declat = Math.round(
+           Math.abs( Math.round({{avaluo.LatitudG}}* 1000000.00)) +
+           (Math.abs(Math.round({{avaluo.LatitudM}}* 1000000.00))/60) +
+           (Math.abs(Math.round({{avaluo.LatitudS}}* 1000000.00))/3600)
+      ) * latsign/1000000;
+
+      var declon = Math.round(
+           Math.abs( Math.round(({{avaluo.LongitudG}})* 1000000.00)) +
+           (Math.abs(Math.round(({{avaluo.LongitudM}})* 1000000.00))/60) +
+           (Math.abs(Math.round(({{avaluo.LongitudS}})* 1000000.00))/3600)
+      ) * lonsign/1000000;
+
+ </script>
+	
+	
+ <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/mapas.js"></script>
+
+
+ {% endblock %}     
+ 
+{% block content %}
+  <h1 style="text-align:center">Consulta Sencilla</h1>
+     <div id="controls" style="display:block;">
+	<input class="btn btn-primary button white" type="button" id="slick-toggle" value="Mapas" />
+		<div id="slickbox" >
+			<div id="map_canvas" style="width: 700px; height: 500px;"  ></div>
+		</div>
+		 <div id="file-uploader" style="float:right">		
+			<noscript>			
+				<p>Please enable JavaScript to use file uploader.</p>
+				<!-- or put a simple form for upload here -->
+			</noscript>         
+		</div>
+	</div>
+  
+ 
+	<table id="datos_texto">
+		<tr>
+			<td>Avaluo Id : {{ avaluo.avaluo_id }}</td>{% csrf_token %}
+			<td>Folio K : {{ avaluo.FolioK }}</td>
+			<td>Tipo de Servicio: {{ avaluo.Servicio }}</td>
+
+		</tr>
+		<tr>
+			<td>Cliente : {{ avaluo.Cliente }}</td>
+			<td>Departamento : {{ avaluo.Depto}}</td>
+			<td>Fecha Solicitud : {{ avaluo.Solicitud }}</td>
+		</tr>
+        <tr>
+			<td>Calle : {{ avaluo.Calle }}</td>
+			<td>Colonia : {{ avaluo.Colonia}}</td>
+			<td>Municipio : {{ avaluo.Municipio }}</td>
+		</tr>
+        <tr>
+			<td>Estado : {{ avaluo.Estado }}</td>
+			<td>Fecha Visita : {{ avaluo.Visita}}</td>
+			<td>Valor : {{ avaluo.Valor }}</td>
+		</tr>
+        <tr>
+			<td>Fecha Solicitud : {{ avaluo.Solicitud }}</td>
+			<td>Mterreno : {{ avaluo.Mterreno}}</td>
+			<td>Mconstruccion : {{ avaluo.Mconstruccion }}</td>
+		</tr>
+        <tr>
+			<td>Factura : {{ avaluo.Factura }}</td>
+			<td>Pagado : {{ avaluo.Pagado}}</td>
+			<td>Observaciones : {{ avaluo.Observaciones }}</td>
+		</tr>
+	</table>
+	<br>
+   <br>
+       
+
+
+  
+{% endblock %}
