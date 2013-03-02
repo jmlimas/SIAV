@@ -80,7 +80,7 @@ def facturar(request):
     
 @login_required
 def cobrar(request):
-    avaluos = Avaluo.objects.filter(Estatus__contains='CONCLUIDO') & Avaluo.objects.exclude(Pagado__contains=1)
+    avaluos = Avaluo.objects.filter(Estatus__contains='CONCLUIDO') & Avaluo.objects.exclude(Pagado__contains=1,Factura__isnull=True) & Avaluo.objects.exclude(Factura__isnull=True)
     PagadoFormset = modelformset_factory(Avaluo,form=CobrarForm,extra=0)
 
     if request.method == 'POST':
@@ -96,7 +96,7 @@ def cobrar(request):
         pagado_formset = PagadoFormset(queryset=avaluos,prefix="formas")
         example_formset = PagadoFormset(queryset=avaluos,prefix="formas") 
 
-        avaluos = Avaluo.objects.filter(Estatus__contains='CONCLUIDO') & Avaluo.objects.exclude(Pagado__contains=1)
+        avaluos = Avaluo.objects.filter(Estatus__contains='CONCLUIDO') & Avaluo.objects.exclude(Pagado__contains=1) & Avaluo.objects.exclude(Factura__isnull=True)
         cantidad = avaluos.count()
         olist = zip(avaluos,pagado_formset)
 

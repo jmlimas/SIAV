@@ -55,9 +55,17 @@
 	<script type="text/javascript">
 	
 	$(document).ready(function(){
-		$(':input').live('focus',function(){
+		$(':input[type="text"]').live('focus',function(){
 			$(this).attr('autocomplete', 'off');
 		});
+
+		$('#submit-id-submit').click(function () {
+		    $("input[type=text]").each(function () {
+		        this.value = this.value.toUpperCase();
+		    });
+		});
+
+
 	});
 
 
@@ -89,7 +97,6 @@
             <p class="navbar-text pull-right">Bienvenido, <a href="#" class="navbar-link">{{user.username }}</a>            </p>
             <form class="navbar-search pull-right"><input type="text" class="search-query" placeholder="Buscar">   </form>
             <ul class="nav">
-              <li class="active"><a href="#">Usuario</a></li>
               <li class="{% block alta %}{% endblock %}" ><a href="/SIAV/alta_avaluo/">Alta</a></li>
               <li class="{% block captura %}{% endblock %}"><a href="/SIAV/captura/" >Captura    <span class="badge badge-warning">{{cantidad.0}}</span></a></li>
               <li class="{% block visita %}{% endblock %}"><a href="/SIAV/visita/" >Visita    <span class="badge badge-warning">{{cantidad.1}}</a></li>
