@@ -64,19 +64,13 @@
 		        this.value = this.value.toUpperCase();
 		    });
 		});
-
-
 	});
-
 
 	function printDiv(divName) {
 	    var printContents = document.getElementById(divName).innerHTML;
 	    var originalContents = document.body.innerHTML;
-
 	    document.body.innerHTML = printContents;
-
 	    window.print();
-
 	    document.body.innerHTML = originalContents;
 	}
 	</script>
@@ -92,21 +86,37 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="brand" href="#">SIAV</a>
+          <a class="brand" href="/SIAV/">SIAV<span class="badge badge-info">{{cantidad.3}}</span></a>
           <div class="nav-collapse collapse">
-            <p class="navbar-text pull-right">Bienvenido, <a href="#" class="navbar-link">{{user.username }}</a>            </p>
-            <form class="navbar-search pull-right"><input type="text" class="search-query" placeholder="Buscar">   </form>
+            <!-- <form class="navbar-search pull-right"><input type="text" class="search-query" placeholder="Buscar"></form> !-->
             <ul class="nav">
+              <li class="divider-vertical"></li>
               <li class="{% block alta %}{% endblock %}" ><a href="/SIAV/alta_avaluo/">Alta</a></li>
-              <li class="{% block captura %}{% endblock %}"><a href="/SIAV/captura/" >Captura    <span class="badge badge-warning">{{cantidad.0}}</span></a></li>
+              <li class="divider-vertical"></li>
               <li class="{% block visita %}{% endblock %}"><a href="/SIAV/visita/" >Visita    <span class="badge badge-warning">{{cantidad.1}}</a></li>
+              <li class="divider-vertical"></li>
+              <li class="{% block captura %}{% endblock %}"><a href="/SIAV/captura/" >Captura    <span class="badge badge-warning">{{cantidad.0}}</span></a></li>
+              <li class="divider-vertical"></li>
               <li class="{% block salida %}{% endblock %}"><a href="/SIAV/salida/">Salida    <span class="badge badge-warning">{{cantidad.2}}</a></li>
+              <li class="divider-vertical"></li>
               <li class="{% block consulta_sencilla %}{% endblock %}"><a href="/SIAV/consulta_sencilla/" >Sencilla</a></li>
+              <li class="divider-vertical"></li>
+
                 {% ifusergroup Admins %}
               <li class="{% block consulta_master %}{% endblock %}"><a href="/SIAV/consulta_master/" >Master</a></li>
+              <li class="divider-vertical"></li>
               <li><a href="/SIAV/facturar/">Facturar</a></li>
+              <li class="divider-vertical"></li>
               <li><a href="/SIAV/cobrar/">Cobrar</a></li>
                 {% endifusergroup %}
+            </ul>
+            <ul class="n-logout nav pull-right">
+                <li class="divider-vertical"></li>
+                <li><a onclick="printDiv('printableArea')"><i class="icon-print icon-white"></i>&nbsp;&nbsp;</a></li>
+                <li class="divider-vertical"></li>
+                <li><p class="navbar-text pull-right">Bienvenido,  <a href="#">{{user.username }}</a></p></li>
+                <li class="divider-vertical"></li>
+                <li><a href="/SIAV/logout"> <i class="icon-eject icon-white"></i> Salir</a></li>
             </ul>
           </div><!--/.nav-collapse -->
         </div>
@@ -118,16 +128,14 @@
 
     <div class="span12">
         <div class="hero-unit">
+        <div id="printableArea">
         {% block content %}
-
         {% endblock %}
+        </div> <!-- Se cierra printable area -->
+        </div>  
 
-     </div>
        <br>
-	  <div id="printableArea">
-	
       <br>
-      </div>  <!-- Se cierra printable area -->
 
       <footer>
         <p>&copy; 2013 Desarrollado para Avaluos del Norte S.C </p>

@@ -46,6 +46,7 @@ ESTADOS = (
         ('YUCATAN','YUCATAN'),
 )
 
+
 MUNICIPIOS = (
     ('-',''),
     ('MONTERREY','MONTERREY'),
@@ -72,8 +73,8 @@ MUNICIPIOS = (
     ('ESCOBEDO','ESCOBEDO'),
     ('LINARES','LINARES'),
     ('MONTEMORELOS','MONTEMORELOS'),
-
 )
+
 
 ESTATUS = (
     ('PROCESO','PROCESO'),
@@ -100,6 +101,7 @@ GRUPO = (
 )
 
 MESES = (
+    ('',''),
     ('01','ENERO'),
     ('02','FEBRERO'),
     ('03','MARZO'),
@@ -115,6 +117,7 @@ MESES = (
 )
 
 ANIOS = (
+    ('',''),
     ('2010','2010'),
     ('2011','2011'),
     ('2012','2012'),
@@ -125,7 +128,6 @@ ANIOS = (
 
 class AltaAvaluo(ModelForm):
 
-    #FolioK = forms.CharField(error_messages=my_default_errors,label="Folio K",required = False)
     Referencia = forms.CharField(error_messages=my_default_errors,required = False)
     Calle = forms.CharField(error_messages=my_default_errors)
     NumExt = forms.CharField(error_messages=my_default_errors,label="Num. Ext.",required = False)
@@ -134,13 +136,12 @@ class AltaAvaluo(ModelForm):
     Municipio = forms.ChoiceField(error_messages=my_default_errors,choices=MUNICIPIOS)
     Estado = forms.ChoiceField(error_messages=my_default_errors,choices=ESTADOS)
     Servicio = forms.ChoiceField(error_messages=my_default_errors,choices=SERVICIOS,label="Tipo Servicio")
-    #Tipo = forms.ChoiceField(error_messages=my_default_errors,choices=TIPO,label="Tipo Inmueble")
     Estatus = forms.ChoiceField(error_messages=my_default_errors,choices=ESTATUS)
     Prioridad = forms.ChoiceField(error_messages=my_default_errors,choices=PRIORIDAD)
+    Depto = forms.ModelChoiceField(queryset=Depto.objects.filter(is_active='True'))
     Solicitud = forms.DateField( label="Fecha Solicitud",widget=forms.DateInput(format = '%d/%m/%Y'), input_formats=['%d/%m/%Y']) 
     Observaciones = forms.CharField(widget=forms.Textarea,required = False)
     Valuador = forms.ModelChoiceField(queryset=Valuador.objects.filter(is_active='True'))
-
 
     class Meta:
       model = Avaluo
@@ -149,7 +150,7 @@ class AltaAvaluo(ModelForm):
     def __init__(self, *args, **kwargs):
         self.helper = FormHelper()
         self.helper.form_id = 'id-AltaAvaluo'
-        self.helper.form_class = 'blueForms'
+        self.helper.form_class = ''
         self.helper.form_method = 'post'
         self.helper.form_action = 'alta_avaluo'
         self.helper.layout = Layout(
@@ -163,8 +164,8 @@ class AltaAvaluo(ModelForm):
             Div(
                 'NumInt',
                 'Colonia',               
-                'Municipio',
-                'Estado',css_class='span3'),
+                'Estado',
+                'Municipio',css_class='span3'),
             Div(
                 'Servicio',
                 'Estatus',
@@ -183,13 +184,10 @@ class AltaAvaluo(ModelForm):
         super(AltaAvaluo, self).__init__(*args, **kwargs)
 
 
-
-
 class VisitaAvaluo(ModelForm):
     Calle = forms.CharField(error_messages=my_default_errors)
     NumExt = forms.CharField(error_messages=my_default_errors,label="Num. Ext.",required = False)
     NumInt = forms.CharField(error_messages=my_default_errors,label="Num. Int.",required = False)
-    #Tipo = forms.ChoiceField(error_messages=my_default_errors,choices=TIPO,label="Tipo Inmueble")
     Estatus = forms.ChoiceField(error_messages=my_default_errors,choices=ESTATUSV)
     Visita = forms.DateField( label="Fecha Visita",widget=forms.DateInput(format = '%d/%m/%Y'), input_formats=['%d/%m/%Y']) 
     LatitudG = forms.DecimalField(required = False,label="Lat.Grad.")
@@ -246,8 +244,6 @@ class CapturaAvaluo(ModelForm):
     Colonia = forms.CharField(error_messages=my_default_errors)
     Municipio = forms.CharField(error_messages=my_default_errors)
     Estado = forms.ChoiceField(error_messages=my_default_errors,choices=ESTADOS)
-    #Servicio = forms.ChoiceField(error_messages=my_default_errors,choices=SERVICIOS,label="Tipo Servicio")
-    #Tipo = forms.ChoiceField(error_messages=my_default_errors,label="Tipo Inmueble")
     Estatus = forms.ChoiceField(error_messages=my_default_errors,choices=ESTATUS)
     Prioridad = forms.ChoiceField(error_messages=my_default_errors,choices=PRIORIDAD)
     Referencia = forms.CharField(error_messages=my_default_errors,required = False)
@@ -324,7 +320,6 @@ class SalidaAvaluo(ModelForm):
 
     class Meta:
       model = Avaluo
-      #exclude = ('Salida','Visita','Pagado','Cliente','Depto','Factura','FolioK')
       fields = ('Mterreno','Mconstruccion','Observaciones','Salida','Importe','Referencia') 
 
     def __init__(self, *args, **kwargs):
@@ -417,7 +412,6 @@ class FormaConsultaMaster(ModelForm):
                 css_class='span3'),css_class='row-fluid'),
             ButtonHolder(
                 Submit('Buscar', 'Buscar', css_class='button white'),
-                #Submit('Guardar', 'Guardar', css_class='btn-success')
             ))
         super(FormaConsultaMaster, self).__init__(*args, **kwargs)         
         
@@ -432,7 +426,6 @@ class RespuestaConsultaMaster(ModelForm):
     Municipio = forms.CharField(error_messages=my_default_errors,required = False)
     Estado = forms.ChoiceField(error_messages=my_default_errors,choices=ESTADOS,required = False)
     Servicio = forms.CharField(error_messages=my_default_errors,required = False,label="Tipo.Servicio")
-    #Tipo = forms.ModelChoiceField(required=False, queryset=Tipo.objects.all())
     Estatus = forms.ChoiceField(error_messages=my_default_errors,choices=ESTATUS,required = False)
     Valuador = forms.ModelChoiceField(required=False, queryset=Valuador.objects.all())
     Prioridad = forms.ChoiceField(error_messages=my_default_errors,choices=PRIORIDAD,required = False)
@@ -640,7 +633,7 @@ class CobrarForm(ModelForm):
     def __init__(self, *args, **kwargs):
         self.helper = FormHelper()
         self.helper.form_id = 'id-CobrarForm'
-        self.helper.form_class = 'blueForms'
+        self.helper.form_class = ''
         self.helper.form_method = 'POST'
         self.helper.form_tag = False
         self.helper.layout = Layout(

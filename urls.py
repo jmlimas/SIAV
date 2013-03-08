@@ -57,9 +57,11 @@ urlpatterns = patterns('',
      url(r'^SIAV/cobrar/', 'app.views.cobrar', name = 'cobrar'),
      
      url(r'^SIAV/submitted/', 'app.views.submitted', name = 'submitted'),
-                       
+     
+     url(r'^SIAV/test/', 'app.views.test', name = 'submitted'),                
 
-
+     url(r'^api/get_colonias/', 'app.views.get_colonias', name='get_colonias'),
+     url(r'^api/get_municipios/', 'app.views.get_municipios', name='get_municipios'),
 
 )
 

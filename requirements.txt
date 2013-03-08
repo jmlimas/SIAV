@@ -1,3 +1,2 @@
-django-debug-toolbar
 south
 django-crispy-forms

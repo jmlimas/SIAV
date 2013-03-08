@@ -1,11 +1,23 @@
 @media print{
     
     @page {size: landscape}
-    #header, #footer {display:none;}
+    header, footer {display:none;}
     span.pseudolink {display:none;}
 
-}
+    h1 {
+    font-style:italic;
+    font-size:large;
+    }
+    .filters {
+    display:none;
+    }
 
+    .tabla_opciones {
+    display:none;
+    
+    }
+
+}
 
 #print-button {
     height:50px;

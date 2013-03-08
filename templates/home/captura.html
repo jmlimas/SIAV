@@ -9,26 +9,21 @@
  
     <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/picnet.table.filter.min.js"></script>
     <script type="text/javascript">
-    $(document).ready(function(){
-        $('#avaluos_table').tableFilter();
+        $(document).ready(function () {
+            $('#avaluos_table').tableFilter();
+            valor = 0;
 
+            var rowCount = { p: $('#avaluos_table tbody tr:visible').length };
+            valor = ($('#avaluos_table tbody tr:visible').length);
 
-    var rowCount = { p: $('#avaluos_table tr:visible').length - 2 };
+            $('#cantidad_tabla').html(valor);
 
-
-
-    $('#avaluos_table').change(function () {
-        rowCount.p = $('#avaluos_table tr:visible').length - 2 ;
-    });
-
-    rowCount.watch("p", function () {
-        $("#cantidad_tabla").hide().html(rowCount.p).fadeIn('fast');
-        console.log("rowCount. changed from + oldval +  to  + newval");
-
-    });
-
-
-    });
+            $('#avaluos_table thead').on("change", function () {
+                setTimeout(function () {
+                    window.location = '/SIAV/captura/';
+                }, 1000);
+            });
+        });
 
 
     </script>
@@ -36,14 +31,13 @@
  {% endblock %}      
 {% block content %}
 
-  <h1>Servicios en Proceso</h1>
+  <h1>Servicios por Capturar</h1>
   <hr /> 
 
-  <h2>{{cantidad.0}} Servicios </h2>
-  <h2><span id="cantidad_tabla"></span>Servicios en Tabla</h2>
+  <h2 style="text-align:left"><span id="cantidad_tabla"></span>  Servicios</h2>
   <table id='avaluos_table'>
 	  <thead>
-		  <tr><th style="width:40px">Folio K</th><th style="width:40px" filter='false' >Ref.</th><th filter-type='ddl'>Cliente</th><th>Calle</th><th filter='false'>Ext.</th><th filter='false'>Int.</th><th style="width:100px" filter-type='ddl'>Colonia</th><th filter-type='ddl'>Municipio</th><th filter-type='ddl'>Prioridad</th><th style="width:10px" filter-type='ddl'>Status</th><th filter='false'>Dias</th><th filter='false'>Opciones</th></tr>
+		  <tr><th style="width:40px">Folio K</th><th style="width:40px" filter='false' >Ref.</th><th filter-type='ddl'>Cliente</th><th>Calle</th><th filter='false'>Ext.</th><th filter='false'>Int.</th><th style="width:100px" filter-type='ddl'>Colonia</th><th filter-type='ddl'>Municipio</th><th filter-type='ddl'>Prioridad</th><th style="width:10px" filter-type='ddl'>Status</th><th filter='false'>Dias</th><th filter='false' class="tabla_opciones">Opciones</th></tr>
 	  </thead>
 	  <body>
 		  {% for a in avaluos %}
@@ -51,15 +45,15 @@
 			  <td> {{a.FolioK}} </td>
 		      <td> {{a.Referencia}} </td>
 			  <td> {{a.Cliente}} </td>
-		      <td> {{a.Calle}} </td>
+		      <td style="width:200px;"> {{a.Calle}} </td>
 			  <td style="width:3px;"> {{a.NumExt}} </td>
 			  <td style="width:10px;"> {{a.NumInt}} </td>
-			  <td style="width:200px;"> {{a.Colonia}} </td>
-		      <td> {{a.Municipio}} </td>
+			  <td style="width:150px;"> {{a.Colonia}} </td>
+		      <td style="width:200px;"> {{a.Municipio}} </td>
 		      <td style="width:3px;"> {{a.Prioridad}} </td>
 		      <td> {{a.Estatus}} </td>
               <td> {{ a.Solicitud|dayssince }}</td>			  
-		      <td> <a href="/SIAV/actualiza_avaluo/{{a.avaluo_id}}">Captura</a></td>
+		      <td class="tabla_opciones"> <a href="/SIAV/actualiza_avaluo/{{a.avaluo_id}}">Captura</a></td>
 		  </tr>
 		  {% endfor %}
 	  </body>

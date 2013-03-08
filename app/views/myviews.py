@@ -1,5 +1,5 @@
 import operator
-from django.db.models import Q
+from django.db.models import Sum, Count, Q
 from app.forms import *
 from django.template import RequestContext
 from django.shortcuts import render_to_response, redirect
@@ -12,6 +12,7 @@ from django.forms.models import formset_factory
 from django.forms.models import BaseInlineFormSet, inlineformset_factory, modelformset_factory
 
 def genera_foliok(avaluo_id,colonia):
+    #
     if(len(colonia.split()) > 1):
         primera = colonia.split()[0]
         ultima = colonia.split()[-1]
@@ -30,14 +31,15 @@ def genera_foliok(avaluo_id,colonia):
 
 def cantidades():
 
-    avaluos = Avaluo.objects.filter(Estatus__contains='PROCESO', Salida__isnull=True) | Avaluo.objects.filter(Estatus__contains='DETENIDO', Salida__isnull=True)
+    avaluos = Avaluo.objects.filter(Estatus__contains='PROCESO', Salida__isnull=True,Visita__isnull=False) | Avaluo.objects.filter(Estatus__contains='DETENIDO', Salida__isnull=True,Visita__isnull=False)
     por_capturar = avaluos.count()
     avaluos = Avaluo.objects.filter(Estatus__contains='PROCESO', Visita__isnull=True, Salida__isnull=True) | Avaluo.objects.filter(Estatus__contains='DETENIDO', Visita__isnull=True, Salida__isnull=True)  
     por_visitar = avaluos.count()
     avaluos = Avaluo.objects.filter(Estatus__contains='PROCESO', Visita__isnull=False, Salida__isnull=True)  
     por_salida = avaluos.count()
-        
-    pendientes = [por_capturar,por_visitar,por_salida]
+    avaluos = Avaluo.objects.filter(Estatus__contains='PROCESO', Salida__isnull=True) | Avaluo.objects.filter(Estatus__contains='DETENIDO', Salida__isnull=True)
+    en_proceso = avaluos.count()    
+    pendientes = [por_capturar,por_visitar,por_salida,en_proceso]
 
     return pendientes
 
@@ -45,7 +47,9 @@ def cantidades():
 
 @login_required
 def home(request):
-    return render_to_response('home/home.html', context_instance=RequestContext(request))
+    avaluos = Avaluo.objects.filter(Estatus__contains='PROCESO', Salida__isnull=True) | Avaluo.objects.filter(Estatus__contains='DETENIDO', Salida__isnull=True)
+    cantidad = cantidades()
+    return render_to_response('home/home.html',{'avaluos': avaluos,'cantidad':cantidad}, context_instance=RequestContext(request))
 
 @login_required    
 def logout_view(request):
@@ -55,7 +59,7 @@ def logout_view(request):
     
 @login_required
 def facturar(request):
-    avaluos = Avaluo.objects.filter(Estatus__contains='CONCLUIDO',Factura__isnull=True)
+    avaluos = Avaluo.objects.filter(Estatus__contains='CONCLUIDO',Factura__isnull=True,Pagado=False) | Avaluo.objects.filter(Estatus__contains='CONCLUIDO',Factura__isnull=True,Pagado__isnull=True)
     FacturaFormset = modelformset_factory(Avaluo,form=FacturaForm,extra=0)
 
     if request.method == 'POST':
@@ -63,19 +67,23 @@ def facturar(request):
         for form in factura_formset:
             if form.is_valid():
                 form.save()
-            else:
-                return HttpResponseRedirect('Forma no valida.') 
         return HttpResponseRedirect('.') 
 
     else:
         factura_formset = FacturaFormset(queryset=avaluos,prefix="formas")
         example_formset = FacturaFormset(queryset=avaluos,prefix="formas") # ELIMINAR
-
-        avaluos = Avaluo.objects.filter(Estatus__contains='CONCLUIDO',Factura__isnull=True)
         cantidad = avaluos.count()
         olist = zip(avaluos,factura_formset)
 
-        return render_to_response('home/lista_factura.html',{'olist': olist,'cantidad':cantidad,'example_formset':example_formset}, context_instance=RequestContext(request))
+        suma_de_monto= avaluos.values('Cliente__Cliente').order_by('Cliente').annotate(total=Sum('Importe'))
+        total_general = 0.00
+        for x in suma_de_monto:
+            if not x['total']:
+                total_general += 0.00
+            else:
+                total_general += float(str(x['total']))
+
+        return render_to_response('home/lista_factura.html',{'olist': olist,'cantidad':cantidad,'example_formset':example_formset,'suma_de_monto': suma_de_monto,'total_general': total_general}, context_instance=RequestContext(request))
 
     
 @login_required
@@ -88,24 +96,21 @@ def cobrar(request):
         for form in pagado_formset:
             if form.is_valid():
                 form.save()
-            else:
-                return HttpResponseRedirect('Forma no valida.') 
         return HttpResponseRedirect('.') 
 
     else:
+        agrupados = avaluos.values('Factura').annotate(Total=Sum('Importe'))
         pagado_formset = PagadoFormset(queryset=avaluos,prefix="formas")
         example_formset = PagadoFormset(queryset=avaluos,prefix="formas") 
-
-        avaluos = Avaluo.objects.filter(Estatus__contains='CONCLUIDO') & Avaluo.objects.exclude(Pagado__contains=1) & Avaluo.objects.exclude(Factura__isnull=True)
         cantidad = avaluos.count()
         olist = zip(avaluos,pagado_formset)
-
-        return render_to_response('home/lista_cobrar.html',{'olist': olist,'cantidad':cantidad,'example_formset':example_formset}, context_instance=RequestContext(request))
+        
+        return render_to_response('home/lista_cobrar.html',{'olist': olist,'cantidad':cantidad,'example_formset':example_formset,'agrupados':agrupados}, context_instance=RequestContext(request))
 
 @login_required
 def captura(request):
     #lista_avaluos = Avaluo.objects.all()
-    avaluos = Avaluo.objects.filter(Estatus__contains='PROCESO', Salida__isnull=True) | Avaluo.objects.filter(Estatus__contains='DETENIDO', Salida__isnull=True)
+    avaluos = Avaluo.objects.filter(Estatus__contains='PROCESO', Salida__isnull=True,Visita__isnull=False) | Avaluo.objects.filter(Estatus__contains='DETENIDO', Salida__isnull=True,Visita__isnull=False)
     cantidad = cantidades()
     return render_to_response('home/captura.html',{'avaluos': avaluos,'cantidad':cantidad}, context_instance=RequestContext(request))
 

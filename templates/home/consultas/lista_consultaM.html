@@ -19,11 +19,9 @@
 {% block content %}
   <h1 style="text-align:center">Consulta Administrador</h1>
   <h2>{{cantidad}} Servicios </h2> 
-  <br>
-
 <table id='avaluos_table'>
 	  <thead>
-		  <tr><th style="width:40px">Folio K</th><th style="width:40px">Ref.</th><th filter-type='ddl'>Cliente</th><th>Calle</th><th>Ext.</th><th>Int.</th><th style="width:100px" filter-type='ddl'>Colonia</th><th filter-type='ddl'>Municipio</th><th filter-type='ddl'>Prioridad</th><th style="width:10px" filter-type='ddl'>Status</th><th>Dias</th><th filter='false'>Opciones</th></tr>
+		  <tr><th style="width:40px">Folio K</th><th style="width:40px">Ref.</th><th filter-type='ddl'>Cliente</th><th>Calle</th><th>Ext.</th><th>Int.</th><th style="width:100px" filter-type='ddl'>Colonia</th><th filter-type='ddl'>Municipio</th><th filter-type='ddl'>Prioridad</th><th style="width:10px" filter-type='ddl'>Status</th><th>Dias</th><th filter='false' class="tabla_opciones">Opciones</th></tr>
 	  </thead>
 	  <tbody>
 		  {% for a in avaluos %}
@@ -31,15 +29,15 @@
 			  <td> {{a.FolioK}} </td>
 		      <td> {{a.Referencia}} </td>
 			  <td> {{a.Cliente}} </td>
-		      <td> {{a.Calle}} </td>
+		      <td style="width:auto;"> {{a.Calle}} </td>
 			  <td style="width:3px;"> {{a.NumExt}} </td>
 			  <td style="width:10px;"> {{a.NumInt}} </td>
 			  <td style="width:200px;"> {{a.Colonia}} </td>
-		      <td> {{a.Municipio}} </td>
+		      <td style="width:200px;"> {{a.Municipio}} </td>
 		      <td style="width:3px;"> {{a.Prioridad}} </td>
 		      <td> {{a.Estatus}} </td>
               <td> {{ a.Solicitud|dayssince }}</td>	
-		      <td> <a href="/SIAV/guarda_master/{{a.avaluo_id}}">Editar</a></td>
+		      <td class="tabla_opciones"> <a href="/SIAV/guarda_master/{{a.avaluo_id}}">Editar</a></td>
 		  </tr>
 		  {% endfor %}
 	  </tbody>

@@ -4,6 +4,8 @@
 
 {% load dayssince %}
 
+{% load currency %}
+
 
 
 {% block script %}
@@ -12,8 +14,6 @@
     <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/jquery.livequery.js"></script> 
 
     <script type="text/javascript">
-
-
         $(document).ready(function () {
             $('#avaluos_table').tableFilter();
                 valor = 0;
@@ -25,7 +25,7 @@
             
             $('#avaluos_table thead').on("change", function () {
                     setTimeout(function () {
-                        window.location = '/SIAV/facturar/';
+                        window.location = '/SIAV/cobrar/';
                     }, 1000);
             });
     });
@@ -36,10 +36,24 @@
 {% block content %}
 
   <h1>Servicios por Cobrar</h1>
-  <h2 style="text-align:left"><span id="cantidad_tabla"></span>Servicios en Tabla</h2>
+  <h2 style="text-align:left"><span id="cantidad_tabla"></span>   Servicios</h2>
+
+  <table>
+  {%for x in agrupados %}
+    <tr>
+        <td>
+            {{x.Factura}}
+        </td>
+         <td>
+            {{x.Total|currency}}
+        </td>
+    </tr>
+  {% endfor %}
+  </table>
+
   <table id='avaluos_table'>
 	  <thead>
-		  <tr><th id="folio_type" filter-type="ddl" style="width:40px">Folio K</th><th style="width:150px" filter='false' >Ref.</th><th filter-type='ddl'>Cliente</th><th filter="false">Calle</th><th filter='false'>Ext.</th><th filter='false'>Int.</th><th style="width:100px" filter='false'>Pagado</th><th filter='false'>Municipio</th><th  filter='false'>Entrega</th><th filter='false'>Monto</th><th filter='false'>Opciones</th></tr>
+		  <tr><th id="folio_type" filter-type="ddl" style="width:40px">Folio K</th><th style="width:150px" filter='false' >Ref.</th><th filter-type='ddl'>Cliente</th><th filter="false">Calle</th><th filter='false'>Ext.</th><th filter='false'>Int.</th><th style="width:100px" filter='false'>Factura</th><th style="width:100px" filter='false'>Pagado</th><th filter='false'>Municipio</th><th  filter='false'>Entrega</th><th filter='false'>Monto</th><th filter='false' class="tabla_opciones">Opciones</th></tr>
 	  </thead>
 	  <tbody>
           <form action="/SIAV/cobrar/" method="post">
@@ -53,14 +67,15 @@
 		      <td> {{a.Calle}} </td>
 			  <td style="width:3px;"> {{a.NumExt}} </td>
 			  <td style="width:10px;"> {{a.NumInt}} </td>
+              <td style="width:10px;"> {{a.Factura}} </td>
 			  <td style="width:10px;"> {% crispy b %} </td>
 		      <td> {{a.Municipio}} </td>
 		      <td> {{a.Salida|date:"d/m/y"}} </td>
-              <td> {{a.Importe }}</td>			  
-		      <td> <a href="/SIAV/actualiza_avaluo/{{a.avaluo_id}}">Captura</a></td>
+              <td> {{a.Importe|currency }}</td>			  
+		      <td class="tabla_opciones"> <a href="/SIAV/actualiza_avaluo/{{a.avaluo_id}}">Captura</a></td>
 		  </tr>
           {% endfor %} 
-        <input class='btn btn-primary' type="submit" name="submit" value="Submit changes" />
+        <input class='btn btn-primary' type="submit" name="submit" value="Cobrar" />
 
           </form>
 	  </tbody>

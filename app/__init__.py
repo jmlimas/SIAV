@@ -1,6 +1,5 @@
 from django.contrib.auth.models import Group as DjangoGroup
 from django.contrib.auth.models import User as DjangoUser
-from ajax import *
 
 flag = "false"
 
