@@ -1,0 +1,46 @@
+<!-- selecciona_estado.html -->
+<form action="" method="get" accept-charset="utf-8">
+    <select name="brand" id="brand">
+        <option value="Z">Selecciona un estado</option>
+        {% for estado in lista_estados %}
+            <option value="{{ estado.estado_id}}">{{ estado.nombre }}</option>
+        {% endfor %}
+    </select>
+    <select name="ciudad" id="ciudad" disabled="true">
+        <option>Selecciona una ciudad</option>
+    </select>
+</form>
+<script>
+    $(document).ready(
+                     function() {
+                         $("select#brand").change(function() {
+                             if ($(this).val() == 'Z') {
+                                 $("select#ciudad").html("<option>Selecciona una ciudad</option>");
+                                 $("select#ciudad").attr('disabled', true);
+                             }
+                             else {
+                                 var url = "/brand/" + $(this).val() + "/all_json_ciudades";
+                                 var brand = $(this).val();
+                                 $.getJSON(url, function(ciudades) {
+                                     var options = '<option value="Z">Select a ciudad</option>';
+                                     for (var i = 0; i < ciudades.length; i++) {
+                                        options += '<option value="' + ciudades[i].pk + '">' + ciudades[i].fields['nombre'] + '</option>';
+                                     }
+                                     $("select#ciudad").html(options);
+                                     $("select#ciudad option:first").attr('selected', 'selected');
+                                     $("select#ciudad").attr('disabled', false);
+                                 });
+                             }
+                         });
+
+
+                         $("select#ciudad").change(function(vent) {
+                             if ($(this).val() == -1) {
+                                 return;
+                             }
+                             myAwesomeFunctionToCallWhenAciudadIsSelected();
+                         });
+                     });
+    }
+
+</script>
