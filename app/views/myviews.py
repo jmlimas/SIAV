@@ -88,7 +88,7 @@ def facturar(request):
     
 @login_required
 def cobrar(request):
-    avaluos = Avaluo.objects.filter(Estatus__contains='CONCLUIDO') & Avaluo.objects.exclude(Pagado__contains=1,Factura__isnull=True) & Avaluo.objects.exclude(Factura__isnull=True)
+    avaluos = Avaluo.objects.filter(Estatus__contains='CONCLUIDO',Salida__year='2013') & Avaluo.objects.exclude(Pagado__contains=1,Factura__isnull=True) & Avaluo.objects.exclude(Factura__isnull=True)
     PagadoFormset = modelformset_factory(Avaluo,form=CobrarForm,extra=0)
 
     if request.method == 'POST':
@@ -97,15 +97,20 @@ def cobrar(request):
             if form.is_valid():
                 form.save()
         return HttpResponseRedirect('.') 
-
     else:
         agrupados = avaluos.values('Factura').annotate(Total=Sum('Importe'))
         pagado_formset = PagadoFormset(queryset=avaluos,prefix="formas")
         example_formset = PagadoFormset(queryset=avaluos,prefix="formas") 
         cantidad = avaluos.count()
-        olist = zip(avaluos,pagado_formset)
-        
-        return render_to_response('home/lista_cobrar.html',{'olist': olist,'cantidad':cantidad,'example_formset':example_formset,'agrupados':agrupados}, context_instance=RequestContext(request))
+        olist = zip(agrupados,pagado_formset)
+
+        total_general = 0.00
+        for x in agrupados:
+            if not x['Total']:
+                total_general += 0.00
+            else:
+                total_general += float(str(x['Total']))
+        return render_to_response('home/lista_cobrar.html',{'total_general': total_general,'olist': olist,'cantidad':cantidad,'example_formset':example_formset,'agrupados':agrupados}, context_instance=RequestContext(request))
 
 @login_required
 def captura(request):
@@ -245,7 +250,7 @@ def edita_salida(request, id):
 def guarda_master(request,id):
     if  id == None:
         forma = RespuestaConsultaMaster()
-        return render_to_response('home/consultas/consulta_master.html', {'forma': forma }, context_instance=RequestContext(request)) 
+        return render_to_response('home/consultas/respuesta_consulta_master.html', {'forma': forma }, context_instance=RequestContext(request)) 
     else:
         avaluo = Avaluo.objects.get(pk = id)
         forma = RespuestaConsultaMaster(instance=avaluo)
@@ -257,7 +262,7 @@ def guarda_master(request,id):
         if forma.is_valid():
             forma.save()
             return redirect('/SIAV/consulta_master/') 
-    return render_to_response('home/consultas/consulta_master.html', { 'forma': forma }, context_instance=RequestContext(request))
+    return render_to_response('home/consultas/respuesta_consulta_master.html', { 'forma': forma,'avaluo': avaluo }, context_instance=RequestContext(request))
 
 @login_required
 def consulta_master(request):
@@ -276,7 +281,8 @@ def consulta_master(request):
             tipi = forma.cleaned_data['Tipo']
             mes = forma.cleaned_data['Mes']
             anio = forma.cleaned_data['Anio']
-
+            factura = forma.cleaned_data['Factura']
+            
             avaluos = Avaluo.objects.all()    
 
             if foliok:
@@ -295,6 +301,8 @@ def consulta_master(request):
                 avaluos = avaluos.filter(Municipio__icontains=mun)
             if edo:
                 avaluos = avaluos.filter(Estado__icontains=edo)
+            if factura:
+                avaluos = avaluos.filter(Factura__icontains=factura)
             if ((tips) and (tips != "N/D")):
                 avaluos = avaluos.filter(Servicio__icontains=tips)
             if (tipi):
@@ -375,7 +383,6 @@ def consulta_sencilla(request):
     else:
         forma = FormaConsultaSencilla()
     return render_to_response('home/consultas/consulta_sencilla.html', { 'forma': forma }, context_instance=RequestContext(request))
-
 
 @login_required
 def respuesta_consulta_sencilla(request,id):

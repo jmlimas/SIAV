@@ -9,33 +9,19 @@ class Migration(SchemaMigration):
 
     def forwards(self, orm):
 
-        # Changing field 'Avaluo.Valor'
-        db.alter_column('app_avaluo', 'Valor', self.gf('django.db.models.fields.DecimalField')(null=True, max_digits=15, decimal_places=2))
+        # Changing field 'Avaluo.Mconstruccion'
+        db.alter_column('app_avaluo', 'Mconstruccion', self.gf('django.db.models.fields.DecimalField')(null=True, max_digits=12, decimal_places=2))
 
-        # Changing field 'Avaluo.Gastos'
-        db.alter_column('app_avaluo', 'Gastos', self.gf('django.db.models.fields.DecimalField')(null=True, max_digits=15, decimal_places=2))
-
-        # Changing field 'Avaluo.Importe'
-        db.alter_column('app_avaluo', 'Importe', self.gf('django.db.models.fields.DecimalField')(null=True, max_digits=15, decimal_places=2))
-        # Adding field 'Valuador.is_active'
-        db.add_column('app_valuador', 'is_active',
-                      self.gf('django.db.models.fields.BooleanField')(default=False),
-                      keep_default=False)
-
+        # Changing field 'Avaluo.Mterreno'
+        db.alter_column('app_avaluo', 'Mterreno', self.gf('django.db.models.fields.DecimalField')(null=True, max_digits=12, decimal_places=2))
 
     def backwards(self, orm):
 
-        # Changing field 'Avaluo.Valor'
-        db.alter_column('app_avaluo', 'Valor', self.gf('django.db.models.fields.DecimalField')(null=True, max_digits=10, decimal_places=0))
+        # Changing field 'Avaluo.Mconstruccion'
+        db.alter_column('app_avaluo', 'Mconstruccion', self.gf('django.db.models.fields.DecimalField')(null=True, max_digits=6, decimal_places=2))
 
-        # Changing field 'Avaluo.Gastos'
-        db.alter_column('app_avaluo', 'Gastos', self.gf('django.db.models.fields.DecimalField')(null=True, max_digits=10, decimal_places=2))
-
-        # Changing field 'Avaluo.Importe'
-        db.alter_column('app_avaluo', 'Importe', self.gf('django.db.models.fields.DecimalField')(null=True, max_digits=7, decimal_places=2))
-        # Deleting field 'Valuador.is_active'
-        db.delete_column('app_valuador', 'is_active')
-
+        # Changing field 'Avaluo.Mterreno'
+        db.alter_column('app_avaluo', 'Mterreno', self.gf('django.db.models.fields.DecimalField')(null=True, max_digits=6, decimal_places=2))
 
     models = {
         'app.avaluo': {
@@ -55,9 +41,9 @@ class Migration(SchemaMigration):
             'LongitudG': ('django.db.models.fields.DecimalField', [], {'null': 'True', 'max_digits': '12', 'decimal_places': '3'}),
             'LongitudM': ('django.db.models.fields.DecimalField', [], {'null': 'True', 'max_digits': '12', 'decimal_places': '3'}),
             'LongitudS': ('django.db.models.fields.DecimalField', [], {'null': 'True', 'max_digits': '12', 'decimal_places': '3'}),
-            'Mconstruccion': ('django.db.models.fields.DecimalField', [], {'null': 'True', 'max_digits': '6', 'decimal_places': '2'}),
+            'Mconstruccion': ('django.db.models.fields.DecimalField', [], {'null': 'True', 'max_digits': '12', 'decimal_places': '2'}),
             'Meta': {'object_name': 'Avaluo'},
-            'Mterreno': ('django.db.models.fields.DecimalField', [], {'null': 'True', 'max_digits': '6', 'decimal_places': '2'}),
+            'Mterreno': ('django.db.models.fields.DecimalField', [], {'null': 'True', 'max_digits': '12', 'decimal_places': '2'}),
             'Municipio': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True'}),
             'NumExt': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True'}),
             'NumInt': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True'}),

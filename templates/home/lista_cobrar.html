@@ -38,17 +38,29 @@
   <h1>Servicios por Cobrar</h1>
   <h2 style="text-align:left"><span id="cantidad_tabla"></span>   Servicios</h2>
 
-  <table>
+  <table class="table table-hover">
   {%for x in agrupados %}
     <tr>
-        <td>
+        <td style="width:10px;">
             {{x.Factura}}
         </td>
-         <td>
-            {{x.Total|currency}}
+         <td style="width:10px;">
+            {{x.Cliente}}
         </td>
+		 <td style="width:10px;">
+            {{x.Total|currency}}
+
+		
     </tr>
   {% endfor %}
+  		  <tr>
+			  <td>
+			  Total General:
+			  </td>
+			  <td>
+			  {{total_general|currency}}
+			  </td>
+		  </tr>
   </table>
 
   <table id='avaluos_table'>
@@ -72,9 +84,9 @@
 		      <td> {{a.Municipio}} </td>
 		      <td> {{a.Salida|date:"d/m/y"}} </td>
               <td> {{a.Importe|currency }}</td>			  
-		      <td class="tabla_opciones"> <a href="/SIAV/actualiza_avaluo/{{a.avaluo_id}}">Captura</a></td>
+		      <td class="tabla_opciones"> <a href="/SIAV/consulta_master/{{a.avaluo_id}}">Editar</a></td>
 		  </tr>
-          {% endfor %} 
+          {% endfor %}
         <input class='btn btn-primary' type="submit" name="submit" value="Cobrar" />
 
           </form>
