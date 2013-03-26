@@ -250,7 +250,7 @@ def edita_salida(request, id):
 def guarda_master(request,id):
     if  id == None:
         forma = RespuestaConsultaMaster()
-        return render_to_response('home/consultas/consulta_master.html', {'forma': forma }, context_instance=RequestContext(request)) 
+        return render_to_response('home/consultas/respuesta_consulta_master.html', {'forma': forma }, context_instance=RequestContext(request)) 
     else:
         avaluo = Avaluo.objects.get(pk = id)
         forma = RespuestaConsultaMaster(instance=avaluo)
@@ -262,7 +262,11 @@ def guarda_master(request,id):
         if forma.is_valid():
             forma.save()
             return redirect('/SIAV/consulta_master/') 
+<<<<<<< HEAD
     return render_to_response('home/consultas/consulta_master.html', { 'forma': forma,'avaluo': avaluo }, context_instance=RequestContext(request))
+=======
+    return render_to_response('home/consultas/respuesta_consulta_master.html', { 'forma': forma,'avaluo': avaluo }, context_instance=RequestContext(request))
+>>>>>>> Actualización Server
 
 @login_required
 def consulta_master(request):
@@ -281,7 +285,8 @@ def consulta_master(request):
             tipi = forma.cleaned_data['Tipo']
             mes = forma.cleaned_data['Mes']
             anio = forma.cleaned_data['Anio']
-
+            factura = forma.cleaned_data['Factura']
+            
             avaluos = Avaluo.objects.all()    
 
             if foliok:
@@ -300,6 +305,8 @@ def consulta_master(request):
                 avaluos = avaluos.filter(Municipio__icontains=mun)
             if edo:
                 avaluos = avaluos.filter(Estado__icontains=edo)
+            if factura:
+                avaluos = avaluos.filter(Factura__icontains=factura)
             if ((tips) and (tips != "N/D")):
                 avaluos = avaluos.filter(Servicio__icontains=tips)
             if (tipi):

@@ -379,10 +379,15 @@ class FormaConsultaMaster(ModelForm):
     Observaciones = forms.CharField(widget=forms.Textarea,required = False)
     Mes = forms.ChoiceField(error_messages=my_default_errors,choices=MESES,required=False)
     Anio = forms.ChoiceField(error_messages=my_default_errors,choices=ANIOS,required=False)
-  
+    Factura = forms.CharField(required = False)
+    
     class Meta:
       model = Avaluo
+<<<<<<< HEAD
       exclude = ('Salida','Cliente','Depto','Factura','Prioridad','Pagado')
+=======
+      exclude = ('Salida','Cliente','Depto','Prioridad','Pagado')
+>>>>>>> Actualización Server
 
     def __init__(self, *args, **kwargs):
         self.helper = FormHelper()
@@ -410,7 +415,11 @@ class FormaConsultaMaster(ModelForm):
                 'Estado',
                 'Servicio',
                 'Tipo',
+<<<<<<< HEAD
                 #'Pagado',
+=======
+                'Factura',
+>>>>>>> Actualización Server
                 css_class='span3'),css_class='row-fluid'),
             ButtonHolder(
                 Submit('Buscar', 'Buscar', css_class='button white'),
@@ -477,7 +486,10 @@ class RespuestaConsultaMaster(ModelForm):
                 'Estatus',
                 'Valuador',
                 'Visita',
+<<<<<<< HEAD
                 'Factura',
+=======
+>>>>>>> Actualización Server
                 'Depto'
                 ,css_class='span3'),  
             Div(
@@ -486,8 +498,7 @@ class RespuestaConsultaMaster(ModelForm):
                 'LatitudS',
                 'LongitudG',
                 'LongitudM',
-                'LongitudS',
-                'Pagado'
+                'LongitudS'
                 ,css_class='span3'),
             Div('Salida',
                 'Mterreno',
@@ -496,7 +507,13 @@ class RespuestaConsultaMaster(ModelForm):
                 'Gastos',
                 'Solicitud',
                 'Importe',
+<<<<<<< HEAD
                 'Prioridad'
+=======
+                'Prioridad',
+                'Factura',
+                'Pagado'
+>>>>>>> Actualización Server
                 ,css_class='span3'),css_class='row-fluid'),
                 'Observaciones',
 
@@ -556,7 +573,6 @@ class FormaConsultaSencilla(ModelForm):
                 css_class='span3'),
             Div(
                 'Edita Avaluo - Captura',
-                'FolioK',
                 'Referencia',
                 'Calle',
                 'NumExt',
