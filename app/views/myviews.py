@@ -262,11 +262,7 @@ def guarda_master(request,id):
         if forma.is_valid():
             forma.save()
             return redirect('/SIAV/consulta_master/') 
-<<<<<<< HEAD
-    return render_to_response('home/consultas/consulta_master.html', { 'forma': forma,'avaluo': avaluo }, context_instance=RequestContext(request))
-=======
     return render_to_response('home/consultas/respuesta_consulta_master.html', { 'forma': forma,'avaluo': avaluo }, context_instance=RequestContext(request))
->>>>>>> Actualización Server
 
 @login_required
 def consulta_master(request):

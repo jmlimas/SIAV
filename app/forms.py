@@ -383,11 +383,7 @@ class FormaConsultaMaster(ModelForm):
     
     class Meta:
       model = Avaluo
-<<<<<<< HEAD
-      exclude = ('Salida','Cliente','Depto','Factura','Prioridad','Pagado')
-=======
       exclude = ('Salida','Cliente','Depto','Prioridad','Pagado')
->>>>>>> Actualización Server
 
     def __init__(self, *args, **kwargs):
         self.helper = FormHelper()
@@ -415,11 +411,7 @@ class FormaConsultaMaster(ModelForm):
                 'Estado',
                 'Servicio',
                 'Tipo',
-<<<<<<< HEAD
-                #'Pagado',
-=======
                 'Factura',
->>>>>>> Actualización Server
                 css_class='span3'),css_class='row-fluid'),
             ButtonHolder(
                 Submit('Buscar', 'Buscar', css_class='button white'),
@@ -485,11 +477,6 @@ class RespuestaConsultaMaster(ModelForm):
                 'Servicio',
                 'Estatus',
                 'Valuador',
-                'Visita',
-<<<<<<< HEAD
-                'Factura',
-=======
->>>>>>> Actualización Server
                 'Depto'
                 ,css_class='span3'),  
             Div(
@@ -507,13 +494,9 @@ class RespuestaConsultaMaster(ModelForm):
                 'Gastos',
                 'Solicitud',
                 'Importe',
-<<<<<<< HEAD
-                'Prioridad'
-=======
                 'Prioridad',
                 'Factura',
                 'Pagado'
->>>>>>> Actualización Server
                 ,css_class='span3'),css_class='row-fluid'),
                 'Observaciones',
 
