@@ -11,8 +11,9 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.forms.models import formset_factory
 from django.forms.models import BaseInlineFormSet, inlineformset_factory, modelformset_factory
 
+# Recibe el id y la colonia.
 def genera_foliok(avaluo_id,colonia):
-    #
+    #Generar el FolioK 
     if(len(colonia.split()) > 1):
         primera = colonia.split()[0]
         ultima = colonia.split()[-1]
@@ -29,8 +30,8 @@ def genera_foliok(avaluo_id,colonia):
         folio_k = ""
         return folio_k
 
+    #Metodo para contar los avaluos en cada seccion.
 def cantidades():
-
     avaluos = Avaluo.objects.filter(Estatus__contains='PROCESO', Salida__isnull=True,Visita__isnull=False) | Avaluo.objects.filter(Estatus__contains='DETENIDO', Salida__isnull=True,Visita__isnull=False)
     por_capturar = avaluos.count()
     avaluos = Avaluo.objects.filter(Estatus__contains='PROCESO', Visita__isnull=True, Salida__isnull=True) | Avaluo.objects.filter(Estatus__contains='DETENIDO', Visita__isnull=True, Salida__isnull=True)  
@@ -93,7 +94,13 @@ def facturar(request):
     
 @login_required
 def cobrar(request):
-    avaluos = Avaluo.objects.filter(Estatus__contains='CONCLUIDO',Salida__year='2013') & Avaluo.objects.exclude(Pagado__contains=1,Factura__isnull=True) & Avaluo.objects.exclude(Factura__isnull=True)
+    #avaluos = Avaluo.objects.filter(Estatus__contains='CONCLUIDO',Salida__year='2013',Pagado__isnull=True) & Avaluo.objects.exclude(Pagado__contains=1,Factura__isnull=True) & Avaluo.objects.exclude(Factura__isnull=True)
+    avaluos= ( Avaluo.objects
+            .filter(Estatus='CONCLUIDO')
+            .filter(Q(Salida__year='2013'))
+            .filter(Q(Factura__isnull=False))
+            .filter(Q(Pagado=0)|Q(Pagado__isnull=True)))
+    
     PagadoFormset = modelformset_factory(Avaluo,form=CobrarForm,extra=0)
 
     if request.method == 'POST':
@@ -142,21 +149,6 @@ def captura(request):
     cantidad = cantidades()
     return render_to_response('home/captura.html',{'avaluos': avaluos,'cantidad':cantidad}, context_instance=RequestContext(request))
 
-"""
-    paginator = Paginator(lista_avaluos, 500)
-
-    page = request.GET.get('page',1)
-
-    try:
-        avaluos = paginator.page(page)
-    except PageNotAnInteger:
-        # If page is not an integer, deliver first page.
-        avaluos = paginator.page(1)
-    except EmptyPage:
-        # If page is out of range (e.g. 9999), deliver last page of results.
-        avaluos = paginator.page(paginator.num_pages)
-"""    
-    
 @login_required
 def visita(request):
     avaluos = Avaluo.objects.filter(Estatus__contains='PROCESO', Visita__isnull=True, Salida__isnull=True) | Avaluo.objects.filter(Estatus__contains='DETENIDO', Visita__isnull=True, Salida__isnull=True)  
@@ -200,8 +192,6 @@ def actualiza_avaluo(request, id):
         forma = CapturaAvaluo()
     else:
         avaluo = Avaluo.objects.get(pk = id)
-        #colonia = form.cleaned_data['Colonia']
-        #avaluo_id = form.cleaned_data.get('avaluo_id')
         colonia = avaluo.Colonia
         avaluo_id = avaluo.avaluo_id
          
@@ -299,7 +289,7 @@ def consulta_master(request):
     if request.is_ajax():
         q1 = request.GET.get('q1', '')
         q2 = request.GET.get('q2', '')
-        results = Avaluo.objects.filter(Q( FolioK__contains = q1 )&Q( Calle__contains = q2 ))
+        results = Avaluo.objects.filter(Q( FolioK__contains = q1 )|Q( Referencia__contains = q1 ))
         data = {'results': results,}
         return render_to_response( 'home/consultas/results.html', data,context_instance = RequestContext( request ) )
     if request.method == 'POST':
@@ -428,7 +418,7 @@ def respuesta_consulta_sencilla(request,id):
 @login_required
 def alta_usuario(request):
   """
-  Create a login for a new customer.  
+ Crear login para un nuevo usuario.  
   """
   if request.user.is_staff == False:
     return HttpResponse('Acceso No Autorizado.')

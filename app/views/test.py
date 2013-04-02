@@ -17,7 +17,7 @@ def test(request):
 def get_colonias(request):
     if request.is_ajax():
         q = request.GET.get('term', '')
-        colonias = Avaluo.objects.filter(Colonia__contains = q ).values_list('Colonia', flat=True).distinct()[:20]
+        colonias = Avaluo.objects.filter(Colonia__contains = q.upper()).values_list('Colonia', flat=True).distinct()[:20]
         results = []
         for colonia in colonias:
             colonia_json = {}
