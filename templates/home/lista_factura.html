@@ -71,7 +71,7 @@
 		      <td> {{a.Municipio}} </td>
 		      <td> {{a.Salida|date:"d/m/y"}} </td>
               <td> {{a.Importe|currency }}</td>			  
-		      <td class="tabla_opciones"> <a href="/SIAV/guarda_master/{{a.avaluo_id}}">Editar</a></td>
+		      <td class="tabla_opciones"> <a href="/SIAV/guarda_master/{{a.avaluo_id}}" target="_blank">Editar</a></td>
 		  </tr>
           {% endfor %} 
         <input class='btn btn-primary' type="submit" name="submit" value="Facturar" />

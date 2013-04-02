@@ -1,3 +1,5 @@
+
+
 {% extends "home/base.html" %}
 
 {% load listutil %}
@@ -62,13 +64,43 @@
     });
 	
     </script>
-	
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#spinner').hide();
+        $('#searchSubmit').click(function () {
+            q1 = $('#q').val();
+            q2 = $('#q').val();
+            //$('#results').html('&nbsp;').load('/SIAV/consulta_master/?q1=' + q1);
+            $('#results').html('&nbsp;').load('/SIAV/consulta_master/?q1='+q1+"&q2="+q2);
+        });
+    });
+        
+    $(document).ajaxStart(function () {
+        $('#spinner').show();
+    }).ajaxStop(function () {
+        $('#spinner').hide();
+    });
+</script>
 	
  <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/mapas.js"></script>
 	
  {% endblock %}      
 
 {% block content %}
+
+<div>
+    <label>FolioK:</label>
+	<input id="q" type="text"/>
+	<input id="searchSubmit" type="submit" value="Search" class="btn btn-primary"/>
+	<br/>
+	<div class="margin">
+		<span id="spinner"><img src="{{ STATIC_URL }}spinner.gif"/></span>
+		<div id="results"></div>
+	</div>
+</div>
+    
+</div>
   <h1>Consulta de Administrador</h1>
 
       {% if forma.errors %}

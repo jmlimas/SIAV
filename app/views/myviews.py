@@ -59,7 +59,11 @@ def logout_view(request):
     
 @login_required
 def facturar(request):
-    avaluos = Avaluo.objects.filter(Estatus__contains='CONCLUIDO',Factura__isnull=True,Pagado=False) | Avaluo.objects.filter(Estatus__contains='CONCLUIDO',Factura__isnull=True,Pagado__isnull=True)
+    avaluos= ( Avaluo.objects
+               .filter(Estatus='CONCLUIDO')
+               .filter(Q(Salida__isnull=False))
+               .filter(Q(Factura='')|Q(Factura__isnull=True))
+               .filter(Q(Pagado=False)|Q(Pagado__isnull=True)) )
     FacturaFormset = modelformset_factory(Avaluo,form=FacturaForm,extra=0)
 
     if request.method == 'POST':
@@ -80,6 +84,7 @@ def facturar(request):
         for x in suma_de_monto:
             if not x['total']:
                 total_general += 0.00
+                x['Total'] = 0.00
             else:
                 total_general += float(str(x['total']))
 
@@ -108,9 +113,27 @@ def cobrar(request):
         for x in agrupados:
             if not x['Total']:
                 total_general += 0.00
+                x['Total'] = 0.00
             else:
                 total_general += float(str(x['Total']))
         return render_to_response('home/lista_cobrar.html',{'total_general': total_general,'olist': olist,'cantidad':cantidad,'example_formset':example_formset,'agrupados':agrupados}, context_instance=RequestContext(request))
+
+@login_required
+def estadistico(request):
+    avaluos = Avaluo.objects.extra(select={'month': 'extract( month from Salida )'}).values('month').filter(Salida__year='2013').order_by('month').annotate(dcount=Count('Solicitud'),Total=Sum('Importe'))
+
+    total_general = 0.00
+    total_avaluos = 0
+    for x in avaluos:
+        if not x['Total']:
+            total_general += 0.00
+            total_avaluos += x['dcount']
+            x['Total'] = 0.00
+        else:
+            total_general += float(str(x['Total']))
+            total_avaluos += x['dcount']
+    totales = [total_avaluos,total_general]
+    return render_to_response('home/estadistico.html',{'avaluos': avaluos,'totales': totales,}, context_instance=RequestContext(request))
 
 @login_required
 def captura(request):
@@ -257,15 +280,28 @@ def guarda_master(request,id):
 
     if request.method == 'POST':
         avaluo = Avaluo.objects.get(pk = id)
+        
+        colonia = avaluo.Colonia
+        avaluo_id = avaluo.avaluo_id
+        
         forma = RespuestaConsultaMaster(request.POST,instance=avaluo)
         forma.helper.form_action = reverse('guarda_master', args=[id])
+        folio_k = genera_foliok(avaluo_id,colonia)
         if forma.is_valid():
+            obj = forma.save(commit=False)
+            obj.FolioK = folio_k
             forma.save()
             return redirect('/SIAV/consulta_master/') 
     return render_to_response('home/consultas/respuesta_consulta_master.html', { 'forma': forma,'avaluo': avaluo }, context_instance=RequestContext(request))
 
 @login_required
 def consulta_master(request):
+    if request.is_ajax():
+        q1 = request.GET.get('q1', '')
+        q2 = request.GET.get('q2', '')
+        results = Avaluo.objects.filter(Q( FolioK__contains = q1 )&Q( Calle__contains = q2 ))
+        data = {'results': results,}
+        return render_to_response( 'home/consultas/results.html', data,context_instance = RequestContext( request ) )
     if request.method == 'POST':
         forma = FormaConsultaMaster(request.POST) 
         if forma.is_valid():

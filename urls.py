@@ -2,6 +2,8 @@ from django.conf.urls.defaults import *
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.contrib.auth.views import login, logout
 from django.contrib import admin
+from django.conf import settings
+
 admin.autodiscover()
 
 urlpatterns = patterns('',
@@ -28,6 +30,7 @@ urlpatterns = patterns('',
 
      url(r'^SIAV/guarda_master/?(\d+)/?$', 'app.views.guarda_master', name = 'guarda_master'),
      url(r'^SIAV/consulta_master/', 'app.views.consulta_master', name = 'consulta_master'),
+     url(r'^SIAV/consulta_master/(?P<query>)/?$', 'app.views.consulta_master', name = 'consulta_master'),
 
      url(r'^SIAV/consulta_sencilla/', 'app.views.consulta_sencilla', name = 'consulta_sencilla'),
      url(r'^SIAV/respuesta_consulta_sencilla/?(\d+)/?$', 'app.views.respuesta_consulta_sencilla', name = 'respuesta_consulta_sencilla'),
@@ -55,6 +58,8 @@ urlpatterns = patterns('',
      url(r'^SIAV/facturar/', 'app.views.facturar', name = 'facturar'),
 
      url(r'^SIAV/cobrar/', 'app.views.cobrar', name = 'cobrar'),
+
+     url(r'^SIAV/estadistico/', 'app.views.estadistico', name = 'estadistico'),
      
      url(r'^SIAV/submitted/', 'app.views.submitted', name = 'submitted'),
      
@@ -62,6 +67,8 @@ urlpatterns = patterns('',
 
      url(r'^api/get_colonias/', 'app.views.get_colonias', name='get_colonias'),
      url(r'^api/get_municipios/', 'app.views.get_municipios', name='get_municipios'),
+
+     url( r'^SIAV/media/(?P<path>.*)$', 'django.views.static.serve', { 'document_root': settings.MEDIA_ROOT } ),
 
 )
 

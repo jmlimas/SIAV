@@ -1,0 +1,72 @@
+﻿{% load dayssince %}
+
+{% if results|length %}
+	<table class="table table-striped">
+	<tr class='even'>
+		<td colspan="13" class="right">
+		<strong>Se encontraron {{ results|length }} avalúos.</strong>
+		</td>
+	</tr>
+	<tr>
+		<th>
+		</th>
+		<th>FolioK</th>
+		<th>Referencia</th>
+		<th>Cliente</th>
+		<th>Calle</th>
+		<th>Num.Ext</th>
+		<th>Num.Int</th>
+		<th>Colonia</th>
+		<th>Municipio</th>
+		<th>Prioridad</th>
+		<th>Estatus</th>
+		<th>Dias</th>
+		<th>Opciones</th>
+	</tr>
+	{% for avaluo in results %}
+	<tr class="{% cycle 'odd' 'even' %}">
+		<td><strong>{{ forloop.counter }}.</strong></td>
+		<td>
+		<span class="hint">{{ avaluo.FolioK }}</span>
+		</td>
+		<td class="right">
+		<span class="hint"> {{ avaluo.Referencia }}</span>
+		</td>
+		<td class="right">
+		<span class="hint"> {{ avaluo.Cliente }}</span>
+		</td>
+		<td class="right">
+		<span class="hint"> {{ avaluo.Calle }}</span>
+		</td>
+		<td class="right">
+		<span class="hint"> {{ avaluo.NumExt }}</span>
+		</td>
+		<td class="right">
+		<span class="hint"> {{ avaluo.NumInt }}</span>
+		</td>
+		<td class="right">
+		<span class="hint"> {{ avaluo.Colonia }}</span>
+		</td>
+		<td class="right">
+		<span class="hint"> {{ avaluo.Municipio }}</span>
+		</td>
+		<td class="right">
+		<span class="hint"> {{ avaluo.Prioridad }}</span>
+		</td>
+		<td class="right">
+		<span class="hint"> {{ avaluo.Estatus }}</span>
+		</td>
+		<td> 
+		<span class="hint"> {{ avaluo.Solicitud|dayssince }}</span>
+		</td>		
+		<td class="tabla_opciones"> 
+		<span class="hint"><a href="/SIAV/guarda_master/{{avaluo.avaluo_id}}" target="_blank">Editar</a></span>
+		</td>
+	</tr>
+	{% endfor %}
+	</table>
+{% else %}
+	<div class="note">
+	Tu busqueda no arrojo resultados, intenta de nuevo :)
+	</div>
+{% endif %}

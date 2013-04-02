@@ -1,0 +1,132 @@
+{% extends "home/base.html" %}
+
+{% load crispy_forms_tags %}
+
+{% load dayssince %}
+
+{% load month_convert %}
+
+{% load currency %}
+
+
+
+{% block script %}
+ 
+    <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/picnet-table.js"></script>
+    <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/jquery.livequery.js"></script> 
+    <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/highcharts.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#avaluos_table').tableFilter();
+                valor = 0;
+
+            var rowCount = { p: $('#avaluos_table tbody tr:visible').length };
+            valor = ($('#avaluos_table tbody tr:visible').length);
+
+            $('#cantidad_tabla').html(valor);
+            
+            $('#avaluos_table thead').on("change", function () {
+                    setTimeout(function () {
+                        window.location = '/SIAV/facturar/';
+                    }, 1000);
+            });
+            $(function () {
+                $('#line_container').highcharts({
+                    chart: {
+                        type: 'line'
+                    },
+                    title: {
+                        text: 'Avaluos 2013'
+                    },
+                    xAxis: {
+                        categories: [{% for data in avaluos %}
+                                        "{{data.month|month_name}}",
+                                    {% endfor %}
+                                    ]
+                    },
+                    yAxis: {
+                        title: {
+                            text: 'Cantidad'
+                        }
+                    },
+                    series: [{
+                        name: 'Avaluos',
+                        data: [  {% for data in avaluos %}
+                                    {{data.dcount}},
+                                 {% endfor %}
+                              ]
+                    }, /*{
+                        name: 'John',
+                        data: [5, 7, 3]
+                    }*/]
+                });
+
+                $('#bar_container').highcharts({
+                    chart: {
+                        type: 'column'
+                    },
+                    title: {
+                        text: 'Importes 2013'
+                    },
+                    xAxis: {
+                        categories: [{% for data in avaluos %}
+                                        "{{data.month|month_name}}",
+                        {% endfor %}
+                        ]
+                    },
+                    yAxis: {
+                        title: {
+                            text: 'Cantidad'
+                        }
+                    },
+                    series: [{
+                        name: 'Importe',
+                        data: [  {% for data in avaluos %}
+                                    {{data.Total}},
+                        {% endfor %}
+                        ]
+                    }, /*{
+                        name: 'John',
+                        data: [5, 7, 3]
+                    }*/]
+                });
+            });
+
+
+    });
+
+    </script>
+
+ {% endblock %}      
+{% block content %}
+
+  <h1>Estadistico (2013)</h1>
+  <br />
+    <div id="charts">
+        <div id="line_container" style="width:50%; height:400px;float:left"></div>
+        <div id="bar_container" style="width:50%; height:400px;float:left"></div>
+    </div>
+  <br>
+  <br>
+    <table class="table table-hover" style="width:60%; margin-top:50px">
+        <thead>
+            <th>Mes</th>
+            <th>Cantidad Avaluos</th>
+            <th>Importe</th>
+        </thead>
+       {% for a in avaluos %}
+        <tr>
+            <td>{{ a.month|month_name }}</td>
+            <td>{{ a.dcount }}</td>
+            <td>{{ a.Total|currency }}</td>
+        </tr>
+      {% endfor %}
+        <tr>
+            <td><b>Total</b></td>
+            <td><b>{{totales.0}}</b></td>
+            <td><b>{{totales.1|currency}}</b></td>
+        </tr>
+    </table>
+    
+{% endblock %}

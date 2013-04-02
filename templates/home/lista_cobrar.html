@@ -35,37 +35,18 @@
  {% endblock %}      
 {% block content %}
 
-  <h1>Servicios por Cobrar</h1>
-  <h2 style="text-align:left"><span id="cantidad_tabla"></span>   Servicios</h2>
-
-  <table class="table table-hover">
-  {%for x in agrupados %}
-    <tr>
-        <td style="width:10px;">
-            {{x.Factura}}
-        </td>
-         <td style="width:10px;">
-            {{x.Cliente}}
-        </td>
-		 <td style="width:10px;">
-            {{x.Total|currency}}
-
-		
-    </tr>
-  {% endfor %}
-  		  <tr>
-			  <td>
-			  Total General:
-			  </td>
-			  <td>
-			  {{total_general|currency}}
-			  </td>
-		  </tr>
-  </table>
-
+  <h1>Facturas por Cobrar</h1>
+  <h2 style="text-align:left"><span id="cantidad_tabla"></span>   Facturas</h2>
   <table id='avaluos_table'>
 	  <thead>
-		  <tr><th id="folio_type" filter-type="ddl" style="width:40px">Folio K</th><th style="width:150px" filter='false' >Ref.</th><th filter-type='ddl'>Cliente</th><th filter="false">Calle</th><th filter='false'>Ext.</th><th filter='false'>Int.</th><th style="width:100px" filter='false'>Factura</th><th style="width:100px" filter='false'>Pagado</th><th filter='false'>Municipio</th><th  filter='false'>Entrega</th><th filter='false'>Monto</th><th filter='false' class="tabla_opciones">Opciones</th></tr>
+		  <tr>
+			  <td><b>Total:</b></td>
+			  <td></td>
+			  <td></td>
+			  <td></td>
+			  <td><b>{{total_general|currency}}</b></td>
+		  </tr>
+		  <tr></th><th style="width:100px" filter='false'>Factura</th><th filter='false'>Cliente</th><th  filter='false'>Servicios</th><th filter='false'>Monto</th><th filter='false' class="tabla_opciones">Pagado</th></tr>
 	  </thead>
 	  <tbody>
           <form action="/SIAV/cobrar/" method="post">
@@ -73,19 +54,11 @@
 		   {% for a,b in olist %}
               {{ b.id }}
 		  <tr>
-			  <td> {{a.FolioK}} </td>
-		      <td> {{a.Referencia}} </td>
-			  <td> {{a.Cliente}} </td>
-		      <td> {{a.Calle}} </td>
-			  <td style="width:3px;"> {{a.NumExt}} </td>
-			  <td style="width:10px;"> {{a.NumInt}} </td>
               <td style="width:10px;"> {{a.Factura}} </td>
-			  <td style="width:10px;"> {% crispy b %} </td>
-		      <td> {{a.Municipio}} </td>
-		      <td> {{a.Salida|date:"d/m/y"}} </td>
-              <td> {{a.Importe|currency }}</td>			  
-		      <td class="tabla_opciones"> <a href="/SIAV/consulta_master/{{a.avaluo_id}}">Editar</a></td>
-		  </tr>
+		      <td> {{a.Cliente__Cliente}} </td>
+		      <td> {{a.Cantidad}} </td>
+              <td> {{a.Total|currency }}</td>			  
+			  <td style="width:10px;align=center"> {% crispy b %} </td>		  </tr>
           {% endfor %}
         <input class='btn btn-primary' type="submit" name="submit" value="Cobrar" />
 
