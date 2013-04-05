@@ -97,7 +97,6 @@ def cobrar(request):
     #avaluos = Avaluo.objects.filter(Estatus__contains='CONCLUIDO',Salida__year='2013',Pagado__isnull=True) & Avaluo.objects.exclude(Pagado__contains=1,Factura__isnull=True) & Avaluo.objects.exclude(Factura__isnull=True)
     avaluos= ( Avaluo.objects
             .filter(Estatus='CONCLUIDO')
-            .filter(Q(Salida__year='2013'))
             .filter(Q(Factura__isnull=False))
             .filter(Q(Pagado=0)|Q(Pagado__isnull=True)))
     

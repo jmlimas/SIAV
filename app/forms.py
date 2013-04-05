@@ -37,7 +37,6 @@ SERVICIOS = (
      ('VERIFICACION DE GARANTIA 1480','VERIFICACION DE GARANTIA 1480'),
 )
 
-
 ESTADOS = (
     ('-',''),
     ('NUEVO LEON','NUEVO LEON'),
@@ -45,7 +44,6 @@ ESTADOS = (
 	('TAMAULIPAS','TAMAULIPAS'),
         ('YUCATAN','YUCATAN'),
 )
-
 
 MUNICIPIOS = (
     ('-',''),
@@ -190,12 +188,12 @@ class VisitaAvaluo(ModelForm):
     NumInt = forms.CharField(error_messages=my_default_errors,label="Num. Int.",required = False)
     Estatus = forms.ChoiceField(error_messages=my_default_errors,choices=ESTATUSV)
     Visita = forms.DateField( label="Fecha Visita",widget=forms.DateInput(format = '%d/%m/%Y'), input_formats=['%d/%m/%Y']) 
-    LatitudG = forms.DecimalField(required = False,label="Lomg.Grad.")
-    LatitudM = forms.DecimalField(label="Long.Min.",required = False)
-    LatitudS = forms.DecimalField(required = False,label="Long.Seg.")
-    LongitudG = forms.DecimalField(required = False,label="Lat.Grad.")
-    LongitudM = forms.DecimalField(required = False,label="Lat.Min.")
-    LongitudS = forms.DecimalField(required = False,label="Lat.Seg.")
+    LatitudG = forms.DecimalField(required = False,label="Lon.G.")
+    LatitudM = forms.DecimalField(label="Lon.M.",required = False)
+    LatitudS = forms.DecimalField(required = False,label="Lon.S.")
+    LongitudG = forms.DecimalField(required = False,label="Lat.G.")
+    LongitudM = forms.DecimalField(required = False,label="Lat.M.")
+    LongitudS = forms.DecimalField(required = False,label="Lat.S.")
     Observaciones = forms.CharField(widget=forms.Textarea,required = False)
     
     class Meta:
@@ -209,25 +207,27 @@ class VisitaAvaluo(ModelForm):
         self.helper.form_method = 'post'
         self.helper.layout = Layout(
             Div(
-            Div(
-                'Edita Avaluo - Visita',
-                'Calle',
-                'NumExt',
-                'NumInt',        
-                css_class='span3'),
-            Div(
-                'Visita',
-                'Estatus',
-                'Tipo'
-                ,css_class='span3'),
-            Div('LatitudG',
-                'LatitudM',
-                'LatitudS'
-                ,css_class='span3'),
-            Div('LongitudG',
-                'LongitudM',
-                'LongitudS'
-                ,css_class='span3'),css_class='row-fluid'),
+                Div(
+                    'Edita Avaluo - Visita',
+                    'Calle',
+                    'NumExt',
+                    'NumInt',        
+                    css_class='span3'),
+                Div(
+                    'Visita',
+                    'Estatus',
+                    'Tipo'
+                    ,css_class='span3'),
+                Div(
+                    Div(
+                    Div(Field('LatitudG', css_class='span20 input-large'), css_class='span4'),
+                    Div(Field('LatitudM', css_class='span16 input-medium'), css_class='span4'),
+                    Div(Field('LatitudS', css_class='span16 input-medium'), css_class='span4')),
+                    Div(
+                    Div(Field('LongitudG', css_class='span16 input-medium'), css_class='span4'),
+                    Div(Field('LongitudM', css_class='span16 input-medium'), css_class='span4'),
+                    Div(Field('LongitudS', css_class='span16 input-medium'), css_class='span4')),
+                    css_class='span4'),css_class='row-fluid'),
                 'Observaciones',
 
             ButtonHolder(
@@ -242,7 +242,7 @@ class CapturaAvaluo(ModelForm):
     NumExt = forms.CharField(error_messages=my_default_errors,label="Num. Ext.",required = False)
     NumInt = forms.CharField(error_messages=my_default_errors,label="Num. Int.",required = False)
     Colonia = forms.CharField(error_messages=my_default_errors)
-    Municipio = forms.CharField(error_messages=my_default_errors)
+    Municipio = forms.ChoiceField(error_messages=my_default_errors,choices=MUNICIPIOS)
     Estado = forms.ChoiceField(error_messages=my_default_errors,choices=ESTADOS)
     Estatus = forms.ChoiceField(error_messages=my_default_errors,choices=ESTATUS)
     Prioridad = forms.ChoiceField(error_messages=my_default_errors,choices=PRIORIDAD)
@@ -250,12 +250,12 @@ class CapturaAvaluo(ModelForm):
     Solicitud = forms.DateField( label="Fecha Solicitud",widget=forms.DateInput(format = '%d/%m/%Y'), input_formats=['%d/%m/%Y']) 
     Mterreno = forms.DecimalField(required = False)
     Mconstruccion = forms.DecimalField(required = False)
-    LatitudG = forms.DecimalField(required = False,label="Long.Grad.")
-    LatitudM = forms.DecimalField(required = False,label="Long.Min.")
-    LatitudS = forms.DecimalField(required = False,label="Long.Seg.")
-    LongitudG = forms.DecimalField(required = False,label="Lat.Grad.")
-    LongitudM = forms.DecimalField(required = False,label="Lat.Min.")
-    LongitudS = forms.DecimalField(required = False,label="Lat.Seg.")
+    LatitudG = forms.DecimalField(required = False,label="Lon.G.")
+    LatitudM = forms.DecimalField(required = False,label="Lon.M.")
+    LatitudS = forms.DecimalField(required = False,label="Lon.S.")
+    LongitudG = forms.DecimalField(required = False,label="Lat.G.")
+    LongitudM = forms.DecimalField(required = False,label="Lat.M.")
+    LongitudS = forms.DecimalField(required = False,label="Lat.S.")
     Gastos = forms.DecimalField(required = False)
     Importe = forms.DecimalField(required = False)
     Observaciones = forms.CharField(widget=forms.Textarea,required = False)
@@ -289,16 +289,21 @@ class CapturaAvaluo(ModelForm):
                 'Prioridad',
                 'Valuador'
                 ,css_class='span3'),
-            Div('LatitudG',
-                'LatitudM',
-                'LatitudS',
-                'LongitudG',
-                'LongitudM',
-                'LongitudS'
-                ,css_class='span3'),
+            Div(
+                    Div(
+                    Div(Field('LatitudG', css_class='span20 input-large'), css_class='span4'),
+                    Div(Field('LatitudM', css_class='span16 input-medium'), css_class='span4'),
+                    Div(Field('LatitudS', css_class='span16 input-medium'), css_class='span4')),
+                    Div(
+                    Div(Field('LongitudG', css_class='span16 input-medium'), css_class='span4'),
+                    Div(Field('LongitudM', css_class='span16 input-medium'), css_class='span4'),
+                    Div(Field('LongitudS', css_class='span16 input-medium'), css_class='span4')),
+                    css_class='span4'),
             Div('Solicitud',
                 'Mterreno',
-                'Mconstruccion',
+                'Mconstruccion'
+                ,css_class='span3'),
+            Div(                
                 'Valor',
                 'Gastos',
                 'Importe'
@@ -354,8 +359,8 @@ class FormaConsultaMaster(ModelForm):
     NumExt = forms.CharField(error_messages=my_default_errors,label="Num. Ext.",required = False)
     NumInt = forms.CharField(error_messages=my_default_errors,label="Num. Int.",required = False)
     Colonia = forms.CharField(error_messages=my_default_errors,required = False)
-    Municipio = forms.CharField(error_messages=my_default_errors,required = False)
-    Estado = forms.CharField(error_messages=my_default_errors,required = False)
+    Municipio = forms.ChoiceField(error_messages=my_default_errors,choices=MUNICIPIOS)
+    Estado = forms.ChoiceField(error_messages=my_default_errors,choices=ESTADOS)
     Servicio = forms.CharField(error_messages=my_default_errors,required = False,label="Tipo.Servicio")
     Tipo = forms.ModelChoiceField(required=False, queryset=Tipo.objects.all())
     Estatus = forms.ChoiceField(error_messages=my_default_errors,choices=ESTATUS,required = False)
@@ -366,13 +371,12 @@ class FormaConsultaMaster(ModelForm):
     Visita = forms.DateField( label="Fecha Visita",widget=forms.DateInput(format = '%d/%m/%Y'), input_formats=['%d/%m/%Y'],required = False) 
     Mterreno = forms.DecimalField(required = False)
     Mconstruccion = forms.DecimalField(required = False)
-    LatitudG = forms.DecimalField(required = False,label="Long.Grad.")
-    LatitudM = forms.DecimalField(required = False,label="Long.Min.")
-    LatitudS = forms.DecimalField(required = False,label="Long.Seg.")
-    LongitudG = forms.DecimalField(required = False,label="Lat.Grad.")
-    LongitudM = forms.DecimalField(required = False,label="Lat.Min.")
-    #Pagado = forms.BooleanField(required = False)
-    LongitudS = forms.DecimalField(required = False,label="Lat.Seg.")
+    LatitudG = forms.DecimalField(required = False,label="Lon.G.")
+    LatitudM = forms.DecimalField(required = False,label="Lon.M.")
+    LatitudS = forms.DecimalField(required = False,label="Lon.S.")
+    LongitudG = forms.DecimalField(required = False,label="Lat.G.")
+    LongitudM = forms.DecimalField(required = False,label="Lat.M.")
+    LongitudS = forms.DecimalField(required = False,label="Lat.S.")
     Valor = forms.DecimalField(required = False)
     Gastos = forms.DecimalField(required = False)
     Importe = forms.DecimalField(required = False)
@@ -427,7 +431,7 @@ class RespuestaConsultaMaster(ModelForm):
     NumInt = forms.CharField(error_messages=my_default_errors,label="Num. Int.",required = False)
     Colonia = forms.CharField(error_messages=my_default_errors,required = False)
     Municipio = forms.CharField(error_messages=my_default_errors,required = False)
-    Estado = forms.ChoiceField(error_messages=my_default_errors,choices=ESTADOS,required = False)
+    Estado = forms.ChoiceField(error_messages=my_default_errors,choices=ESTADOS)
     Servicio = forms.ChoiceField(error_messages=my_default_errors,choices=SERVICIOS,label="Tipo Servicio")
     Estatus = forms.ChoiceField(error_messages=my_default_errors,choices=ESTATUS,required = False)
     Valuador = forms.ModelChoiceField(required=False, queryset=Valuador.objects.all())
@@ -438,12 +442,12 @@ class RespuestaConsultaMaster(ModelForm):
     Salida = forms.DateField( label="Fecha Salida",widget=forms.DateInput(format = '%d/%m/%Y'), input_formats=['%d/%m/%Y'],required = False) 
     Mterreno = forms.DecimalField(required = False)
     Mconstruccion = forms.DecimalField(required = False)
-    LatitudG = forms.DecimalField(required = False,label="Long.Grad.")
-    LatitudM = forms.DecimalField(required = False,label="Long.Min.")
-    LatitudS = forms.DecimalField(required = False,label="Long.Seg.")
-    LongitudG = forms.DecimalField(required = False,label="Lat.Grad.")
-    LongitudM = forms.DecimalField(required = False,label="Lat.Min.")
-    LongitudS = forms.DecimalField(required = False,label="Lat.Seg.")
+    LatitudG = forms.DecimalField(required = False,label="Lon.G.")
+    LatitudM = forms.DecimalField(required = False,label="Lon.M.")
+    LatitudS = forms.DecimalField(required = False,label="Lon.S.")
+    LongitudG = forms.DecimalField(required = False,label="Lat.G.")
+    LongitudM = forms.DecimalField(required = False,label="Lat.M.")
+    LongitudS = forms.DecimalField(required = False,label="Lat.S.")
     Valor = forms.DecimalField(required = False)
     Gastos = forms.DecimalField(required = False)
     Importe = forms.DecimalField(required = False)
@@ -480,17 +484,22 @@ class RespuestaConsultaMaster(ModelForm):
                 'Depto'
                 ,css_class='span3'),  
             Div(
-                'LatitudG',
-                'LatitudM',
-                'LatitudS',
-                'LongitudG',
-                'LongitudM',
-                'LongitudS'
-                ,css_class='span3'),
-            Div('Salida',
+                Div(
+                Div(Field('LatitudG', css_class='span20 input-large'), css_class='span4'),
+                Div(Field('LatitudM', css_class='span16 input-medium'), css_class='span4'),
+                Div(Field('LatitudS', css_class='span16 input-medium'), css_class='span4')),
+                Div(
+                Div(Field('LongitudG', css_class='span16 input-medium'), css_class='span4'),
+                Div(Field('LongitudM', css_class='span16 input-medium'), css_class='span4'),
+                Div(Field('LongitudS', css_class='span16 input-medium'), css_class='span4')),
+                css_class='span4'),
+            Div(
+                'Salida',
                 'Mterreno',
                 'Mconstruccion',
-                'Valor',
+                'Valor'
+                ,css_class='span3'),
+            Div(
                 'Gastos',
                 'Solicitud',
                 'Importe',
@@ -513,7 +522,7 @@ class FormaConsultaSencilla(ModelForm):
     NumExt = forms.CharField(error_messages=my_default_errors,label="Num. Ext.",required = False)
     NumInt = forms.CharField(error_messages=my_default_errors,label="Num. Int.",required = False)
     Colonia = forms.CharField(error_messages=my_default_errors,required = False)
-    Municipio = forms.CharField(error_messages=my_default_errors,required = False)
+    Municipio = forms.ChoiceField(error_messages=my_default_errors,choices=MUNICIPIOS)
     Estado = forms.CharField(error_messages=my_default_errors,required = False)
     Servicio = forms.CharField(error_messages=my_default_errors,required = False,label="Tipo.Servicio")
     Tipo = forms.ModelChoiceField(required=False, queryset=Tipo.objects.all())
@@ -525,12 +534,12 @@ class FormaConsultaSencilla(ModelForm):
     Visita = forms.DateField( label="Fecha Visita",widget=forms.DateInput(format = '%d/%m/%Y'), input_formats=['%d/%m/%Y'],required = False) 
     Mterreno = forms.DecimalField(required = False)
     Mconstruccion = forms.DecimalField(required = False)
-    LatitudG = forms.DecimalField(required = False,label="Long.Grad.")
-    LatitudM = forms.DecimalField(required = False,label="Long.Min.")
-    LatitudS = forms.DecimalField(required = False,label="Long.Seg.")
-    LongitudG = forms.DecimalField(required = False,label="Lat.Grad.")
-    LongitudM = forms.DecimalField(required = False,label="Lat.Min.")
-    LongitudS = forms.DecimalField(required = False,label="Lat.Seg.")
+    LatitudG = forms.DecimalField(required = False,label="Lon.G.")
+    LatitudM = forms.DecimalField(required = False,label="Lon.M.")
+    LatitudS = forms.DecimalField(required = False,label="Lon.S.")
+    LongitudG = forms.DecimalField(required = False,label="Lat.G.")
+    LongitudM = forms.DecimalField(required = False,label="Lat.M.")
+    LongitudS = forms.DecimalField(required = False,label="Lat.S.")
     Valor = forms.DecimalField(required = False)
     Gastos = forms.DecimalField(required = False)
     Importe = forms.DecimalField(required = False)

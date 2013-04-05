@@ -27,7 +27,8 @@
 	
     <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/jquery-ui-1.8.24.custom.min.js"></script> 
     <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/jquery-datepicker-es.js"></script>
-    
+    <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/ajax_estados_municipios.js"></script> <!-- Incluye  sugerencia de colonias.-->
+
     <script type="text/javascript"> 
 	
 	$(document).ready( function() {
@@ -62,26 +63,7 @@
 	    }
 	});
 
-	$(function () {
-	    $("#id_Colonia").autocomplete({
-	        source: "/api/get_colonias/",
-	        minLength: 2,
-	    });
-	});
-
-	$("#id_Estado").change(function () {
-	    $.getJSON("/api/get_municipios/", { id: $(this).val(), ajax: 'true' }, function (j) {
-	        var options = '';
-	        for (var i = 0; i < j.length; i++) {
-	            options += '<option value="' + j[i].optionValue + '">' + j[i].optionDisplay + '</option>';
-	        }
-	        $("#id_Municipio").html(options);
-	    })
-	})
-
-	  
     });
-	
     </script>
 	
  {% endblock %}      

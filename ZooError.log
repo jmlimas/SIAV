@@ -166,3 +166,8 @@ LastError:La operación de E/S se anuló por una salida de subproceso o por una so
 [18/02/2013 13:09:58] v2.0.77.328	BUG: BeginRequest failed. ZooException: Can't read data from IIS. ReadPost failed - El nombre de red especificado ya no está disponible. Please send report to support@helicontech.com
 [18/02/2013 13:09:58] v2.0.77.328	BUG: BeginRequest failed. ZooException: Can't read data from IIS. ReadPost failed - El nombre de red especificado ya no está disponible. Please send report to support@helicontech.com
 [18/03/2013 16:04:31] v2.0.77.328	BUG: BeginConnect failed. ZooException: Can't start worker process, check configuration Please send report to support@helicontech.com
+[04/04/2013 21:04:39] v2.0.77.328	BUG: BeginConnect failed. ZooException: Can't start worker process, check configuration Please send report to support@helicontech.com
+[04/04/2013 21:04:39] v2.0.77.328	BUG: BeginConnect failed. ZooException: Can't start worker process, check configuration Please send report to support@helicontech.com
+[04/04/2013 21:04:39] v2.0.77.328	BUG: BeginConnect failed. ZooException: Can't start worker process, check configuration Please send report to support@helicontech.com
+[04/04/2013 21:04:39] v2.0.77.328	BUG: BeginConnect failed. ZooException: Can't start worker process, check configuration Please send report to support@helicontech.com
+[04/04/2013 21:04:39] v2.0.77.328	BUG: BeginConnect failed. ZooException: Can't start worker process, check configuration Please send report to support@helicontech.com

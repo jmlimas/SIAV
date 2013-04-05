@@ -1,0 +1,1 @@
+[{"pk": 1, "model": "app.tipo", "fields": {"Tipo": "TERRENO"}}, {"pk": 2, "model": "app.tipo", "fields": {"Tipo": "CASA"}}, {"pk": 3, "model": "app.tipo", "fields": {"Tipo": "DEPARTAMENTO"}}, {"pk": 4, "model": "app.tipo", "fields": {"Tipo": "LOCAL"}}, {"pk": 5, "model": "app.tipo", "fields": {"Tipo": "NAVE"}}, {"pk": 6, "model": "app.tipo", "fields": {"Tipo": "OTRO"}}]

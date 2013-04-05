@@ -1,0 +1,1 @@
+[{"pk": 1, "model": "app.estado", "fields": {"Nombre": "NUEVO LEON"}}, {"pk": 2, "model": "app.estado", "fields": {"Nombre": "COAHUILA"}}, {"pk": 3, "model": "app.estado", "fields": {"Nombre": "TAMAULIPAS"}}, {"pk": 4, "model": "app.estado", "fields": {"Nombre": "YUCATAN"}}, {"pk": 5, "model": "app.estado", "fields": {"Nombre": "CHIHUAHUA"}}]
