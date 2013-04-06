@@ -109,7 +109,7 @@ def archivar(request):
                 form.save()
         return HttpResponseRedirect('.') 
     else:
-        agrupados = avaluos.values('Factura').annotate(Total=Sum('Importe'))
+        agrupados = avaluos.values('Factura','Cliente__Cliente').annotate(Total=Sum('Importe'),Cantidad=Count('Factura'))
         pagado_formset = PagadoFormset(queryset=avaluos,prefix="formas")
         example_formset = PagadoFormset(queryset=avaluos,prefix="formas") 
         cantidad = avaluos.count()
@@ -288,7 +288,11 @@ def consulta_master(request):
     if request.is_ajax():
         q1 = request.GET.get('q1', '')
         q2 = request.GET.get('q2', '')
-        results = Avaluo.objects.filter(Q( FolioK__contains = q1 )|Q( Referencia__contains = q1 ))
+        results = Avaluo.objects.all() 
+        if q1:
+            results = results.objects.filter(Q( FolioK__contains = q1 )|Q( Referencia__contains = q1 ))
+        if q2:
+            results = results.filter((Q( Factura__contains = q2 )))
         data = {'results': results,}
         return render_to_response( 'home/consultas/results.html', data,context_instance = RequestContext( request ) )
     if request.method == 'POST':

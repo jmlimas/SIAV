@@ -69,8 +69,9 @@
     $(document).ready(function () {
         $('#spinner').hide();
         $('#searchSubmit').click(function () {
-            q1 = $('#q').val();
-            q2 = $('#q').val();
+            q1 = $('#q1').val();
+            q2 = encodeURIComponent($('#q2').val());
+
             //$('#results').html('&nbsp;').load('/SIAV/consulta_master/?q1=' + q1);
             $('#results').html('&nbsp;').load('/SIAV/consulta_master/?q1='+q1+"&q2="+q2);
         });
@@ -91,7 +92,9 @@
 
 <div>
     <label>FolioK:</label>
-	<input id="q" type="text"/>
+	<input id="q1" type="text"/>
+    <label>Factura:</label>
+	<input id="q2" type="text"/>
 	<input id="searchSubmit" type="submit" value="Search" class="btn btn-primary"/>
 	<br/>
 	<div class="margin">
