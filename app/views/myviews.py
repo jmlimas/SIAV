@@ -343,9 +343,9 @@ def consulta_master(request):
                     if mes == 02:
                         dias = "28"
                     else:
-                        dias = "31"
+                        dias = "30"
                 elif mes % 2 != 0:
-                    dias ="30"
+                    dias ="31"
                 fin = str(anio)+"-"+str(mes)+"-"+dias
                 avaluos = avaluos.filter(Solicitud__range=(inicio,fin))
             cantidad = avaluos.count()
@@ -387,7 +387,7 @@ def consulta_sencilla(request):
                     avaluos = avaluos.filter(NumInt__icontains=numi)
                 if col:
                     avaluos = avaluos.filter(Colonia__icontains=col)
-                if mun:
+                if (mun and (mun != '-')):
                     avaluos = avaluos.filter(Municipio__icontains=mun)
                 if edo:
                     avaluos = avaluos.filter(Estado__icontains=edo)
@@ -402,9 +402,9 @@ def consulta_sencilla(request):
                         if mes == 02:
                             dias = "28"
                         else:
-                            dias = "31"
+                            dias = "30"
                     elif mes % 2 != 0:
-                        dias ="30"
+                        dias ="31"
                     fin = str(anio)+"-"+str(mes)+"-"+dias
                     avaluos = avaluos.filter(Solicitud__range=(inicio,fin))
                 cantidad = avaluos.count()
