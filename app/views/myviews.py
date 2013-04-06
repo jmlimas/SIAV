@@ -322,9 +322,9 @@ def consulta_master(request):
                 avaluos = avaluos.filter(NumInt__icontains=numi)
             if col:
                 avaluos = avaluos.filter(Colonia__icontains=col)
-            if mun:
+            if (mun and (edo != "-")):
                 avaluos = avaluos.filter(Municipio__icontains=mun)
-            if edo:
+            if (edo and (edo != "-")):
                 avaluos = avaluos.filter(Estado__icontains=edo)
             if factura:
                 avaluos = avaluos.filter(Factura__icontains=factura)
