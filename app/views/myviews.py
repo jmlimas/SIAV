@@ -93,7 +93,7 @@ def facturar(request):
 
     
 @login_required
-def cobrar(request):
+def archivar(request):
     #avaluos = Avaluo.objects.filter(Estatus__contains='CONCLUIDO',Salida__year='2013',Pagado__isnull=True) & Avaluo.objects.exclude(Pagado__contains=1,Factura__isnull=True) & Avaluo.objects.exclude(Factura__isnull=True)
     avaluos= ( Avaluo.objects
             .filter(Estatus='CONCLUIDO')
