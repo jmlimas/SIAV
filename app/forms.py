@@ -634,8 +634,8 @@ class FacturaForm(ModelForm):
         super(FacturaForm, self).__init__(*args, **kwargs)     
 
 
-
-class CobrarForm(ModelForm):
+"""
+class ArchivarForm(ModelForm):
     Pagado = forms.BooleanField(required=False,label="")
 
     class Meta:
@@ -644,11 +644,12 @@ class CobrarForm(ModelForm):
 
     def __init__(self, *args, **kwargs):
         self.helper = FormHelper()
-        self.helper.form_id = 'id-CobrarForm'
+        self.helper.form_id = 'id-ArchivarForm'
         self.helper.form_class = ''
         self.helper.form_method = 'POST'
         self.helper.form_tag = False
         self.helper.layout = Layout(
             Div(Div('Pagado',
                 css_class='span3'),css_class='row-fluid'),)
-        super(CobrarForm, self).__init__(*args, **kwargs)     
+        super(ArchivarForm, self).__init__(*args, **kwargs)     
+"""

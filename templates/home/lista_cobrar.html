@@ -25,7 +25,7 @@
             
             $('#avaluos_table thead').on("change", function () {
                     setTimeout(function () {
-                        window.location = '/SIAV/cobrar/';
+                        window.location = '/SIAV/archivar/';
                     }, 1000);
             });
     });
@@ -49,16 +49,14 @@
 		  <tr></th><th style="width:100px" filter='false'>Factura</th><th filter='false'>Cliente</th><th  filter='false'>Servicios</th><th filter='false'>Monto</th><th filter='false' class="tabla_opciones">Pagado</th></tr>
 	  </thead>
 	  <tbody>
-          <form action="/SIAV/cobrar/" method="post">
-              {{example_formset.management_form }}
-		   {% for a,b in olist %}
-              {{ b.id }}
+          <form action="/SIAV/archivar/" method="post">
+		   {% for a in agrupados %}
 		  <tr>
-              <td style="width:10px;"> {{a.Factura}} </td>
+              <td style="width:10px;"> {{a.Factura}} </td>{% csrf_token %}
 		      <td> {{a.Cliente__Cliente}} </td>
 		      <td> {{a.Cantidad}} </td>
-              <td> {{a.Total|currency }}</td>			  
-			  <td style="width:10px;align=center"> {% crispy b %} </td>		  </tr>
+              <td> {{a.Total|currency }}			  
+              <td> <input type="checkbox" value="{{a.Factura}}" name="facturas_pagadas">	</td>  </tr>
           {% endfor %}
         <input class='btn btn-primary' type="submit" name="submit" value="Cobrar" />
 

@@ -11,7 +11,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.forms.models import formset_factory
 from django.forms.models import BaseInlineFormSet, inlineformset_factory, modelformset_factory
 
-# Recibe el id y la colonia.
+#   Recibe el id y la colonia.
 def genera_foliok(avaluo_id,colonia):
     #Generar el FolioK 
     if(len(colonia.split()) > 1):
@@ -30,7 +30,7 @@ def genera_foliok(avaluo_id,colonia):
         folio_k = ""
         return folio_k
 
-    #Metodo para contar los avaluos en cada seccion.
+#   Metodo para contar los avaluos en cada seccion.
 def cantidades():
     avaluos = Avaluo.objects.filter(Estatus__contains='PROCESO', Salida__isnull=True,Visita__isnull=False) | Avaluo.objects.filter(Estatus__contains='DETENIDO', Salida__isnull=True,Visita__isnull=False)
     por_capturar = avaluos.count()
@@ -45,19 +45,21 @@ def cantidades():
     return pendientes
 
 
-
+#   Vista de la pagina inicial (Muestra avaluos en proceso)
 @login_required
 def home(request):
     avaluos = Avaluo.objects.filter(Estatus__contains='PROCESO', Salida__isnull=True) | Avaluo.objects.filter(Estatus__contains='DETENIDO', Salida__isnull=True)
     cantidad = cantidades()
     return render_to_response('home/home.html',{'avaluos': avaluos,'cantidad':cantidad}, context_instance=RequestContext(request))
 
+#   Vista para cerrar sesion
 @login_required    
 def logout_view(request):
     logout(request)
     response = redirect('/SIAV/login/')
     return response
-    
+ 
+#   Vista de facturacion.   
 @login_required
 def facturar(request):
     avaluos= ( Avaluo.objects
@@ -76,7 +78,7 @@ def facturar(request):
 
     else:
         factura_formset = FacturaFormset(queryset=avaluos,prefix="formas")
-        example_formset = FacturaFormset(queryset=avaluos,prefix="formas") # ELIMINAR
+        example_formset = FacturaFormset(queryset=avaluos,prefix="formas")
         cantidad = avaluos.count()
         olist = zip(avaluos,factura_formset)
 
@@ -91,30 +93,24 @@ def facturar(request):
 
         return render_to_response('home/lista_factura.html',{'olist': olist,'cantidad':cantidad,'example_formset':example_formset,'suma_de_monto': suma_de_monto,'total_general': total_general}, context_instance=RequestContext(request))
 
-    
+#   Vista que se encarga de archivar las facturas ya pagadas 
+#   Cambiando el estado Pagado de los avaluos de 0 a 1     
 @login_required
 def archivar(request):
-    #avaluos = Avaluo.objects.filter(Estatus__contains='CONCLUIDO',Salida__year='2013',Pagado__isnull=True) & Avaluo.objects.exclude(Pagado__contains=1,Factura__isnull=True) & Avaluo.objects.exclude(Factura__isnull=True)
-    avaluos= ( Avaluo.objects
+    avaluos = (Avaluo.objects
             .filter(Estatus='CONCLUIDO')
             .filter(Q(Factura__isnull=False))
-            .filter(Q(Pagado=0)|Q(Pagado__isnull=True)))
-    
-    PagadoFormset = modelformset_factory(Avaluo,form=CobrarForm,extra=0)
-
+            .filter(Q(Pagado=0)|Q(Pagado__isnull=True))) 
     if request.method == 'POST':
-        pagado_formset =  PagadoFormset(request.POST,prefix="formas")
-        for form in pagado_formset:
-            if form.is_valid():
-                form.save()
+        facturas_pagadas = request.POST.getlist('facturas_pagadas')
+        (Avaluo.objects
+        .filter(Factura__in=facturas_pagadas)
+        .filter(Q(Pagado=0)|Q(Pagado__isnull=True))
+        .update(Pagado=True))
         return HttpResponseRedirect('.') 
     else:
         agrupados = avaluos.values('Factura','Cliente__Cliente').annotate(Total=Sum('Importe'),Cantidad=Count('Factura'))
-        pagado_formset = PagadoFormset(queryset=avaluos,prefix="formas")
-        example_formset = PagadoFormset(queryset=avaluos,prefix="formas") 
         cantidad = avaluos.count()
-        olist = zip(agrupados,pagado_formset)
-
         total_general = 0.00
         for x in agrupados:
             if not x['Total']:
@@ -122,12 +118,12 @@ def archivar(request):
                 x['Total'] = 0.00
             else:
                 total_general += float(str(x['Total']))
-        return render_to_response('home/lista_cobrar.html',{'total_general': total_general,'olist': olist,'cantidad':cantidad,'example_formset':example_formset,'agrupados':agrupados}, context_instance=RequestContext(request))
+        return render_to_response('home/lista_cobrar.html',{'total_general': total_general,'cantidad':cantidad,'agrupados':agrupados}, context_instance=RequestContext(request))
 
 @login_required
-def estadistico(request):
-    avaluos = Avaluo.objects.extra(select={'month': 'extract( month from Salida )'}).values('month').filter(Salida__year='2013').order_by('month').annotate(dcount=Count('Solicitud'),Total=Sum('Importe'))
-
+def estadistico(request,anio=2013):
+    anios = Avaluo.objects.all().dates('Salida', 'year')
+    avaluos = Avaluo.objects.extra(select={'month': 'extract( month from Salida )'}).values('month').filter(Salida__year=anio).order_by('month').annotate(dcount=Count('Solicitud'),Total=Sum('Importe'))
     total_general = 0.00
     total_avaluos = 0
     for x in avaluos:
@@ -139,7 +135,7 @@ def estadistico(request):
             total_general += float(str(x['Total']))
             total_avaluos += x['dcount']
     totales = [total_avaluos,total_general]
-    return render_to_response('home/estadistico.html',{'avaluos': avaluos,'totales': totales,}, context_instance=RequestContext(request))
+    return render_to_response('home/estadistico.html',{'avaluos': avaluos,'totales': totales,'anio': anio,'anios': anios}, context_instance=RequestContext(request))
 
 @login_required
 def captura(request):
@@ -163,9 +159,9 @@ def salida(request):
 
 @login_required
 def alta_avaluo(request):
-
+   
     # Si la forma es enviada...
-    cantidad = Avaluo.objects.count()
+    cantidad = cantidades()
     if request.method == 'POST':
         # La forma ligada a los datos enviados en el POST
         forma = AltaAvaluo(request.POST)      
@@ -356,6 +352,7 @@ def consulta_master(request):
 
 @login_required
 def consulta_sencilla(request):
+    
     if request.method == 'POST':
         forma = FormaConsultaSencilla(request.POST) 
         if('Buscar' in request.POST):
@@ -407,11 +404,13 @@ def consulta_sencilla(request):
                         dias ="31"
                     fin = str(anio)+"-"+str(mes)+"-"+dias
                     avaluos = avaluos.filter(Solicitud__range=(inicio,fin))
-                cantidad = avaluos.count()
+                #cantidad = avaluos.count()
+                cantidad = cantidades()
                 return render_to_response('home/consultas/lista_consultaS.html', { 'forma': forma,'avaluos':avaluos,'cantidad':cantidad }, context_instance=RequestContext(request))
     else:
         forma = FormaConsultaSencilla()
-    return render_to_response('home/consultas/consulta_sencilla.html', { 'forma': forma }, context_instance=RequestContext(request))
+        cantidad = cantidades()
+    return render_to_response('home/consultas/consulta_sencilla.html', { 'forma': forma,'cantidad':cantidad  }, context_instance=RequestContext(request))
 
 @login_required
 def respuesta_consulta_sencilla(request,id):

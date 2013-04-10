@@ -20,17 +20,7 @@
         $(document).ready(function () {
             $('#avaluos_table').tableFilter();
                 valor = 0;
-
-            var rowCount = { p: $('#avaluos_table tbody tr:visible').length };
-            valor = ($('#avaluos_table tbody tr:visible').length);
-
-            $('#cantidad_tabla').html(valor);
-            
-            $('#avaluos_table thead').on("change", function () {
-                    setTimeout(function () {
-                        window.location = '/SIAV/facturar/';
-                    }, 1000);
-            });
+      
             $(function () {
                 $('#line_container').highcharts({
                     chart: {
@@ -100,8 +90,14 @@
 
  {% endblock %}      
 {% block content %}
+    <ul class="breadcrumb">
+       {% for a in anios %}
+        <li><a href="/SIAV/estadistico/{{a.year}}">{{a.year}}</a> <span class="divider">/</span></li>
+        {% endfor %}
+    </ul>
 
-  <h1>Estadistico (2013)</h1>
+
+  <h1>Estadistico ({{anio}})</h1>
   <br />
     <div id="charts">
         <div id="line_container" style="width:50%; height:400px;float:left"></div>
