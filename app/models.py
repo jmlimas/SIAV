@@ -5,8 +5,10 @@ from django import forms
 
 class Estado(models.Model):
     estado_id = models.AutoField(primary_key=True)
+    clave = models.CharField(null=True, max_length=255)
     Nombre = models.CharField(null=False, max_length=255)
-
+    abrev = models.CharField(null=True, max_length=255)
+    is_active = models.BooleanField(null=False,default=1)
     def __unicode__(self):
         if self.Nombre is None:
             return "N/D"
@@ -16,7 +18,9 @@ class Estado(models.Model):
 class Municipio(models.Model):
     municipio_id = models.AutoField(primary_key=True)
     estado_id = models.ForeignKey(Estado)
+    clave = models.CharField(null=True, max_length=255)
     Nombre = models.CharField(null=False, max_length=255)
+    is_active = models.BooleanField(null=False,default=1)
 
     def __unicode__(self):
         if self.Nombre is None:
@@ -87,10 +91,10 @@ class Avaluo(models.Model):
     NumExt = models.CharField(null=True, max_length=255)
     NumInt = models.CharField(null=True, max_length=255)
     Colonia = models.CharField(null=True, max_length=255)
-    Municipio = models.CharField(null=True, max_length=255)
-    #Municipio = models.ForeignKey(Municipio, null = True )
-    Estado = models.CharField(null=True, max_length=255)
-    #Estado = models.ForeignKey(Estado, null = True )
+    #Municipio = models.CharField(null=True, max_length=255)
+    Municipio = models.ForeignKey(Municipio, null = True )
+    #Estado = models.CharField(null=True, max_length=255)
+    Estado = models.ForeignKey(Estado, null = True )
     Servicio = models.CharField(null=True, max_length=255)
     Tipo = models.ForeignKey(Tipo, null = True )
     Estatus = models.CharField(null=True, max_length=255)

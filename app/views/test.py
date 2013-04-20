@@ -35,29 +35,11 @@ def get_municipios(request):
     if request.is_ajax():
         q = request.GET.get('id', '')
         print q
-        if q == 'NUEVO LEON':
-            municipios = Municipio.objects.filter(estado_id = 1 )[:20]
-            #municipios = Municipio.objects.all()[:20]
-        elif q == 'COAHUILA':
-            municipios = Municipio.objects.filter(estado_id = 2)[:20]
-            #municipios = Municipio.objects.all()[:20]
-        elif q == 'TAMAULIPAS':
-            municipios = Municipio.objects.filter(estado_id = 3)[:20]
-            #municipios = Municipio.objects.all()[:20]
-        elif q == 'YUCATAN':
-            municipios = Municipio.objects.filter(estado_id = 4)[:20]
-            #municipios = Municipio.objects.all()[:20]
-        elif q == 'CHIHUAHUA':
-            municipios = Municipio.objects.filter(estado_id = 5)[:20]
-            #municipios = Municipio.objects.all()[:20]
-        elif q == '':
-            municipios = Municipio.objects.all()[:20]
-        else:
-            municipios = Municipio.objects.all()[:20]
+        municipios = Municipio.objects.filter(estado_id = q )
         results = []
         for municipio in municipios:
             municipio_json = {}
-            municipio_json['optionValue'] = municipio.Nombre
+            municipio_json['optionValue'] = municipio.municipio_id
             municipio_json['optionDisplay'] = municipio.Nombre
             results.append(municipio_json)
         data = json.dumps(results)

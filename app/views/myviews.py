@@ -322,10 +322,10 @@ def consulta_master(request):
                 avaluos = avaluos.filter(NumInt__icontains=numi)
             if col:
                 avaluos = avaluos.filter(Colonia__icontains=col)
-            if (mun and (edo != "-")):
-                avaluos = avaluos.filter(Municipio__icontains=mun)
-            if (edo and (edo != "-")):
-                avaluos = avaluos.filter(Estado__icontains=edo)
+            if mun:
+                avaluos = avaluos.filter(Municipio=mun)
+            if edo:
+                avaluos = avaluos.filter(Estado=edo)
             if factura:
                 avaluos = avaluos.filter(Factura__icontains=factura)
             if ((tips) and (tips != "N/D")):
@@ -346,13 +346,17 @@ def consulta_master(request):
                 avaluos = avaluos.filter(Solicitud__range=(inicio,fin))
             cantidad = avaluos.count()
             return render_to_response('home/consultas/lista_consultaM.html', { 'forma': forma,'avaluos':avaluos,'cantidad':cantidad }, context_instance=RequestContext(request))
+        else:
+            forma = FormaConsultaMaster(request.POST) 
+            cantidad = cantidades()
+            return render_to_response('home/consultas/consulta_master.html', { 'forma': forma,'cantidad':cantidad  }, context_instance=RequestContext(request))
     else:
         forma = FormaConsultaMaster()
         return render_to_response('home/consultas/consulta_master.html', { 'forma': forma }, context_instance=RequestContext(request))
 
 @login_required
 def consulta_sencilla(request):
-    
+    cantidad = cantidades()    
     if request.method == 'POST':
         forma = FormaConsultaSencilla(request.POST) 
         if('Buscar' in request.POST):
@@ -384,10 +388,10 @@ def consulta_sencilla(request):
                     avaluos = avaluos.filter(NumInt__icontains=numi)
                 if col:
                     avaluos = avaluos.filter(Colonia__icontains=col)
-                if (mun and (mun != '-')):
-                    avaluos = avaluos.filter(Municipio__icontains=mun)
+                if mun:
+                    avaluos = avaluos.filter(Municipio=mun)
                 if edo:
-                    avaluos = avaluos.filter(Estado__icontains=edo)
+                    avaluos = avaluos.filter(Estado=edo)
                 if ((tips) and (tips != "N/D")):
                     avaluos = avaluos.filter(Servicio__icontains=tips)
                 if tipi:
@@ -405,7 +409,7 @@ def consulta_sencilla(request):
                     fin = str(anio)+"-"+str(mes)+"-"+dias
                     avaluos = avaluos.filter(Solicitud__range=(inicio,fin))
                 #cantidad = avaluos.count()
-                cantidad = cantidades()
+                
                 return render_to_response('home/consultas/lista_consultaS.html', { 'forma': forma,'avaluos':avaluos,'cantidad':cantidad }, context_instance=RequestContext(request))
     else:
         forma = FormaConsultaSencilla()

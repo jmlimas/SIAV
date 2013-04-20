@@ -1,6 +1,4 @@
-﻿{% load dayssince %}
-
-{% if results|length %}
+﻿{% if results|length %}
 	<table class="table table-striped">
 	<tr class='even'>
 		<td colspan="13" class="right">
@@ -20,7 +18,6 @@
 		<th>Municipio</th>
 		<th>Prioridad</th>
 		<th>Estatus</th>
-		<th>Dias</th>
 		<th>Opciones</th>
 	</tr>
 	{% for avaluo in results %}
@@ -56,9 +53,6 @@
 		<td class="right">
 		<span class="hint"> {{ avaluo.Estatus }}</span>
 		</td>
-		<td> 
-		<span class="hint"> {{ avaluo.Solicitud|dayssince }}</span>
-		</td>		
 		<td class="tabla_opciones"> 
 		<span class="hint"><a href="/SIAV/guarda_master/{{avaluo.avaluo_id}}" target="_blank">Editar</a></span>
 		</td>

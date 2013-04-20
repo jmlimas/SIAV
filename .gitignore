@@ -1,9 +1,16 @@
 #SIAV Media folder
 /media/
 
+#SIAV Migrations folder
+/app/migrations/
+
+#Python
+.pyc
+.pyo
 #################
 ## Eclipse
 #################
+
 
 *.pydevproject
 .project
