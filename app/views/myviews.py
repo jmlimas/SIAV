@@ -100,7 +100,8 @@ def archivar(request):
     avaluos = (Avaluo.objects
             .filter(Estatus='CONCLUIDO')
             .filter(Q(Factura__isnull=False))
-            .filter(Q(Pagado=0)|Q(Pagado__isnull=True))) 
+            .filter(Q(Pagado=0)|Q(Pagado__isnull=True))
+            .exclude(Q(Factura__exact='')))
     if request.method == 'POST':
         facturas_pagadas = request.POST.getlist('facturas_pagadas')
         (Avaluo.objects
