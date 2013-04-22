@@ -368,8 +368,8 @@ class FormaConsultaMaster(ModelForm):
     NumExt = forms.CharField(error_messages=my_default_errors,label="Num. Ext.",required = False)
     NumInt = forms.CharField(error_messages=my_default_errors,label="Num. Int.",required = False)
     Colonia = forms.CharField(error_messages=my_default_errors,required = False)
-    Municipio = forms.ModelChoiceField(error_messages=my_default_errors,queryset=Municipio.objects.filter(estado_id__is_active='True'))
-    Estado = forms.ModelChoiceField(error_messages=my_default_errors,queryset=Estado.objects.filter(is_active='True'))
+    Municipio = forms.ModelChoiceField(required = False, error_messages=my_default_errors,queryset=Municipio.objects.filter(estado_id__is_active='True'))
+    Estado = forms.ModelChoiceField(required = False, error_messages=my_default_errors,queryset=Estado.objects.filter(is_active='True'))
     Servicio = forms.CharField(error_messages=my_default_errors,required = False,label="Tipo.Servicio")
     Tipo = forms.ModelChoiceField(required=False, queryset=Tipo.objects.all())
     Estatus = forms.ChoiceField(error_messages=my_default_errors,choices=ESTATUS,required = False)
@@ -430,7 +430,7 @@ class FormaConsultaMaster(ModelForm):
                 Submit('Buscar', 'Buscar', css_class='button white'),
             ))
         super(FormaConsultaMaster, self).__init__(*args, **kwargs)         
-        self.fields['Municipio'] = forms.ModelChoiceField(queryset=Municipio.objects.filter(estado_id__is_active='True'))
+        self.fields['Municipio'] = forms.ModelChoiceField(required = False, queryset=Municipio.objects.filter(estado_id__is_active='True'))
         
 class RespuestaConsultaMaster(ModelForm):
   
@@ -531,8 +531,8 @@ class FormaConsultaSencilla(ModelForm):
     NumExt = forms.CharField(error_messages=my_default_errors,label="Num. Ext.",required = False)
     NumInt = forms.CharField(error_messages=my_default_errors,label="Num. Int.",required = False)
     Colonia = forms.CharField(error_messages=my_default_errors,required = False)
-    Municipio = forms.ModelChoiceField(error_messages=my_default_errors,queryset=Municipio.objects.filter(estado_id__is_active='True'))
-    Estado = forms.ModelChoiceField(error_messages=my_default_errors,queryset=Estado.objects.filter(is_active='True'))
+    Municipio = forms.ModelChoiceField(error_messages=my_default_errors,queryset=Municipio.objects.filter(estado_id__is_active='True'),required = False)
+    Estado = forms.ModelChoiceField(error_messages=my_default_errors,queryset=Estado.objects.filter(is_active='True'),required = False)
     Servicio = forms.CharField(error_messages=my_default_errors,required = False,label="Tipo.Servicio")
     Tipo = forms.ModelChoiceField(required=False, queryset=Tipo.objects.all())
     Estatus = forms.ChoiceField(error_messages=my_default_errors,choices=ESTATUS,required = False)
@@ -590,7 +590,7 @@ class FormaConsultaSencilla(ModelForm):
                 Submit('Buscar', 'Buscar', css_class='btn-success'),
             ))
         super(FormaConsultaSencilla, self).__init__(*args, **kwargs)  
-        self.fields['Municipio'] = forms.ModelChoiceField(queryset=Municipio.objects.filter(estado_id__is_active='True'))   
+        self.fields['Municipio'] = forms.ModelChoiceField(required = False, queryset=Municipio.objects.filter(estado_id__is_active='True'))   
        
            
           
