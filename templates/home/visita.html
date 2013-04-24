@@ -54,19 +54,18 @@
 	  <tbody>
 		  {% for a in avaluos %}
 		  <tr>
-		      <td> {{a.FolioK}} </td>
+		      <td > {{a.FolioK}} </td>
 			  <td style="width:100px;"> {{a.Referencia}} </td>
-			  <td> {{a.Cliente}} </td>
-		      <td style="width:200px;"> {{a.Calle}} </td>
+			  <td style="width:10px;"> {{a.Cliente}} </td>
+		      <td style="width:200px"> {{a.Calle}} </td>
 			  <td style="width:3px;"> {{a.NumExt}} </td>
 			  <td style="width:10px;"> {{a.NumInt}} </td>
 			  <td style="width:200px;"> {{a.Colonia}} </td>
 		      <td style="width:200px;"> {{a.Municipio}} </td>
 		      <td style="width:3px;"> {{a.Prioridad}} </td>
-		      <td> {{a.Estatus}} </td>
-			  <td> {{ a.Solicitud|dayssince }}</td>			  
-
-		      <td class="tabla_opciones"> <a href="/SIAV/edita_visita/{{a.avaluo_id}}">Visita</a></td>
+		      <td style="width:60px;"> {{a.Estatus}} </td>
+			  <td style="width:35px;"> {{ a.Solicitud|dayssince }}</td>			  
+		      <td style="width:60px;" class="tabla_opciones"> <a href="/SIAV/edita_visita/{{a.avaluo_id}}">Visita</a></td>
 		  </tr>
 		  {% endfor %}
 	  </tbody>

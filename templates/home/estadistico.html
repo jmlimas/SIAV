@@ -11,103 +11,102 @@
 
 
 {% block script %}
- 
-    <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/picnet-table.js"></script>
-    <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/jquery.livequery.js"></script> 
-    <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/highcharts.js"></script>
 
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $('#avaluos_table').tableFilter();
-                valor = 0;
-      
-            $(function () {
-                $('#line_container').highcharts({
-                    chart: {
-                        type: 'line',
-                        backgroundColor: '#EEEEEE',
-                        borderColor: '#D5D5D5',
-                        borderWidth: 2,
-                    },
-                    title: {
-                        text: 'Avaluos {{anio}}'
-                    },
-                    xAxis: {
-                        categories: [{% for data in avaluos %}
-                                        "{{data.month|month_name}}",
-                                    {% endfor %}
-                                    ]
-                    },
-                    yAxis: {
-                        title: {
-                            text: 'Cantidad'
-                        }
-                    },
-                    series: [{
-                        name: 'Avaluos',
-                        data: [  {% for data in avaluos %}
-                                    {{data.dcount}},
-                                 {% endfor %}
-                              ]
-                    }, /*{
-                        name: 'John',
-                        data: [5, 7, 3]
-                    }*/]
-                });
+<script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/picnet-table.js"></script>
+<script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/jquery.livequery.js"></script> 
+<script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/highcharts.js"></script>
+<script type="text/javascript">
+$(document).ready(function () {
+    $('#avaluos_table').tableFilter();
+    valor = 0;
 
-                $('#bar_container').highcharts({
-                    chart: {
-                        type: 'column',
-                        backgroundColor: '#EEEEEE',
-                        borderColor: '#D5D5D5',
-                        borderWidth: 2,
-                        
-                    },
-                    title: {
-                        text: 'Importes {{anio}}'
-                    },
-                    xAxis: {
-                        categories: [{% for data in avaluos %}
-                                        "{{data.month|month_name}}",
-                        {% endfor %}
-                        ]
-                    },
-                    yAxis: {
-                        title: {
-                            text: 'Cantidad'
-                        }
-                    },
-                    series: [{
-                        name: 'Importe',
-                        data: [  {% for data in avaluos %}
-                                    {{data.Total}},
-                        {% endfor %}
-                        ]
-                    }, /*{
-                        name: 'John',
-                        data: [5, 7, 3]
-                    }*/]
-                });
-            });
+    $(function () {
+        $('#line_container').highcharts({
+            chart: {
+                type: 'line',
+                backgroundColor: '#FFFFFF',
+                borderColor: '#D5D5D5',
+                borderWidth: 2,
+            },
+            title: {
+                text: 'Avaluos {{anio}}'
+            },
+            xAxis: {
+                categories: [{% for data in avaluos %}
+                "{{data.month|month_name}}",
+                {% endfor %}
+                ]
+            },
+            yAxis: {
+                title: {
+                    text: 'Cantidad'
+                }
+            },
+            series: [{
+                name: 'Avaluos',
+                data: [  {% for data in avaluos %}
+                {{data.dcount}},
+                {% endfor %}
+                ]
+}, /*{
+name: 'John',
+data: [5, 7, 3]
+}*/]
+});
 
+        $('#bar_container').highcharts({
+            chart: {
+                type: 'column',
+                backgroundColor: '#FFFFFF',
+                borderColor: '#D5D5D5',
+                borderWidth: 2,
 
+            },
+            title: {
+                text: 'Importes {{anio}}'
+            },
+            xAxis: {
+                categories: [{% for data in avaluos %}
+                "{{data.month|month_name}}",
+                {% endfor %}
+                ]
+            },
+            yAxis: {
+                title: {
+                    text: 'Cantidad'
+                }
+            },
+            series: [{
+                name: 'Importe',
+                data: [  {% for data in avaluos %}
+                {{data.Total}},
+                {% endfor %}
+                ]
+}, /*{
+name: 'John',
+data: [5, 7, 3]
+}*/]
+});
     });
 
-    </script>
 
- {% endblock %}      
+});
+
+</script>
+
+{% endblock %}      
 {% block content %}
-    <ul class="breadcrumb">
-       {% for a in anios %}
-        <li><a href="/SIAV/estadistico/{{a.year}}">{{a.year}}</a> <span class="divider">/</span></li>
-        {% endfor %}
-    </ul>
+<ul class="breadcrumb">
+    {% for a in anios %}
+    <li><a href="/SIAV/estadistico/{{a.year}}">{{a.year}}</a> <span class="divider">/</span></li>
+    {% endfor %}
+</ul>
 
 <div class="container">
-  <h1>Estadistico ({{anio}})</h1>
-  <br />
-    <div class="span12">
-        <div class="row-fluid">
+    <h1>Estadistico ({{anio}})</h1>
+    <br />
+    <div class="span11">
+        <div class="row-fluid" style="padding:10px">
             <div class="span6">
                 <div id="line_container" ></div>
             </div>
@@ -116,28 +115,26 @@
             </div>
         </div>
 
-
-   
-    <table class="table table-hover" style="width:60%; margin-top:50px">
-        <thead>
-            <th>Mes</th>
-            <th>Cantidad Avaluos</th>
-            <th>Importe</th>
-        </thead>
-       {% for a in avaluos %}
-        <tr>
-            <td>{{ a.month|month_name }}</td>
-            <td>{{ a.dcount }}</td>
-            <td>{{ a.Total|currency }}</td>
-        </tr>
-      {% endfor %}
-        <tr>
-            <td><b>Total</b></td>
-            <td><b>{{totales.0}}</b></td>
-            <td><b>{{totales.1|currency}}</b></td>
-        </tr>
-    </table>
+        <table class="table table-hover" style="width:60%; margin-top:50px">
+            <thead>
+                <th>Mes</th>
+                <th>Cantidad Avaluos</th>
+                <th>Importe</th>
+            </thead>
+            {% for a in avaluos %}
+            <tr>
+                <td>{{ a.month|month_name }}</td>
+                <td>{{ a.dcount }}</td>
+                <td>{{ a.Total|currency }}</td>
+            </tr>
+            {% endfor %}
+            <tr>
+                <td><b>Total</b></td>
+                <td><b>{{totales.0}}</b></td>
+                <td><b>{{totales.1|currency}}</b></td>
+            </tr>
+        </table>
 
     </div>
-    </div>
+</div>
 {% endblock %}

@@ -93,10 +93,10 @@ def facturar(request):
 
         return render_to_response('home/lista_factura.html',{'olist': olist,'cantidad':cantidad,'example_formset':example_formset,'suma_de_monto': suma_de_monto,'total_general': total_general}, context_instance=RequestContext(request))
 
-#   Vista que se encarga de archivar las facturas ya pagadas 
+#   Vista que se encarga de liquidar las facturas ya pagadas 
 #   Cambiando el estado Pagado de los avaluos de 0 a 1     
 @login_required
-def archivar(request):
+def liquidar(request):
     avaluos = (Avaluo.objects
             .filter(Estatus='CONCLUIDO')
             .filter(Q(Factura__isnull=False))
@@ -478,8 +478,9 @@ def lista_valuador(request):
 
 @login_required    
 def mapas(request):
-    
-    return render_to_response('home/mapas.html',{}, context_instance=RequestContext(request))
+    avaluo = Avaluo.objects.get(FolioK = 'PAR17524')
+    todos = Avaluo.objects.all().order_by('?')
+    return render_to_response('home/mapas.html',{'avaluo':avaluo,'todos':todos}, context_instance=RequestContext(request))
 
 @login_required    
 def submitted(request):

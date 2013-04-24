@@ -425,6 +425,9 @@ class FormaConsultaMaster(ModelForm):
                 'Servicio',
                 'Tipo',
                 'Factura',
+                css_class='span3'),
+             Div(
+                'Importe',
                 css_class='span3'),css_class='row-fluid'),
             ButtonHolder(
                 Submit('Buscar', 'Buscar', css_class='button white'),

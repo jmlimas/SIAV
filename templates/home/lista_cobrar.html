@@ -9,62 +9,62 @@
 
 
 {% block script %}
- 
-    <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/picnet-table.js"></script>
-    <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/jquery.livequery.js"></script> 
 
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $('#avaluos_table').tableFilter();
-                valor = 0;
+<script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/picnet-table.js"></script>
+<script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/jquery.livequery.js"></script> 
 
-            var rowCount = { p: $('#avaluos_table tbody tr:visible').length };
-            valor = ($('#avaluos_table tbody tr:visible').length);
+<script type="text/javascript">
+$(document).ready(function () {
+  $('#avaluos_table').tableFilter();
+  valor = 0;
 
-            $('#cantidad_tabla').html(valor);
-            
-            $('#avaluos_table thead').on("change", function () {
-                    setTimeout(function () {
-                        window.location = '/SIAV/archivar/';
-                    }, 1000);
-            });
-    });
+  var rowCount = { p: $('#avaluos_table tbody tr:visible').length };
+  valor = ($('#avaluos_table tbody tr:visible').length);
 
-    </script>
+  $('#cantidad_tabla').html(valor);
 
- {% endblock %}      
+  $('#avaluos_table thead').on("change", function () {
+    setTimeout(function () {
+      window.location = '/SIAV/liquidar/';
+    }, 1000);
+  });
+});
+
+</script>
+
+{% endblock %}      
 {% block content %}
 
-  <h1>Facturas por Cobrar</h1>
-  <h2 style="text-align:left"><span id="cantidad_tabla"></span>   Facturas</h2>
-  <table id='avaluos_table'>
-	  <thead>
-		  <tr>
-			  <td><b>Total:</b></td>
-			  <td></td>
-			  <td></td>
-			  <td></td>
-			  <td><b>{{total_general|currency}}</b></td>
-		  </tr>
-		  <tr></th><th style="width:100px" filter='false'>Factura</th><th filter='false'>Cliente</th><th  filter='false'>Servicios</th><th filter='false'>Monto</th><th filter='false' class="tabla_opciones">Pagado</th></tr>
-	  </thead>
-	  <tbody>
-          <form action="/SIAV/archivar/" method="post">
-		   {% for a in agrupados %}
-		  <tr>
-              <td style="width:10px;"> {{a.Factura}} </td>{% csrf_token %}
-		      <td> {{a.Cliente__Cliente}} </td>
-		      <td> {{a.Cantidad}} </td>
-              <td> {{a.Total|currency }}			  
-              <td> <input type="checkbox" value="{{a.Factura}}" name="facturas_pagadas">	</td>  </tr>
-          {% endfor %}
-        <input class='btn btn-primary' type="submit" name="submit" value="Cobrar" />
+<h1>Facturas por Liquidar</h1>
+<h2 style="text-align:left"><span id="cantidad_tabla"></span>   Facturas</h2>
+<table id='avaluos_table'>
+ <thead>
+  <tr>
+   <td><b>Total:</b></td>
+   <td></td>
+   <td></td>
+   <td></td>
+   <td><b>{{total_general|currency}}</b></td>
+ </tr>
+ <tr></th><th style="width:100px" filter='false'>Factura</th><th filter='false'>Cliente</th><th  filter='false'>Servicios</th><th filter='false'>Monto</th><th filter='false' class="tabla_opciones">Pagado</th></tr>
+</thead>
+<tbody>
+  <form action="/SIAV/liquidar/" method="post">
+   {% for a in agrupados %}
+   <tr>
+    <td style="width:10px;"> {{a.Factura}} </td>{% csrf_token %}
+    <td> {{a.Cliente__Cliente}} </td>
+    <td> {{a.Cantidad}} </td>
+    <td> {{a.Total|currency }}			  
+      <td> <input type="checkbox" value="{{a.Factura}}" name="facturas_pagadas">	</td>  </tr>
+      {% endfor %}
+      <input class='btn btn-primary' type="submit" name="submit" value="Liquidar" />
 
-          </form>
-	  </tbody>
+    </form>
+  </tbody>
 
-  </table>
+</table>
 
 
-  
+
 {% endblock %}

@@ -57,7 +57,7 @@ urlpatterns = patterns('',
 
      url(r'^SIAV/facturar/', 'app.views.facturar', name = 'facturar'),
 
-     url(r'^SIAV/archivar/', 'app.views.archivar', name = 'archivar'),
+     url(r'^SIAV/liquidar/', 'app.views.liquidar', name = 'liquidar'),
 
      url(r'^SIAV/estadistico/(\d+)/$', 'app.views.estadistico', name = 'estadistico'),
      #url(r'^SIAV/estadistico/', 'app.views.estadistico', name = 'estadistico'),
