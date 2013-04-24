@@ -308,6 +308,7 @@ def consulta_master(request):
             mes = forma.cleaned_data['Mes']
             anio = forma.cleaned_data['Anio']
             factura = forma.cleaned_data['Factura']
+            importe = forma.cleaned_data['Importe']
             
             avaluos = Avaluo.objects.all()    
 
@@ -329,23 +330,27 @@ def consulta_master(request):
                 avaluos = avaluos.filter(Estado=edo)
             if factura:
                 avaluos = avaluos.filter(Factura__icontains=factura)
+            if importe:
+                avaluos = avaluos.filter(Importe__icontains=importe)     
             if ((tips) and (tips != "N/D")):
                 avaluos = avaluos.filter(Servicio__icontains=tips)
             if (tipi):
                 avaluos = avaluos.filter(Tipo__Tipo__icontains=tipi)
-            if mes and anio:
-                inicio = str(anio)+"-"+str(mes)+"-01"
-                mes = int(mes)
-                if mes % 2 == 00:
-                    if mes == 02:
-                        dias = "28"
-                    else:
-                        dias = "30"
-                elif mes % 2 != 0:
-                    dias ="31"
-                fin = str(anio)+"-"+str(mes)+"-"+dias
-                avaluos = avaluos.filter(Solicitud__range=(inicio,fin))
-            cantidad = avaluos.count()
+            if anio:
+                avaluos = avaluos.filter(Solicitud__year=anio)
+                if mes and anio:
+                    inicio = str(anio)+"-"+str(mes)+"-01"
+                    mes = int(mes)
+                    if mes % 2 == 00:
+                        if mes == 02:
+                            dias = "28"
+                        else:
+                            dias = "30"
+                    elif mes % 2 != 0:
+                        dias ="31"
+                    fin = str(anio)+"-"+str(mes)+"-"+dias
+                    avaluos = avaluos.filter(Solicitud__range=(inicio,fin))
+                cantidad = avaluos.count()
             return render_to_response('home/consultas/lista_consultaM.html', { 'forma': forma,'avaluos':avaluos,'cantidad':cantidad }, context_instance=RequestContext(request))
         else:
             forma = FormaConsultaMaster(request.POST) 
