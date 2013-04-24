@@ -30,21 +30,22 @@
   <h2 style="text-align:left"><span id="cantidad_tabla"></span>  Servicios</h2>
   <table id='avaluos_table'>
 	  <thead>
-		  <tr><th style="width:40px">Folio K</th><th style="width:40px" filter='false' >Ref.</th><th filter-type='ddl'>Cliente</th><th>Calle</th><th filter='false'>Ext.</th><th filter='false'>Int.</th><th style="width:100px" filter-type='ddl'>Colonia</th><th filter-type='ddl'>Municipio</th><th style="width:10px" filter-type='ddl'>Estatus</th><th filter='false'>Dias</th></tr>
+		  <tr><th style="width:40px">Folio K</th><th style="width:40px" filter='false' >Ref.</th><th filter-type='ddl'>Cliente</th><th>Calle</th><th filter='false'>Ext.</th><th filter='false'>Int.</th><th style="width:100px" filter-type='ddl'>Colonia</th><th filter-type='ddl'>Municipio</th><th filter='false'>Prioridad</th><th style="width:10px" filter-type='ddl'>Estatus</th><th filter='false'>Dias</th></tr>
 	  </thead>
 	  <body>
 		  {% for a in avaluos %}
 		  <tr>
-			  <td> {{a.FolioK}} </td>
-		      <td> {{a.Referencia}} </td>
-			  <td> {{a.Cliente}} </td>
-		      <td style="width:200px;"> {{a.Calle}} </td>
-			  <td style="width:3px;"> {{a.NumExt}} </td>
-			  <td style="width:10px;"> {{a.NumInt}} </td>
-			  <td style="width:150px;"> {{a.Colonia}} </td>
-		      <td> {{a.Municipio}} </td>
-		      <td> {{a.Estatus}} </td>
-              <td> {{ a.Solicitud|dayssince }}</td>			  
+          <td > {{a.FolioK}} </td>
+          <td style="width:100px;"> {{a.Referencia}} </td>
+          <td style="width:10px;"> {{a.Cliente}} </td>
+          <td style="width:200px"> {{a.Calle}} </td>
+          <td style="width:3px;"> {{a.NumExt}} </td>
+          <td style="width:10px;"> {{a.NumInt}} </td>
+          <td style="width:200px;"> {{a.Colonia}} </td>
+          <td style="width:200px;"> {{a.Municipio}} </td>
+          <td style="width:3px;"> {{a.Prioridad}} </td>
+          <td style="width:60px;"> {{a.Estatus}} </td>
+          <td style="width:35px;"> {{ a.Solicitud|dayssince }}</td> 	  
 		  </tr>
 		  {% endfor %}
 	  </body>
