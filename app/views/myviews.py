@@ -353,6 +353,7 @@ def consulta_master(request):
                     fin = str(anio)+"-"+str(mes)+"-"+dias
                     avaluos = avaluos.filter(Solicitud__range=(inicio,fin))
                 cantidad = avaluos.count()
+            cantidad = avaluos.count()
             return render_to_response('home/consultas/lista_consultaM.html', { 'forma': forma,'avaluos':avaluos,'cantidad':cantidad }, context_instance=RequestContext(request))
         else:
             forma = FormaConsultaMaster(request.POST) 
