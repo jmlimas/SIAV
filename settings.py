@@ -141,6 +141,7 @@ INSTALLED_APPS = (
     'app',
     'south',
     'crispy_forms',
+    'sorl.thumbnail',
     # Uncomment the next line to enable the admin:
      'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:

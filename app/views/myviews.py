@@ -486,7 +486,7 @@ def lista_valuador(request):
 @login_required    
 def mapas(request):
     avaluo = Avaluo.objects.get(FolioK = 'PAR17524')
-    todos = Avaluo.objects.all().order_by('?')
+    todos = Avaluo.objects.all().order_by('?')[:100]
     return render_to_response('home/mapas.html',{'avaluo':avaluo,'todos':todos}, context_instance=RequestContext(request))
 
 @login_required    
