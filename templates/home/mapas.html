@@ -165,6 +165,16 @@ function initialize() {
 
         {% block content %}
 
+        {% for item in imagenes %}
+
+        {% thumbnail item.imagen "1000" as big %}
+            {% thumbnail item.imagen "100x100" crop="center" as small %}
+                <a href="{{ big.url}}" title="{{item.avaluo_id}}"><img src="{{ small.url }}" style="padding:5px;"></a>
+            {% endthumbnail %}
+        {% endthumbnail %}
+
+        {% endfor %}
+
         <div id="controls" style="display:block;">
          <input class="btn btn-primary button white" type="button" id="slick-toggle" value="Mapas" />
          <div id="slickbox" >
@@ -177,4 +187,6 @@ function initialize() {
           </noscript>         
         </div>
       </div> 
+
+
       {% endblock %}

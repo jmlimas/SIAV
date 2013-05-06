@@ -119,3 +119,8 @@ class Avaluo(models.Model):
     Factura = models.CharField(null=True, max_length=30)
     Pagado = models.NullBooleanField(null=True)
     Observaciones = models.CharField(null=True,max_length=255)
+
+class ImagenAvaluo(models.Model):
+    imagen_id = models.AutoField(primary_key=True)
+    avaluo = models.ForeignKey(Avaluo)
+    imagen = models.ImageField("Imagen Avaluo", upload_to="media/", blank=True, null=True)

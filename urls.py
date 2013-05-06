@@ -17,7 +17,7 @@ urlpatterns = patterns('',
     # Uncomment the next line to enable the admin:
 
      # Upload files Urls                  
-     url( r'^SIAV/ajax_upload/(\w*\d+)/$', 'app.uploads.ajax_upload', name="ajax_upload" ),
+     url( r'^SIAV/ajax_upload/(\w*\d+)/(\w*\d+)/$', 'app.uploads.ajax_upload', name="ajax_upload" ),
                             
      url(r'^SIAV/admin/', include(admin.site.urls)),
      

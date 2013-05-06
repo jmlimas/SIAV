@@ -261,9 +261,12 @@ def edita_salida(request, id):
 def guarda_master(request,id):
     if  id == None:
         forma = RespuestaConsultaMaster()
-        return render_to_response('home/consultas/respuesta_consulta_master.html', {'forma': forma }, context_instance=RequestContext(request)) 
+        imagenes = ImagenAvaluo.objects.none()
+        return render_to_response('home/consultas/respuesta_consulta_master.html', {'forma': forma,'imagenes':imagenes }, context_instance=RequestContext(request)) 
     else:
         avaluo = Avaluo.objects.get(pk = id)
+        imagenes = ImagenAvaluo.objects.filter(avaluo = id)
+
         forma = RespuestaConsultaMaster(instance=avaluo)
 
     if request.method == 'POST':
@@ -280,7 +283,7 @@ def guarda_master(request,id):
             obj.FolioK = folio_k
             forma.save()
             return redirect('/SIAV/consulta_master/') 
-    return render_to_response('home/consultas/respuesta_consulta_master.html', { 'forma': forma,'avaluo': avaluo }, context_instance=RequestContext(request))
+    return render_to_response('home/consultas/respuesta_consulta_master.html', { 'forma': forma,'avaluo': avaluo ,'imagenes':imagenes }, context_instance=RequestContext(request))
 
 @login_required
 def consulta_master(request):
@@ -488,7 +491,8 @@ def lista_valuador(request):
 def mapas(request):
     avaluo = Avaluo.objects.get(FolioK = 'PAR17524')
     todos = Avaluo.objects.all().order_by('?')[:100]
-    return render_to_response('home/mapas.html',{'avaluo':avaluo,'todos':todos}, context_instance=RequestContext(request))
+    imagenes = ImagenAvaluo.objects.all()
+    return render_to_response('home/mapas.html',{'avaluo':avaluo,'todos':todos,'imagenes':imagenes}, context_instance=RequestContext(request))
 
 @login_required    
 def submitted(request):
