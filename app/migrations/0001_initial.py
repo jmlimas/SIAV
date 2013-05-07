@@ -11,7 +11,10 @@ class Migration(SchemaMigration):
         # Adding model 'Estado'
         db.create_table('app_estado', (
             ('estado_id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+            ('clave', self.gf('django.db.models.fields.CharField')(max_length=255, null=True)),
             ('Nombre', self.gf('django.db.models.fields.CharField')(max_length=255)),
+            ('abrev', self.gf('django.db.models.fields.CharField')(max_length=255, null=True)),
+            ('is_active', self.gf('django.db.models.fields.BooleanField')(default=True)),
         ))
         db.send_create_signal('app', ['Estado'])
 
@@ -19,7 +22,9 @@ class Migration(SchemaMigration):
         db.create_table('app_municipio', (
             ('municipio_id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('estado_id', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['app.Estado'])),
+            ('clave', self.gf('django.db.models.fields.CharField')(max_length=255, null=True)),
             ('Nombre', self.gf('django.db.models.fields.CharField')(max_length=255)),
+            ('is_active', self.gf('django.db.models.fields.BooleanField')(default=True)),
         ))
         db.send_create_signal('app', ['Municipio'])
 
@@ -29,6 +34,7 @@ class Migration(SchemaMigration):
             ('Nombre', self.gf('django.db.models.fields.CharField')(max_length=255, null=True)),
             ('Apellido', self.gf('django.db.models.fields.CharField')(max_length=255, null=True)),
             ('Correo', self.gf('django.db.models.fields.CharField')(max_length=255, null=True)),
+            ('is_active', self.gf('django.db.models.fields.BooleanField')(default=False)),
         ))
         db.send_create_signal('app', ['Valuador'])
 
@@ -73,8 +79,8 @@ class Migration(SchemaMigration):
             ('NumExt', self.gf('django.db.models.fields.CharField')(max_length=255, null=True)),
             ('NumInt', self.gf('django.db.models.fields.CharField')(max_length=255, null=True)),
             ('Colonia', self.gf('django.db.models.fields.CharField')(max_length=255, null=True)),
-            ('Municipio', self.gf('django.db.models.fields.CharField')(max_length=255, null=True)),
-            ('Estado', self.gf('django.db.models.fields.CharField')(max_length=255, null=True)),
+            ('Municipio', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['app.Municipio'], null=True)),
+            ('Estado', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['app.Estado'], null=True)),
             ('Servicio', self.gf('django.db.models.fields.CharField')(max_length=255, null=True)),
             ('Tipo', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['app.Tipo'], null=True)),
             ('Estatus', self.gf('django.db.models.fields.CharField')(max_length=255, null=True)),
@@ -83,8 +89,8 @@ class Migration(SchemaMigration):
             ('Depto', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['app.Depto'], null=True)),
             ('Valuador', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['app.Valuador'], null=True)),
             ('Solicitud', self.gf('django.db.models.fields.DateField')(null=True)),
-            ('Mterreno', self.gf('django.db.models.fields.DecimalField')(null=True, max_digits=6, decimal_places=2)),
-            ('Mconstruccion', self.gf('django.db.models.fields.DecimalField')(null=True, max_digits=6, decimal_places=2)),
+            ('Mterreno', self.gf('django.db.models.fields.DecimalField')(null=True, max_digits=12, decimal_places=2)),
+            ('Mconstruccion', self.gf('django.db.models.fields.DecimalField')(null=True, max_digits=12, decimal_places=2)),
             ('LatitudG', self.gf('django.db.models.fields.DecimalField')(null=True, max_digits=12, decimal_places=3)),
             ('LatitudM', self.gf('django.db.models.fields.DecimalField')(null=True, max_digits=12, decimal_places=3)),
             ('LatitudS', self.gf('django.db.models.fields.DecimalField')(null=True, max_digits=12, decimal_places=3)),
@@ -92,15 +98,23 @@ class Migration(SchemaMigration):
             ('LongitudM', self.gf('django.db.models.fields.DecimalField')(null=True, max_digits=12, decimal_places=3)),
             ('LongitudS', self.gf('django.db.models.fields.DecimalField')(null=True, max_digits=12, decimal_places=3)),
             ('Visita', self.gf('django.db.models.fields.DateField')(null=True)),
-            ('Valor', self.gf('django.db.models.fields.DecimalField')(null=True, max_digits=10, decimal_places=0)),
-            ('Gastos', self.gf('django.db.models.fields.DecimalField')(null=True, max_digits=10, decimal_places=2)),
-            ('Importe', self.gf('django.db.models.fields.DecimalField')(null=True, max_digits=7, decimal_places=2)),
+            ('Valor', self.gf('django.db.models.fields.DecimalField')(null=True, max_digits=15, decimal_places=2)),
+            ('Gastos', self.gf('django.db.models.fields.DecimalField')(null=True, max_digits=15, decimal_places=2)),
+            ('Importe', self.gf('django.db.models.fields.DecimalField')(null=True, max_digits=15, decimal_places=2)),
             ('Salida', self.gf('django.db.models.fields.DateField')(null=True)),
             ('Factura', self.gf('django.db.models.fields.CharField')(max_length=30, null=True)),
             ('Pagado', self.gf('django.db.models.fields.NullBooleanField')(null=True, blank=True)),
             ('Observaciones', self.gf('django.db.models.fields.CharField')(max_length=255, null=True)),
         ))
         db.send_create_signal('app', ['Avaluo'])
+
+        # Adding model 'ImagenAvaluo'
+        db.create_table('app_imagenavaluo', (
+            ('imagen_id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+            ('avaluo', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['app.Avaluo'])),
+            ('imagen', self.gf('django.db.models.fields.files.ImageField')(max_length=100, null=True, blank=True)),
+        ))
+        db.send_create_signal('app', ['ImagenAvaluo'])
 
 
     def backwards(self, orm):
@@ -125,6 +139,9 @@ class Migration(SchemaMigration):
         # Deleting model 'Avaluo'
         db.delete_table('app_avaluo')
 
+        # Deleting model 'ImagenAvaluo'
+        db.delete_table('app_imagenavaluo')
+
 
     models = {
         'app.avaluo': {
@@ -132,22 +149,22 @@ class Migration(SchemaMigration):
             'Cliente': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['app.Cliente']", 'null': 'True'}),
             'Colonia': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True'}),
             'Depto': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['app.Depto']", 'null': 'True'}),
-            'Estado': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True'}),
+            'Estado': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['app.Estado']", 'null': 'True'}),
             'Estatus': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True'}),
             'Factura': ('django.db.models.fields.CharField', [], {'max_length': '30', 'null': 'True'}),
             'FolioK': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True'}),
-            'Gastos': ('django.db.models.fields.DecimalField', [], {'null': 'True', 'max_digits': '10', 'decimal_places': '2'}),
-            'Importe': ('django.db.models.fields.DecimalField', [], {'null': 'True', 'max_digits': '7', 'decimal_places': '2'}),
+            'Gastos': ('django.db.models.fields.DecimalField', [], {'null': 'True', 'max_digits': '15', 'decimal_places': '2'}),
+            'Importe': ('django.db.models.fields.DecimalField', [], {'null': 'True', 'max_digits': '15', 'decimal_places': '2'}),
             'LatitudG': ('django.db.models.fields.DecimalField', [], {'null': 'True', 'max_digits': '12', 'decimal_places': '3'}),
             'LatitudM': ('django.db.models.fields.DecimalField', [], {'null': 'True', 'max_digits': '12', 'decimal_places': '3'}),
             'LatitudS': ('django.db.models.fields.DecimalField', [], {'null': 'True', 'max_digits': '12', 'decimal_places': '3'}),
             'LongitudG': ('django.db.models.fields.DecimalField', [], {'null': 'True', 'max_digits': '12', 'decimal_places': '3'}),
             'LongitudM': ('django.db.models.fields.DecimalField', [], {'null': 'True', 'max_digits': '12', 'decimal_places': '3'}),
             'LongitudS': ('django.db.models.fields.DecimalField', [], {'null': 'True', 'max_digits': '12', 'decimal_places': '3'}),
-            'Mconstruccion': ('django.db.models.fields.DecimalField', [], {'null': 'True', 'max_digits': '6', 'decimal_places': '2'}),
+            'Mconstruccion': ('django.db.models.fields.DecimalField', [], {'null': 'True', 'max_digits': '12', 'decimal_places': '2'}),
             'Meta': {'object_name': 'Avaluo'},
-            'Mterreno': ('django.db.models.fields.DecimalField', [], {'null': 'True', 'max_digits': '6', 'decimal_places': '2'}),
-            'Municipio': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True'}),
+            'Mterreno': ('django.db.models.fields.DecimalField', [], {'null': 'True', 'max_digits': '12', 'decimal_places': '2'}),
+            'Municipio': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['app.Municipio']", 'null': 'True'}),
             'NumExt': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True'}),
             'NumInt': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True'}),
             'Observaciones': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True'}),
@@ -158,7 +175,7 @@ class Migration(SchemaMigration):
             'Servicio': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True'}),
             'Solicitud': ('django.db.models.fields.DateField', [], {'null': 'True'}),
             'Tipo': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['app.Tipo']", 'null': 'True'}),
-            'Valor': ('django.db.models.fields.DecimalField', [], {'null': 'True', 'max_digits': '10', 'decimal_places': '0'}),
+            'Valor': ('django.db.models.fields.DecimalField', [], {'null': 'True', 'max_digits': '15', 'decimal_places': '2'}),
             'Valuador': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['app.Valuador']", 'null': 'True'}),
             'Visita': ('django.db.models.fields.DateField', [], {'null': 'True'}),
             'avaluo_id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'})
@@ -187,12 +204,23 @@ class Migration(SchemaMigration):
         'app.estado': {
             'Meta': {'object_name': 'Estado'},
             'Nombre': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
-            'estado_id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'})
+            'abrev': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True'}),
+            'clave': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True'}),
+            'estado_id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'is_active': ('django.db.models.fields.BooleanField', [], {'default': 'True'})
+        },
+        'app.imagenavaluo': {
+            'Meta': {'object_name': 'ImagenAvaluo'},
+            'avaluo': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['app.Avaluo']"}),
+            'imagen': ('django.db.models.fields.files.ImageField', [], {'max_length': '100', 'null': 'True', 'blank': 'True'}),
+            'imagen_id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'})
         },
         'app.municipio': {
             'Meta': {'object_name': 'Municipio'},
             'Nombre': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
+            'clave': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True'}),
             'estado_id': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['app.Estado']"}),
+            'is_active': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
             'municipio_id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'})
         },
         'app.tipo': {
@@ -205,6 +233,7 @@ class Migration(SchemaMigration):
             'Correo': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True'}),
             'Meta': {'object_name': 'Valuador'},
             'Nombre': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True'}),
+            'is_active': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'valuador_id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'})
         }
     }

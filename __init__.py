@@ -1,6 +1,6 @@
 from django.contrib.auth.models import Group as DjangoGroup
 from django.contrib.auth.models import User as DjangoUser
-
+"""
 flag = "false"
 
 
@@ -15,3 +15,5 @@ if(DjangoGroup.objects.all == 0):
   Usuarios = DjangoGroup(name='Usuarios')
   Usuarios.save()
   flag = "false"
+
+"""

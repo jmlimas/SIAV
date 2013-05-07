@@ -176,3 +176,20 @@ LastError:La operación de E/S se anuló por una salida de subproceso o por una so
 [05/04/2013 20:42:49] v2.0.77.328	BUG: BeginConnect failed. ZooException: Can't start worker process, check configuration Please send report to support@helicontech.com
 [05/04/2013 20:42:49] v2.0.77.328	BUG: BeginConnect failed. ZooException: Can't start worker process, check configuration Please send report to support@helicontech.com
 [05/04/2013 20:42:49] v2.0.77.328	BUG: BeginConnect failed. ZooException: Can't start worker process, check configuration Please send report to support@helicontech.com
+[07/05/2013 11:45:30]	Restarting the application due to changes to file 'app\migrations\0004_auto__chg_field_avaluo_Estado__chg_field_avaluo_Municipio__add_field_e.py'
+[07/05/2013 13:38:16]	Restarting the application due to changes to file 'settings.py'
+[07/05/2013 14:45:08]	Restarting the application due to changes to file 'build\django-crispy-forms\setup.py'
+[07/05/2013 15:15:17]	Restarting the application due to changes to file 'app\uploads.py'
+[07/05/2013 15:21:08]	Restarting the application due to changes to file 'app\uploads.py'
+[07/05/2013 15:21:44]	Restarting the application due to changes to file 'app\uploads.py'
+[07/05/2013 15:25:10]	Restarting the application due to changes to file 'app\uploads.py'
+[07/05/2013 15:26:09]	Restarting the application due to changes to file 'app\uploads.py'
+[07/05/2013 15:26:29]	Restarting the application due to changes to file 'app\uploads.py'
+[07/05/2013 15:28:43]	Restarting the application due to changes to file 'app\uploads.py'
+[07/05/2013 15:29:20]	Restarting the application due to changes to file 'app\uploads.py'
+[07/05/2013 15:30:52]	Restarting the application due to changes to file 'app\uploads.py'
+[07/05/2013 15:31:37]	Restarting the application due to changes to file 'app\uploads.py'
+[07/05/2013 15:32:27]	Restarting the application due to changes to file 'app\uploads.py'
+[07/05/2013 16:11:04]	Restarting the application due to changes to file 'app\models.py'
+[07/05/2013 16:17:00]	Restarting the application due to changes to file 'app\models.py'
+[07/05/2013 16:25:26]	Restarting the application due to changes to file 'app\models.py'

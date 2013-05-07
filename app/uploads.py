@@ -75,16 +75,16 @@ def ajax_upload( request,avaluo_id,folio_k ):
       else:
         raise Http404( "Bad Upload" )
       filename = upload.name
-     
+      filename2 = folio_k + "/" + filename
     # save the file
     success = save_upload( upload, filename, is_raw, folio_k)
 
-    file_contents = SimpleUploadedFile("%s.jpg" % "myfile", request.raw_post_data, "JPG")
+    file_contents = SimpleUploadedFile(filename, request.raw_post_data)
 
 
     imagen_avaluo = ImagenAvaluo()
     imagen_avaluo.avaluo_id = avaluo_id
-    imagen_avaluo.imagen.save(filename,file_contents, save=True)
+    imagen_avaluo.imagen.save(filename2,file_contents, save=True)
  
     # let Ajax Upload know whether we saved it or not
     import json

@@ -91,15 +91,10 @@
           <div class="nav-collapse collapse">
             <!-- <form class="navbar-search pull-right"><input type="text" class="search-query" placeholder="Buscar"></form> !-->
             <ul class="nav">
-              <li class="divider-vertical"></li>
               <li class="{% block alta %}{% endblock %}" ><a href="/SIAV/alta_avaluo/">Alta</a></li>
-              <li class="divider-vertical"></li>
               <li class="{% block visita %}{% endblock %}"><a href="/SIAV/visita/" >Visita    <span class="badge badge-warning">{{cantidad.1}}</a></li>
-              <li class="divider-vertical"></li>
               <li class="{% block captura %}{% endblock %}"><a href="/SIAV/captura/" >Captura    <span class="badge badge-warning">{{cantidad.0}}</span></a></li>
-              <li class="divider-vertical"></li>
               <li class="{% block salida %}{% endblock %}"><a href="/SIAV/salida/">Salida    <span class="badge badge-warning">{{cantidad.2}}</a></li>
-              <li class="divider-vertical"></li>
 
                 {% ifusergroup Admins %}
               <li class="{% block consulta_master %}{% endblock %}"><a href="/SIAV/consulta_master/" >Consulta</a></li>
@@ -108,12 +103,9 @@
                 {% endifusergroup %}
 
                 {% ifusergroup Admins %}
-              <li class="divider-vertical"></li>
               <li><a href="/SIAV/facturar/">Facturar</a></li>
-              <li class="divider-vertical"></li>
               <li><a href="/SIAV/liquidar/">Liquidar</a></li>
-              <li class="divider-vertical"></li>
-              <li><a href="/SIAV/estadistico/{%now "Y"%}">Estadistico</a></li>
+              <li><a href="/SIAV/estadistico/{%now "Y"%}">Estadístico</a></li>
               </li> 
                 {% endifusergroup %}
             </ul>

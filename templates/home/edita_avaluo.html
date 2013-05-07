@@ -86,7 +86,7 @@
             $('#id_NumInt').attr('disabled','disabled'); 
             $('input').blur(function () {
                 if ($('#id_NumExt').val()) {
-                    $('#id_NumInt').removeAttr('disabled');   
+                    $('#id_NumInt').removeAttr('disabled');
                 }else{
                     $('#id_NumInt').attr('disabled','disabled');   
                 }
@@ -133,6 +133,7 @@
  
 {% block content %}
   <h1 style="text-align:center">Servicio en Captura</h1>
+  <hr>
 	<div id="controls" style="display:block;">
 	<input class="btn btn-primary button white" type="button" id="slick-toggle" value="Mapas" />
 		<div id="slickbox" >

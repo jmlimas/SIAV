@@ -10,36 +10,19 @@
 	    });
 	</script>
 
-{% if form.errors %}
-<p>Tu nombre de usuario y/o contraseña no coinciden. Porfavor intenta de nuevo.</p>
-{% endif %}
-<!--
-<form method="POST" action="{% url django.contrib.auth.views.login %}" >
-{% csrf_token %}
-    <div id="inner" style="left:38%;position:absolute;top:20%">
-    <table>
-    <tr>
-	<td>Usuario :</td>
-	<td style="width:200px">{{ form.username }}</td>
-    </tr>
-    <tr>
-	<td>Contraseña :</td>
-	<td style="width:200px">{{ form.password }}</td>
-    </tr>
-    </table>
-
-    <input type="submit" class="btn btn-primary button white" id="login" value="Login" />
-    <input type="hidden" name="next" value="{{ next }}" />
-    </form>!-->
-
  <div class="container">
+
+        {% if form.errors %}
+         <div class="alert alert-error">
+                    <a class="close" data-dismiss="alert-error">×</a>
+                    <p>Nombre de Usuario y/o contraseña no válido.</p>
+                  </div>
+        {% endif %}
 
       <form class="form-signin" method="POST" action="{% url django.contrib.auth.views.login %}" > {% csrf_token %}
         <h1 class="form-signin-heading">Inicia sesión</h1>
         {{ form.username }}
         {{ form.password }}
-        <!-- <input type="text" class="input-block-level" placeholder="Usuario"> !-->
-        <!-- <input type="password" class="input-block-level" placeholder="Contraseña">  !-->
         <label class="checkbox">
           <input type="checkbox" value="remember-me"> Recordarme
         </label>

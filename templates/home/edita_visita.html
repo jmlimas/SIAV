@@ -133,7 +133,8 @@
  
 {% block content %}
   <h1 style="text-align:center">Servicio por Visitar</h1>
-	<div id="controls" style="display:block;">
+  <hr>
+	<div id="controls">
 	<input class="btn btn-primary button white" type="button" id="slick-toggle" value="Mapas" />
 		<div id="slickbox" >
 			<div id="map_canvas" style="width: 700px; height: 500px;"  ></div>
@@ -144,12 +145,12 @@
 				<!-- or put a simple form for upload here -->
 			</noscript>         
 		</div>
+    <a href="/SIAV/show_visita_pdf/{{avaluo.avaluo_id}}/" >
+      <input class="btn btn-info button white" type="button" id="slick-toggle" value="Reporte de Visita"></input>
+    </a>
 	</div>
-  
    <div>
-   	<a href="/SIAV/show_visita_pdf/{{avaluo.avaluo_id}}/">Reporte de Visita</a>
-	<br />
-    <br />
+
 	<table class="table table-condensed" id="datos_texto">
 		<tr>
 			<td>Avaluo Id : {{ avaluo.avaluo_id }}</td>
