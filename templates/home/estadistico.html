@@ -17,6 +17,8 @@
 <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/picnet-table.js"></script>
 <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/jquery.livequery.js"></script> 
 <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/highcharts.js"></script>
+<script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/boostrap-tab.js"></script>
+
 <script type="text/javascript">
 $(document).ready(function () {
     $('#avaluos_table').tableFilter();
@@ -151,53 +153,164 @@ data: [5, 7, 3]
             shared: false,
         },
     });
-});
+
+  $('#pie_container').highcharts({
+            chart: {
+                plotBackgroundColor: null,
+                plotBorderWidth: null,
+                plotShadow: false,
+                backgroundColor: '#FFFFFF',
+                borderColor: '#D5D5D5',
+                borderWidth: 2,
+            },
+            title: {
+                text: ''
+            },
+            tooltip: {
+                pointFormat: '{series.name}: <b>{point.percentage}%</b>',
+                percentageDecimals: 1
+            },
+            plotOptions: {
+                pie: {
+                    size:'70%',
+                    allowPointSelect: true,
+                    cursor: 'pointer',
+                    dataLabels: {
+                        enabled: true,
+                        color: '#000000',
+                        connectorColor: '#000000',
+                        formatter: function() {
+                            return '<b>' + this.point.name + '</b>: ' + this.percentage.toFixed(2) + ' %';
+                        }
+                    }
+                }
+            },
+            series: [{
+                type: 'pie',
+                name: 'Browser share',
+                data: [
+                {% for a in cliente %}
+                    ['{{a.Cliente__Cliente}}',{{a.Total}}],
+                {% endfor %}
+
+                ]
+            }]
+        });
 
 });
+
+
+});
+
+    
 });
 
 </script>
 
 {% endblock %}      
 {% block content %}
-<ul class="breadcrumb">
-    {% for a in anios %}
-    <li><a href="/SIAV/estadistico/{{a.year}}">{{a.year}}</a> <span class="divider">/</span></li>
-    {% endfor %}
-</ul>
+    <ul class="breadcrumb">
+        {% for a in anios %}
+        <li><a href="/SIAV/estadistico/{{a.year}}">{{a.year}}</a> <span class="divider">/</span></li>
+        {% endfor %}
+    </ul>
 
-<div class="container">
-    <h1>Estadístico ({{anio}})</h1>
-    <br />
-    <div class="row-fluid span10">
-        <div class="span6">
-            <div id="line_container" ></div>
-            <table class="table table-hover" style="width:60%; margin-top:50px">
-                <thead>
-                    <th>Mes</th>
-                    <th>Cantidad Avaluos</th>
-                    <th>Importe</th>
-                </thead>
-                {% for a in avaluos %}
-                <tr>
-                    <td>{{ a.month|month_name }}</td>
-                    <td>{{ a.dcount }}</td>
-                    <td>{{ a.Total|currency }}</td>
-                </tr>
-                {% endfor %}
-                <tr>
-                    <td><b>Total</b></td>
-                    <td><b>{{totales.0}}</b></td>
-                    <td><b>{{totales.1|currency}}</b></td>
-                </tr>
-            </table>
+    <ul id="tabs" class="nav nav-tabs" data-tabs="tabs">
+        <li class="active"><a href="#asigna" data-toggle="tab">Asignación</a></li>
+        <li><a href="#cliente" data-toggle="tab">Cliente</a></li>
+        <li><a href="#historial" data-toggle="tab">Historial</a></li>
+    </ul>
+
+    <div id="my-tab-content" class="tab-content">
+        <div class="tab-pane active" id="asigna">
+            <h1>Asignación ({{anio}})</h1>
+            <br>
+                <div class="container">
+                    <div class="row-fluid span10">
+                        <div class="span6">
+                            <div id="line_container" ></div>
+                 
+                        </div>
+                        <div class="span6">
+                            <div id="bar_container"></div>
+                        </div>
+                    </div>
+                   <br>
+                   <table class="table table-hover" style="width:83%;margin-top:50px">
+                        <thead>
+                            <th>Mes</th>
+                            <th>Cantidad Avaluos</th>
+                            <th>Importe</th>
+                        </thead>
+                        {% for a in avaluos %}
+                        <tr>
+                            <td>{{ a.month|month_name }}</td>
+                            <td>{{ a.dcount }}</td>
+                            <td>{{ a.Total|currency }}</td>
+                        </tr>
+                        {% endfor %}
+                        <tr>
+                            <td><b>Total</b></td>
+                            <td><b>{{totales.0}}</b></td>
+                            <td><b>{{totales.1|currency}}</b></td>
+                        </tr>
+                    </table>
+                </div>
         </div>
-        <div class="span6">
-            <div id="bar_container"></div>
-            <div id="todos_container"></div>
+        <div class="tab-pane" id="cliente">
+            <h1>Clientes {{anio}}</h1>
+            <br>
+            <div class="container">
+                <div class="row-fluid">
+                <div class="span6">
+                     <div id="pie_container"></div>
+                </div>
+                <div class="span6">
+                    <table class="table table-hover" style="width:50%;margin-left:10px;">
+                                        <thead>
+                                            <th>Cliente</th>
+                                            <th>Importe</th>
+                                        </thead>
+                                        {% for a in cliente %}
+                                        <tr>
+                                            <td>{{a.Cliente__Cliente}} </td>
+                                            <td>{{ a.Total|currency }}</td>
+                                        </tr>
+                                        {% endfor %}
+                    </table>
+                </div>
+         
+                </div>
+            </div>
+        </div>
+        <div class="tab-pane" id="historial">
+            <h1>Historial ({{anio}})</h1>
+            <br>
+            <div class="container">
+                <div class="row-fluid">
+                    <div class="span6">
+                        <div id="todos_container"></div>
+                    </div>
+                    <div class="span6">
+                        <table class="table table-hover" style="width:50%;margin-left:10px;">
+                                <thead>
+                                    <th>Año</th>
+                                    <th>Importe</th>
+                                </thead>
+                                {% for a in monto_todos_anios %}
+                                <tr>
+                                    <td>{{ a.year }}</td>
+                                    <td>{{ a.Total|currency }}</td>
+                                </tr>
+                                {% endfor %}
+                        </table>
+                    </div>
+                </div>
+                </div>
+            </div>
         </div>
     </div>
 
-</div>
+
 </div>
 {% endblock %}

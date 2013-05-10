@@ -130,6 +130,7 @@ def liquidar(request):
 def estadistico(request, anio=2013):
     anios = Avaluo.objects.all().dates('Salida', 'year')
     avaluos = Avaluo.objects.extra(select={'month': 'extract( month from Salida )'}).values('month').filter(Salida__year=anio).order_by('month').annotate(dcount=Count('Solicitud'), Total=Sum('Importe'))
+    cliente = Avaluo.objects.filter(Salida__year=anio).values('Cliente__Cliente').annotate(Total=Sum('Importe'), Cantidad=Count('Cliente'))
     monto_todos_anios = Avaluo.objects.extra(select={'year': 'extract( year from Salida )'}).values('year').annotate(Total=Sum('Importe')).order_by('year')
 
     total_general = 0.00
@@ -143,7 +144,7 @@ def estadistico(request, anio=2013):
             total_general += float(str(x['Total']))
             total_avaluos += x['dcount']
     totales = [total_avaluos, total_general]
-    return render_to_response('home/estadistico.html', {'avaluos': avaluos, 'totales': totales, 'anio': anio, 'anios': anios, 'monto_todos_anios': monto_todos_anios}, context_instance=RequestContext(request))
+    return render_to_response('home/estadistico.html', {'avaluos': avaluos, 'totales': totales, 'anio': anio, 'anios': anios, 'monto_todos_anios': monto_todos_anios, 'cliente': cliente}, context_instance=RequestContext(request))
 
 
 @login_required
