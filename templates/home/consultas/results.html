@@ -1,4 +1,6 @@
-﻿{% if results|length %}
+﻿{% load currency %}
+
+{% if results|length %}
 	<table class="table table-striped">
 	<tr class='even'>
 		<td colspan="13" class="right">
@@ -16,7 +18,7 @@
 		<th>Num.Int</th>
 		<th>Colonia</th>
 		<th>Municipio</th>
-		<th>Prioridad</th>
+		<th>Monto</th>
 		<th>Estatus</th>
 		<th>Opciones</th>
 	</tr>
@@ -48,7 +50,7 @@
 		<span class="hint"> {{ avaluo.Municipio }}</span>
 		</td>
 		<td class="right">
-		<span class="hint"> {{ avaluo.Prioridad }}</span>
+		<span class="hint"> {{ avaluo.Importe|currency }}</span>
 		</td>
 		<td class="right">
 		<span class="hint"> {{ avaluo.Estatus }}</span>

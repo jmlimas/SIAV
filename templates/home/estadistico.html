@@ -190,7 +190,9 @@ data: [5, 7, 3]
                 name: 'Browser share',
                 data: [
                 {% for a in cliente %}
+                {% if a.Total %}
                     ['{{a.Cliente__Cliente}}',{{a.Total}}],
+                {% endif %}
                 {% endfor %}
 
                 ]
