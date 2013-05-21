@@ -8,167 +8,168 @@
 
 
 
- {% block style %}
- 
-     <style type="text/css" title="currentStyle">
-	@import "{{ STATIC_URL }}CSS/smoothness/jquery-ui-1.8.24.custom.css";
-    </style>
-    
-    <style>
-      div.ui-datepicker{
+{% block style %}
+
+<style type="text/css" title="currentStyle">
+@import "{{ STATIC_URL }}CSS/smoothness/jquery-ui-1.8.24.custom.css";
+</style>
+
+<style>
+div.ui-datepicker{
 	font-size:10px;
-      }
-    </style>
- {% endblock %}
+}
+</style>
+{% endblock %}
 
- {% block script %}
- 
-    
-    <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/jquery-ui-1.8.24.custom.min.js"></script> 
-    <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/jquery-datepicker-es.js"></script>
-    <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/fileuploader.js"></script>
-    <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/ajax_estados_municipios.js"></script> <!-- Incluye  sugerencia de colonias.-->
+{% block script %}
 
-    
-    <script>        
-        function createUploader(){            
-            var uploader = new qq.FileUploader( {
-                action: "{% url app.uploads.ajax_upload avaluo.avaluo_id avaluo.FolioK %}",
-                element: $('#file-uploader')[0],
-                multiple: true,
-                onComplete: function( id, fileName, responseJSON ) {
-                    if( responseJSON.success )
-                        alert( "success!" ) ;
-                    else
-                        alert( "upload failed!" ) ;
-                },
-                onAllComplete: function( uploads ) {
+
+<script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/jquery-ui-1.8.24.custom.min.js"></script> 
+<script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/jquery-datepicker-es.js"></script>
+<script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/fileuploader.js"></script>
+<script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/ajax_estados_municipios.js"></script> <!-- Incluye  sugerencia de colonias.-->
+
+
+<script>        
+function createUploader(){            
+  var uploader = new qq.FileUploader( {
+    action: "{% url app.uploads.ajax_upload avaluo.avaluo_id avaluo.FolioK %}",
+    element: $('#file-uploader')[0],
+    multiple: true,
+    onComplete: function( id, fileName, responseJSON ) {
+      if( responseJSON.success )
+        alert( "success!" ) ;
+      else
+        alert( "upload failed!" ) ;
+    },
+    onAllComplete: function( uploads ) {
                     // uploads is an array of maps
                     // the maps look like this: { file: FileObject, response: JSONServerResponse }
                     alert( "All complete!" ) ;
-                },
-                params: {
+                  },
+                  params: {
                     'csrf_token': '{{ csrf_token }}',
                     'csrf_name': 'csrfmiddlewaretoken',
                     'csrf_xname': 'X-CSRFToken',
-                },
-            } ) ;
-        }         
+                  },
+                } ) ;
+}         
 
- 
-    </script>  
-	
-    <script type="text/javascript"> 
-        $(function() {
+
+</script>  
+
+<script type="text/javascript"> 
+$(function() {
 
             // in your app create uploader as soon as the DOM is ready
             // don't wait for the window to load  
             window.onload = createUploader;    
-	  
-  
+
+
             $('#id_Solicitud').datepicker({ autoSize: true });
             $('#id_Visita').datepicker({ autoSize: true });
-	  
+
             $(":input").blur(function() {
-                if(this.id != 'id_Observaciones') {
-                    this.value = this.value.toUpperCase();
-                }
+              if(this.id != 'id_Observaciones') {
+                this.value = this.value.toUpperCase();
+              }
             });
-		
+
             $('#slickbox').hide();
             // toggles the slickbox on clicking the noted link  
             $('#slick-toggle').click(function() {	
-                $('#slickbox').toggle(400);
-                initialize();
-                return false;
+              $('#slickbox').toggle(400);
+              initialize();
+              return false;
             });
 
             $('#id_NumInt').attr('disabled','disabled'); 
             $('input').blur(function () {
-                if ($('#id_NumExt').val()) {
-                    $('#id_NumInt').removeAttr('disabled');   
-                }else{
-                    $('#id_NumInt').attr('disabled','disabled');   
-                }
+              if ($('#id_NumExt').val()) {
+                $('#id_NumInt').removeAttr('disabled');   
+              }else{
+                $('#id_NumInt').attr('disabled','disabled');   
+              }
             });
-			
-        });
 
-        
+          });
 
-	
-    </script>
-	
-	<script type="text/javascript"
-      src="https://maps.google.com/maps/api/js?sensor=true">
-	</script>   
-	
-  <script type="text/javascript">
 
-      var latsign = 1;
-      if( {{avaluo.LatitudG}} < 0){
-          latsign = -1;
-      }
-      var lonsign = 1;
-      if( {{avaluo.LongitudG}} < 0){
-          lonsign = -1;
-      }
-      var declat = Math.round(
-           Math.abs( Math.round({{avaluo.LatitudG}}* 1000000.00)) +
-           (Math.abs(Math.round({{avaluo.LatitudM}}* 1000000.00))/60) +
-           (Math.abs(Math.round({{avaluo.LatitudS}}* 1000000.00))/3600)
-      ) * latsign/1000000;
 
-      var declon = Math.round(
-           Math.abs( Math.round(({{avaluo.LongitudG}})* 1000000.00)) +
-           (Math.abs(Math.round(({{avaluo.LongitudM}})* 1000000.00))/60) +
-           (Math.abs(Math.round(({{avaluo.LongitudS}})* 1000000.00))/3600)
-      ) * lonsign/1000000;
 
- </script>
- 
- <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/mapas.js"></script>
+</script>
 
- {% endblock %}     
- 
+<script type="text/javascript"
+src="https://maps.google.com/maps/api/js?sensor=true">
+</script>   
+
+<script type="text/javascript">
+
+var latsign = 1;
+if( {{avaluo.LatitudG}} < 0){
+  latsign = -1;
+}
+var lonsign = 1;
+if( {{avaluo.LongitudG}} < 0){
+  lonsign = -1;
+}
+var declat = Math.round(
+ Math.abs( Math.round({{avaluo.LatitudG}}* 1000000.00)) +
+ (Math.abs(Math.round({{avaluo.LatitudM}}* 1000000.00))/60) +
+ (Math.abs(Math.round({{avaluo.LatitudS}}* 1000000.00))/3600)
+ ) * latsign/1000000;
+
+var declon = Math.round(
+ Math.abs( Math.round(({{avaluo.LongitudG}})* 1000000.00)) +
+ (Math.abs(Math.round(({{avaluo.LongitudM}})* 1000000.00))/60) +
+ (Math.abs(Math.round(({{avaluo.LongitudS}})* 1000000.00))/3600)
+ ) * lonsign/1000000;
+
+</script>
+
+<script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/mapas.js"></script>
+
+{% endblock %}     
+
 {% block content %}
-  <h1 style="text-align:center">Servicio por Visitar</h1>
-  <hr>
-	<div id="controls">
+<h1 style="text-align:center">Visita</h1>
+<div id="controls">
 	<input class="btn btn-primary button white" type="button" id="slick-toggle" value="Mapas" />
-		<div id="slickbox" >
-			<div id="map_canvas" style="width: 700px; height: 500px;"  ></div>
-		</div>
-		 <div id="file-uploader" style="float:right;">		
-			<noscript>			
-				<p>Please enable JavaScript to use file uploader.</p>
-				<!-- or put a simple form for upload here -->
-			</noscript>         
-		</div>
-    <a href="/SIAV/show_visita_pdf/{{avaluo.avaluo_id}}/" >
-      <input class="btn btn-info button white" type="button" id="slick-toggle" value="Reporte de Visita"></input>
-    </a>
-	</div>
-   <div>
+  <div id="slickbox" >
+   <div id="map_canvas" style="width: 700px; height: 500px;"  ></div>
+ </div>
+ <div id="file-uploader" style="float:right;">		
+   <noscript>			
+    <p>Please enable JavaScript to use file uploader.</p>
+    <!-- or put a simple form for upload here -->
+  </noscript>         
+</div>
+<a href="/SIAV/show_visita_pdf/{{avaluo.avaluo_id}}/" >
+  <input class="btn btn-info button white" type="button" id="slick-toggle" value="Reporte de Visita"></input>
+</a>
+</div>
 
+    <div class="span12">
+    <div class="offset2 span8">
 	<table class="table table-condensed" id="datos_texto">
 		<tr>
-			<td>Avaluo Id : {{ avaluo.avaluo_id }}</td>
-			<td>Folio K : {{ folio_k }}</td>
-			<td>Tipo de Servicio: {{ avaluo.Servicio }}</td>
+			<td>Avaluo Id : <b>{{ avaluo.avaluo_id }}</b></td>
+			<td>Folio K : <b>{{ folio_k }}</b></td>
+			<td>Tipo de Servicio: <b>{{ avaluo.Servicio }}</b></td>
 
 		</tr>
 		<tr>
-			<td>Cliente : {{ avaluo.Cliente }}</td>
-			<td>Departamento : {{ avaluo.Depto}}</td>
-			<td>Fecha Solicitud : {{ avaluo.Solicitud }}</td>
+			<td>Cliente : <b>{{ avaluo.Cliente }}</b></td>
+			<td>Departamento : <b>{{ avaluo.Depto}}</b></td>
+			<td>Fecha Solicitud : <b>{{ avaluo.Solicitud }}</b></td>
 		</tr>
 	</table>
+  </div>
+  </div>
 	
 	{% crispy form %}	
 
 	<br>
-   </div>
-   <br>
+<br>
 
 {% endblock %}

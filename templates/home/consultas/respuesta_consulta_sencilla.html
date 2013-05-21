@@ -113,35 +113,34 @@
  
 	<table id="datos_texto">
 		<tr>
-			<td>Avaluo Id : {{ avaluo.avaluo_id }}</td>{% csrf_token %}
-			<td>Folio K : {{ avaluo.FolioK }}</td>
-			<td>Tipo de Servicio: {{ avaluo.Servicio }}</td>
+			<td>Avaluo Id : <b>{{ avaluo.avaluo_id }}</b></td>{% csrf_token %}
+			<td>Folio K : <b>{{ avaluo.FolioK }}</b></td>
+			<td>Tipo de Servicio: <b>{{ avaluo.Servicio }}</b></td>
 
 		</tr>
 		<tr>
-			<td>Cliente : {{ avaluo.Cliente }}</td>
-			<td>Departamento : {{ avaluo.Depto}}</td>
-			<td>Fecha Solicitud : {{ avaluo.Solicitud }}</td>
+			<td>Cliente : <b>{{ avaluo.Cliente }}<b></td>
+			<td>Departamento :<b> {{ avaluo.Depto}}<b></td>
+			<td>Fecha Solicitud : <b>{{ avaluo.Solicitud }}</b></td>
 		</tr>
         <tr>
-			<td>Calle : {{ avaluo.Calle }}</td>
-			<td>Colonia : {{ avaluo.Colonia}}</td>
-			<td>Municipio : {{ avaluo.Municipio }}</td>
+			<td>Calle : <b>{{ avaluo.Calle }}</b></td>
+			<td>Colonia : <b>{{ avaluo.Colonia}}</b></td>
+			<td>Municipio : <b>{{ avaluo.Municipio }}</b></td>
 		</tr>
         <tr>
-			<td>Estado : {{ avaluo.Estado }}</td>
-			<td>Fecha Visita : {{ avaluo.Visita}}</td>
-			<td>Valor : {{ avaluo.Valor }}</td>
+			<td>Estado : <b>{{ avaluo.Estado }}</b></td>
+			<td>Fecha Visita : <b>{{ avaluo.Visita}}</b></td>
+			<td>Valor : <b>{{ avaluo.Valor }}</b></td>
 		</tr>
         <tr>
-			<td>Fecha Solicitud : {{ avaluo.Solicitud }}</td>
-			<td>Mterreno : {{ avaluo.Mterreno}}</td>
-			<td>Mconstruccion : {{ avaluo.Mconstruccion }}</td>
+        	<td>Factura : <b>{{ avaluo.Factura }}</b></td>
+			<td>Mterreno : <b>{{avaluo.Mterreno}}</b></td>
+			<td>Mconstruccion : <b>{{ avaluo.Mconstruccion }}</b></td>
 		</tr>
         <tr>
-			<td>Factura : {{ avaluo.Factura }}</td>
-			<td>Pagado : {{ avaluo.Pagado}}</td>
-			<td>Observaciones : {{ avaluo.Observaciones }}</td>
+			<td>Pagado : <b>{{ avaluo.Pagado}}</b></td>
+			<td>Observaciones : <b>{{ avaluo.Observaciones }}</b></td>
 		</tr>
 	</table>
 	<br>

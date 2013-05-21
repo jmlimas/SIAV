@@ -48,6 +48,7 @@ def cantidades():
 @login_required
 def home(request):
     avaluos = Avaluo.objects.filter(Estatus__contains='PROCESO', Salida__isnull=True) | Avaluo.objects.filter(Estatus__contains='DETENIDO', Salida__isnull=True)
+    avaluos = avaluos.order_by('-Solicitud')
     cantidad = cantidades()
     return render_to_response('home/home.html', {'avaluos': avaluos, 'cantidad': cantidad}, context_instance=RequestContext(request))
 
@@ -68,6 +69,7 @@ def facturar(request):
                .filter(Q(Salida__isnull=False))
                .filter(Q(Factura='') | Q(Factura__isnull=True))
                .filter(Q(Pagado=False) | Q(Pagado__isnull=True)))
+    avaluos = avaluos.order_by('-Salida')
     FacturaFormset = modelformset_factory(Avaluo, form=FacturaForm, extra=0)
 
     if request.method == 'POST':
@@ -151,6 +153,7 @@ def estadistico(request, anio=2013):
 def captura(request):
     #lista_avaluos = Avaluo.objects.all()
     avaluos = Avaluo.objects.filter(Estatus__contains='PROCESO', Salida__isnull=True, Visita__isnull=False) | Avaluo.objects.filter(Estatus__contains='DETENIDO', Salida__isnull=True, Visita__isnull=False)
+    avaluos = avaluos.order_by('-Solicitud')
     cantidad = cantidades()
     return render_to_response('home/captura.html', {'avaluos': avaluos, 'cantidad': cantidad}, context_instance=RequestContext(request))
 
@@ -158,6 +161,7 @@ def captura(request):
 @login_required
 def visita(request):
     avaluos = Avaluo.objects.filter(Estatus__contains='PROCESO', Visita__isnull=True, Salida__isnull=True) | Avaluo.objects.filter(Estatus__contains='DETENIDO', Visita__isnull=True, Salida__isnull=True)
+    avaluos = avaluos.order_by('-Solicitud')
     cantidad = cantidades()
     return render_to_response('home/visita.html', {'avaluos': avaluos, 'cantidad': cantidad}, context_instance=RequestContext(request))
 
@@ -165,6 +169,7 @@ def visita(request):
 @login_required
 def salida(request):
     avaluos = Avaluo.objects.filter(Estatus__contains='PROCESO', Visita__isnull=False, Salida__isnull=True)
+    avaluos = avaluos.order_by('-Solicitud')
     cantidad = cantidades()
     return render_to_response('home/salida.html', {'avaluos': avaluos, 'cantidad': cantidad}, context_instance=RequestContext(request))
 
@@ -370,6 +375,7 @@ def consulta_master(request):
                     avaluos = avaluos.filter(Solicitud__range=(inicio, fin))
                 cantidad = avaluos.count()
             cantidad = avaluos.count()
+            avaluos = avaluos.order_by('-Solicitud')
             return render_to_response('home/consultas/lista_consultaM.html', {'forma': forma, 'avaluos': avaluos, 'cantidad': cantidad}, context_instance=RequestContext(request))
         else:
             forma = FormaConsultaMaster(request.POST)
@@ -434,8 +440,8 @@ def consulta_sencilla(request):
                         dias = "31"
                     fin = str(anio)+"-"+str(mes)+"-"+dias
                     avaluos = avaluos.filter(Solicitud__range=(inicio, fin))
-                #cantidad = avaluos.count()
-
+                cantidad = avaluos.count()
+                avaluos = avaluos.order_by('-Solicitud')
                 return render_to_response('home/consultas/lista_consultaS.html', {'forma': forma, 'avaluos': avaluos, 'cantidad': cantidad}, context_instance=RequestContext(request))
     else:
         forma = FormaConsultaSencilla()

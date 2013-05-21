@@ -7,78 +7,74 @@
 {% block alta %}active{% endblock %}
 {% block inicio %}active{% endblock %}
 
- {% block style %}
- 
-     <style type="text/css" title="currentStyle">
-	@import "{{ STATIC_URL }}CSS/smoothness/jquery-ui-1.8.24.custom.css";
-    </style>
+{% block style %}
+
+<style type="text/css" title="currentStyle">
+@import "{{ STATIC_URL }}CSS/smoothness/jquery-ui-1.8.24.custom.css";
+</style>
 
 
-    
-    <style>
-      div.ui-datepicker{
+
+<style>
+div.ui-datepicker{
 	font-size:10px;
-      }
-    </style>
- 
- {% endblock %}
- 
- {% block script %}
-	
-    <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/jquery-ui-1.8.24.custom.min.js"></script> 
-    <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/jquery-datepicker-es.js"></script>
-    <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/ajax_estados_municipios.js"></script> <!-- Incluye  sugerencia de colonias.-->
+}
+</style>
 
-    <script type="text/javascript"> 
-	
-	$(document).ready( function() {
-    var now = new Date();
-    var month = (now.getMonth() + 1);               
-    var day = now.getDate();
-    if(month < 10) 
-        month = "0" + month;
-    if(day < 10) 
-        day = "0" + day;
-    var today = day + '/' + month + '/' + now.getFullYear() ;
-    $('#id_Solicitud').val(today);
-	});
+{% endblock %}
 
-    $(function() {
+{% block script %}
 
-	  $('#id_Solicitud').datepicker({ autoSize: true });
-	  
-	 
-	$(":input").blur(function() {
-	if(this.id != 'id_Observaciones') {
-	  this.value = this.value.toUpperCase();
-	  }
-	});
+<script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/jquery-ui-1.8.24.custom.min.js"></script> 
+<script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/jquery-datepicker-es.js"></script>
+<script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/ajax_estados_municipios.js"></script> <!-- Incluye  sugerencia de colonias.-->
+<script type="text/javascript"> 
 
-	$('#id_NumInt').attr('disabled', 'disabled');
-	$('input').blur(function () {
-	    if ($('#id_NumExt').val()) {
-	        $('#id_NumInt').removeAttr('disabled');
-	    } else {
-	        $('#id_NumInt').attr('disabled', 'disabled');
-	    }
-	});
+$(document).ready( function() {
+  var now = new Date();
+  var month = (now.getMonth() + 1);               
+  var day = now.getDate();
+  if(month < 10) 
+    month = "0" + month;
+  if(day < 10) 
+    day = "0" + day;
+  var today = day + '/' + month + '/' + now.getFullYear() ;
+  $('#id_Solicitud').val(today);
+});
 
-    });
-    </script>
-	
- {% endblock %}      
+$(function() {
+
+ $('#id_Solicitud').datepicker({ autoSize: true });
+
+
+ $(":input").blur(function() {
+   if(this.id != 'id_Observaciones') {
+     this.value = this.value.toUpperCase();
+   }
+ });
+
+ $('#id_NumInt').attr('disabled', 'disabled');
+ $('input').blur(function () {
+   if ($('#id_NumExt').val()) {
+     $('#id_NumInt').removeAttr('disabled');
+   } else {
+     $('#id_NumInt').attr('disabled', 'disabled');
+   }
+ });
+
+});
+</script>
+
+{% endblock %}      
 
 {% block content %}
-  <h1>Alta Avalúo</h1>
-  <hr>
-    <br />
-      {% if forma.errors %}
-        <p style="color: red;">
-            Porfavor completa los campos faltantes.
-        </p>
-    {% endif %}
-  
-	{% crispy forma %}	
-   <br>
-  
+<h1>Alta Avalúo</h1>
+<br />
+{% if forma.errors %}
+<p style="color: red;">
+  Porfavor completa los campos faltantes.
+</p>
+{% endif %}
+{% crispy forma %}	
+<br>
 {% endblock %}

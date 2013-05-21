@@ -129,8 +129,7 @@ var declon = Math.round(
 {% endblock %}     
 
 {% block content %}
-<h1 style="text-align:center">Servicio en Captura</h1>
-<hr>
+<h1 style="text-align:center">Captura</h1>
 <div id="controls" style="display:block;">
 	<input class="btn btn-primary button white" type="button" id="slick-toggle" value="Mapas" />
   <div id="slickbox" >
@@ -144,22 +143,24 @@ var declon = Math.round(
 </div>
 </div>
 
-<div>
-	<table class="table table-condensed" id="datos_texto">
+    <div class="span12">
+    <div class="offset2 span8">
+	<table class="table table-striped" id="datos_texto">
 		<tr>
-			<td>Avaluo Id : {{ avaluo.avaluo_id }}</td>
-			<td>Folio K : {{ folio_k }}</td>
-			<td>Tipo de Servicio: {{ avaluo.Servicio }}</td>
+			<td>Avaluo Id : <b>{{ avaluo.avaluo_id }}</b></td>
+			<td>Folio K : <b>{{ folio_k }}</b></td>
+			<td>Tipo de Servicio: <b>{{ avaluo.Servicio }}</b></td>
 
 		</tr>
 		<tr>
-			<td>Cliente : {{ avaluo.Cliente }}</td>
-			<td>Departamento : {{ avaluo.Depto}}</td>
-			<td>Fecha Solicitud : {{ avaluo.Solicitud }}</td>
+			<td>Cliente : <b>{{ avaluo.Cliente }}</b></td>
+			<td>Departamento : <b>{{ avaluo.Depto}}</b></td>
+			<td>Fecha Solicitud : <b>{{ avaluo.Solicitud }}</b></td>
 		</tr>
 	</table>
+</div>
+</div>
 	{% crispy form %}	
 	<br>
-</div>
-<br>
+  <br>
 {% endblock %}

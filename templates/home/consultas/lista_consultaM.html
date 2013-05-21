@@ -21,13 +21,13 @@
 {% block content %}
   <h1 style="text-align:center">Consulta Administrador</h1>
   <h2>{{cantidad}} Servicios </h2> 
-<table id='avaluos_table'>
+<table id='avaluos_table' class="table table-striped">
 	  <thead>
-      <tr><th style="width:40px">Folio K</th><th style="width:40px" filter='false' >Ref.</th><th filter-type='ddl'>Cliente</th><th>Calle</th><th filter='false'>Ext.</th><th filter='false'>Int.</th><th style="width:100px" filter-type='ddl'>Colonia</th><th filter-type='ddl'>Municipio</th><th filter='false'>Monto</th><th style="width:10px" filter-type='ddl'>Estatus</th><th filter='false'>Dias</th><th filter='false' class="tabla_opciones">Opciones</th></tr>
+      <tr class='even'><th style="width:40px">Folio K</th><th style="width:40px" filter='false' >Ref.</th><th filter-type='ddl'>Cliente</th><th>Calle</th><th filter='false'>Ext.</th><th filter='false'>Int.</th><th style="width:100px" filter-type='ddl'>Colonia</th><th filter-type='ddl'>Municipio</th><th filter='false'>Monto</th><th style="width:10px" filter-type='ddl'>Estatus</th><th filter='false'>Dias</th><th filter='false' class="tabla_opciones">Opciones</th></tr>
     </thead>
 	  <tbody>
 		  {% for a in avaluos %}
-		  <tr>
+		  <tr class="{% cycle 'odd' 'even' %}">
 			  <td > {{a.FolioK}} </td>
 	          <td style="width:100px;"> {{a.Referencia}} </td>
 	          <td style="width:10px;"> {{a.Cliente}} </td>

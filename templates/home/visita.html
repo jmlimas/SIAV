@@ -5,71 +5,69 @@
 {% block visita %}active{% endblock %}
 
 {% block script %}
- 
-    <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/picnet.table.filter.min.js"></script>
-	<script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/show_hide.js"></script>
-    <script type="text/javascript">
-            $(document).ready(function () {
-                $('#avaluos_table').tableFilter();
-                valor = 0;
 
-                var rowCount = { p: $('#avaluos_table tbody tr:visible').length };
-                valor = ($('#avaluos_table tbody tr:visible').length);
+<script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/picnet.table.filter.min.js"></script>
+<script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/show_hide.js"></script>
+<script type="text/javascript">
+$(document).ready(function () {
+  $('#avaluos_table').tableFilter();
+  valor = 0;
 
-                $('#cantidad_tabla').html(valor);
-            
-                $('#avaluos_table thead').on("change", function () {
-                    setTimeout(function () {
-                        window.location = '/SIAV/visita/';
-                    }, 1000);
-                });
-            });
-	
-	$(document).ready(function(){
- 
-   $('.show_hide').showHide({
+  var rowCount = { p: $('#avaluos_table tbody tr:visible').length };
+  valor = ($('#avaluos_table tbody tr:visible').length);
+
+  $('#cantidad_tabla').html(valor);
+
+  $('#avaluos_table thead').on("change", function () {
+    setTimeout(function () {
+      window.location = '/SIAV/visita/';
+    }, 1000);
+  });
+});
+
+$(document).ready(function(){
+
+ $('.show_hide').showHide({
         speed: 1000,  // speed you want the toggle to happen
         easing: '',  // the animation effect you want. Remove this line if you dont want an effect and if you haven't included jQuery UI
         changeText: 1, // if you dont want the button text to change, set this to 0
         showText: 'View',// the button text to show when a div is closed
         hideText: 'Close' // the button text to show when a div is open
- 
-    });
- 
-	});
 
-    </script>
+      });
+ 
+});
 
- {% endblock %}      
+</script>
+
+{% endblock %}      
 
 {% block content %}
-  <h1>Visita</h1>
-    <hr /> 
+<h1>Visita</h1>
+<h2 style="text-align:left"><span id="cantidad_tabla"></span>  Servicios</h2>
+<table id='avaluos_table' class="table table-striped">
+ <thead>
+  <tr class='even'><th style="width:40px">Folio K</th><th style="width:40px" filter='false' >Ref.</th><th filter-type='ddl'>Cliente</th><th>Calle</th><th filter='false'>Ext.</th><th filter='false'>Int.</th><th style="width:100px" filter-type='ddl'>Colonia</th><th filter-type='ddl'>Municipio</th><th filter-type='ddl'>Prioridad</th><th style="width:10px" filter-type='ddl'>Status</th><th filter='false'>Dias</th><th filter='false' class="tabla_opciones">Opciones</th></tr>
+</thead>
+<tbody>
+  {% for a in avaluos %}
+  <tr class="{% cycle 'odd' 'even' %}">
+    <td > {{a.FolioK}} </td>
+    <td style="width:100px;"> {{a.Referencia}} </td>
+    <td style="width:10px;"> {{a.Cliente}} </td>
+    <td style="width:200px"> {{a.Calle}} </td>
+    <td style="width:3px;"> {{a.NumExt}} </td>
+    <td style="width:10px;"> {{a.NumInt}} </td>
+    <td style="width:200px;"> {{a.Colonia}} </td>
+    <td style="width:200px;"> {{a.Municipio}} </td>
+    <td style="width:3px;"> {{a.Prioridad}} </td>
+    <td style="width:60px;"> {{a.Estatus}} </td>
+    <td style="width:35px;"> {{ a.Solicitud|dayssince }}</td>			  
+    <td style="width:60px;" class="tabla_opciones"> <a href="/SIAV/edita_visita/{{a.avaluo_id}}">Visita</a></td>
+  </tr>
+  {% endfor %}
+</tbody>
+</table>
 
-  <h2 style="text-align:left"><span id="cantidad_tabla"></span>  Servicios</h2>
-  <table id='avaluos_table'>
-	  <thead>
-		  <tr><th style="width:40px">Folio K</th><th style="width:40px" filter='false' >Ref.</th><th filter-type='ddl'>Cliente</th><th>Calle</th><th filter='false'>Ext.</th><th filter='false'>Int.</th><th style="width:100px" filter-type='ddl'>Colonia</th><th filter-type='ddl'>Municipio</th><th filter-type='ddl'>Prioridad</th><th style="width:10px" filter-type='ddl'>Status</th><th filter='false'>Dias</th><th filter='false' class="tabla_opciones">Opciones</th></tr>
-	  </thead>
-	  <tbody>
-		  {% for a in avaluos %}
-		  <tr>
-		      <td > {{a.FolioK}} </td>
-			  <td style="width:100px;"> {{a.Referencia}} </td>
-			  <td style="width:10px;"> {{a.Cliente}} </td>
-		      <td style="width:200px"> {{a.Calle}} </td>
-			  <td style="width:3px;"> {{a.NumExt}} </td>
-			  <td style="width:10px;"> {{a.NumInt}} </td>
-			  <td style="width:200px;"> {{a.Colonia}} </td>
-		      <td style="width:200px;"> {{a.Municipio}} </td>
-		      <td style="width:3px;"> {{a.Prioridad}} </td>
-		      <td style="width:60px;"> {{a.Estatus}} </td>
-			  <td style="width:35px;"> {{ a.Solicitud|dayssince }}</td>			  
-		      <td style="width:60px;" class="tabla_opciones"> <a href="/SIAV/edita_visita/{{a.avaluo_id}}">Visita</a></td>
-		  </tr>
-		  {% endfor %}
-	  </tbody>
-  </table>
 
-  
 {% endblock %}
