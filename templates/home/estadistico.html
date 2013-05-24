@@ -211,12 +211,6 @@ data: [5, 7, 3]
 
 {% endblock %}      
 {% block content %}
-    <ul class="breadcrumb">
-        {% for a in anios %}
-        <li><a href="/SIAV/estadistico/{{a.year}}">{{a.year}}</a> <span class="divider">/</span></li>
-        {% endfor %}
-    </ul>
-
     <ul id="tabs" class="nav nav-tabs" data-tabs="tabs">
         <li class="active"><a href="#asigna" data-toggle="tab">Asignación</a></li>
         <li><a href="#cliente" data-toggle="tab">Cliente</a></li>
@@ -312,7 +306,13 @@ data: [5, 7, 3]
             </div>
         </div>
     </div>
-
+    <br>
+    <br>
+    <ul class="breadcrumb">
+        {% for a in anios %}
+        <li><a href="/SIAV/estadistico/{{a.year}}">{{a.year}}</a> <span class="divider">/</span></li>
+        {% endfor %}
+    </ul>
 
 </div>
 {% endblock %}

@@ -73,120 +73,58 @@ src="https://maps.google.com/maps/api/js?sensor=true">
 
 <script type="text/javascript">
 
-function calcula_declat(latG,latM,latS){
-
-  var latsign = 1;
-  if( {{avaluo.LatitudG}} < 0){
-    latsign = -1;
-  }
-
-  var fun_declat = Math.round(
-   Math.abs( Math.round(latG * 1000000.00)) +
-   (Math.abs(Math.round(latM * 1000000.00))/60) +
-   (Math.abs(Math.round(latS * 1000000.00))/3600)
-   ) * latsign/1000000;
-
-  return fun_declat;
-
-}
-
-function calcula_declon(lonG,lonM,lonS){
-
-  var lonsign = 1;
-  if( {{avaluo.LongitudG}} < 0){
-    lonsign = -1;
-  }
-
-  var fun_declon = Math.round(
-   Math.abs( Math.round(lonG * 1000000.00)) +
-   (Math.abs(Math.round(lonM * 1000000.00))/60) +
-   (Math.abs(Math.round(lonS* 1000000.00))/3600)
-   ) * lonsign/1000000;
-
-  return fun_declon;
-
-}
-
 var geocoder;
 var map;
 function initialize() {
-  geocoder = new google.maps.Geocoder();
 
-  var declon = calcula_declon({{avaluo.LongitudG}},{{avaluo.LongitudM}},{{avaluo.LongitudS}});
-  var declat = calcula_declat({{avaluo.LatitudG}},{{avaluo.LatitudM}},{{avaluo.LatitudS}});
+ var latlng = new google.maps.LatLng(100.449917,-25.653944);
+ var myOptions = {
+  zoom: 14,
+  center: latlng,
+  mapTypeId: google.maps.MapTypeId.ROADMAP
+};
+var map = new google.maps.Map(document.getElementById("map_canvas"),
+  myOptions);
 
-  var latlng = new google.maps.LatLng(declon,(declat*-1));
-  var myOptions = {
-    zoom: 7,
-    center: latlng,
-    mapTypeId: google.maps.MapTypeId.ROADMAP
-  };
-  var map = new google.maps.Map(document.getElementById("map_canvas"),
-    myOptions);
-  
+marker = new google.maps.Marker({
+  position: latlng,
+  map: map
+});
 
-  marker = new google.maps.Marker({
-    position: latlng,
-    map: map
-  });
-
-  marker.setMap(map);
-
-  google.maps.event.addDomListener(window, 'load', initialize);
+marker.setMap(map);
 
 
-  {% for avaluo in todos %}
+}
 
-  {%if avaluo.LongitudG and avaluo.LongitudM and avaluo.LongitudS %}
-  {%if avaluo.LatitudG and avaluo.LatitudM and avaluo.LatitudS %}
-
-  var declon = calcula_declon({{avaluo.LongitudG}},{{avaluo.LongitudM}},{{avaluo.LongitudS}});
-  var declat = calcula_declat({{avaluo.LatitudG}},{{avaluo.LatitudM}},{{avaluo.LatitudS}});
-
-  var latlng = new google.maps.LatLng(declon,(declat*-1));
-
-          // {{avaluo.FolioK}}
-          marker = new google.maps.Marker({
-            position: latlng,
-            map: map
-          });
-
-          marker.setMap(map);
-          {% endif %}
-          {% endif %}
-          {% endfor %}
-
-        }
-
-        </script>
+</script>
 
 
-        {% endblock %}     
+{% endblock %}     
 
-        {% block content %}
+{% block content %}
 
-        {% for item in imagenes %}
+{% for item in imagenes %}
 
-        {% thumbnail item.imagen "1000" as big %}
-            {% thumbnail item.imagen "100x100" crop="center" as small %}
-                <a href="{{ big.url}}" title="{{item.avaluo_id}}"><img src="{{ small.url }}" style="padding:5px;"></a>
-            {% endthumbnail %}
-        {% endthumbnail %}
+{% thumbnail item.imagen "1000" as big %}
+{% thumbnail item.imagen "100x100" crop="center" as small %}
+<a href="{{ big.url}}" title="{{item.avaluo_id}}"><img src="{{ small.url }}" style="padding:5px;"></a>
+{% endthumbnail %}
+{% endthumbnail %}
 
-        {% endfor %}
+{% endfor %}
 
-        <div id="controls" style="display:block;">
-         <input class="btn btn-primary button white" type="button" id="slick-toggle" value="Mapas" />
-         <div id="slickbox" >
-           <div id="map_canvas" style="width: 1000px; height: 1000px;"  ></div>
-         </div>
-         <div id="file-uploader" style="float:right;">		
-           <noscript>			
-            <p>Please enable JavaScript to use file uploader.</p>
-            <!-- or put a simple form for upload here -->
-          </noscript>         
-        </div>
-      </div> 
+<div id="controls" style="display:block;">
+ <input class="btn btn-primary button white" type="button" id="slick-toggle" value="Mapas" />
+ <div id="slickbox" >
+   <div id="map_canvas" style="width: 1000px; height: 1000px;"  ></div>
+ </div>
+ <div id="file-uploader" style="float:right;">		
+   <noscript>			
+    <p>Please enable JavaScript to use file uploader.</p>
+    <!-- or put a simple form for upload here -->
+  </noscript>         
+</div>
+</div> 
 
 
-      {% endblock %}
+{% endblock %}

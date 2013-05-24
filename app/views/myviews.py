@@ -1,5 +1,6 @@
 from django.db.models import Sum, Count, Q
 from app.forms import *
+from app.haversine import *
 from django.template import RequestContext
 from django.shortcuts import render_to_response, redirect
 from django.http import HttpResponse, HttpResponseRedirect
@@ -518,10 +519,13 @@ def lista_valuador(request):
 
 @login_required
 def mapas(request):
-    avaluo = Avaluo.objects.get(FolioK='PAR17524')
+
+
+    avaluo = Avaluo.objects.get(FolioK='OLI20032')
+    decimals = decimal_conversion(avaluo)
     todos = Avaluo.objects.all().order_by('?')[:100]
     imagenes = ImagenAvaluo.objects.all()
-    return render_to_response('home/mapas.html', {'avaluo': avaluo, 'todos': todos, 'imagenes': imagenes}, context_instance=RequestContext(request))
+    return render_to_response('home/mapas.html', {'avaluo': avaluo, 'todos': todos, 'imagenes': imagenes, 'decimals': decimals}, context_instance=RequestContext(request))
 
 
 @login_required
