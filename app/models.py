@@ -90,8 +90,8 @@ class Depto(models.Model):
 
 class Avaluo(models.Model):
     avaluo_id = models.AutoField(primary_key=True)
-    Referencia = models.CharField(null=True, max_length=255)
-    FolioK = models.CharField(null=True, max_length=255)
+    Referencia = models.CharField(null=True, max_length=255, unique=True)
+    FolioK = models.CharField(null=True, max_length=255, unique=True)
     Calle = models.CharField(null=True, max_length=255)
     NumExt = models.CharField(null=True, max_length=255)
     NumInt = models.CharField(null=True, max_length=255)

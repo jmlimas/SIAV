@@ -72,6 +72,7 @@ mixpanel.init("6494b92efb3fa21a317ecfee3d3e9790");</script><!-- end Mixpanel -->
 		$('#submit-id-submit').click(function () {
 		    $("input[type=text]").each(function () {
 		        this.value = this.value.toUpperCase();
+            mixpanel.track("Submit Form")
 		    });
 		});
 	});
@@ -127,7 +128,6 @@ mixpanel.init("6494b92efb3fa21a317ecfee3d3e9790");</script><!-- end Mixpanel -->
         </div>
       </div>
     </div>
-
     <div class="container-fluid">
     <div class="row-fluid">
 
