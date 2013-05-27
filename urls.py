@@ -72,6 +72,7 @@ urlpatterns = patterns(
     url(r'^api/get_municipios/', 'app.views.get_municipios', name='get_municipios'),
 
     url(r'^SIAV/media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT}),
+    url(r'^favicon\.ico$', 'django.views.generic.simple.redirect_to', {'url': '/static/img/favicon.ico'}),
 
 )
 

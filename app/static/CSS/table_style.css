@@ -1,7 +1,3 @@
-body {
-
-  }
-
 h1 {
   color:#00334e;
   
@@ -80,7 +76,8 @@ a:hover {
   text-decoration:underline;
   }
 .filtering {
-  background-color:light-gray;
+  background-color:light-gray
+;
   }
 #jqtf_filters {
   list-style:none;  
@@ -101,4 +98,4 @@ a:hover {
 
 #cleanfilters {
   margin-left:20px;
-  }
+  }

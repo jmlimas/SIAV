@@ -3,149 +3,120 @@
 
 <!DOCTYPE html>
 <html lang="en">
+<link rel="shortcut icon" href="{{ STATIC_URL }}img/favicon.ico" />
+<head>
+  <meta charset="utf-8">
+  <title>SIAV</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="">
 
-  <!-- start Mixpanel --><script type="text/javascript">(function(e,b){if(!b.__SV){var a,f,i,g;window.mixpanel=b;a=e.createElement("script");a.type="text/javascript";a.async=!0;a.src=("https:"===e.location.protocol?"https:":"http:")+'//cdn.mxpnl.com/libs/mixpanel-2.2.min.js';f=e.getElementsByTagName("script")[0];f.parentNode.insertBefore(a,f);b._i=[];b.init=function(a,e,d){function f(b,h){var a=h.split(".");2==a.length&&(b=b[a[0]],h=a[1]);b[h]=function(){b.push([h].concat(Array.prototype.slice.call(arguments,0)))}}var c=b;"undefined"!==
-typeof d?c=b[d]=[]:d="mixpanel";c.people=c.people||[];c.toString=function(b){var a="mixpanel";"mixpanel"!==d&&(a+="."+d);b||(a+=" (stub)");return a};c.people.toString=function(){return c.toString(1)+".people (stub)"};i="disable track track_pageview track_links track_forms register register_once alias unregister identify name_tag set_config people.set people.set_once people.increment people.append people.track_charge people.clear_charges people.delete_user".split(" ");for(g=0;g<i.length;g++)f(c,i[g]);
-b._i.push([a,e,d])};b.__SV=1.2}})(document,window.mixpanel||[]);
-mixpanel.init("6494b92efb3fa21a317ecfee3d3e9790");</script><!-- end Mixpanel -->
+  <!-- Common CSS Styles -->
 
-  <head>
-    <meta charset="utf-8">
-    <title>SIAV</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    
-    <!-- Common CSS Styles -->
-
-    <style type="text/css" title="currentStyle">
-    @import "{{ STATIC_URL }}CSS/bootstrap.css";
-    @import "{{ STATIC_URL }}CSS/bootstrap-responsive.css";
-    @import "{{ STATIC_URL }}CSS/fileuploader.css";
-    @import "{{ STATIC_URL }}CSS/Style.css";
-    @import "{{ STATIC_URL }}CSS/table_style.css";
+  <style type="text/css" title="currentStyle">
+  @import "{{ STATIC_URL }}CSS/bootstrap.css";
+  @import "{{ STATIC_URL }}CSS/bootstrap-responsive.css";
+  @import "{{ STATIC_URL }}CSS/fileuploader.css";
+  @import "{{ STATIC_URL }}CSS/Style.css";
+  @import "{{ STATIC_URL }}CSS/table_style.css";
 	/*
 	@import "{{ STATIC_URL }}CSS/jdpicker.css";
-    */
-    </style>
+  */
+  </style>
 
-    <style type="text/css">
-      body {
-        padding-top: 60px;
-        padding-bottom: 40px;
-      }
-      .sidebar-nav {
-        padding: 9px 0;
-      }
+  {% block style %}{% endblock %}
+  <!-- Common JS Libraries  -->
 
-      @media (max-width: 980px) {
-        /* Enable use of floated navbar text */
-        .navbar-text.pull-right {
-          float: none;
-          padding-left: 5px;
-          padding-right: 5px;
-        }
-      }
-    </style>
+  <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/jquery-1.8.2.min.js"></script>
+  <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/jquery.jdpicker.js"></script>
+  <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/jquery.cookie.js"></script>
+  <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/bootstrap.js"></script>
 
-    
-    {% block style %}{% endblock %}
-        <!-- Common JS Libraries  -->
+  {% block script %}{% endblock %}
 
-    <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/jquery-1.8.2.min.js"></script>
-    <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/jquery.jdpicker.js"></script>
-    <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/jquery.cookie.js"></script>
-    <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/bootstrap.js"></script>
+  <script type="text/javascript">
 
-    {% block script %}{% endblock %}
-	
+  $(document).ready(function(){
+    $(':input[type="text"]').live('focus',function(){
+     $(this).attr('autocomplete', 'off');
+   });
 
+    $('#submit-id-submit').click(function () {
+      $("input[type=text]").each(function () {
+        this.value = this.value.toUpperCase();
+        mixpanel.track("Submit Form")
+      });
+    });
+  });
 
+  function printDiv(divName) {
+   var printContents = document.getElementById(divName).innerHTML;
+   var originalContents = document.body.innerHTML;
+   document.body.innerHTML = printContents;
+   window.print();
+   document.body.innerHTML = originalContents;
+ }
+ </script>
+</head>
+<body onload="initialize()">
+  <!-- navigation -->
+  <div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar-inner">
+      <div class="container-fluid">
+        <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="brand" href="/SIAV/">SIAV<span class="badge badge-info">{{cantidad.3}}</span></a>
+        <div class="nav-collapse collapse">
+          <!-- <form class="navbar-search pull-right"><input type="text" class="search-query" placeholder="Buscar"></form> !-->
+          <ul class="nav">
+            <li class="{% block alta %}{% endblock %}" ><a href="/SIAV/alta_avaluo/">Alta</a></li>
+            <li class="{% block visita %}{% endblock %}"><a href="/SIAV/visita/" >Visita    <span class="badge badge-warning">{{cantidad.1}}</a></li>
+            <li class="{% block captura %}{% endblock %}"><a href="/SIAV/captura/" >Captura    <span class="badge badge-warning">{{cantidad.0}}</span></a></li>
+            <li class="{% block salida %}{% endblock %}"><a href="/SIAV/salida/">Salida    <span class="badge badge-warning">{{cantidad.2}}</a></li>
 
-	<script type="text/javascript">
-	
-	$(document).ready(function(){
-		$(':input[type="text"]').live('focus',function(){
-			$(this).attr('autocomplete', 'off');
-		});
+            {% ifusergroup Admins %}
+            <li class="{% block consulta_master %}{% endblock %}"><a href="/SIAV/consulta_master/" >Consulta</a></li>
+            {% else %}
+            <li class="{% block consulta_sencilla %}{% endblock %}"><a href="/SIAV/consulta_sencilla/" >Consulta</a></li>              
+            {% endifusergroup %}
 
-		$('#submit-id-submit').click(function () {
-		    $("input[type=text]").each(function () {
-		        this.value = this.value.toUpperCase();
-            mixpanel.track("Submit Form")
-		    });
-		});
-	});
-
-	function printDiv(divName) {
-	    var printContents = document.getElementById(divName).innerHTML;
-	    var originalContents = document.body.innerHTML;
-	    document.body.innerHTML = printContents;
-	    window.print();
-	    document.body.innerHTML = originalContents;
-	}
-	</script>
-
-    </head>
-	<body onload="initialize()">
-    <!-- navigation -->
-    <div class="navbar navbar-inverse navbar-fixed-top">
-      <div class="navbar-inner">
-        <div class="container-fluid">
-          <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="brand" href="/SIAV/">SIAV<span class="badge badge-info">{{cantidad.3}}</span></a>
-          <div class="nav-collapse collapse">
-            <!-- <form class="navbar-search pull-right"><input type="text" class="search-query" placeholder="Buscar"></form> !-->
-            <ul class="nav">
-              <li class="{% block alta %}{% endblock %}" ><a href="/SIAV/alta_avaluo/">Alta</a></li>
-              <li class="{% block visita %}{% endblock %}"><a href="/SIAV/visita/" >Visita    <span class="badge badge-warning">{{cantidad.1}}</a></li>
-              <li class="{% block captura %}{% endblock %}"><a href="/SIAV/captura/" >Captura    <span class="badge badge-warning">{{cantidad.0}}</span></a></li>
-              <li class="{% block salida %}{% endblock %}"><a href="/SIAV/salida/">Salida    <span class="badge badge-warning">{{cantidad.2}}</a></li>
-
-                {% ifusergroup Admins %}
-              <li class="{% block consulta_master %}{% endblock %}"><a href="/SIAV/consulta_master/" >Consulta</a></li>
-                {% else %}
-              <li class="{% block consulta_sencilla %}{% endblock %}"><a href="/SIAV/consulta_sencilla/" >Consulta</a></li>              
-                {% endifusergroup %}
-
-                {% ifusergroup Admins %}
-              <li><a href="/SIAV/facturar/">Facturar</a></li>
-              <li><a href="/SIAV/liquidar/">Liquidar</a></li>
-              <li><a href="/SIAV/estadistico/{%now "Y"%}">Estadístico</a></li>
-              </li> 
-                {% endifusergroup %}
-            </ul>
-            <ul class="n-logout nav pull-right">
-                <li><a onclick="printDiv('printableArea')"><i class="icon-print icon-white"></i>&nbsp;&nbsp;</a></li>
-                <li><p class="navbar-text pull-right">Bienvenido,  <a href="#">{{user.username }}</a></p></li>
-                <li><a href="/SIAV/logout"> <i class="icon-eject icon-white"></i> Salir</a></li>
-            </ul>
-          </div><!--/.nav-collapse -->
-        </div>
-      </div>
+            {% ifusergroup Admins %}
+            <li><a href="/SIAV/facturar/">Facturar</a></li>
+            <li><a href="/SIAV/liquidar/">Liquidar</a></li>
+            <li><a href="/SIAV/estadistico/{%now "Y"%}">Estadístico</a></li>
+          </li> 
+          {% endifusergroup %}
+        </ul>
+        <ul class="n-logout nav pull-right">
+          <li><a onclick="printDiv('printableArea')"><i class="icon-print icon-white"></i>&nbsp;&nbsp;</a></li>
+          <li><p class="navbar-text pull-right">Bienvenido,  <a href="#">{{user.username }}</a></p></li>
+          <li><a href="/SIAV/logout"> <i class="icon-eject icon-white"></i> Salir</a></li>
+        </ul>
+      </div><!--/.nav-collapse -->
     </div>
-    <div class="container-fluid">
-    <div class="row-fluid">
+  </div>
+</div>
+<div class="container-fluid">
+  <div class="row-fluid">
 
     <div class="span12">
-        <div class="hero-unit">
+      <div class="hero-unit">
         <div id="printableArea">
-        {% block content %}
-        {% endblock %}
+          {% block content %}
+          {% endblock %}
         </div> <!-- Se cierra printable area -->
-        </div>  
+      </div>  
 
-       <br>
+      <br>
       <br>
 
       <footer>
-        <p>&copy; 2013 Desarrollado para Valuadores del Norte S.C </p>
+        <p style="color:white;text-align:center">&copy; Copyright 2013 Valuadores del Norte S.C. </p>
       </footer>
 
-      </div>
-      </body>
+    </div>
+  </body>
   </html>

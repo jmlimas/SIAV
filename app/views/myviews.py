@@ -519,13 +519,12 @@ def lista_valuador(request):
 
 @login_required
 def mapas(request):
-
-
-    avaluo = Avaluo.objects.get(FolioK='OLI20032')
-    decimals = decimal_conversion(avaluo)
+    avaluo = Avaluo.objects.get(FolioK='RUL17611')
+    decimal = decimal_conversion(avaluo)
+    cercanos = find_closest(avaluo)
     todos = Avaluo.objects.all().order_by('?')[:100]
     imagenes = ImagenAvaluo.objects.all()
-    return render_to_response('home/mapas.html', {'avaluo': avaluo, 'todos': todos, 'imagenes': imagenes, 'decimals': decimals}, context_instance=RequestContext(request))
+    return render_to_response('home/mapas.html', {'avaluo': avaluo, 'todos': todos, 'imagenes': imagenes,'decimal': decimal, 'cercanos': cercanos}, context_instance=RequestContext(request))
 
 
 @login_required

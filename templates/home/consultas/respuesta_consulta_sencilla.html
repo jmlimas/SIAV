@@ -4,6 +4,7 @@
 
 {% load crispy_forms_tags %}
 
+{% load currency %}
 
 
 
@@ -131,7 +132,7 @@
         <tr>
 			<td>Estado : <b>{{ avaluo.Estado }}</b></td>
 			<td>Fecha Visita : <b>{{ avaluo.Visita}}</b></td>
-			<td>Valor : <b>{{ avaluo.Valor }}</b></td>
+			<td>Valor : <b>{{ avaluo.Valor|currency }}</b></td>
 		</tr>
         <tr>
         	<td>Factura : <b>{{ avaluo.Factura }}</b></td>

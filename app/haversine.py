@@ -1,4 +1,5 @@
 from math import radians, cos, sin, asin, sqrt, fabs
+from app.models import *
 
 def decimal_conversion(avaluo):
 
@@ -28,29 +29,10 @@ def decimal_conversion(avaluo):
     (fabs(iround(float(avaluo.LongitudS)* 1000000.00))/3600)
     )*lonsign/1000000,5)
 
-    return [declat,declon]
-
-
-"""
-var latsign = 1;
-if( {{avaluo.LatitudG}} < 0){
-  latsign = -1;
-}
-var lonsign = 1;
-if( {{avaluo.LongitudG}} < 0){
-  lonsign = -1;
-}
-var declat = Math.round(
- Math.abs( Math.round({{avaluo.LatitudG}}* 1000000.00)) +
- (Math.abs(Math.round({{avaluo.LatitudM}}* 1000000.00))/60) +
- (Math.abs(Math.round({{avaluo.LatitudS}}* 1000000.00))/3600)
- ) * latsign/1000000;
-
-var declon = Math.round(
- Math.abs( Math.round(({{avaluo.LongitudG}})* 1000000.00)) +
- (Math.abs(Math.round(({{avaluo.LongitudM}})* 1000000.00))/60) +
- (Math.abs(Math.round(({{avaluo.LongitudS}})* 1000000.00))/3600)
- ) * lonsign/1000000;
+    dec_cords = {}
+    dec_cords ['declat'] = declat
+    dec_cords ['declon'] = declon
+    return dec_cords 
 
 
 def haversine(lon1, lat1, lon2, lat2):
@@ -68,4 +50,25 @@ def haversine(lon1, lat1, lon2, lat2):
     km = 6367 * c
     return km 
 
-    """
+
+def find_closest(avaluo):
+    cercanos = []
+    #Encuentra los 10 puntos mas cercanos 
+    #avaluo = Avaluo.objects.get(FolioK='OLI20032')
+    orig = decimal_conversion(avaluo)
+    avaluos_todos = Avaluo.objects.all()
+    for a in avaluos_todos:
+            if a.LatitudG and a.LatitudM and a.LatitudS and a.LongitudG and a.LongitudM and a.LongitudS:
+                dest = decimal_conversion(a)
+                distancia = haversine(orig['declat'], orig['declon'], dest['declat'], dest['declon'])
+                if len(cercanos) <= 15:
+                    cercanos.append((distancia,a.avaluo_id, dest['declon'], dest['declat']))
+                else:
+                    if distancia < max(cercanos) and distancia > 0.0:
+                        cercanos.remove(max(cercanos))
+                        cercanos.append((distancia,a.avaluo_id, dest['declon'], dest['declat']))
+    #for x in cercanos:
+        #print x
+    #print "El mas grande", max(cercanos)   
+    return cercanos     
+    
