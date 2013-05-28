@@ -165,7 +165,8 @@ class VisitaAvaluo(ModelForm):
     class Meta:
         model = Avaluo
         exclude = ('avaluo_id', 'Solicitud', 'FolioK', 'Referencia', 'Prioridad', 'Colonia', 'Municipio', 'Estado', 'Servicio', 'Salida', 'Factura', 'Cliente', 'Depto', 'Valuador', 'Solicitud', 'Mterreno', 'Mconstruccion', 'Valor', 'Gastos', 'Importe', 'Pagado')
-
+    def clean_Referencia(self):
+        return self.cleaned_data['Referencia'] or None
     def __init__(self,  *args,  **kwargs):
         self.helper = FormHelper()
         self.helper.form_id = 'id-VisitaAvaluo'
@@ -230,7 +231,8 @@ class CapturaAvaluo(ModelForm):
     class Meta:
         model = Avaluo
         exclude = ('Salida', 'Visita', 'Pagado', 'Cliente', 'Depto', 'Factura', 'FolioK')
-
+    def clean_Referencia(self):
+        return self.cleaned_data['Referencia'] or None
     def __init__(self,  *args,  **kwargs):
         self.helper = FormHelper()
         self.helper.form_id = 'id-CapturaAvaluo'
@@ -294,7 +296,8 @@ class SalidaAvaluo(ModelForm):
     class Meta:
         model = Avaluo
         fields = ('Mterreno', 'Mconstruccion', 'Observaciones', 'Salida', 'Importe', 'Referencia')
-
+    def clean_Referencia(self):
+        return self.cleaned_data['Referencia'] or None
     def __init__(self,  *args,  **kwargs):
         self.helper = FormHelper()
         self.helper.form_id = 'id-SalidaAvaluo'
@@ -356,7 +359,8 @@ class FormaConsultaMaster(ModelForm):
     class Meta:
         model = Avaluo
         exclude = ('Salida', 'Cliente', 'Depto', 'Prioridad', 'Pagado')
-
+    def clean_Referencia(self):
+        return self.cleaned_data['Referencia'] or None
     def __init__(self,  *args,  **kwargs):
         self.helper = FormHelper()
         self.helper.form_id = 'id-FormaConsultaMaster'
@@ -428,7 +432,8 @@ class RespuestaConsultaMaster(ModelForm):
 
     class Meta:
         model = Avaluo
-
+    def clean_Referencia(self):
+        return self.cleaned_data['Referencia'] or None
     def __init__(self,  *args,  **kwargs):
         self.helper = FormHelper()
         self.helper.form_id = 'id-RespuestaConsultaMaster'
@@ -522,7 +527,8 @@ class FormaConsultaSencilla(ModelForm):
     class Meta:
         model = Avaluo
         exclude = ('Salida', 'Pagado', 'Cliente', 'Depto', 'Factura', 'Prioridad')
-
+    def clean_Referencia(self):
+        return self.cleaned_data['Referencia'] or None
     def __init__(self,  *args,  **kwargs):
         self.helper = FormHelper()
         self.helper.form_id = 'id-FormaConsultaSencilla'
