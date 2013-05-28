@@ -107,7 +107,8 @@ class AltaAvaluo(ModelForm):
     class Meta:
         model = Avaluo
         exclude = ('avaluo_id', 'FolioK', 'LatitudG', 'LatitudM', 'LatitudS', 'LongitudG', 'LongitudM', 'LongitudS', 'Mterreno', 'Mconstruccion', 'Visita', 'Gastos', 'Importe', 'Salida', 'Pagado', 'Factura', )
-
+    def clean_Referencia(self):
+        return self.cleaned_data['Referencia'] or None
     def __init__(self,  *args,  **kwargs):
         self.helper = FormHelper()
         self.helper.form_id = 'id-AltaAvaluo'
