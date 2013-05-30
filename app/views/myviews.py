@@ -318,6 +318,7 @@ def consulta_master(request):
         return render_to_response('home/consultas/results.html', data, context_instance=RequestContext(request))
     if request.method == 'POST':
         forma = FormaConsultaMaster(request.POST)
+        
         if forma.is_valid():
             foliok = forma.cleaned_data['FolioK']
             ref = forma.cleaned_data['Referencia']

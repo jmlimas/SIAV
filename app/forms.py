@@ -359,6 +359,12 @@ class FormaConsultaMaster(ModelForm):
     class Meta:
         model = Avaluo
         exclude = ('Salida', 'Cliente', 'Depto', 'Prioridad', 'Pagado')
+    def clean(self):
+        cleaned_data = self.cleaned_data
+        ref = cleaned_data.get('Referencia')
+        if ref in self._errors:
+            del self._errors['Referencia']
+        return self.cleaned_data 
     def clean_Referencia(self):
         return self.cleaned_data['Referencia'] or None
     def __init__(self,  *args,  **kwargs):
@@ -432,6 +438,12 @@ class RespuestaConsultaMaster(ModelForm):
 
     class Meta:
         model = Avaluo
+    def clean(self):
+        cleaned_data = self.cleaned_data
+        ref = cleaned_data.get('Referencia')
+        if ref in self._errors:
+            del self._errors['Referencia']
+        return self.cleaned_data 
     def clean_Referencia(self):
         return self.cleaned_data['Referencia'] or None
     def __init__(self,  *args,  **kwargs):
@@ -527,6 +539,12 @@ class FormaConsultaSencilla(ModelForm):
     class Meta:
         model = Avaluo
         exclude = ('Salida', 'Pagado', 'Cliente', 'Depto', 'Factura', 'Prioridad')
+    def clean(self):
+        cleaned_data = self.cleaned_data
+        ref = cleaned_data.get('Referencia')
+        if ref in self._errors:
+            del self._errors['Referencia']
+        return self.cleaned_data 
     def clean_Referencia(self):
         return self.cleaned_data['Referencia'] or None
     def __init__(self,  *args,  **kwargs):
