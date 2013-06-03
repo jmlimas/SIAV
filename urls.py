@@ -20,9 +20,15 @@ admin.autodiscover()
 
 urlpatterns = patterns(
 
+
     '', url(r'^SIAV/ajax_upload/(\w*\d+)/(\w*\d+)/$', 'app.uploads.ajax_upload', name="ajax_upload"),
 
     url(r'^SIAV/admin/', include(admin.site.urls)),
+
+
+
+
+    #Urls del SIAV
 
     url(r'^SIAV/$', 'app.views.home', name='home'),
     url(r'^SIAV/login/$',  login),
@@ -74,6 +80,9 @@ urlpatterns = patterns(
     url(r'^SIAV/media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT}),
     url(r'^favicon\.ico$', 'django.views.generic.simple.redirect_to', {'url': '/static/img/favicon.ico'}),
 
+    #Urls del sitio web
+    url(r'^$', 'website.views.index', name='index'),
+    url(r'^/contacto$', 'website.views.index', name='index'),
 )
 
 # Add the static files pattern to the url.
