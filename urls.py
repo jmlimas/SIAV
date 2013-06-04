@@ -82,7 +82,8 @@ urlpatterns = patterns(
 
     #Urls del sitio web
     url(r'^$', 'website.views.index', name='index'),
-    url(r'^/contacto$', 'website.views.index', name='index'),
+    url(r'^servicios/', 'website.views.servicios', name='servicios'),
+    url(r'^contacto/', 'website.views.contacto', name='contacto'),
 )
 
 # Add the static files pattern to the url.

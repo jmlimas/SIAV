@@ -6,3 +6,8 @@ from django.template import RequestContext
 def index(request):
     return render_to_response('ericka/index.html', {}, context_instance=RequestContext(request))
 
+def servicios(request):
+    return render_to_response('ericka/servicios.html', {}, context_instance=RequestContext(request))
+
+def contacto(request):
+    return render_to_response('ericka/contacto.html', {}, context_instance=RequestContext(request))
