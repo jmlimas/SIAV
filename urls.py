@@ -82,6 +82,7 @@ urlpatterns = patterns(
 
     #Urls del sitio web
     url(r'^$', 'website.views.index', name='index'),
+    url(r'^faq/', 'website.views.faq', name='faq'),
     url(r'^servicios/', 'website.views.servicios', name='servicios'),
     url(r'^contacto/', 'website.views.contacto', name='contacto'),
 )
