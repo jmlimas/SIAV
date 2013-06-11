@@ -99,7 +99,7 @@ $(function() {
 
         var boxText = document.createElement("div");
         boxText.style.cssText = "border: 1px solid black; margin-top: 8px; background: yellow; padding: 5px;";
-        boxText.innerHTML = "<a href='/SIAV/respuesta_consulta_sencilla/{{x.1}}'>{{x.1}}</a>";
+        boxText.innerHTML = "<a href='/SIAV/respuesta_consulta_sencilla/{{x.1}}'>{{x.4}}</a>";
                 
         var myOptions_{{x.1}} = {
                  content: boxText
@@ -151,10 +151,24 @@ $(function() {
 
 {% endfor %}
 
-<div id="controls" style="display:block;">
+<div id="controls">
  <input class="btn btn-primary button white" type="button" id="slick-toggle" value="Mapas" />
  <div id="slickbox" >
-   <div id="map_canvas" style="width: 1000px; height: 1000px;"  ></div>
+
+   <table style="float:right;">
+    <th>Distancia</th>
+    <th>Id</th>
+    <th>FolioK</th>
+   {% for x in cercanos %}
+    <tr>
+      <td>{{x.0}}</td>
+      <td>{{x.1}}</td>
+      <td>{{x.4}}</td>
+    </tr>
+    {%endfor%}
+   </table>
+   <div id="map_canvas" style="width: 800px; height: 800px;"  >
+   </div>
  </div>
  <div id="file-uploader" style="float:right;">		
    <noscript>			

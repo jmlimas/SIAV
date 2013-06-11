@@ -220,7 +220,9 @@ def actualiza_avaluo(request, id):
             return redirect('/SIAV/captura/')
     else:
         form = CapturaAvaluo(instance=avaluo)
-    return render_to_response('home/edita_avaluo.html', {'form': form, 'avaluo': avaluo, 'folio_k': folio_k}, context_instance=RequestContext(request))
+    decimal = decimal_conversion(avaluo)
+    cercanos = find_closest(avaluo)
+    return render_to_response('home/edita_avaluo.html', {'form': form, 'avaluo': avaluo, 'decimal': decimal, 'cercanos': cercanos, 'folio_k': folio_k}, context_instance=RequestContext(request))
 
 
 @login_required
@@ -246,7 +248,9 @@ def edita_visita(request, id):
             return redirect('/SIAV/visita/')
     else:
         form = VisitaAvaluo(instance=avaluo)
-    return render_to_response('home/edita_visita.html', {'form': form, 'avaluo': avaluo, 'folio_k': folio_k}, context_instance=RequestContext(request))
+    decimal = decimal_conversion(avaluo)
+    cercanos = find_closest(avaluo)
+    return render_to_response('home/edita_visita.html', {'form': form, 'avaluo': avaluo, 'decimal': decimal, 'cercanos': cercanos, 'folio_k': folio_k}, context_instance=RequestContext(request))
 
 
 @login_required

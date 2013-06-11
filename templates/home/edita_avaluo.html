@@ -6,6 +6,7 @@
 
 {% block captura %}active{% endblock %}
 
+{% load currency %}
 
 
 {% block style %}
@@ -24,10 +25,14 @@ div.ui-datepicker{
 {% block script %}
 
 
+<script type="text/javascript"
+src="https://maps.google.com/maps/api/js?sensor=true">
+</script>   
 <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/jquery-ui-1.8.24.custom.min.js"></script> 
 <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/jquery-datepicker-es.js"></script>
 <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/fileuploader.js"></script>
 <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/ajax_estados_municipios.js"></script> <!-- Incluye  sugerencia de colonias.-->
+<script type="text/javascript" src="http://google-maps-utility-library-v3.googlecode.com/svn/trunk/infobox/src/infobox.js"></script>
 
 
 <script>        
@@ -95,36 +100,76 @@ $(function() {
           });
 
 </script>
-
-<script type="text/javascript"
-src="https://maps.google.com/maps/api/js?sensor=true">
-</script>   
+<script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/mapas.js"></script>
 
 <script type="text/javascript">
 
-var latsign = 1;
-if( {{avaluo.LatitudG}} < 0){
-  latsign = -1;
-}
-var lonsign = 1;
-if( {{avaluo.LongitudG}} < 0){
-  lonsign = -1;
-}
-var declat = Math.round(
- Math.abs( Math.round({{avaluo.LatitudG}}* 1000000.00)) +
- (Math.abs(Math.round({{avaluo.LatitudM}}* 1000000.00))/60) +
- (Math.abs(Math.round({{avaluo.LatitudS}}* 1000000.00))/3600)
- ) * latsign/1000000;
+ function initialize() {
 
-var declon = Math.round(
- Math.abs( Math.round(({{avaluo.LongitudG}})* 1000000.00)) +
- (Math.abs(Math.round(({{avaluo.LongitudM}})* 1000000.00))/60) +
- (Math.abs(Math.round(({{avaluo.LongitudS}})* 1000000.00))/3600)
- ) * lonsign/1000000;
+   var latlng = new google.maps.LatLng({{decimal.declon}},({{decimal.declat}}*-1));
+   var myOptions = {
+      zoom: 14,
+      center: latlng,
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    };
+    var map = new google.maps.Map(document.getElementById("map_canvas"),
+        myOptions);
+  
 
+  marker = new google.maps.Marker({
+    position: latlng,
+    map: map
+  });
+  
+  marker.setMap(map);
+
+     {% for x in cercanos %}
+  var latlng = new google.maps.LatLng({{x.2}},({{x.3}}*-1));
+
+  marker_{{x.1}} = new google.maps.Marker({
+    position: latlng,
+    map: map,
+    icon:'http://maps.google.com/mapfiles/ms/icons/blue-dot.png'
+  });
+  marker_{{x.1}}.setMap(map);
+
+        var boxText = document.createElement("div");
+        boxText.style.cssText = "border: 1px solid black; margin-top: 8px; background: yellow; padding: 5px;";
+        boxText.innerHTML = "<a href='/SIAV/respuesta_consulta_sencilla/{{x.1}}' target='_blank' >{{x.4}}</a>";
+                
+        var myOptions_{{x.1}} = {
+                 content: boxText
+                ,disableAutoPan: false
+                ,maxWidth: 0
+                ,pixelOffset: new google.maps.Size(-140, 0)
+                ,zIndex: null
+                ,boxStyle: { 
+                  background: "url('tipbox.gif') no-repeat"
+                  ,opacity: 0.75
+                  ,width: "280px"
+                 }
+                ,closeBoxMargin: "10px 2px 2px 2px"
+                ,closeBoxURL: "http://www.google.com/intl/en_us/mapfiles/close.gif"
+                ,infoBoxClearance: new google.maps.Size(1, 1)
+                ,isHidden: false
+                ,pane: "floatPane"
+                ,enableEventPropagation: false
+        };
+
+
+        var ib = new InfoBox();
+
+    google.maps.event.addListener(marker_{{x.1}}, "click", function (e) {
+      ib.close();
+      ib.setOptions(myOptions_{{x.1}})
+      ib.open(map, this);
+    });
+
+
+  {% endfor %}
+}
 </script>
 
-<script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/mapas.js"></script>
 
 {% endblock %}     
 
@@ -133,6 +178,20 @@ var declon = Math.round(
 <div id="controls" style="display:block;">
 	<input class="btn btn-primary button white" type="button" id="slick-toggle" value="Mapas" />
   <div id="slickbox" >
+   <table style="float:right;">
+    <th>Distancia</th>
+    <th>Id</th>
+    <th>FolioK</th>
+    <th>Valor</th>
+   {% for x in cercanos %}
+    <tr>
+      <td>{{x.0}}</td>
+      <td>{{x.1}}</td>
+      <td><a href='/SIAV/respuesta_consulta_sencilla/{{x.1}}' target='_blank' >{{x.4}}</a></td>
+      <td>{{x.5|currency}}</td>
+    </tr>
+    {%endfor%}
+   </table>
    <div id="map_canvas" style="width: 700px; height: 500px;"  ></div>
  </div>
  <div id="file-uploader" style="float:right;">		
