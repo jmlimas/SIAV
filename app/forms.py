@@ -154,12 +154,12 @@ class VisitaAvaluo(ModelForm):
     NumInt = forms.CharField(error_messages=my_default_errors, label="Num. Int.", required=False)
     Estatus = forms.ChoiceField(error_messages=my_default_errors, choices=ESTATUSV)
     Visita = forms.DateField(label="Fecha Visita", widget=forms.DateInput(format='%d/%m/%Y'),  input_formats=['%d/%m/%Y'])
-    LatitudG = forms.DecimalField(required=False, label="Lon.G.")
-    LatitudM = forms.DecimalField(label="Lon.M.", required=False)
-    LatitudS = forms.DecimalField(required=False, label="Lon.S.")
-    LongitudG = forms.DecimalField(required=False, label="Lat.G.")
-    LongitudM = forms.DecimalField(required=False, label="Lat.M.")
-    LongitudS = forms.DecimalField(required=False, label="Lat.S.")
+    LatitudG = forms.DecimalField(required=True, label="Lon.G.")
+    LatitudM = forms.DecimalField(required=True, label="Lon.M.",)
+    LatitudS = forms.DecimalField(required=True, label="Lon.S.")
+    LongitudG = forms.DecimalField(required=True, label="Lat.G.")
+    LongitudM = forms.DecimalField(required=True, label="Lat.M.")
+    LongitudS = forms.DecimalField(required=True, label="Lat.S.")
     Observaciones = forms.CharField(widget=forms.Textarea, required=False)
 
     class Meta:
@@ -438,7 +438,7 @@ class RespuestaConsultaMaster(ModelForm):
 
     class Meta:
         model = Avaluo
-        exclude = ('Visita','Observaciones')
+        exclude = ('')
     def clean(self):
         cleaned_data = self.cleaned_data
         ref = cleaned_data.get('Referencia')
@@ -472,6 +472,7 @@ class RespuestaConsultaMaster(ModelForm):
                     'Estatus',
                     'Valuador',
                     'Depto',
+                    'Visita',
                     css_class='span3'),
                 Div(
                     Div(
