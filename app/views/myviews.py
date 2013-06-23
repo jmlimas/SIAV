@@ -227,6 +227,7 @@ def actualiza_avaluo(request, id):
 
 @login_required
 def edita_visita(request, id):
+
     if id is None:
         form = VisitaAvaluo()
     else:
@@ -250,7 +251,8 @@ def edita_visita(request, id):
         form = VisitaAvaluo(instance=avaluo)
     decimal = decimal_conversion(avaluo)
     cercanos = find_closest(avaluo)
-    return render_to_response('home/edita_visita.html', {'form': form, 'avaluo': avaluo, 'decimal': decimal, 'cercanos': cercanos, 'folio_k': folio_k}, context_instance=RequestContext(request))
+    imagenes = ImagenAvaluo.objects.filter(avaluo = avaluo.avaluo_id)
+    return render_to_response('home/edita_visita.html', {'form': form, 'avaluo': avaluo, 'decimal': decimal, 'cercanos': cercanos,'imagenes': imagenes, 'folio_k': folio_k}, context_instance=RequestContext(request))
 
 
 @login_required
