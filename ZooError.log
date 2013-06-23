@@ -218,3 +218,6 @@ LastError:La operación de E/S se anuló por una salida de subproceso o por una so
 [23/06/2013 14:42:06]	Restarting the application due to changes to file 'app\forms.py'
 [23/06/2013 14:46:14]	Restarting the application due to changes to file 'app\forms.py'
 [23/06/2013 14:48:03]	Restarting the application due to changes to file 'app\forms.py'
+[23/06/2013 14:50:23]	Restarting the application due to changes to file 'app\views\myviews.py'
+[23/06/2013 14:58:38]	Restarting the application due to changes to file 'app\uploads.py'
+[23/06/2013 15:00:01]	Restarting the application due to changes to file 'app\uploads.py'

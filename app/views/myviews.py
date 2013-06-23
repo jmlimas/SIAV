@@ -524,7 +524,7 @@ def lista_valuador(request):
 
 @login_required
 def mapas(request):
-    avaluo = Avaluo.objects.get(FolioK='RUL17611')
+    avaluo = Avaluo.objects.get(FolioK='POP20213')
     decimal = decimal_conversion(avaluo)
     cercanos = find_closest(avaluo)
     todos = Avaluo.objects.all().order_by('?')[:100]
