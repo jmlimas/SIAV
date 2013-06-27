@@ -1,0 +1,149 @@
+ {% extends "ericka/ericka_base.html" %}
+ {% block content %}
+
+<!-- Content strats -->
+
+<div class="content">
+   <div class="container">
+      <div class="row">
+         <div class="span12">
+            
+            <!-- FAQ starts -->
+            
+            <div class="faq">
+               <div class="row">
+                  <div class="span12">
+                  
+                     <!-- FAQ hero -->
+                     <div class="hero">
+                        <!-- Title. Don't forget the <span> tag -->
+                        <h3><span>FAQ</span></h3>
+                        <!-- para -->
+                        <!-- <p>Praesent at tellus porttitor nisl porttitor sagittis. Mauris in massa ligula, a tempor nulla. Ut tempus interdum mauris vel vehicula. Nulla ullamcorper tortor commodo in sagittis est accumsan.</p> -->
+                     </div>
+                     <!-- FAQ -->
+                     
+                     <div class="accordion" id="accordion2">
+                        <!-- Each item should be enclosed inside the class "accordion-group". Note down the below markup. -->
+                        
+                        <!-- First Accordion -->
+                       <div class="accordion-group">
+                         <div class="accordion-heading">
+                           <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+                              <!-- Title. Don't forget the <i> tag. -->
+                             <h5><i class="icon-plus"></i>¿Qué es un avalúo?</h5>
+                           </a>
+                         </div>
+                         <div id="collapseOne" class="accordion-body collapse in">
+                           <div class="accordion-inner">
+                              <!-- Para -->
+                             <p>Es una estimación de valor, donde valor significa la valía monetaria o utilidad de un objeto para alguien para algún propósito. Valor de mercado puede definirse simplemente como el precio de venta más probable de una propiedad.</p>
+                           </div>
+                         </div>
+                       </div>
+                       
+                       <!-- Second Accordion -->
+                       <div class="accordion-group">
+                         <div class="accordion-heading">
+                           <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
+                             <h5><i class="icon-plus"></i> ¿Por qué necesito un avalúo?</h5>
+                           </a>
+                         </div>
+                         <div id="collapseTwo" class="accordion-body collapse">
+                           <div class="accordion-inner">
+                             <p>El avalúo ofrece la opinión de un experto, quien mediante un análisis técnico, estima el valor mas cercano al que se debe comercializar un inmueble, ya sea para comprar, vender o rentar. El realizar un avalúo antes de concretar una compra-venta puede ahorrar al comprador o vendedor, importantes sumas de dinero, en virtud de que es la única forma de tener la certeza del valor del bien.</p>
+                           </div>
+                         </div>
+                       </div>
+                       
+                       <!-- Thrid accordion -->
+                       <div class="accordion-group">
+                         <div class="accordion-heading">
+                           <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
+                             <h5><i class="icon-plus"></i> ¿Que tipo de avalúos existen?</h5>
+                           </a>
+                         </div>
+                         <div id="collapseThree" class="accordion-body collapse">
+                           <div class="accordion-inner">
+                             <p></p>
+                           </div>
+                         </div>
+                       </div>
+                       
+                       <!-- Fourth accordion -->
+                       <div class="accordion-group">
+                         <div class="accordion-heading">
+                           <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseFour">
+                             <h5><i class="icon-plus"></i> ¿Cuál es el valor sobre el cual se escritura un inmueble?</h5>
+                           </a>
+                         </div>
+                         <div id="collapseFour" class="accordion-body collapse">
+                           <div class="accordion-inner">
+                             <p>La escritura de compraventa se hace con base en el valor del avalúo de la propiedad.</p>
+                           </div>
+                         </div>
+                       </div>
+                       
+                       <!-- Fifth accordion -->
+                       <div class="accordion-group">
+                         <div class="accordion-heading">
+                           <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseFive">
+                             <h5><i class="icon-plus"></i>¿Qué es el valor del avalúo del Inmueble ?</h5>
+                           </a>
+                         </div>
+                         <div id="collapseFive" class="accordion-body collapse">
+                           <div class="accordion-inner">
+                             <p>El valor del avalúo es el valor de mercado del inmueble y lo determina un perito calificado que cuenta con solvencia moral y profesional para determinar el justo valor de los bienes.</p>
+                           </div>
+                         </div>
+                       </div>
+
+                    <!-- Sixth accordion -->
+                       <div class="accordion-group">
+                         <div class="accordion-heading">
+                           <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseSix">
+                             <h5><i class="icon-plus"></i>¿Cuál es la diferencia entre avalúo catastral y avalúo bancario?</h5>
+                           </a>
+                         </div>
+                         <div id="collapseSix" class="accordion-body collapse">
+                           <div class="accordion-inner">
+                             <p>El contenido de ambos es el mismo ya que el primero se realiza en papelería del gobierno y el segundo en papel bancario membretado. El catastral sirve para pagar el impuesto relativo al valor del traslado de dominio y el bancario tiene múltiples usos siendo el más común definir el monto de crédito o el valor de la propiedad. 
+							 Los valores del avalúo catastral son obtenidos de las tablas que cada gobierno estatal o municipal emite y el Bancario se obtiene del valor de mercado.</p>
+                           </div>
+                         </div>
+                       </div>                         
+
+                       <!-- Eighthaccordion -->
+                       <div class="accordion-group">
+                         <div class="accordion-heading">
+                           <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseSeven">
+                             <h5><i class="icon-plus"></i>¿Cuál es el avalúo por capitalización de rentas?</h5>
+                           </a>
+                         </div>
+                         <div id="collapseSeven" class="accordion-body collapse">
+                           <div class="accordion-inner">
+                             <p>Consiste en traer a valor presente las rentas futuras considerando costos de mantenimiento, impuestos y probabilidad de meses que pueda no estar rentado. El resultado se capitaliza a una tasa de capitalización dada. Esta tasa se compone de inflación, riesgo y utilidad.</p>
+                           </div>
+                         </div>
+                       </div>                       
+                       
+                     </div>
+                     
+                  </div>
+               </div>
+            </div>
+            
+            
+            <!-- FAQ ends -->
+            
+            <!-- CTA starts -->
+            
+            <!-- CTA Ends -->
+            
+         </div>
+      </div>
+   </div>
+</div>   
+
+<!-- Content ends --> 
+{% endblock %}

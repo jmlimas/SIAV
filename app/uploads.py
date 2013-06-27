@@ -74,8 +74,8 @@ def ajax_upload( request,avaluo_id,folio_k ):
         upload = request.FILES.values( )[ 0 ]
       else:
         raise Http404( "Bad Upload" )
-      filename = upload.name
-      filename2 = folio_k + "/" + filename
+    
+    filename2 = folio_k + "/" + filename
     # save the file
     success = save_upload( upload, filename, is_raw, folio_k)
 

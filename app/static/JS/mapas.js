@@ -18,9 +18,6 @@
 	
 	marker.setMap(map);
 
-	
-	
-	  
 	}
 	
 	    // Function for adding a marker to the page.

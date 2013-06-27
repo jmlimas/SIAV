@@ -220,11 +220,14 @@ def actualiza_avaluo(request, id):
             return redirect('/SIAV/captura/')
     else:
         form = CapturaAvaluo(instance=avaluo)
-    return render_to_response('home/edita_avaluo.html', {'form': form, 'avaluo': avaluo, 'folio_k': folio_k}, context_instance=RequestContext(request))
+    decimal = decimal_conversion(avaluo)
+    cercanos = find_closest(avaluo)
+    return render_to_response('home/edita_avaluo.html', {'form': form, 'avaluo': avaluo, 'decimal': decimal, 'cercanos': cercanos, 'folio_k': folio_k}, context_instance=RequestContext(request))
 
 
 @login_required
 def edita_visita(request, id):
+
     if id is None:
         form = VisitaAvaluo()
     else:
@@ -246,7 +249,10 @@ def edita_visita(request, id):
             return redirect('/SIAV/visita/')
     else:
         form = VisitaAvaluo(instance=avaluo)
-    return render_to_response('home/edita_visita.html', {'form': form, 'avaluo': avaluo, 'folio_k': folio_k}, context_instance=RequestContext(request))
+    decimal = decimal_conversion(avaluo)
+    cercanos = find_closest(avaluo)
+    imagenes = ImagenAvaluo.objects.filter(avaluo = avaluo.avaluo_id)
+    return render_to_response('home/edita_visita.html', {'form': form, 'avaluo': avaluo, 'decimal': decimal, 'cercanos': cercanos,'imagenes': imagenes, 'folio_k': folio_k}, context_instance=RequestContext(request))
 
 
 @login_required
@@ -318,6 +324,7 @@ def consulta_master(request):
         return render_to_response('home/consultas/results.html', data, context_instance=RequestContext(request))
     if request.method == 'POST':
         forma = FormaConsultaMaster(request.POST)
+        
         if forma.is_valid():
             foliok = forma.cleaned_data['FolioK']
             ref = forma.cleaned_data['Referencia']
@@ -519,7 +526,7 @@ def lista_valuador(request):
 
 @login_required
 def mapas(request):
-    avaluo = Avaluo.objects.get(FolioK='RUL17611')
+    avaluo = Avaluo.objects.get(FolioK='POP20213')
     decimal = decimal_conversion(avaluo)
     cercanos = find_closest(avaluo)
     todos = Avaluo.objects.all().order_by('?')[:100]

@@ -5,11 +5,6 @@ from crispy_forms.helper import FormHelper, reverse
 from crispy_forms.layout import *
 
 
-my_default_errors = {
-    'required': 'Se requiere este campo.',
-    'invalid': 'Este campo es invalido.'
-}
-
 SERVICIOS = (
     ('', 'N/D'),
     ('AVALUO  CREDITO HIPOTECARIO', 'AVALUO  CREDITO HIPOTECARIO'),
@@ -89,25 +84,27 @@ ANIOS = (
 
 class AltaAvaluo(ModelForm):
 
-    Referencia = forms.CharField(error_messages=my_default_errors, required=False)
-    Calle = forms.CharField(error_messages=my_default_errors)
-    NumExt = forms.CharField(error_messages=my_default_errors, label="Num. Ext.", required=False)
-    NumInt = forms.CharField(error_messages=my_default_errors, label="Num. Int.", required=False)
-    Colonia = forms.CharField(error_messages=my_default_errors)
-    Municipio = forms.ModelChoiceField(error_messages=my_default_errors, queryset=Municipio.objects.filter(estado_id__is_active='True'))
-    Estado = forms.ModelChoiceField(error_messages=my_default_errors, queryset=Estado.objects.filter(is_active='True'))
-    Servicio = forms.ChoiceField(error_messages=my_default_errors, choices=SERVICIOS, label="Tipo Servicio")
-    Estatus = forms.ChoiceField(error_messages=my_default_errors, choices=ESTATUS)
-    Prioridad = forms.ChoiceField(error_messages=my_default_errors, choices=PRIORIDAD)
+    Referencia = forms.CharField(required=False)
+    Calle = forms.CharField()
+    NumExt = forms.CharField(label="Num. Ext.", required=False)
+    NumInt = forms.CharField(label="Num. Int.", required=False)
+    Colonia = forms.CharField()
+    Municipio = forms.ModelChoiceField(queryset=Municipio.objects.filter(estado_id__is_active='True'))
+    Estado = forms.ModelChoiceField(queryset=Estado.objects.filter(is_active='True'))
+    Servicio = forms.ChoiceField(choices=SERVICIOS, label="Tipo Servicio")
+    Estatus = forms.ChoiceField(choices=ESTATUS)
+    Prioridad = forms.ChoiceField(choices=PRIORIDAD)
     Depto = forms.ModelChoiceField(queryset=Depto.objects.filter(is_active='True'))
     Solicitud = forms.DateField(label="Fecha Solicitud", widget=forms.DateInput(format='%d/%m/%Y'),  input_formats=['%d/%m/%Y'])
     Observaciones = forms.CharField(widget=forms.Textarea, required=False)
+    Valor = forms.DecimalField(required=False)
     Valuador = forms.ModelChoiceField(queryset=Valuador.objects.filter(is_active='True'))
 
     class Meta:
         model = Avaluo
         exclude = ('avaluo_id', 'FolioK', 'LatitudG', 'LatitudM', 'LatitudS', 'LongitudG', 'LongitudM', 'LongitudS', 'Mterreno', 'Mconstruccion', 'Visita', 'Gastos', 'Importe', 'Salida', 'Pagado', 'Factura', )
-
+    def clean_Referencia(self):
+        return self.cleaned_data['Referencia'] or None
     def __init__(self,  *args,  **kwargs):
         self.helper = FormHelper()
         self.helper.form_id = 'id-AltaAvaluo'
@@ -148,23 +145,24 @@ class AltaAvaluo(ModelForm):
 
 
 class VisitaAvaluo(ModelForm):
-    Calle = forms.CharField(error_messages=my_default_errors)
-    NumExt = forms.CharField(error_messages=my_default_errors, label="Num. Ext.", required=False)
-    NumInt = forms.CharField(error_messages=my_default_errors, label="Num. Int.", required=False)
-    Estatus = forms.ChoiceField(error_messages=my_default_errors, choices=ESTATUSV)
+    Calle = forms.CharField( )
+    NumExt = forms.CharField( label="Num. Ext.", required=False)
+    NumInt = forms.CharField( label="Num. Int.", required=False)
+    Estatus = forms.ChoiceField( choices=ESTATUSV)
     Visita = forms.DateField(label="Fecha Visita", widget=forms.DateInput(format='%d/%m/%Y'),  input_formats=['%d/%m/%Y'])
-    LatitudG = forms.DecimalField(required=False, label="Lon.G.")
-    LatitudM = forms.DecimalField(label="Lon.M.", required=False)
-    LatitudS = forms.DecimalField(required=False, label="Lon.S.")
-    LongitudG = forms.DecimalField(required=False, label="Lat.G.")
-    LongitudM = forms.DecimalField(required=False, label="Lat.M.")
-    LongitudS = forms.DecimalField(required=False, label="Lat.S.")
+    LatitudG = forms.DecimalField(required=True, label="Lon.G.")
+    LatitudM = forms.DecimalField(required=True, label="Lon.M.",)
+    LatitudS = forms.DecimalField(required=True, label="Lon.S.")
+    LongitudG = forms.DecimalField(required=True, label="Lat.G.")
+    LongitudM = forms.DecimalField(required=True, label="Lat.M.")
+    LongitudS = forms.DecimalField(required=True, label="Lat.S.")
     Observaciones = forms.CharField(widget=forms.Textarea, required=False)
 
     class Meta:
         model = Avaluo
         exclude = ('avaluo_id', 'Solicitud', 'FolioK', 'Referencia', 'Prioridad', 'Colonia', 'Municipio', 'Estado', 'Servicio', 'Salida', 'Factura', 'Cliente', 'Depto', 'Valuador', 'Solicitud', 'Mterreno', 'Mconstruccion', 'Valor', 'Gastos', 'Importe', 'Pagado')
-
+    def clean_Referencia(self):
+        return self.cleaned_data['Referencia'] or None
     def __init__(self,  *args,  **kwargs):
         self.helper = FormHelper()
         self.helper.form_id = 'id-VisitaAvaluo'
@@ -202,16 +200,16 @@ class VisitaAvaluo(ModelForm):
 
 class CapturaAvaluo(ModelForm):
 
-    Calle = forms.CharField(error_messages=my_default_errors)
-    Calle = forms.CharField(error_messages=my_default_errors, required="True")
-    NumExt = forms.CharField(error_messages=my_default_errors, label="Num. Ext.", required=False)
-    NumInt = forms.CharField(error_messages=my_default_errors, label="Num. Int.", required=False)
-    Colonia = forms.CharField(error_messages=my_default_errors)
-    Municipio = forms.ModelChoiceField(error_messages=my_default_errors, queryset=Municipio.objects.filter(estado_id__is_active='True'))
-    Estado = forms.ModelChoiceField(error_messages=my_default_errors, queryset=Estado.objects.filter(is_active='True'))
-    Estatus = forms.ChoiceField(error_messages=my_default_errors, choices=ESTATUS)
-    Prioridad = forms.ChoiceField(error_messages=my_default_errors, choices=PRIORIDAD)
-    Referencia = forms.CharField(error_messages=my_default_errors, required=False)
+    Calle = forms.CharField()
+    Calle = forms.CharField(required="True")
+    NumExt = forms.CharField(label="Num. Ext.", required=False)
+    NumInt = forms.CharField(label="Num. Int.", required=False)
+    Colonia = forms.CharField()
+    Municipio = forms.ModelChoiceField( queryset=Municipio.objects.filter(estado_id__is_active='True'))
+    Estado = forms.ModelChoiceField( queryset=Estado.objects.filter(is_active='True'))
+    Estatus = forms.ChoiceField(choices=ESTATUS)
+    Prioridad = forms.ChoiceField(choices=PRIORIDAD)
+    Referencia = forms.CharField(required=False)
     Solicitud = forms.DateField(label="Fecha Solicitud", widget=forms.DateInput(format='%d/%m/%Y'),  input_formats=['%d/%m/%Y'])
     Mterreno = forms.DecimalField(required=False)
     Mconstruccion = forms.DecimalField(required=False)
@@ -221,6 +219,7 @@ class CapturaAvaluo(ModelForm):
     LongitudG = forms.DecimalField(required=False, label="Lat.G.")
     LongitudM = forms.DecimalField(required=False, label="Lat.M.")
     LongitudS = forms.DecimalField(required=False, label="Lat.S.")
+    Valor = forms.DecimalField(required=True)
     Gastos = forms.DecimalField(required=False)
     Importe = forms.DecimalField(required=False)
     Observaciones = forms.CharField(widget=forms.Textarea, required=False)
@@ -229,7 +228,8 @@ class CapturaAvaluo(ModelForm):
     class Meta:
         model = Avaluo
         exclude = ('Salida', 'Visita', 'Pagado', 'Cliente', 'Depto', 'Factura', 'FolioK')
-
+    def clean_Referencia(self):
+        return self.cleaned_data['Referencia'] or None
     def __init__(self,  *args,  **kwargs):
         self.helper = FormHelper()
         self.helper.form_id = 'id-CapturaAvaluo'
@@ -283,17 +283,19 @@ class CapturaAvaluo(ModelForm):
 
 
 class SalidaAvaluo(ModelForm):
-    Referencia = forms.CharField(error_messages=my_default_errors, required=True)
-    Mterreno = forms.DecimalField(error_messages=my_default_errors, required=True)
-    Mconstruccion = forms.DecimalField(error_messages=my_default_errors, required=True)
-    Observaciones = forms.CharField(error_messages=my_default_errors, widget=forms.Textarea, required=False)
-    Salida = forms.DateField(error_messages=my_default_errors, label="Fecha Salida", widget=forms.DateInput(format='%d/%m/%Y'),  input_formats=['%d/%m/%Y'])
+    Referencia = forms.CharField(required=True)
+    Mterreno = forms.DecimalField(required=True)
+    Mconstruccion = forms.DecimalField(required=True)
+    Observaciones = forms.CharField(widget=forms.Textarea, required=False)
+    Salida = forms.DateField(label="Fecha Salida", widget=forms.DateInput(format='%d/%m/%Y'),  input_formats=['%d/%m/%Y'])
+    Valor = forms.DecimalField(required=True)
     Importe = forms.DecimalField(required=True)
 
     class Meta:
         model = Avaluo
-        fields = ('Mterreno', 'Mconstruccion', 'Observaciones', 'Salida', 'Importe', 'Referencia')
-
+        fields = ('Mterreno', 'Mconstruccion', 'Observaciones', 'Salida', 'Importe', 'Referencia','Valor')
+    def clean_Referencia(self):
+        return self.cleaned_data['Referencia'] or None
     def __init__(self,  *args,  **kwargs):
         self.helper = FormHelper()
         self.helper.form_id = 'id-SalidaAvaluo'
@@ -310,7 +312,8 @@ class SalidaAvaluo(ModelForm):
                     'Mterreno',
                     'Mconstruccion',
                     css_class='span3'),
-                Div('Importe',
+                Div('Valor',
+                    'Importe',
                     css_class='span3'),
                 css_class='row-fluid'),
             'Observaciones',
@@ -321,19 +324,19 @@ class SalidaAvaluo(ModelForm):
 
 
 class FormaConsultaMaster(ModelForm):
-    FolioK = forms.CharField(error_messages=my_default_errors, required=False)
-    Calle = forms.CharField(error_messages=my_default_errors, required=False)
-    NumExt = forms.CharField(error_messages=my_default_errors, label="Num. Ext.", required=False)
-    NumInt = forms.CharField(error_messages=my_default_errors, label="Num. Int.", required=False)
-    Colonia = forms.CharField(error_messages=my_default_errors, required=False)
-    Municipio = forms.ModelChoiceField(required=False,  error_messages=my_default_errors, queryset=Municipio.objects.filter(estado_id__is_active='True'))
-    Estado = forms.ModelChoiceField(required=False,  error_messages=my_default_errors, queryset=Estado.objects.filter(is_active='True'))
-    Servicio = forms.CharField(error_messages=my_default_errors, required=False, label="Tipo.Servicio")
+    FolioK = forms.CharField(required=False)
+    Calle = forms.CharField(required=False)
+    NumExt = forms.CharField(label="Num. Ext.", required=False)
+    NumInt = forms.CharField(label="Num. Int.", required=False)
+    Colonia = forms.CharField(required=False)
+    Municipio = forms.ModelChoiceField(required=False,   queryset=Municipio.objects.filter(estado_id__is_active='True'))
+    Estado = forms.ModelChoiceField(required=False,   queryset=Estado.objects.filter(is_active='True'))
+    Servicio = forms.CharField(required=False, label="Tipo.Servicio")
     Tipo = forms.ModelChoiceField(required=False,  queryset=Tipo.objects.all())
-    Estatus = forms.ChoiceField(error_messages=my_default_errors, choices=ESTATUS, required=False)
+    Estatus = forms.ChoiceField(choices=ESTATUS, required=False)
     Valuador = forms.ModelChoiceField(required=False,  queryset=Valuador.objects.all())
-    Prioridad = forms.ChoiceField(error_messages=my_default_errors, choices=PRIORIDAD, required=False)
-    Referencia = forms.CharField(error_messages=my_default_errors, required=False)
+    Prioridad = forms.ChoiceField(choices=PRIORIDAD, required=False)
+    Referencia = forms.CharField(required=False)
     Solicitud = forms.DateField(label="Fecha Solicitud", widget=forms.DateInput(format='%d/%m/%Y'), input_formats=['%d/%m/%Y'], required=False)
     Visita = forms.DateField(label="Fecha Visita", widget=forms.DateInput(format='%d/%m/%Y'), input_formats=['%d/%m/%Y'], required=False)
     Mterreno = forms.DecimalField(required=False)
@@ -348,14 +351,21 @@ class FormaConsultaMaster(ModelForm):
     Gastos = forms.DecimalField(required=False)
     Importe = forms.DecimalField(required=False)
     Observaciones = forms.CharField(widget=forms.Textarea, required=False)
-    Mes = forms.ChoiceField(error_messages=my_default_errors, choices=MESES, required=False)
-    Anio = forms.ChoiceField(error_messages=my_default_errors, choices=ANIOS, required=False)
+    Mes = forms.ChoiceField( choices=MESES, required=False)
+    Anio = forms.ChoiceField( choices=ANIOS, required=False)
     Factura = forms.CharField(required=False)
 
     class Meta:
         model = Avaluo
         exclude = ('Salida', 'Cliente', 'Depto', 'Prioridad', 'Pagado')
-
+    def clean(self):
+        cleaned_data = self.cleaned_data
+        ref = cleaned_data.get('Referencia')
+        if ref in self._errors:
+            del self._errors['Referencia']
+        return self.cleaned_data 
+    def clean_Referencia(self):
+        return self.cleaned_data['Referencia'] or None
     def __init__(self,  *args,  **kwargs):
         self.helper = FormHelper()
         self.helper.form_id = 'id-FormaConsultaMaster'
@@ -395,18 +405,18 @@ class FormaConsultaMaster(ModelForm):
 
 
 class RespuestaConsultaMaster(ModelForm):
-    FolioK = forms.CharField(error_messages=my_default_errors, required=False)
-    Calle = forms.CharField(error_messages=my_default_errors, required=False)
-    NumExt = forms.CharField(error_messages=my_default_errors, label="Num. Ext.", required=False)
-    NumInt = forms.CharField(error_messages=my_default_errors, label="Num. Int.", required=False)
-    Colonia = forms.CharField(error_messages=my_default_errors, required=False)
-    Municipio = forms.ModelChoiceField(error_messages=my_default_errors, queryset=Municipio.objects.filter(estado_id__is_active='True'))
-    Estado = forms.ModelChoiceField(error_messages=my_default_errors, queryset=Estado.objects.filter(is_active='True'))
-    Servicio = forms.ChoiceField(error_messages=my_default_errors, choices=SERVICIOS, label="Tipo Servicio")
-    Estatus = forms.ChoiceField(error_messages=my_default_errors, choices=ESTATUS, required=False)
+    FolioK = forms.CharField( required=False)
+    Calle = forms.CharField( required=False)
+    NumExt = forms.CharField( label="Num. Ext.", required=False)
+    NumInt = forms.CharField( label="Num. Int.", required=False)
+    Colonia = forms.CharField( required=False)
+    Municipio = forms.ModelChoiceField( queryset=Municipio.objects.filter(estado_id__is_active='True'))
+    Estado = forms.ModelChoiceField( queryset=Estado.objects.filter(is_active='True'))
+    Servicio = forms.ChoiceField( choices=SERVICIOS, label="Tipo Servicio")
+    Estatus = forms.ChoiceField( choices=ESTATUS, required=False)
     Valuador = forms.ModelChoiceField(required=False,  queryset=Valuador.objects.all())
-    Prioridad = forms.ChoiceField(error_messages=my_default_errors, choices=PRIORIDAD, required=False)
-    Referencia = forms.CharField(error_messages=my_default_errors, required=False)
+    Prioridad = forms.ChoiceField( choices=PRIORIDAD, required=False)
+    Referencia = forms.CharField( required=False)
     Solicitud = forms.DateField(label="Fecha Solicitud", widget=forms.DateInput(format='%d/%m/%Y'),  input_formats=['%d/%m/%Y'], required=False)
     Visita = forms.DateField(label="Fecha Visita", widget=forms.DateInput(format='%d/%m/%Y'),  input_formats=['%d/%m/%Y'], required=False)
     Salida = forms.DateField(label="Fecha Salida", widget=forms.DateInput(format='%d/%m/%Y'),  input_formats=['%d/%m/%Y'], required=False)
@@ -422,12 +432,20 @@ class RespuestaConsultaMaster(ModelForm):
     Gastos = forms.DecimalField(required=False)
     Importe = forms.DecimalField(required=False)
     Observaciones = forms.CharField(widget=forms.Textarea, required=False)
-    Factura = forms.CharField(error_messages=my_default_errors, required=False)
+    Factura = forms.CharField( required=False)
     Pagado = forms.BooleanField(required=False)
 
     class Meta:
         model = Avaluo
-
+        exclude = ('')
+    def clean(self):
+        cleaned_data = self.cleaned_data
+        ref = cleaned_data.get('Referencia')
+        if ref in self._errors:
+            del self._errors['Referencia']
+        return self.cleaned_data 
+    def clean_Referencia(self):
+        return self.cleaned_data['Referencia'] or None
     def __init__(self,  *args,  **kwargs):
         self.helper = FormHelper()
         self.helper.form_id = 'id-RespuestaConsultaMaster'
@@ -453,6 +471,7 @@ class RespuestaConsultaMaster(ModelForm):
                     'Estatus',
                     'Valuador',
                     'Depto',
+                    'Visita',
                     css_class='span3'),
                 Div(
                     Div(
@@ -488,19 +507,19 @@ class RespuestaConsultaMaster(ModelForm):
 
 
 class FormaConsultaSencilla(ModelForm):
-    FolioK = forms.CharField(error_messages=my_default_errors, required=False)
-    Calle = forms.CharField(error_messages=my_default_errors, required=False)
-    NumExt = forms.CharField(error_messages=my_default_errors, label="Num. Ext.", required=False)
-    NumInt = forms.CharField(error_messages=my_default_errors, label="Num. Int.", required=False)
-    Colonia = forms.CharField(error_messages=my_default_errors, required=False)
-    Municipio = forms.ModelChoiceField(error_messages=my_default_errors, queryset=Municipio.objects.filter(estado_id__is_active='True'), required=False)
-    Estado = forms.ModelChoiceField(error_messages=my_default_errors, queryset=Estado.objects.filter(is_active='True'), required=False)
-    Servicio = forms.CharField(error_messages=my_default_errors, required=False, label="Tipo.Servicio")
-    Tipo = forms.ModelChoiceField(required=False,  queryset=Tipo.objects.all())
-    Estatus = forms.ChoiceField(error_messages=my_default_errors, choices=ESTATUS, required=False)
-    Valuador = forms.ModelChoiceField(required=False,  queryset=Valuador.objects.all())
-    Prioridad = forms.ChoiceField(error_messages=my_default_errors, choices=PRIORIDAD, required=False)
-    Referencia = forms.CharField(error_messages=my_default_errors, required=False)
+    FolioK = forms.CharField(required=False)
+    Calle = forms.CharField(required=False)
+    NumExt = forms.CharField(label="Num. Ext.", required=False)
+    NumInt = forms.CharField(label="Num. Int.", required=False)
+    Colonia = forms.CharField(required=False)
+    Municipio = forms.ModelChoiceField(queryset=Municipio.objects.filter(estado_id__is_active='True'), required=False)
+    Estado = forms.ModelChoiceField(queryset=Estado.objects.filter(is_active='True'), required=False)
+    Servicio = forms.CharField(required=False, label="Tipo.Servicio")
+    Tipo = forms.ModelChoiceField(required=False, queryset=Tipo.objects.all())
+    Estatus = forms.ChoiceField(choices=ESTATUS, required=False)
+    Valuador = forms.ModelChoiceField(required=False, queryset=Valuador.objects.all())
+    Prioridad = forms.ChoiceField(choices=PRIORIDAD, required=False)
+    Referencia = forms.CharField(required=False)
     Solicitud = forms.DateField(label="Fecha Solicitud", widget=forms.DateInput(format='%d/%m/%Y'),  input_formats=['%d/%m/%Y'], required=False)
     Visita = forms.DateField(label="Fecha Visita", widget=forms.DateInput(format='%d/%m/%Y'),  input_formats=['%d/%m/%Y'], required=False)
     Mterreno = forms.DecimalField(required=False)
@@ -515,13 +534,20 @@ class FormaConsultaSencilla(ModelForm):
     Gastos = forms.DecimalField(required=False)
     Importe = forms.DecimalField(required=False)
     Observaciones = forms.CharField(widget=forms.Textarea, required=False)
-    Mes = forms.ChoiceField(error_messages=my_default_errors, choices=MESES, required=False)
-    Anio = forms.ChoiceField(error_messages=my_default_errors, choices=ANIOS, required=False)
+    Mes = forms.ChoiceField( choices=MESES, required=False)
+    Anio = forms.ChoiceField( choices=ANIOS, required=False)
 
     class Meta:
         model = Avaluo
         exclude = ('Salida', 'Pagado', 'Cliente', 'Depto', 'Factura', 'Prioridad')
-
+    def clean(self):
+        cleaned_data = self.cleaned_data
+        ref = cleaned_data.get('Referencia')
+        if ref in self._errors:
+            del self._errors['Referencia']
+        return self.cleaned_data 
+    def clean_Referencia(self):
+        return self.cleaned_data['Referencia'] or None
     def __init__(self,  *args,  **kwargs):
         self.helper = FormHelper()
         self.helper.form_id = 'id-FormaConsultaSencilla'
@@ -558,9 +584,9 @@ class FormaConsultaSencilla(ModelForm):
 
 
 class AltaValuador(ModelForm):
-    Nombre = forms.CharField(error_messages=my_default_errors)
-    Apellido = forms.CharField(error_messages=my_default_errors)
-    Correo = forms.CharField(error_messages=my_default_errors)
+    Nombre = forms.CharField()
+    Apellido = forms.CharField()
+    Correo = forms.CharField()
 
     class Meta:
         model = Valuador
@@ -568,9 +594,9 @@ class AltaValuador(ModelForm):
 
 class AltaUsuario(forms.Form):
   #  Form for creating new login
-    Nombre = forms.CharField(error_messages=my_default_errors)
-    Correo = forms.CharField(error_messages=my_default_errors)
-    Usuario = forms.CharField(error_messages=my_default_errors)
+    Nombre = forms.CharField()
+    Correo = forms.CharField()
+    Usuario = forms.CharField()
     Contrasena = forms.CharField(widget=forms.PasswordInput)
     Repetir_Contrasena = forms.CharField(widget=forms.PasswordInput)
     Repetir_Contrasena = forms.CharField(widget=forms.PasswordInput)
@@ -588,7 +614,7 @@ class AltaUsuario(forms.Form):
 
 
 class FacturaForm(ModelForm):
-    Factura = forms.CharField(error_messages=my_default_errors, label="")
+    Factura = forms.CharField( label="")
 
     class Meta:
         model = Avaluo
