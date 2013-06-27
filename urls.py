@@ -22,6 +22,8 @@ urlpatterns = patterns(
 
     '', url(r'^SIAV/ajax_upload/(\w*\d+)/(\w*\d+)/$', 'app.uploads.ajax_upload', name="ajax_upload"),
 
+    url(r'^grappelli/', include('grappelli.urls')),
+
     url(r'^SIAV/admin/', include(admin.site.urls)),
 
     url(r'^SIAV/$', 'app.views.home', name='home'),
