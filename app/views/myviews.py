@@ -8,7 +8,7 @@ from django.contrib.auth import logout
 from django.contrib.auth.models import User, Group
 from django.contrib.auth.decorators import login_required
 from django.forms.models import modelformset_factory
-
+from django.contrib.admin.views.decorators import staff_member_required
 
 #   Recibe el id y la colonia.
 def genera_foliok(avaluo_id, colonia):
@@ -63,7 +63,7 @@ def logout_view(request):
 
 
 #   Vista de facturacion.
-@login_required
+@staff_member_required
 def facturar(request):
     avaluos = (Avaluo.objects
                .filter(Estatus='CONCLUIDO')
@@ -100,7 +100,7 @@ def facturar(request):
 
 #   Vista que se encarga de liquidar las facturas ya pagadas
 #   Cambiando el estado Pagado de los avaluos de 0 a 1
-@login_required
+@staff_member_required
 def liquidar(request):
     avaluos = (Avaluo.objects
                .filter(Estatus='CONCLUIDO')
@@ -129,7 +129,7 @@ def liquidar(request):
 
 #   Vista para generar estadisticos en Highcharts
 #   Se planea segmentar para generar diferentes clases de estadistico.
-@login_required
+@staff_member_required
 def estadistico(request, anio=2013):
     anios = Avaluo.objects.all().dates('Salida', 'year')
     avaluos = Avaluo.objects.extra(select={'month': 'extract( month from Salida )'}).values('month').filter(Salida__year=anio).order_by('month').annotate(dcount=Count('Solicitud'), Total=Sum('Importe'))
@@ -281,7 +281,7 @@ def edita_salida(request, id):
     return render_to_response('home/edita_salida.html', {'form': form, 'avaluo': avaluo, 'folio_k': folio_k}, context_instance=RequestContext(request))
 
 
-@login_required
+@staff_member_required
 def guarda_master(request, id):
     if id is None:
         forma = RespuestaConsultaMaster()
@@ -310,85 +310,57 @@ def guarda_master(request, id):
     return render_to_response('home/consultas/respuesta_consulta_master.html', {'forma': forma, 'avaluo': avaluo, 'imagenes': imagenes}, context_instance=RequestContext(request))
 
 
-@login_required
+@staff_member_required
 def consulta_master(request):
     if request.is_ajax():
-        q1 = request.GET.get('q1', '')
-        q2 = request.GET.get('q2', '')
+        foliok = request.GET.get('foliok', '')
+        ref = request.GET.get('ref', '')
+        calle = request.GET.get('calle', '')
+        col = request.GET.get('col', '')
+        factura = request.GET.get('factura', '')
+        edo = request.GET.get('edo', '')
+        mun = request.GET.get('mun', '')
+        imp = request.GET.get('imp', '')
+        tipo = request.GET.get('tipo', '')
+        mes = request.GET.get('mes', '')
+        anio = request.GET.get('anio', '')
+
         results = Avaluo.objects.all()
-        if q1:
-            results = results.filter(Q(FolioK__contains=q1) | Q(Referencia__contains=q1))
-        if q2:
-            results = results.filter((Q(Factura__contains=q2)))
+        if foliok:
+            results = results.filter(Q(FolioK__contains=foliok))
+        if ref:
+            results = results.filter((Q(Referencia__contains=ref)))
+        if calle:
+            results = results.filter((Q(Calle__contains=calle)))    
+        if col:
+            results = results.filter((Q(Colonia__contains=col)))                 
+        if factura:
+            results = results.filter((Q(Factura__contains=factura)))
+        if edo:
+            results = results.filter((Q(Estado=edo)))    
+        if mun:
+            results = results.filter((Q(Municipio=mun)))
+        if imp:
+            results = results.filter((Q(Importe__icontains=imp)))  
+        if tipo:
+            results = results.filter((Q(Tipo=tipo)))
+        if anio:
+            results = results.filter(Solicitud__year=anio)
+            if mes and anio:
+                inicio = str(anio)+"-"+str(mes)+"-01"
+                mes = int(mes)
+                if mes % 2 == 00:
+                    if mes == 02:
+                        dias = "28"
+                    else:
+                        dias = "30"
+                elif mes % 2 != 0:
+                    dias = "31"
+                fin = str(anio)+"-"+str(mes)+"-"+dias
+                results = results.filter(Solicitud__range=(inicio, fin))
+
         data = {'results': results}
         return render_to_response('home/consultas/results.html', data, context_instance=RequestContext(request))
-    if request.method == 'POST':
-        forma = FormaConsultaMaster(request.POST)
-        
-        if forma.is_valid():
-            foliok = forma.cleaned_data['FolioK']
-            ref = forma.cleaned_data['Referencia']
-            calle = forma.cleaned_data['Calle']
-            nume = forma.cleaned_data['NumExt']
-            numi = forma.cleaned_data['NumInt']
-            col = forma.cleaned_data['Colonia']
-            mun = forma.cleaned_data['Municipio']
-            edo = forma.cleaned_data['Estado']
-            tips = forma.cleaned_data['Servicio']
-            tipi = forma.cleaned_data['Tipo']
-            mes = forma.cleaned_data['Mes']
-            anio = forma.cleaned_data['Anio']
-            factura = forma.cleaned_data['Factura']
-            importe = forma.cleaned_data['Importe']
-
-            avaluos = Avaluo.objects.all()
-
-            if foliok:
-                avaluos = avaluos.filter(FolioK__icontains=foliok)
-            if ref:
-                avaluos = avaluos.filter(Referencia__icontains=ref)
-            if calle:
-                avaluos = avaluos.filter(Calle__icontains=calle)
-            if nume:
-                avaluos = avaluos.filter(NumExt__icontains=nume)
-            if numi:
-                avaluos = avaluos.filter(NumInt__icontains=numi)
-            if col:
-                avaluos = avaluos.filter(Colonia__icontains=col)
-            if mun:
-                avaluos = avaluos.filter(Municipio=mun)
-            if edo:
-                avaluos = avaluos.filter(Estado=edo)
-            if factura:
-                avaluos = avaluos.filter(Factura__icontains=factura)
-            if importe:
-                avaluos = avaluos.filter(Importe__icontains=importe)
-            if ((tips) and (tips != "N/D")):
-                avaluos = avaluos.filter(Servicio__icontains=tips)
-            if (tipi):
-                avaluos = avaluos.filter(Tipo__Tipo__icontains=tipi)
-            if anio:
-                avaluos = avaluos.filter(Solicitud__year=anio)
-                if mes and anio:
-                    inicio = str(anio)+"-"+str(mes)+"-01"
-                    mes = int(mes)
-                    if mes % 2 == 00:
-                        if mes == 02:
-                            dias = "28"
-                        else:
-                            dias = "30"
-                    elif mes % 2 != 0:
-                        dias = "31"
-                    fin = str(anio)+"-"+str(mes)+"-"+dias
-                    avaluos = avaluos.filter(Solicitud__range=(inicio, fin))
-                cantidad = avaluos.count()
-            cantidad = avaluos.count()
-            avaluos = avaluos.order_by('-Solicitud')
-            return render_to_response('home/consultas/lista_consultaM.html', {'forma': forma, 'avaluos': avaluos, 'cantidad': cantidad}, context_instance=RequestContext(request))
-        else:
-            forma = FormaConsultaMaster(request.POST)
-            cantidad = cantidades()
-            return render_to_response('home/consultas/consulta_master.html', {'forma': forma, 'cantidad': cantidad}, context_instance=RequestContext(request))
     else:
         forma = FormaConsultaMaster()
         return render_to_response('home/consultas/consulta_master.html', {'forma': forma}, context_instance=RequestContext(request))

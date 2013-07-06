@@ -77,22 +77,25 @@
             <li class="{% block captura %}{% endblock %}"><a href="/SIAV/captura/" >Captura    <span class="badge badge-warning">{{cantidad.0}}</span></a></li>
             <li class="{% block salida %}{% endblock %}"><a href="/SIAV/salida/">Salida    <span class="badge badge-warning">{{cantidad.2}}</a></li>
 
-            {% ifusergroup Admins %}
+            {% if user.is_staff %}
             <li class="{% block consulta_master %}{% endblock %}"><a href="/SIAV/consulta_master/" >Consulta</a></li>
             {% else %}
             <li class="{% block consulta_sencilla %}{% endblock %}"><a href="/SIAV/consulta_sencilla/" >Consulta</a></li>              
-            {% endifusergroup %}
+            {% endif %}
 
-            {% ifusergroup Admins %}
+            {% if user.is_staff %}
             <li><a href="/SIAV/facturar/">Facturar</a></li>
             <li><a href="/SIAV/liquidar/">Liquidar</a></li>
             <li><a href="/SIAV/estadistico/{%now "Y"%}">Estadístico</a></li>
           </li> 
-          {% endifusergroup %}
+          {% endif %}
         </ul>
         <ul class="n-logout nav pull-right">
           <li><a onclick="printDiv('printableArea')"><i class="icon-print icon-white"></i>&nbsp;&nbsp;</a></li>
           <li><p class="navbar-text pull-right">Bienvenido,  <a href="#">{{user.username }}</a></p></li>
+          {% if user.is_staff %}
+          <li><a href="/SIAV/admin"> <i class="icon-wrench icon-white"></i> Admin</a></li>
+          {% endif %}
           <li><a href="/SIAV/logout"> <i class="icon-eject icon-white"></i> Salir</a></li>
         </ul>
       </div><!--/.nav-collapse -->

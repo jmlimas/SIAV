@@ -69,11 +69,19 @@
     $(document).ready(function () {
         $('#spinner').hide();
         $('#searchSubmit').click(function () {
-            q1 = $('#q1').val();
-            q2 = encodeURIComponent($('#q2').val());
-
+            foliok = $('#id_FolioK').val();
+            ref = $('#id_Referencia').val();
+            calle = $('#id_Calle').val();
+            col = encodeURIComponent($('#id_Colonia').val());
+            factura = encodeURIComponent($('#id_Factura').val());
+            edo = $('#id_Estado').val();
+            mun = $('#id_Municipio').val();
+            imp = $('#id_Importe').val();
+            tipo = $('#id_Tipo').val();
+            mes = $('#id_Mes').val();
+            anio = $('#id_Anio').val();
             //$('#results').html('&nbsp;').load('/SIAV/consulta_master/?q1=' + q1);
-            $('#results').html('&nbsp;').load('/SIAV/consulta_master/?q1='+q1+"&q2="+q2);
+            $('#results').html('&nbsp;').load('/SIAV/consulta_master/?foliok='+foliok+"&ref="+ref+"&calle="+calle+"&col="+col+"&edo="+edo+"&mun="+mun+"&factura="+factura+"&imp="+imp+"&tipo="+tipo+"&mes="+mes+"&anio="+anio);
         });
     });
         
@@ -90,22 +98,9 @@
 
 {% block content %}
 
-<div>
-    <label>FolioK:</label>
-	<input id="q1" type="text"/>
-    <label>Factura:</label>
-	<input id="q2" type="text"/>
-	<input id="searchSubmit" type="submit" value="Search" class="btn btn-primary"/>
-	<br/>
-	<div class="margin">
-		<span id="spinner"><img src="{{ STATIC_URL }}spinner.gif"/></span>
-		<div id="results"></div>
-	</div>
-</div>
-    
-</div>
-  <h1>Consulta de Administrador</h1>
 
+  <h1>Consulta de Administrador</h1>
+    <br>
       {% if forma.errors %}
         <p style="color: red;">
             Porfavor completa los campos faltantes.
@@ -115,5 +110,15 @@
 	{% crispy forma %}	
    <br>
 
-  
+  <div>
+    <input id="searchSubmit" type="submit" value="Buscar" class="btn btn-primary"/>
+    <br/>
+    <div class="margin">
+        <span id="spinner"><img src="{{ STATIC_URL }}spinner.gif"/></span>
+        <div id="results"></div>
+    </div>
+</div>
+    
+</div>
+
 {% endblock %}

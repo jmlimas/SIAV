@@ -47,3 +47,20 @@ def get_municipios(request):
         data = 'fail'
     mimetype = 'application/json'
     return HttpResponse(data, mimetype)
+
+def get_deptos(request):
+    if request.is_ajax():
+        q = request.GET.get('id', '')
+        print q
+        deptos = Depto.objects.filter(cliente_id = q )
+        results = []
+        for depto in deptos:
+            depto_json = {}
+            depto_json['optionValue'] = depto.depto_id
+            depto_json['optionDisplay'] = depto.Depto
+            results.append(depto_json)
+        data = json.dumps(results)
+    else:
+        data = 'fail'
+    mimetype = 'application/json'
+    return HttpResponse(data, mimetype)
