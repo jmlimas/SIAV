@@ -71,7 +71,7 @@
         $('#searchSubmit').click(function () {
             foliok = $('#id_FolioK').val();
             ref = $('#id_Referencia').val();
-            calle = $('#id_Calle').val();
+            calle = encodeURIComponent($('#id_Calle').val());
             col = encodeURIComponent($('#id_Colonia').val());
             factura = encodeURIComponent($('#id_Factura').val());
             edo = $('#id_Estado').val();
