@@ -222,7 +222,8 @@ def actualiza_avaluo(request, id):
         form = CapturaAvaluo(instance=avaluo)
     decimal = decimal_conversion(avaluo)
     cercanos = find_closest(avaluo)
-    return render_to_response('home/edita_avaluo.html', {'form': form, 'avaluo': avaluo, 'decimal': decimal, 'cercanos': cercanos, 'folio_k': folio_k}, context_instance=RequestContext(request))
+    imagenes = ImagenAvaluo.objects.filter(avaluo = avaluo.avaluo_id)
+    return render_to_response('home/edita_avaluo.html', {'form': form, 'avaluo': avaluo, 'decimal': decimal, 'cercanos': cercanos, 'folio_k': folio_k,'imagenes':imagenes}, context_instance=RequestContext(request))
 
 
 @login_required
