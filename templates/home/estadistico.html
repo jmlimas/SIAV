@@ -24,6 +24,18 @@ $(document).ready(function () {
     $('#avaluos_table').tableFilter();
     valor = 0;
 
+  // Radialize the colors
+    Highcharts.getOptions().colors = Highcharts.map(Highcharts.getOptions().colors, function(color) {
+        return {
+            radialGradient: { cx: 0.5, cy: 0.3, r: 0.7 },
+            stops: [
+                [0, color],
+                [1, Highcharts.Color(color).brighten(-0.3).get('rgb')] // darken
+            ]
+        };
+    });
+
+
     $(function () {
         $(document).ready(function() {
            var chart;
@@ -305,7 +317,7 @@ data: [5, 7, 3]
                 </div>
             </div>
         </div>
-    </div>
+ 
     <br>
     <br>
     <ul class="breadcrumb">
@@ -314,5 +326,5 @@ data: [5, 7, 3]
         {% endfor %}
     </ul>
 
-</div>
+
 {% endblock %}

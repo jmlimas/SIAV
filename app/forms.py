@@ -356,7 +356,7 @@ class FormaConsultaMaster(ModelForm):
 
     class Meta:
         model = Avaluo
-        exclude = ('Salida', 'Cliente', 'Depto', 'Prioridad', 'Pagado','NumExt','NumInt','Servicio')
+        exclude = ('Salida', 'Prioridad', 'Pagado','NumExt','NumInt','Servicio')
     def clean(self):
         cleaned_data = self.cleaned_data
         ref = cleaned_data.get('Referencia')
@@ -382,14 +382,13 @@ class FormaConsultaMaster(ModelForm):
                     'FolioK',
                     'Referencia',
                     'Calle',
-                    #'NumExt',
-                    #'NumInt',
+                    'Cliente',
                     css_class='span3'),
                 Div(
                     'Colonia',
                     'Estado',
                     'Municipio',
-                    #'Servicio',
+                    'Depto',
                     css_class='span3'),
                 Div(
                     'Tipo',

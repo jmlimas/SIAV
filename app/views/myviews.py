@@ -319,7 +319,9 @@ def consulta_master(request):
         col = request.GET.get('col', '')
         factura = request.GET.get('factura', '')
         edo = request.GET.get('edo', '')
-        mun = request.GET.get('mun', '')
+        cli = request.GET.get('cli', '')
+        dep = request.GET.get('dep', '')
+        mun = request.GET.get('mun', '')        
         imp = request.GET.get('imp', '')
         tipo = request.GET.get('tipo', '')
         mes = request.GET.get('mes', '')
@@ -340,6 +342,10 @@ def consulta_master(request):
             results = results.filter((Q(Estado=edo)))    
         if mun:
             results = results.filter((Q(Municipio=mun)))
+        if cli:
+            results = results.filter((Q(Cliente=cli)))    
+        if dep:
+            results = results.filter((Q(Depto=dep)))
         if imp:
             results = results.filter((Q(Importe__icontains=imp)))  
         if tipo:

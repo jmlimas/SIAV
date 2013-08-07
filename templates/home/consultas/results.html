@@ -1,10 +1,14 @@
 ﻿{% load currency %}
+{% load adder %}
 
 {% if results|length %}
 	<table class="table table-striped">
 	<tr class='even'>
-		<td colspan="13" class="right">
-		<strong>Se encontraron {{ results|length }} avalúos.</strong>
+		<td colspan="9" class="right">
+			<strong>Se encontraron {{ results|length }} avalúos.</strong>
+		</td>
+		<td colspan="3" class="right">
+			<strong> Total: {{results|adder|currency}}</strong>
 		</td>
 	</tr>
 	<tr>

@@ -12,6 +12,9 @@
 
 <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/picnet-table.js"></script>
 <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/jquery.livequery.js"></script> 
+<script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/highcharts.js"></script>
+<script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/boostrap-tab.js"></script>
+
 
 <script type="text/javascript">
 $(document).ready(function () {
@@ -28,7 +31,72 @@ $(document).ready(function () {
       window.location = '/SIAV/liquidar/';
     }, 1000);
   });
+
+
+  // Radialize the colors
+    Highcharts.getOptions().colors = Highcharts.map(Highcharts.getOptions().colors, function(color) {
+        return {
+            radialGradient: { cx: 0.5, cy: 0.3, r: 0.7 },
+            stops: [
+                [0, color],
+                [1, Highcharts.Color(color).brighten(-0.3).get('rgb')] // darken
+            ]
+        };
+    });
+
+
+  $('#pie_container').highcharts({
+    chart: {
+      plotBackgroundColor: null,
+      plotBorderWidth: null,
+      plotShadow: false,
+      backgroundColor: '#FFFFFF',
+      borderColor: '#D5D5D5',
+      borderWidth: 2,
+    },
+    title: {
+      text: ''
+    },
+    tooltip: {
+      pointFormat: '{series.name}: <b>{point.percentage}%</b>',
+      percentageDecimals: 1
+    },
+    plotOptions: {
+      pie: {
+        size:'70%',
+        allowPointSelect: true,
+        cursor: 'pointer',
+        dataLabels: {
+          enabled: true,
+          color: '#000000',
+          connectorColor: '#000000',
+          formatter: function() {
+            return '<b>' + this.point.name + '</b>: ' + this.percentage.toFixed(2) + ' %';
+          }
+        }
+      }
+    },
+    series: [{
+      type: 'pie',
+      name: 'Browser share',
+      data: [
+      {% for a in agrupados %}
+      {% if a.Total %}
+      ['{{a.Cliente__Cliente}}',{{a.Total}}],
+      {% endif %}
+      {% endfor %}
+
+      ]
+    }]
+  });
+
+
 });
+
+
+
+
+
 
 </script>
 
@@ -37,6 +105,9 @@ $(document).ready(function () {
 
 <h1>Facturas por Liquidar</h1>
 <h2 style="text-align:left"><span id="cantidad_tabla"></span>   Facturas</h2>
+
+<div class="container">
+<div class="row-fluid span6">
 <table id='avaluos_table'>
  <thead>
   <tr>
@@ -46,7 +117,7 @@ $(document).ready(function () {
    <td></td>
    <td><b>{{total_general|currency}}</b></td>
  </tr>
- <tr></th><th style="width:100px" filter='false'>Factura</th><th filter='false'>Cliente</th><th  filter='false'>Servicios</th><th filter='false'>Monto</th><th filter='false' class="tabla_opciones">Pagado</th></tr>
+ <tr><th style="width:100px" filter='false'>Factura</th><th filter='false'>Cliente</th><th  filter='false'>Servicios</th><th filter='false'>Monto</th><th filter='false' class="tabla_opciones">Pagado</th></tr>
 </thead>
 <tbody>
   <form action="/SIAV/liquidar/" method="post">
@@ -55,15 +126,19 @@ $(document).ready(function () {
     <td style="width:10px;"> {{a.Factura}} </td>{% csrf_token %}
     <td> {{a.Cliente__Cliente}} </td>
     <td> {{a.Cantidad}} </td>
-    <td> {{a.Total|currency }}			  
-      <td> <input type="checkbox" value="{{a.Factura}}" name="facturas_pagadas">	</td>  </tr>
-      {% endfor %}
-      <input class='btn btn-primary' type="submit" name="submit" value="Liquidar" />
+    <td> {{a.Total|currency }} </td>			  
+    <td> <input type="checkbox" value="{{a.Factura}}" name="facturas_pagadas">	</td>  </tr>
+    {% endfor %}
+    <input class='btn btn-primary' type="submit" name="submit" value="Liquidar" />
 
-    </form>
-  </tbody>
-
+  </form>
+</tbody>
 </table>
+</div>
+<div class="row-fluid span6">
+ <div id="pie_container"></div>
+</div>
+</div>
 
 
 
