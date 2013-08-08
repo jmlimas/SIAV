@@ -134,6 +134,7 @@ def estadistico(request, anio=2013):
     anios = Avaluo.objects.all().dates('Salida', 'year')
     avaluos = Avaluo.objects.extra(select={'month': 'extract( month from Salida )'}).values('month').filter(Salida__year=anio).order_by('month').annotate(dcount=Count('Solicitud'), Total=Sum('Importe'))
     cliente = Avaluo.objects.filter(Salida__year=anio).values('Cliente__Cliente').annotate(Total=Sum('Importe'), Cantidad=Count('Cliente'))
+    tiempo_respuesta = Avaluo.objects.filter(Salida__year=anio).values('Depto__Depto','Solicitud','Salida').annotate(Total=Sum('Importe'), Cantidad=Count('Cliente'))
     monto_todos_anios = Avaluo.objects.extra(select={'year': 'extract( year from Salida )'}).values('year').annotate(Total=Sum('Importe')).order_by('year')
 
     total_general = 0.00
@@ -147,7 +148,7 @@ def estadistico(request, anio=2013):
             total_general += float(str(x['Total']))
             total_avaluos += x['dcount']
     totales = [total_avaluos, total_general]
-    return render_to_response('home/estadistico.html', {'avaluos': avaluos, 'totales': totales, 'anio': anio, 'anios': anios, 'monto_todos_anios': monto_todos_anios, 'cliente': cliente}, context_instance=RequestContext(request))
+    return render_to_response('home/estadistico.html', {'avaluos': avaluos, 'totales': totales, 'anio': anio, 'anios': anios, 'monto_todos_anios': monto_todos_anios, 'cliente': cliente, 'tiempo_respuesta': tiempo_respuesta}, context_instance=RequestContext(request))
 
 
 @login_required
@@ -222,8 +223,7 @@ def actualiza_avaluo(request, id):
         form = CapturaAvaluo(instance=avaluo)
     decimal = decimal_conversion(avaluo)
     cercanos = find_closest(avaluo)
-    imagenes = ImagenAvaluo.objects.filter(avaluo = avaluo.avaluo_id)
-    return render_to_response('home/edita_avaluo.html', {'form': form, 'avaluo': avaluo, 'decimal': decimal, 'cercanos': cercanos, 'folio_k': folio_k,'imagenes':imagenes}, context_instance=RequestContext(request))
+    return render_to_response('home/edita_avaluo.html', {'form': form, 'avaluo': avaluo, 'decimal': decimal, 'cercanos': cercanos, 'folio_k': folio_k}, context_instance=RequestContext(request))
 
 
 @login_required
@@ -320,9 +320,7 @@ def consulta_master(request):
         col = request.GET.get('col', '')
         factura = request.GET.get('factura', '')
         edo = request.GET.get('edo', '')
-        cli = request.GET.get('cli', '')
-        dep = request.GET.get('dep', '')
-        mun = request.GET.get('mun', '')        
+        mun = request.GET.get('mun', '')
         imp = request.GET.get('imp', '')
         tipo = request.GET.get('tipo', '')
         mes = request.GET.get('mes', '')
@@ -343,10 +341,6 @@ def consulta_master(request):
             results = results.filter((Q(Estado=edo)))    
         if mun:
             results = results.filter((Q(Municipio=mun)))
-        if cli:
-            results = results.filter((Q(Cliente=cli)))    
-        if dep:
-            results = results.filter((Q(Depto=dep)))
         if imp:
             results = results.filter((Q(Importe__icontains=imp)))  
         if tipo:

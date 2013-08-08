@@ -8,6 +8,8 @@
 
 {% load currency %}
 
+{% load elapsed %}
+
 {% load humanize %}
 
 
@@ -263,6 +265,21 @@ data: [5, 7, 3]
                             <td><b>{{totales.1|currency}}</b></td>
                         </tr>
                     </table>
+
+
+                        <table class="table table-hover" style="width:83%;margin-top:50px">
+                        <thead>
+                            <th>Departamento</th>
+                            <th>Tiempo Promedio de Respuesta (Ultimos 30 dias)</th>
+                        </thead>
+                        {% for a,b in anio|elapsed %}
+                        <tr>
+                            <td>{{ a }}</td>
+                            <td>{{ b }} dias</td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+
                 </div>
         </div>
         <div class="tab-pane" id="cliente">

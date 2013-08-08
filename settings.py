@@ -1,5 +1,13 @@
 # Django settings for SIAV project.
 
+import os
+
+# Set the DJANGO_SETTINGS_MODULE environment variable.
+os.environ['DJANGO_SETTINGS_MODULE'] = "SIAV.settings"
+
+#do your stuff
+
+
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
