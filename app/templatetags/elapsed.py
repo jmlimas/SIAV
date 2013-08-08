@@ -7,7 +7,7 @@ register = template.Library()
 def elapsed(anio):
 	deptos = Depto.objects.all()
 	dias_solicitud = 120
-	how_many_days = 30
+	how_many_days = 15
 	dias_transcurridos = 0
 	dic = {}
 	for d in deptos:
@@ -19,9 +19,11 @@ def elapsed(anio):
 					diferencia = a.Salida - a.Solicitud
 					dias_transcurridos += diferencia.days
 				else:
-					cantidad_avaluos-= 1
+                                        cantidad_avaluos-=1
 			promedio = dias_transcurridos/cantidad_avaluos
-			dic[d.Depto] = promedio	
+			dic[d.Depto] = promedio
+			dias_transcurridos = 0
+			cantidad_avaluos = 0
 	return dic.iteritems()
 
 
