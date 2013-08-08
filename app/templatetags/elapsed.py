@@ -6,12 +6,11 @@ register = template.Library()
 
 def elapsed(anio):
 	deptos = Depto.objects.all()
-	how_many_days = 500
+	how_many_days = 30
 	dias_transcurridos = 0
 	dic = {}
-#	anio2 = int(anio)
 	for d in deptos:
-		avaluos = Avaluo.objects.filter(Salida__year=2013).filter(Depto=d.depto_id).filter(Salida__gte=datetime.now()-timedelta(days=how_many_days))
+		avaluos = Avaluo.objects.filter(Salida__year=anio).filter(Depto=d.depto_id).filter(Salida__gte=datetime.now()-timedelta(days=how_many_days))
 		cantidad_avaluos = avaluos.count()
 		if cantidad_avaluos > 0:
 			for a in avaluos:
