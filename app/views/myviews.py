@@ -116,6 +116,7 @@ def liquidar(request):
         return HttpResponseRedirect('.')
     else:
         agrupados = avaluos.values('Factura', 'Cliente__Cliente').annotate(Total=Sum('Importe'), Cantidad=Count('Factura'))
+
         cantidad = avaluos.count()
         total_general = 0.00
         for x in agrupados:

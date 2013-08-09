@@ -3,6 +3,8 @@
 {% load crispy_forms_tags %}
 
 {% load dayssince %}
+{% load adder %}
+{% load graficas %}
 
 {% load currency %}
 
@@ -45,50 +47,117 @@ $(document).ready(function () {
     });
 
 
-  $('#pie_container').highcharts({
-    chart: {
-      plotBackgroundColor: null,
-      plotBorderWidth: null,
-      plotShadow: false,
-      backgroundColor: '#FFFFFF',
-      borderColor: '#D5D5D5',
-      borderWidth: 2,
-    },
-    title: {
-      text: ''
-    },
-    tooltip: {
-      pointFormat: '{series.name}: <b>{point.percentage}%</b>',
-      percentageDecimals: 1
-    },
-    plotOptions: {
-      pie: {
-        size:'70%',
-        allowPointSelect: true,
-        cursor: 'pointer',
-        dataLabels: {
-          enabled: true,
-          color: '#000000',
-          connectorColor: '#000000',
-          formatter: function() {
-            return '<b>' + this.point.name + '</b>: ' + this.percentage.toFixed(2) + ' %';
-          }
-        }
-      }
-    },
-    series: [{
-      type: 'pie',
-      name: 'Browser share',
-      data: [
-      {% for a in agrupados %}
-      {% if a.Total %}
-      ['{{a.Cliente__Cliente}}',{{a.Total}}],
-      {% endif %}
-      {% endfor %}
+$(function () {
+    
+        var colors = Highcharts.getOptions().colors,
+            categories = ['No Facturado','Facturado'],
+            name = 'Balance de Facturación',
+            data = [{
+                    //y: 55.11,
+                    y:  {{Something|grafica_por_facturar|importe_adder}},
+                    color: colors[0],
+                    drilldown: {
+                        name: 'Por Facturar',
+                        categories: [{% for x in Something|grafica_por_facturar %}'{{x.Cliente__Cliente}}',{% endfor %}],
+                        data: [{% for x in Something|grafica_por_facturar %}{{x.total}},{% endfor %}],
+                        color: colors[0]
 
-      ]
-    }]
-  });
+
+                        /*name: 'MSIE versions',
+                        categories: ['MSIE 6.0', 'MSIE 7.0', 'MSIE 8.0', 'MSIE 9.0'],
+                        data: [10.85, 7.35, 33.06, 2.81],
+                        color: colors[0]*/
+                    }
+                }, {
+                     y:  {{Something|grafica_por_liquidar|importe_adder}},
+                    color: colors[1],
+                    drilldown: {
+
+                        name: 'Facturado',
+                        categories: [{% for x in Something|grafica_por_liquidar %}'{{x.Factura}}',{% endfor %}],
+                        data: [{% for x in Something|grafica_por_liquidar %}{{x.total}},{% endfor %}],
+                        color: colors[0]
+
+
+                        /*name: 'Firefox versions',
+                        categories: ['Firefox 2.0', 'Firefox 3.0', 'Firefox 3.5', 'Firefox 3.6', 'Firefox 4.0'],
+                        data: [0.20, 0.83, 1.58, 13.12, 5.43],
+                        color: colors[1]*/
+                    }
+                }];
+    
+    
+        // Build the data arrays
+        var browserData = [];
+        var versionsData = [];
+        for (var i = 0; i < data.length; i++) {
+    
+            // add browser data
+            browserData.push({
+                name: categories[i],
+                y: data[i].y,
+                color: data[i].color
+            });
+    
+            // add version data
+            for (var j = 0; j < data[i].drilldown.data.length; j++) {
+                var brightness = 0.2 - (j / data[i].drilldown.data.length) / 5 ;
+                versionsData.push({
+                    name: data[i].drilldown.categories[j],
+                    y: data[i].drilldown.data[j],
+                    color: Highcharts.Color(data[i].color).brighten(brightness).get()
+                });
+            }
+        }
+    
+        // Create the chart
+        $('#donut_container').highcharts({
+            chart: {
+                type: 'pie'
+            },
+            title: {
+                text: 'Balance de Facturación'
+            },
+            yAxis: {
+                title: {
+                    text: 'Blance de Facturación'
+                }
+            },
+            plotOptions: {
+                pie: {
+                    shadow: false,
+                    center: ['50%', '50%']
+                }
+            },
+            tooltip: {
+              valuePrefix: '$'
+            },
+            series: [{
+                name: 'Importe',
+                data: browserData,
+                size: '60%',
+                dataLabels: {
+                    formatter: function() {
+                        return this.y > 5 ? this.point.name : null;
+                    },
+                    color: 'white',
+                    distance: -30
+                }
+            }, {
+                name: 'Importe',
+                data: versionsData,
+                size: '80%',
+                innerSize: '60%',
+                dataLabels: {
+                    formatter: function() {
+                        // display only if larger than 1
+                        return '<b>' + this.point.name + '</b>: ' + this.percentage.toFixed(2) + ' %';
+                    }
+                }
+            }]
+        });
+    });
+
 
 
 });
@@ -107,7 +176,7 @@ $(document).ready(function () {
 <h2 style="text-align:left"><span id="cantidad_tabla"></span>   Facturas</h2>
 
 <div class="container">
-<div class="row-fluid span6">
+<div class="row-fluid span5">
 <table id='avaluos_table'>
  <thead>
   <tr>
@@ -135,9 +204,11 @@ $(document).ready(function () {
 </tbody>
 </table>
 </div>
-<div class="row-fluid span6">
- <div id="pie_container"></div>
+
+<div class="row-fluid span7">
+ <div id="donut_container"></div>
 </div>
+
 </div>
 
 
