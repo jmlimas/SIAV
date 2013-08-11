@@ -106,69 +106,69 @@ $(function() {
 
 <script type="text/javascript">
 
- function initialize() {
+function initialize() {
 
-   var latlng = new google.maps.LatLng({{decimal.declon}},({{decimal.declat}}*-1));
-   var myOptions = {
-      zoom: 14,
-      center: latlng,
-      mapTypeId: google.maps.MapTypeId.ROADMAP
-    };
-    var map = new google.maps.Map(document.getElementById("map_canvas"),
-        myOptions);
-  
-
-  marker = new google.maps.Marker({
-    position: latlng,
-    map: map
-  });
-  
-  marker.setMap(map);
-
-     {% for x in cercanos %}
-  var latlng = new google.maps.LatLng({{x.2}},({{x.3}}*-1));
-
-  marker_{{x.1}} = new google.maps.Marker({
-    position: latlng,
-    map: map,
-    icon:'http://maps.google.com/mapfiles/ms/icons/blue-dot.png'
-  });
-  marker_{{x.1}}.setMap(map);
-
-        var boxText = document.createElement("div");
-        boxText.style.cssText = "border: 1px solid black; margin-top: 8px; background: yellow; padding: 5px;";
-        boxText.innerHTML = "<a href='/SIAV/respuesta_consulta_sencilla/{{x.1}}' target='_blank' >{{x.4}}</a>";
-                
-        var myOptions_{{x.1}} = {
-                 content: boxText
-                ,disableAutoPan: false
-                ,maxWidth: 0
-                ,pixelOffset: new google.maps.Size(-140, 0)
-                ,zIndex: null
-                ,boxStyle: { 
-                  background: "url('tipbox.gif') no-repeat"
-                  ,opacity: 0.75
-                  ,width: "280px"
-                 }
-                ,closeBoxMargin: "10px 2px 2px 2px"
-                ,closeBoxURL: "http://www.google.com/intl/en_us/mapfiles/close.gif"
-                ,infoBoxClearance: new google.maps.Size(1, 1)
-                ,isHidden: false
-                ,pane: "floatPane"
-                ,enableEventPropagation: false
-        };
+ var latlng = new google.maps.LatLng({{decimal.declon}},({{decimal.declat}}*-1));
+ var myOptions = {
+  zoom: 14,
+  center: latlng,
+  mapTypeId: google.maps.MapTypeId.ROADMAP
+};
+var map = new google.maps.Map(document.getElementById("map_canvas"),
+  myOptions);
 
 
-        var ib = new InfoBox();
+marker = new google.maps.Marker({
+  position: latlng,
+  map: map
+});
 
-    google.maps.event.addListener(marker_{{x.1}}, "click", function (e) {
-      ib.close();
-      ib.setOptions(myOptions_{{x.1}})
-      ib.open(map, this);
-    });
+marker.setMap(map);
+
+{% for x in cercanos %}
+var latlng = new google.maps.LatLng({{x.2}},({{x.3}}*-1));
+
+marker_{{x.1}} = new google.maps.Marker({
+  position: latlng,
+  map: map,
+  icon:'http://maps.google.com/mapfiles/ms/icons/blue-dot.png'
+});
+marker_{{x.1}}.setMap(map);
+
+var boxText = document.createElement("div");
+boxText.style.cssText = "border: 1px solid black; margin-top: 8px; background: yellow; padding: 5px;";
+boxText.innerHTML = "<a href='/SIAV/respuesta_consulta_sencilla/{{x.1}}' target='_blank' >{{x.4}}</a>";
+
+var myOptions_{{x.1}} = {
+ content: boxText
+ ,disableAutoPan: false
+ ,maxWidth: 0
+ ,pixelOffset: new google.maps.Size(-140, 0)
+ ,zIndex: null
+ ,boxStyle: { 
+  background: "url('tipbox.gif') no-repeat"
+  ,opacity: 0.75
+  ,width: "280px"
+}
+,closeBoxMargin: "10px 2px 2px 2px"
+,closeBoxURL: "http://www.google.com/intl/en_us/mapfiles/close.gif"
+,infoBoxClearance: new google.maps.Size(1, 1)
+,isHidden: false
+,pane: "floatPane"
+,enableEventPropagation: false
+};
 
 
-  {% endfor %}
+var ib = new InfoBox();
+
+google.maps.event.addListener(marker_{{x.1}}, "click", function (e) {
+  ib.close();
+  ib.setOptions(myOptions_{{x.1}})
+  ib.open(map, this);
+});
+
+
+{% endfor %}
 }
 </script>
 
@@ -176,14 +176,18 @@ $(function() {
 {% endblock %}     
 
 {% block content %}
+<div style=display:block>
+  {% for item in imagenes %}
+  {% thumbnail item.imagen "100x100" crop="center" as small %}
+  {# <a href="/{{item.imagen}}" title="{{item.FolioK}}"> <img src="{{small.imagen}}" ></a> #}
+  <a href="/{{item.imagen}}" title="{{item.avaluo_id}}"><img src="/{{ small.url }}" style="padding:5px;"></a>
+  {% endthumbnail %}
+  {% endfor %}
+</div>
+<br>
+{% for item in archivos %}
 
-{% for item in imagenes %}
-
-{% thumbnail item.imagen "1000" as big %}
-{% thumbnail item.imagen "100x100" crop="center" as small %}
-<a href="{{ big.url}}" title="{{item.avaluo_id}}"><img src="{{ small.url }}" style="padding:5px;"></a>
-{% endthumbnail %}
-{% endthumbnail %}
+<a href="/{{item.file}}" target="_blank" >{{item.file}}</a><br>
 
 {% endfor %}
 
@@ -196,7 +200,7 @@ $(function() {
     <th>Id</th>
     <th>FolioK</th>
     <th>Valor</th>
-   {% for x in cercanos %}
+    {% for x in cercanos %}
     <tr>
       <td>{{x.0}}</td>
       <td>{{x.1}}</td>
@@ -204,35 +208,35 @@ $(function() {
       <td>{{x.5|currency}}</td>
     </tr>
     {%endfor%}
-   </table>
-   <div id="map_canvas" style="width: 700px; height: 500px;"  ></div>
- </div>
- <div id="file-uploader" style="float:right;">		
-   <noscript>			
-    <p>Please enable JavaScript to use file uploader.</p>
-    <!-- or put a simple form for upload here -->
-  </noscript>         
+  </table>
+  <div id="map_canvas" style="width: 700px; height: 500px;"  ></div>
+</div>
+<div id="file-uploader" style="float:right;">		
+ <noscript>			
+  <p>Please enable JavaScript to use file uploader.</p>
+  <!-- or put a simple form for upload here -->
+</noscript>         
 </div>
 </div>
 
-    <div class="span12">
-    <div class="offset2 span8">
-	<table class="table table-striped" id="datos_texto">
-		<tr>
-			<td>Avaluo Id : <b>{{ avaluo.avaluo_id }}</b></td>
-			<td>Folio K : <b>{{ folio_k }}</b></td>
-			<td>Tipo de Servicio: <b>{{ avaluo.Servicio }}</b></td>
+<div class="span12">
+  <div class="offset2 span8">
+   <table class="table table-striped" id="datos_texto">
+    <tr>
+     <td>Avaluo Id : <b>{{ avaluo.avaluo_id }}</b></td>
+     <td>Folio K : <b>{{ folio_k }}</b></td>
+     <td>Tipo de Servicio: <b>{{ avaluo.Servicio }}</b></td>
 
-		</tr>
-		<tr>
-			<td>Cliente : <b>{{ avaluo.Cliente }}</b></td>
-			<td>Departamento : <b>{{ avaluo.Depto}}</b></td>
-			<td>Fecha Solicitud : <b>{{ avaluo.Solicitud }}</b></td>
-		</tr>
-	</table>
+   </tr>
+   <tr>
+     <td>Cliente : <b>{{ avaluo.Cliente }}</b></td>
+     <td>Departamento : <b>{{ avaluo.Depto}}</b></td>
+     <td>Fecha Solicitud : <b>{{ avaluo.Solicitud }}</b></td>
+   </tr>
+ </table>
 </div>
 </div>
-	{% crispy form %}	
-	<br>
-  <br>
+{% crispy form %}	
+<br>
+<br>
 {% endblock %}

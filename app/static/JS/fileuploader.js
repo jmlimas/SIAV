@@ -491,7 +491,7 @@ qq.FileUploader = function(o){
                 
         template: '<div class="qq-uploader">' + 
                 '<div class="qq-upload-drop-area"><span>Drop files here to upload</span></div>' +
-                '<button class="qq-upload-button btn btn-danger">Subir Foto</button>' +
+                '<button class="qq-upload-button btn btn-danger">Subir Archivo</button>' +
                 '<ul class="qq-upload-list"></ul>' + 
              '</div>',
 

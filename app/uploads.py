@@ -5,51 +5,17 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.core.files.storage import default_storage
 from django.core.files.uploadedfile import SimpleUploadedFile
 from app.models import *
+from io import FileIO, BufferedWriter
+import imghdr
 import os
+import os.path
 
 
 # Create your views here.
-"""
-def upload_page( request ):
-  ctx = RequestContext( request, {
-    'csrf_token': get_token( request ),
-  } )
-  return render_to_response('home/selecciona_estado.html', ctx )
-"""
 
-def save_upload( uploaded, filename, raw_data,  folio_k):
-  ''' 
-  raw_data: if True, uploaded is an HttpRequest object with the file being
-            the raw post data 
-            if False, uploaded has been submitted via the basic form
-            submission and is a regular Django UploadedFile in request.FILES
-  '''
-  try:
-    from io import FileIO, BufferedWriter
-    d = os.path.dirname("media\\"+folio_k+"\\"+filename)
-    if not os.path.exists(d):
-      os.makedirs(d)
-    with BufferedWriter( FileIO( "media\\"+folio_k+"\\"+filename, "wb" ) ) as dest:
-      # if the "advanced" upload, read directly from the HTTP request
 
-      # with the Django 1.3 functionality
-      if raw_data:
-        foo = uploaded.read( 1024 )
-        while foo:
-          dest.write( foo )
-          foo = uploaded.read( 1024 ) 
-      # if not raw, it was a form upload so read in the normal Django chunks fashion
-      else:
-        for c in uploaded.chunks( ):
-          dest.write( c )
 
-      # got through saving the upload, report success
-      return True
-  except IOError:
-    # could not open the file most likely
-    pass
-  return False
- 
+
 def ajax_upload( request,avaluo_id,folio_k ):
   if request.method == "POST":    
     if request.is_ajax( ):
@@ -74,19 +40,26 @@ def ajax_upload( request,avaluo_id,folio_k ):
         upload = request.FILES.values( )[ 0 ]
       else:
         raise Http404( "Bad Upload" )
-    
-    filename2 = folio_k + "/" + filename
+ 
     # save the file
-    success = save_upload( upload, filename, is_raw, folio_k)
+    #success = save_upload( upload, filename, is_raw, folio_k)
 
     file_contents = SimpleUploadedFile(filename, request.raw_post_data)
 
+    ext = os.path.splitext(filename)[1]
 
-    imagen_avaluo = ImagenAvaluo()
-    imagen_avaluo.avaluo_id = avaluo_id
-    imagen_avaluo.imagen.save(filename2,file_contents, save=True)
+    if (ext == ".png")|(ext == ".jpg")|(ext == ".jpeg")|(ext == ".PNG")|(ext == ".JPG")|(ext == ".JPEG"):
+      imagen_avaluo = ImagenAvaluo()
+      imagen_avaluo.avaluo_id = avaluo_id
+      imagen_avaluo.FolioK = folio_k
+      imagen_avaluo.imagen.save(filename, file_contents)
+    else:
+      archivo_avaluo = ArchivoAvaluo()
+      archivo_avaluo.avaluo_id = avaluo_id
+      archivo_avaluo.FolioK = folio_k
+      archivo_avaluo.file.save(filename, file_contents)
  
     # let Ajax Upload know whether we saved it or not
     import json
-    ret_json = { 'success': success, }
+    ret_json = { 'success': 'test','ext':ext }
     return HttpResponse( json.dumps( ret_json ) )

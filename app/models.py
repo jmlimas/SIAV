@@ -1,5 +1,5 @@
 from django.db import models
-
+import os
 
 # Create your models here.
 class Estado(models.Model):
@@ -126,7 +126,26 @@ class Avaluo(models.Model):
     Observaciones = models.CharField(null=True, max_length=255)
 
 
+def get_image_path(folder, filename):
+    return os.path.join('media/',str(folder), filename)
+
 class ImagenAvaluo(models.Model):
     imagen_id = models.AutoField(primary_key=True)
+    FolioK = models.CharField(null=True, max_length=255)
     avaluo = models.ForeignKey(Avaluo)
-    imagen = models.ImageField("Imagen Avaluo", upload_to="media/", blank=True, null=True)
+    imagen = models.ImageField("Imagen Avaluo", upload_to=get_image_path, blank=True, null=True)
+
+    def __unicode__(self):
+        return unicode(self.FolioK)
+
+class ArchivoAvaluo(models.Model):
+    archivo_id = models.AutoField(primary_key=True)
+    FolioK = models.CharField(null=True, max_length=255)
+    avaluo = models.ForeignKey(Avaluo)
+    file = models.FileField("Archivo Avaluo", upload_to=get_image_path, blank = True, null=True)
+
+    def __unicode__(self):
+        return unicode(self.FolioK)
+
+
+

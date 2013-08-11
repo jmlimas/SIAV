@@ -88,6 +88,7 @@ urlpatterns = patterns(
     url(r'^faq/', 'website.views.faq', name='faq'),
     url(r'^servicios/', 'website.views.servicios', name='servicios'),
     url(r'^contacto/', 'website.views.contacto', name='contacto'),
+    url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': 'media/'})
 )
 
 # Add the static files pattern to the url.

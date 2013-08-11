@@ -121,7 +121,7 @@ src="https://maps.google.com/maps/api/js?sensor=true">
 
 {% thumbnail item.imagen "1000" as big %}
 {% thumbnail item.imagen "100x100" crop="center" as small %}
-<a href="{{ big.url}}" title="{{item.avaluo_id}}"><img src="{{ small.url }}" style="padding:5px;"></a>
+<a href="/{{item.imagen}}" title="{{item.avaluo_id}}"><img src="/{{ small.url }}" style="padding:5px;"></a>
 {% endthumbnail %}
 {% endthumbnail %}
 

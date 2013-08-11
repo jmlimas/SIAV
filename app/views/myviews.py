@@ -1,3 +1,5 @@
+import os
+from django.conf.urls.defaults import *
 from django.db.models import Sum, Count, Q
 from app.forms import *
 from app.haversine import *
@@ -9,6 +11,13 @@ from django.contrib.auth.models import User, Group
 from django.contrib.auth.decorators import login_required
 from django.forms.models import modelformset_factory
 from django.contrib.admin.views.decorators import staff_member_required
+from django.core.files import File
+from django.core.files.storage import default_storage
+from django.core.files.base import ContentFile
+from io import FileIO, BufferedWriter
+
+current_directory = os.path.dirname(os.path.abspath(__file__))
+
 
 #   Recibe el id y la colonia.
 def genera_foliok(avaluo_id, colonia):
@@ -225,7 +234,8 @@ def actualiza_avaluo(request, id):
     decimal = decimal_conversion(avaluo)
     cercanos = find_closest(avaluo)
     imagenes = ImagenAvaluo.objects.filter(avaluo = avaluo.avaluo_id)[:3]
-    return render_to_response('home/edita_avaluo.html', {'form': form, 'avaluo': avaluo, 'decimal': decimal, 'cercanos': cercanos,'imagenes': imagenes, 'folio_k': folio_k}, context_instance=RequestContext(request))
+    archivos = ArchivoAvaluo.objects.filter(avaluo = avaluo.avaluo_id)
+    return render_to_response('home/edita_avaluo.html', {'form': form, 'avaluo': avaluo, 'decimal': decimal, 'cercanos': cercanos,'imagenes': imagenes,'archivos': archivos, 'folio_k': folio_k}, context_instance=RequestContext(request))
 
 
 @login_required
@@ -292,7 +302,7 @@ def guarda_master(request, id):
         return render_to_response('home/consultas/respuesta_consulta_master.html', {'forma': forma, 'imagenes': imagenes}, context_instance=RequestContext(request))
     else:
         avaluo = Avaluo.objects.get(pk=id)
-        imagenes = ImagenAvaluo.objects.filter(avaluo=id)
+        imagenes = ImagenAvaluo.objects.filter(avaluo=id)[:3]
 
         forma = RespuestaConsultaMaster(instance=avaluo)
 
@@ -502,12 +512,14 @@ def alta_valuador(request):
 @login_required
 def lista_valuador(request):
     valuadores = Valuador.objects.all()
-    return render_to_response('home/lista_valuador.html', {'valuadores': valuadores}, context_instance=RequestContext(request))
+    return render_to_response(current_directory+'/../../media', {'valuadores': valuadores}, context_instance=RequestContext(request))
 
 
 @login_required
 def mapas(request):
-    avaluo = Avaluo.objects.get(FolioK='POP20213')
+#    path = default_storage.save(d, ContentFile('new_content.html'))
+    
+    avaluo = Avaluo.objects.order_by('?')[0]
     decimal = decimal_conversion(avaluo)
     cercanos = find_closest(avaluo)
     todos = Avaluo.objects.all().order_by('?')[:100]
@@ -518,3 +530,11 @@ def mapas(request):
 @login_required
 def submitted(request):
     return render_to_response('home/submitted.html', context_instance=RequestContext(request))
+
+
+def pdf_view(avaluo_id):
+    archivo = ArchivoAvaluo.objects.filter(avaluo = avaluo.avaluo_id)
+    response = HttpResponse(archivo, mimetype='application/pdf')
+    response['Content-Disposition'] = 'inline;filename=some_file.pdf'
+    return response
+    pdf.closed

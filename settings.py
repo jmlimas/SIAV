@@ -10,6 +10,8 @@ os.environ['DJANGO_SETTINGS_MODULE'] = "SIAV.settings"
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
+THUMBNAIL_DEBUG = True 
+THUMBNAIL_PREFIX ='media/cache/'
 
 ADMINS = (
     # ('Your Name', 'your_email@example.com'),
@@ -67,12 +69,12 @@ USE_TZ = True
 
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/home/media/media.lawrence.com/media/"
-MEDIA_ROOT = '/SIAV/media/'
+MEDIA_ROOT = os.path.dirname("media")
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash.
 # Examples: "http://media.lawrence.com/media/", "http://example.com/media/"
-MEDIA_URL = '/SIAV/media/'
+MEDIA_URL = os.path.dirname("media")
 
 # Absolute path to the directory static files should be collected to.
 # Don't put anything in this directory yourself; store your static files
