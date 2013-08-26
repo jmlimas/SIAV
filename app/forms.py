@@ -219,7 +219,7 @@ class CapturaAvaluo(ModelForm):
     LongitudG = forms.DecimalField(required=False, label="Lat.G.")
     LongitudM = forms.DecimalField(required=False, label="Lat.M.")
     LongitudS = forms.DecimalField(required=False, label="Lat.S.")
-    Valor = forms.DecimalField(required=True)
+    Valor = forms.DecimalField(required=False)
     Gastos = forms.DecimalField(required=False)
     Importe = forms.DecimalField(required=False)
     Observaciones = forms.CharField(widget=forms.Textarea, required=False)

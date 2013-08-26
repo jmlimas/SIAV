@@ -1,3 +1,5 @@
+/*
+
 @media only screen and (max-width: 1024px) {
    table td:nth-child(2), 
    table th:nth-child(2) {display: none;}
@@ -32,6 +34,8 @@
    table td:nth-child(11),
    table th:nth-child(11){display: none;}
 }
+
+*/
 
 h1 {
   color:#00334e;

@@ -68,7 +68,7 @@ $(document).ready(function () {
 <h2 style="text-align:left"><span id="cantidad_tabla"></span>  Servicios</h2>
 <table id='avaluos_table' class="table table-striped">
  <thead>
-  <tr class='even'><th id="folio_type" filter-type="ddl" style="width:40px">Folio K</th><th style="width:150px" filter='false' >Ref.</th><th filter-type='ddl'>Cliente</th><th filter="false">Calle</th><th filter='false'>Ext.</th><th filter='false'>Int.</th><th style="width:100px" filter='false'>Factura</th><th filter='false'>Municipio</th><th  filter='false'>Entrega</th><th filter='false'>Monto</th><th filter='false' class="tabla_opciones">Opciones</th></tr>
+  <tr class='even'><th id="folio_type" filter-type="ddl" style="width:40px">Folio K</th><th style="width:150px" filter='false' >Ref.</th><th filter-type='ddl'>Cliente</th><th filter-type='ddl'>Depto</th><th filter="false">Calle</th><th filter='false'>Ext.</th><th filter='false'>Int.</th><th style="width:100px" filter='false'>Factura</th><th filter='false'>Municipio</th><th  filter='false'>Entrega</th><th filter='false'>Monto</th><th filter='false' class="tabla_opciones">Opciones</th></tr>
 </thead>
 <tbody>
   <form action="/SIAV/facturar/" method="post">
@@ -79,6 +79,7 @@ $(document).ready(function () {
      <td> {{a.FolioK}} </td>
      <td> {{a.Referencia}} </td>
      <td> {{a.Cliente}} </td>
+	 <td> {{a.Depto}} </td>
      <td> {{a.Calle}} </td>
      <td style="width:3px;"> {{a.NumExt}} </td>
      <td style="width:10px;"> {{a.NumInt}} </td>
