@@ -31,6 +31,7 @@
   <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/jquery.jdpicker.js"></script>
   <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/jquery.cookie.js"></script>
   <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/bootstrap.js"></script>
+  <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/autoNumeric.js"></script>
 
   {% block script %}{% endblock %}
 
@@ -41,12 +42,34 @@
      $(this).attr('autocomplete', 'off');
    });
 
+
     $('#submit-id-submit').click(function () {
       $("input[type=text]").each(function () {
         this.value = this.value.toUpperCase();
-        mixpanel.track("Submit Form")
-      });
+
+    $("input[type=text]").each(function () {
+        var self = $(this);
+        try{
+            var v = self.autoNumeric('get');
+            self.autoNumeric('destroy');
+            self.val(v);
+            console.log(self.val(v));
+        }catch(err){
+            console.log("Not an autonumeric field: " + self.attr("name"));
+        }
     });
+
+        
+      });
+
+
+      $("#id_Valor").autoNumeric('destroy');
+
+    });
+
+    $('#id_Valor').autoNumeric('init', {aSign: '$'}); 
+    $('#id_Gastos').autoNumeric('init', {aSign: '$'}); 
+    $('#id_Importe').autoNumeric('init', {aSign: '$'}); 
   });
 
   function printDiv(divName) {

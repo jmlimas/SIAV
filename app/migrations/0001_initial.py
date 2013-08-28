@@ -73,8 +73,8 @@ class Migration(SchemaMigration):
         # Adding model 'Avaluo'
         db.create_table('app_avaluo', (
             ('avaluo_id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('Referencia', self.gf('django.db.models.fields.CharField')(max_length=255, null=True)),
-            ('FolioK', self.gf('django.db.models.fields.CharField')(max_length=255, null=True)),
+            ('Referencia', self.gf('django.db.models.fields.CharField')(max_length=255, unique=True, null=True)),
+            ('FolioK', self.gf('django.db.models.fields.CharField')(max_length=255, unique=True, null=True)),
             ('Calle', self.gf('django.db.models.fields.CharField')(max_length=255, null=True)),
             ('NumExt', self.gf('django.db.models.fields.CharField')(max_length=255, null=True)),
             ('NumInt', self.gf('django.db.models.fields.CharField')(max_length=255, null=True)),
@@ -111,10 +111,20 @@ class Migration(SchemaMigration):
         # Adding model 'ImagenAvaluo'
         db.create_table('app_imagenavaluo', (
             ('imagen_id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+            ('FolioK', self.gf('django.db.models.fields.CharField')(max_length=255, null=True)),
             ('avaluo', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['app.Avaluo'])),
             ('imagen', self.gf('django.db.models.fields.files.ImageField')(max_length=100, null=True, blank=True)),
         ))
         db.send_create_signal('app', ['ImagenAvaluo'])
+
+        # Adding model 'ArchivoAvaluo'
+        db.create_table('app_archivoavaluo', (
+            ('archivo_id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+            ('FolioK', self.gf('django.db.models.fields.CharField')(max_length=255, null=True)),
+            ('avaluo', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['app.Avaluo'])),
+            ('file', self.gf('django.db.models.fields.files.FileField')(max_length=100, null=True, blank=True)),
+        ))
+        db.send_create_signal('app', ['ArchivoAvaluo'])
 
 
     def backwards(self, orm):
@@ -142,8 +152,18 @@ class Migration(SchemaMigration):
         # Deleting model 'ImagenAvaluo'
         db.delete_table('app_imagenavaluo')
 
+        # Deleting model 'ArchivoAvaluo'
+        db.delete_table('app_archivoavaluo')
+
 
     models = {
+        'app.archivoavaluo': {
+            'FolioK': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True'}),
+            'Meta': {'object_name': 'ArchivoAvaluo'},
+            'archivo_id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'avaluo': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['app.Avaluo']"}),
+            'file': ('django.db.models.fields.files.FileField', [], {'max_length': '100', 'null': 'True', 'blank': 'True'})
+        },
         'app.avaluo': {
             'Calle': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True'}),
             'Cliente': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['app.Cliente']", 'null': 'True'}),
@@ -152,7 +172,7 @@ class Migration(SchemaMigration):
             'Estado': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['app.Estado']", 'null': 'True'}),
             'Estatus': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True'}),
             'Factura': ('django.db.models.fields.CharField', [], {'max_length': '30', 'null': 'True'}),
-            'FolioK': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True'}),
+            'FolioK': ('django.db.models.fields.CharField', [], {'max_length': '255', 'unique': 'True', 'null': 'True'}),
             'Gastos': ('django.db.models.fields.DecimalField', [], {'null': 'True', 'max_digits': '15', 'decimal_places': '2'}),
             'Importe': ('django.db.models.fields.DecimalField', [], {'null': 'True', 'max_digits': '15', 'decimal_places': '2'}),
             'LatitudG': ('django.db.models.fields.DecimalField', [], {'null': 'True', 'max_digits': '12', 'decimal_places': '3'}),
@@ -170,7 +190,7 @@ class Migration(SchemaMigration):
             'Observaciones': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True'}),
             'Pagado': ('django.db.models.fields.NullBooleanField', [], {'null': 'True', 'blank': 'True'}),
             'Prioridad': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True'}),
-            'Referencia': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True'}),
+            'Referencia': ('django.db.models.fields.CharField', [], {'max_length': '255', 'unique': 'True', 'null': 'True'}),
             'Salida': ('django.db.models.fields.DateField', [], {'null': 'True'}),
             'Servicio': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True'}),
             'Solicitud': ('django.db.models.fields.DateField', [], {'null': 'True'}),
@@ -210,6 +230,7 @@ class Migration(SchemaMigration):
             'is_active': ('django.db.models.fields.BooleanField', [], {'default': 'True'})
         },
         'app.imagenavaluo': {
+            'FolioK': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True'}),
             'Meta': {'object_name': 'ImagenAvaluo'},
             'avaluo': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['app.Avaluo']"}),
             'imagen': ('django.db.models.fields.files.ImageField', [], {'max_length': '100', 'null': 'True', 'blank': 'True'}),

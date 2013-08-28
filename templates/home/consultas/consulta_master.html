@@ -68,7 +68,7 @@
 <script type="text/javascript">
     $(document).ready(function () {
         $('#spinner').hide();
-        $('#searchSubmit').click(function () {
+        $('#submit-id-submit').click(function () {
             foliok = $('#id_FolioK').val();
             ref = $('#id_Referencia').val();
             calle = encodeURIComponent($('#id_Calle').val());
@@ -113,7 +113,7 @@
    <br>
 
   <div>
-    <input id="searchSubmit" type="submit" value="Buscar" class="btn btn-primary"/>
+    <input id="submit-id-submit" type="submit" value="Buscar" class="btn btn-primary"/>
     <br/>
     <div class="margin">
         <span id="spinner"><img src="{{ STATIC_URL }}spinner.gif"/></span>
