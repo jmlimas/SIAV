@@ -498,7 +498,7 @@ class RespuestaConsultaMaster(ModelForm):
                 css_class='row-fluid'),
             'Observaciones',
             ButtonHolder(
-                Submit('Guardar',  'Guardar',  css_class='btn-success')
+                Submit('submit',  'Guardar',  css_class='btn-success')
             ))
         super(RespuestaConsultaMaster,  self).__init__(*args,  **kwargs)
         self.fields['Municipio'] = forms.ModelChoiceField(queryset=Municipio.objects.filter(estado_id__is_active='True'))
