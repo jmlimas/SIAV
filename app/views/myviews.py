@@ -1,4 +1,7 @@
 import os
+from django.utils import timezone
+import datetime
+from datetime import date
 from django.conf.urls.defaults import *
 from django.db.models import Sum, Count, Q
 from app.forms import *
@@ -15,6 +18,7 @@ from django.core.files import File
 from django.core.files.storage import default_storage
 from django.core.files.base import ContentFile
 from io import FileIO, BufferedWriter
+
 
 current_directory = os.path.dirname(os.path.abspath(__file__))
 
@@ -46,6 +50,7 @@ def cantidades():
     avaluos = Avaluo.objects.filter(Estatus__contains='PROCESO', Visita__isnull=True, Salida__isnull=True) | Avaluo.objects.filter(Estatus__contains='DETENIDO', Visita__isnull=True, Salida__isnull=True)
     por_visitar = avaluos.count()
     avaluos = Avaluo.objects.filter(Estatus__contains='PROCESO', Visita__isnull=False, Salida__isnull=True)
+    avaluos = avaluos.exclude(Valor=0.00)
     por_salida = avaluos.count()
     avaluos = Avaluo.objects.filter(Estatus__contains='PROCESO', Salida__isnull=True) | Avaluo.objects.filter(Estatus__contains='DETENIDO', Salida__isnull=True)
     en_proceso = avaluos.count()
@@ -180,10 +185,17 @@ def visita(request):
 
 @login_required
 def salida(request):
-    avaluos = Avaluo.objects.filter(Estatus__contains='PROCESO', Visita__isnull=False, Salida__isnull=True)
+    avaluos = Avaluo.objects.filter(Estatus__contains='PROCESO', Visita__isnull=False, Salida__isnull=True,Valor__isnull=False)
+    avaluos = avaluos.exclude(Valor=0.00)
     avaluos = avaluos.order_by('-Solicitud')
     cantidad = cantidades()
     return render_to_response('home/salida.html', {'avaluos': avaluos, 'cantidad': cantidad}, context_instance=RequestContext(request))
+
+def salida_efectiva(request, id):
+    avaluo = Avaluo.objects.get(avaluo_id=id)
+    avaluo.Salida = datetime.date.isoformat(date.today())
+    avaluo.save()
+    return salida(request)
 
 
 @login_required

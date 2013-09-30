@@ -49,11 +49,31 @@ $(document).ready(function () {
 			<td style="width:3px;"> {{a.Prioridad}} </td>
 			<td style="width:60px;"> {{a.Estatus}} </td>
 			<td style="width:35px;"> {{ a.Solicitud|dayssince }}</td>			  
-			<td style="width:60px;" class="tabla_opciones"> <a href="/SIAV/edita_salida/{{a.avaluo_id}}">Salida</a></td>
+			<td style="width:60px;" class="tabla_opciones"> 
+				<a href="#myModal{{a.FolioK}}" role="button" class="btn btn-primary" data-form="{{a.FolioK}}" data-toggle="modal">Salida</a>
+			</td>
 		</tr>
 		{% endfor %}
 	</tbody>
 </table>
+
+
+{% for a in avaluos %}
+<!-- Modal1 -->
+<div id="myModal{{a.FolioK}}" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+ <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+     <h3 align="center" id="myModalLabel">{{a.FolioK}}</h3> 
+  </div>
+  <div class="modal-body">
+    <p align="center">¿Estás seguro que deseas dar salida a este servicio? </p>
+  </div>
+  <div class="modal-footer">
+    <button class="btn" data-dismiss="modal" aria-hidden="true">Cancelar</button>
+    <a href="/SIAV/salida_efectiva/{{a.avaluo_id}}" role="button" class="btn btn-primary">Confirmar</a>
+  </div>
+</div>
+{% endfor %}
 
 
 {% endblock %}

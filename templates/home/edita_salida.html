@@ -32,6 +32,17 @@
 		  this.value = this.value.toUpperCase();
 		  }
 		});
+
+		if('{{avaluo.Tipo}}' == 'TERRENO'){
+			$("#valor_sugerido").html('<b>Importe Sugerido:  $</b>'+({{avaluo.Depto.base|default_if_none:0}} + 
+				 ({{avaluo.Depto.factor|default_if_none:0}} * {{avaluo.Mconstruccion|default_if_none:0}})));
+		}else{
+			$("#valor_sugerido").html('<b>Importe Sugerido:  $</b>'+({{avaluo.Depto.base|default_if_none:0}} + 
+				 ({{avaluo.Depto.factor|default_if_none:0}} * {{avaluo.Mconstruccion|default_if_none:0}})));
+
+		}
+
+
 		  
     });
     </script>
@@ -39,8 +50,6 @@
  {% endblock %}   
 
 
-
- 
 {% block content %}
   <h1>Salida</h1>
   <br>
@@ -51,7 +60,16 @@
     {% endif %}
     <div class="span12">
     <div class="offset2 span8">
-	<table id="datos_texto" class="table table-striped">
+    	<div class='span4'>
+    		<select class="select" id="select_valor">
+				<option value="SUPERFICIE">SUPERFICIE - T/C</option>
+				<option value="VALOR">VALOR - $</option>
+			</select>
+    	</div>
+    	<div class="span4">
+			<div id="valor_sugerido" class="alert alert-info"></div>
+		</div>
+		<table id="datos_texto" class="table table-striped">
 		<tbody>
 		<tr>
 			<td>Avaluo Id : <b>{{ avaluo.avaluo_id }}</b></td>

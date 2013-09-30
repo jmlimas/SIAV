@@ -54,9 +54,12 @@ urlpatterns = patterns(
 
     url(r'^SIAV/captura/', 'app.views.captura', name='captura'),
 
+    #Salida
     url(r'^SIAV/salida/', 'app.views.salida', name='salida'),
     url(r'^SIAV/edita_salida/(\d+)/$', 'app.views.edita_salida', name='edita_salida'),
+    url(r'^SIAV/salida_efectiva/(\d+)/$', 'app.views.salida_efectiva', name='salida_efectiva'),
 
+    #Alta Usuario
     url(r'^SIAV/alta_usuario/', 'app.views.alta_usuario', name='alta_usuario'),
     url(r'^SIAV/lista_usuario/', 'app.views.lista_usuario', name='lista_usuario'),
 
