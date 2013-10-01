@@ -206,10 +206,10 @@ def salida(request):
                .filter(Q(Salida__isnull=True)))
 
     avaluos = (avaluos.exclude(Valor=0.00)
-                .exclude(Q(Valor__isnull=True))
-                .exclude(Q(Referencia__isnull=True))
+               # .exclude(Q(Valor__isnull=True))
+               # .exclude(Q(Referencia__isnull=True))
                 .exclude(Q(Mterreno__isnull=True))
-                .exclude(Q(Importe__isnull=True))
+               # .exclude(Q(Importe__isnull=True))
                 .exclude(Q(Mconstruccion__isnull=True))
                 #.exclude(Q(Valor__exact=''))
                 )
