@@ -45,12 +45,27 @@ def genera_foliok(avaluo_id, colonia):
 
 #   Metodo para contar los avaluos en cada seccion.
 def cantidades():
+
+    #Conteo avaluos de Captura
     avaluos = Avaluo.objects.filter(Estatus__contains='PROCESO', Salida__isnull=True, Visita__isnull=False) | Avaluo.objects.filter(Estatus__contains='DETENIDO', Salida__isnull=True, Visita__isnull=False)
     por_capturar = avaluos.count()
+    #Conteo avaluos de Visita
     avaluos = Avaluo.objects.filter(Estatus__contains='PROCESO', Visita__isnull=True, Salida__isnull=True) | Avaluo.objects.filter(Estatus__contains='DETENIDO', Visita__isnull=True, Salida__isnull=True)
     por_visitar = avaluos.count()
-    avaluos = Avaluo.objects.filter(Estatus__contains='PROCESO', Visita__isnull=False, Salida__isnull=True)
-    avaluos = avaluos.exclude(Valor=0.00)
+    #Conteo avaluos de Salida
+    avaluos = (Avaluo.objects
+               .filter(Estatus='PROCESO')
+               .filter(Q(Visita__isnull=False))
+               .filter(Q(Salida__isnull=True)))
+
+    avaluos = (avaluos.exclude(Valor=0.00)
+                .exclude(Q(Valor__isnull=True))
+                .exclude(Q(Referencia__isnull=True))
+                .exclude(Q(Mterreno__isnull=True))
+                .exclude(Q(Importe__isnull=True))
+                .exclude(Q(Mconstruccion__isnull=True))
+                #.exclude(Q(Valor__exact=''))
+                )
     por_salida = avaluos.count()
     avaluos = Avaluo.objects.filter(Estatus__contains='PROCESO', Salida__isnull=True) | Avaluo.objects.filter(Estatus__contains='DETENIDO', Salida__isnull=True)
     en_proceso = avaluos.count()
@@ -185,8 +200,22 @@ def visita(request):
 
 @login_required
 def salida(request):
-    avaluos = Avaluo.objects.filter(Estatus__contains='PROCESO', Visita__isnull=False, Salida__isnull=True,Valor__isnull=False)
-    avaluos = avaluos.exclude(Valor=0.00)
+    avaluos = (Avaluo.objects
+               .filter(Estatus='PROCESO')
+               .filter(Q(Visita__isnull=False))
+               .filter(Q(Salida__isnull=True)))
+
+    avaluos = (avaluos.exclude(Valor=0.00)
+                .exclude(Q(Valor__isnull=True))
+                .exclude(Q(Referencia__isnull=True))
+                .exclude(Q(Mterreno__isnull=True))
+                .exclude(Q(Importe__isnull=True))
+                .exclude(Q(Mconstruccion__isnull=True))
+                #.exclude(Q(Valor__exact=''))
+                )
+
+
+
     avaluos = avaluos.order_by('-Solicitud')
     cantidad = cantidades()
     return render_to_response('home/salida.html', {'avaluos': avaluos, 'cantidad': cantidad}, context_instance=RequestContext(request))
@@ -194,6 +223,7 @@ def salida(request):
 def salida_efectiva(request, id):
     avaluo = Avaluo.objects.get(avaluo_id=id)
     avaluo.Salida = datetime.date.isoformat(date.today())
+    avaluo.Estatus = 'CONCLUIDO'
     avaluo.save()
     return salida(request)
 
@@ -288,7 +318,6 @@ def edita_salida(request, id):
         avaluo = Avaluo.objects.get(pk=id)
         colonia = avaluo.Colonia
         avaluo_id = avaluo.avaluo_id
-
         folio_k = genera_foliok(avaluo_id, colonia)
 
     if request.method == 'POST':
