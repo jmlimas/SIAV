@@ -50,7 +50,7 @@ $(document).ready(function () {
 			<td style="width:60px;"> {{a.Estatus}} </td>
 			<td style="width:35px;"> {{ a.Solicitud|dayssince }}</td>			  
 			<td style="width:60px;" class="tabla_opciones"> 
-				<a href="#myModal{{a.FolioK}}" role="button" class="btn btn-primary" data-form="{{a.FolioK}}" data-toggle="modal">Salida</a>
+				<a href="/SIAV/edita_salida/{{a.avaluo_id}}">Salida</a>
 			</td>
 		</tr>
 		{% endfor %}
