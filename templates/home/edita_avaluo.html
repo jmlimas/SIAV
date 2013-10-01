@@ -10,6 +10,8 @@
 
 {% load currency %}
 
+{% load file_exists %}
+
 
 {% block style %}
 
@@ -178,9 +180,12 @@ google.maps.event.addListener(marker_{{x.1}}, "click", function (e) {
 {% block content %}
 <div style=display:block>
   {% for item in imagenes %}
-  {% thumbnail item.imagen "100x100" crop="center" as small %}
-  <a href="/{{item.imagen}}" title="{{item.avaluo_id}}"><img src="/{{ small.url }}" style="padding:5px;"></a>
-  {% endthumbnail %}
+    {% if item.imagen.url|file_exists %}
+      {% thumbnail item.imagen "100x100" crop="center" as small %}
+      <a href="/SIAV/elimina_imagen/{{item.avaluo_id}}/{{item.imagen_id}}/" title="{{item.FolioK}}"><img src="{{ STATIC_URL }}CSS/images/delete.png" style='width:15px;height:15px;padding-bottom:70px;' style="padding:5px;"></a>
+      <a href="/{{item.imagen}}" title="{{item.avaluo_id}}"><img src="/{{ small.url }}" style="padding:5px;"></a>
+      {% endthumbnail %}
+    {% endif %}
   {% endfor %}
 </div>
 <br>

@@ -73,6 +73,10 @@ def cantidades():
 
     return pendientes
 
+#   Eliminar Imagenes
+def elimina_imagen(request,folio,imagen_id):
+    ImagenAvaluo.objects.filter(imagen_id=imagen_id).delete()
+    return home(request,folio)
 
 #   Vista de la pagina inicial (Muestra avaluos en proceso)
 @login_required

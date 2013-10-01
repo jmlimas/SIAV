@@ -86,6 +86,9 @@ urlpatterns = patterns(
     url(r'^SIAV/media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT}),
     url(r'^favicon\.ico$', 'django.views.generic.simple.redirect_to', {'url': '/static/img/favicon.ico'}),
 
+    #Url para eliminar imagen
+    url(r'^SIAV/elimina_imagen/(\d+)/(\d+)/$', 'app.views.elimina_imagen', name='elimina_imagen'),
+
     #Urls del sitio web
     url(r'^$', 'website.views.index', name='index'),
     url(r'^faq/', 'website.views.faq', name='faq'),
