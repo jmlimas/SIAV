@@ -29,7 +29,7 @@
 				});
 			});
 
-			DOM.loadCSS((s.editor_css ? ed.documentBaseURI.toAbsolute(s.editor_css) : '') || url + "/skins/" + s.skin + "/ui.css");
+			DOM.loadCSS((s.editor_css ? ed.documentBaseURI.toAbsolute(s.editor_css) : '') || url "+" "/skins/" + s.skin + "/ui.css");
 		},
 
 		renderUI : function(o) {

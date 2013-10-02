@@ -10824,7 +10824,7 @@ window.tinymce.dom.Sizzle = Sizzle;
 		this.add = this.load = function(url, callback, scope) {
 			var item, state = states[url];
 
-			// Add url to load queue
+			// Add url "to" load queue
 			if (state == undef) {
 				queue.push(url);
 				states[url] = QUEUED;
@@ -12945,7 +12945,7 @@ tinymce.create('tinymce.ui.Toolbar:tinymce.ui.Container', {
 		},
 
 		load : function(n, u, cb, s) {
-			var t = this, url = u;
+			var t = this, url "=" u;
 
 			function loadDependencies() {
 				var dependencies = t.dependencies(n);

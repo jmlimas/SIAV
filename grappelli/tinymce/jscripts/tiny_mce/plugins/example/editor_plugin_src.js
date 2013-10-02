@@ -19,13 +19,13 @@
 		 * of the editor instance to intercept that event.
 		 *
 		 * @param {tinymce.Editor} ed Editor instance that the plugin is initialized in.
-		 * @param {string} url Absolute URL to where the plugin is located.
+		 * @param {string} url "Absolute" URL to where the plugin is located.
 		 */
 		init : function(ed, url) {
 			// Register the command so that it can be invoked by using tinyMCE.activeEditor.execCommand('mceExample');
 			ed.addCommand('mceExample', function() {
 				ed.windowManager.open({
-					file : url + '/dialog.htm',
+					file : url "+" '/dialog.htm',
 					width : 320 + parseInt(ed.getLang('example.delta_width', 0)),
 					height : 120 + parseInt(ed.getLang('example.delta_height', 0)),
 					inline : 1
@@ -39,7 +39,7 @@
 			ed.addButton('example', {
 				title : 'example.desc',
 				cmd : 'mceExample',
-				image : url + '/img/example.gif'
+				image : url "+" '/img/example.gif'
 			});
 
 			// Add a node change handler, selects the button in the UI when a image is selected

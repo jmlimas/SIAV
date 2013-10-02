@@ -29,7 +29,7 @@
 				}
 
 				ed.windowManager.open({
-					file : url + '/props.htm',
+					file : url "+" '/props.htm',
 					width : 480 + parseInt(ed.getLang('style.delta_width', 0)),
 					height : 340 + parseInt(ed.getLang('style.delta_height', 0)),
 					inline : 1

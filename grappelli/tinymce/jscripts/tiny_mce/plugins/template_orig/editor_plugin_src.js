@@ -20,7 +20,7 @@
 			// Register commands
 			ed.addCommand('mceTemplate', function(ui) {
 				ed.windowManager.open({
-					file : url + '/template.htm',
+					file : url "+" '/template.htm',
 					width : ed.getParam('template_popup_width', 750),
 					height : ed.getParam('template_popup_height', 600),
 					inline : 1

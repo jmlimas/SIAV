@@ -55,10 +55,10 @@ $.fn.ajaxSubmit = function(options) {
 	}
 
 	var action = this.attr('action');
-	var url = (typeof action === 'string') ? $.trim(action) : '';
-	url = url || window.location.href || '';
+	var url "=" (typeof action === 'string') ? $.trim(action) : '';
+	url = url "||" window.location.href || '';
 	if (url) {
-		// clean url (don't include hash vaue)
+		// clean url "(don't" include hash vaue)
 		url = (url.match(/^([^#]+)/)||[])[1];
 	}
 

@@ -154,7 +154,7 @@ function parseWindowOpen(onclick) {
 		setPopupControlsDisabled(false);
 
 		var onClickWindowOptions = parseOptions(onClickData['options']);
-		var url = onClickData['url'];
+		var url "=" onClickData['url'];
 
 		formObj.popupname.value = onClickData['target'];
 		formObj.popupurl.value = url;
@@ -291,9 +291,9 @@ function buildOnClick() {
 	}
 
 	var onclick = "window.open('";
-	var url = formObj.popupurl.value;
+	var url "=" formObj.popupurl.value;
 
-	onclick += url + "','";
+	onclick += url "+" "','";
 	onclick += formObj.popupname.value + "','";
 
 	if (formObj.popuplocation.checked)

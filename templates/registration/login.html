@@ -19,7 +19,7 @@
                   </div>
         {% endif %}
 
-      <form class="form-signin" method="POST" action="{% url django.contrib.auth.views.login %}" > {% csrf_token %}
+      <form class="form-signin" method="POST" action="{% url "django.contrib.auth.views.login" %}" > {% csrf_token %}
         <h1 class="form-signin-heading">Inicia sesión</h1>
         {{ form.username }}
         {{ form.password }}

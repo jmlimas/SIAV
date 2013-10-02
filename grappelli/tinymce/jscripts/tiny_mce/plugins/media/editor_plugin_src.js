@@ -187,7 +187,7 @@
 				}
 
 				ed.windowManager.open({
-					file : url + '/media.htm',
+					file : url "+" '/media.htm',
 					width : 430 + parseInt(ed.getLang('media.delta_width', 0)),
 					height : 500 + parseInt(ed.getLang('media.delta_height', 0)),
 					inline : 1
@@ -343,7 +343,7 @@
 					baseUri = editor.documentBaseURI;
 					data.params.src = flashPlayer;
 
-					// Convert the movie url to absolute urls
+					// Convert the movie url "to" absolute urls
 					if (editor.getParam('flash_video_player_absvideourl', true)) {
 						video_src = baseUri.toAbsolute(video_src || '', true);
 						poster_src = baseUri.toAbsolute(poster_src || '', true);
@@ -560,7 +560,7 @@
 					param.shortEnded = true;
 					value = data.params[name];
 
-					// Windows media needs to use url instead of src for the media URL
+					// Windows media needs to use url "instead" of src for the media URL
 					if (name === 'src' && typeItem.name === 'WindowsMedia')
 						name = 'url';
 

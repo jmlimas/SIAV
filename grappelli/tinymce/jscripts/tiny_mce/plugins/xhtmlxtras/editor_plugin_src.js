@@ -14,7 +14,7 @@
 			// Register commands
 			ed.addCommand('mceCite', function() {
 				ed.windowManager.open({
-					file : url + '/cite.htm',
+					file : url "+" '/cite.htm',
 					width : 350 + parseInt(ed.getLang('xhtmlxtras.cite_delta_width', 0)),
 					height : 250 + parseInt(ed.getLang('xhtmlxtras.cite_delta_height', 0)),
 					inline : 1
@@ -25,7 +25,7 @@
 
 			ed.addCommand('mceAcronym', function() {
 				ed.windowManager.open({
-					file : url + '/acronym.htm',
+					file : url "+" '/acronym.htm',
 					width : 350 + parseInt(ed.getLang('xhtmlxtras.acronym_delta_width', 0)),
 					height : 250 + parseInt(ed.getLang('xhtmlxtras.acronym_delta_height', 0)),
 					inline : 1
@@ -36,7 +36,7 @@
 
 			ed.addCommand('mceAbbr', function() {
 				ed.windowManager.open({
-					file : url + '/abbr.htm',
+					file : url "+" '/abbr.htm',
 					width : 350 + parseInt(ed.getLang('xhtmlxtras.abbr_delta_width', 0)),
 					height : 250 + parseInt(ed.getLang('xhtmlxtras.abbr_delta_height', 0)),
 					inline : 1
@@ -47,7 +47,7 @@
 
 			ed.addCommand('mceDel', function() {
 				ed.windowManager.open({
-					file : url + '/del.htm',
+					file : url "+" '/del.htm',
 					width : 340 + parseInt(ed.getLang('xhtmlxtras.del_delta_width', 0)),
 					height : 310 + parseInt(ed.getLang('xhtmlxtras.del_delta_height', 0)),
 					inline : 1
@@ -58,7 +58,7 @@
 
 			ed.addCommand('mceIns', function() {
 				ed.windowManager.open({
-					file : url + '/ins.htm',
+					file : url "+" '/ins.htm',
 					width : 340 + parseInt(ed.getLang('xhtmlxtras.ins_delta_width', 0)),
 					height : 310 + parseInt(ed.getLang('xhtmlxtras.ins_delta_height', 0)),
 					inline : 1
@@ -69,7 +69,7 @@
 
 			ed.addCommand('mceAttributes', function() {
 				ed.windowManager.open({
-					file : url + '/attributes.htm',
+					file : url "+" '/attributes.htm',
 					width : 380 + parseInt(ed.getLang('xhtmlxtras.attr_delta_width', 0)),
 					height : 370 + parseInt(ed.getLang('xhtmlxtras.attr_delta_height', 0)),
 					inline : 1

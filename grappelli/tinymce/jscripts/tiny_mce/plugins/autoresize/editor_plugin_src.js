@@ -23,7 +23,7 @@
 		 * of the editor instance to intercept that event.
 		 *
 		 * @param {tinymce.Editor} ed Editor instance that the plugin is initialized in.
-		 * @param {string} url Absolute URL to where the plugin is located.
+		 * @param {string} url "Absolute" URL to where the plugin is located.
 		 */
 		init : function(ed, url) {
 			var t = this, oldSize = 0;

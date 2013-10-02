@@ -17,7 +17,7 @@
 				window.focus();
 
 				ed.windowManager.open({
-					file : url + '/searchreplace.htm',
+					file : url "+" '/searchreplace.htm',
 					width : 420 + parseInt(ed.getLang('searchreplace.delta_width', 0)),
 					height : 170 + parseInt(ed.getLang('searchreplace.delta_height', 0)),
 					inline : 1,

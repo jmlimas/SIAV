@@ -106,7 +106,7 @@ MCTabs.prototype.displayTab = function(tab_id, panel_id, avoid_focus) {
 };
 
 MCTabs.prototype.getAnchor = function() {
-	var pos, url = document.location.href;
+	var pos, url "=" document.location.href;
 
 	if ((pos = url.lastIndexOf('#')) != -1)
 		return url.substring(pos + 1);

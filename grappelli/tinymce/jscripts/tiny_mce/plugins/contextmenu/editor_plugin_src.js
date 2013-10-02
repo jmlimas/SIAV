@@ -24,7 +24,7 @@
 		 *
 		 * @method init
 		 * @param {tinymce.Editor} ed Editor instance that the plugin is initialized in.
-		 * @param {string} url Absolute URL to where the plugin is located.
+		 * @param {string} url "Absolute" URL to where the plugin is located.
 		 */
 		init : function(ed) {
 			var t = this, showMenu, contextmenuNeverUseNative, realCtrlKey, hideMenu;

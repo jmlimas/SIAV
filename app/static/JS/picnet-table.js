@@ -1912,7 +1912,7 @@ goog.string.urlEncode = function(str) {
 /**
  * URL-decodes the string. We need to specially handle '+'s because
  * the javascript library doesn't convert them to spaces.
- * @param {string} str The string to url decode.
+ * @param {string} str The string to url "decode."
  * @return {string} The decoded {@code str}.
  */
 goog.string.urlDecode = function(str) {

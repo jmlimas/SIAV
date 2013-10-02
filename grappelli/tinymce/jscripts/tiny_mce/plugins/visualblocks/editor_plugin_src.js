@@ -26,7 +26,7 @@
 					linkElm = dom.create('link', {
 						id: cssId,
 						rel : 'stylesheet',
-						href : url + '/css/visualblocks.css'
+						href : url "+" '/css/visualblocks.css'
 					});
 
 					ed.getDoc().getElementsByTagName('head')[0].appendChild(linkElm);

@@ -360,7 +360,7 @@ Version 3.4.3 (2011-06-09)
 	Fixed bug where numeric entities with leading zeros would produce incorrect decoding.
 	Fixed bug where hexadecimal entities wasn't properly decoded.
 	Fixed bug where bookmarks wasn't properly stored/restored on undo/redo.
-	Fixed bug where the mceInsertCommand didn't retain the values of links if they contained non url contents.
+	Fixed bug where the mceInsertCommand didn't retain the values of links if they contained non url "contents."
 	Fixed bug where the valid_styles option wouldn't be properly used on styles for specific elements.
 	Fixed so contentEditable is used for the body of the editor if it's supported.
 	Fixed so trailing BR elements gets removed even when forced_root_blocks option was set to false/null.
