@@ -148,7 +148,7 @@ INSTALLED_APPS = (
     'example_project',
     'south',
     'crispy_forms',
-    'django_socketio',
+    #'django_socketio',
     #'grappelli',
     'sorl.thumbnail',
     # Uncomment the next line to enable the admin:
