@@ -228,3 +228,39 @@ LastError:La operación de E/S se anuló por una salida de subproceso o por una so
 [15/10/2013 15:53:57] v3.0.98.472	WorkersManager - BeginGracefulShutdown() 
 [15/10/2013 15:56:57] v3.0.98.472	WorkersManager - BeginGracefulShutdown() 
 [15/10/2013 16:00:02] v3.0.98.472	WorkersManager - BeginGracefulShutdown() 
+[15/10/2013 16:56:02] v3.0.98.472	WorkersManager - BeginGracefulShutdown() 
+[15/10/2013 16:56:46] v3.0.98.472	WorkersManager - BeginGracefulShutdown() 
+[15/10/2013 16:56:56] v3.0.98.472	WorkersManager - OnProcessExit() 
+[15/10/2013 16:56:58] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Add:1 , needed:1 , current:0, Ready:0 , Creating: 0 
+[15/10/2013 16:56:58] v3.0.98.472	WorkersManager - Worker closed.
+[15/10/2013 16:57:36] v3.0.98.472	WorkersManager - OnProcessExit() 
+[15/10/2013 16:57:38] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Add:1 , needed:1 , current:0, Ready:0 , Creating: 0 
+[15/10/2013 16:57:38] v3.0.98.472	WorkersManager - Worker closed.
+[15/10/2013 16:58:44] v3.0.98.472	WorkersManager - BeginGracefulShutdown() 
+[15/10/2013 16:58:46] v3.0.98.472	WorkersManager - OnProcessExit() 
+[15/10/2013 16:58:48] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Add:1 , needed:1 , current:0, Ready:0 , Creating: 0 
+[15/10/2013 16:58:48] v3.0.98.472	WorkersManager - Worker closed.
+[15/10/2013 16:59:14] v3.0.98.472	WorkersManager - BeginGracefulShutdown() 
+[15/10/2013 16:59:15] v3.0.98.472	WorkersManager - OnProcessExit() 
+[15/10/2013 16:59:16] v3.0.98.472	WorkersManager - OnProcessExit() 
+[15/10/2013 16:59:18] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Add:1 , needed:1 , current:0, Ready:0 , Creating: 0 
+[15/10/2013 16:59:18] v3.0.98.472	WorkersManager - Worker closed.
+[15/10/2013 16:59:18] v3.0.98.472	WorkersManager - Worker closed.
+[15/10/2013 16:59:32] v3.0.98.472	WorkersManager - BeginGracefulShutdown() 
+[15/10/2013 17:01:54] v3.0.98.472	WorkersManager - BeginGracefulShutdown() 
+[15/10/2013 17:02:27] v3.0.98.472	WorkersManager - OnProcessExit() 
+[15/10/2013 17:02:27] v3.0.98.472	WorkersManager - OnProcessExit() 
+[15/10/2013 17:02:29] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Add:1 , needed:1 , current:0, Ready:0 , Creating: 0 
+[15/10/2013 17:02:29] v3.0.98.472	WorkersManager - Worker closed.
+[15/10/2013 17:02:29] v3.0.98.472	WorkersManager - Worker closed.
+[15/10/2013 17:02:30] v3.0.98.472	WorkersManager - OnProcessExit() 
+[15/10/2013 17:02:32] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Add:1 , needed:1 , current:0, Ready:0 , Creating: 0 
+[15/10/2013 17:02:32] v3.0.98.472	WorkersManager - Worker closed.
+[15/10/2013 17:02:32] v3.0.98.472	WorkersManager - OnProcessExit() 
+[15/10/2013 17:02:34] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Add:1 , needed:1 , current:0, Ready:0 , Creating: 0 
+[15/10/2013 17:02:34] v3.0.98.472	WorkersManager - Worker closed.
+[15/10/2013 17:02:35] v3.0.98.472	WorkersManager - OnProcessExit() 
+[15/10/2013 17:02:37] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Add:1 , needed:1 , current:0, Ready:0 , Creating: 0 
+[15/10/2013 17:02:37] v3.0.98.472	WorkersManager - Worker closed.
+[15/10/2013 17:02:37] v3.0.98.472	WorkersManager - BeginGracefulShutdown() 
+[15/10/2013 17:02:37] v3.0.98.472	WorkersManager - OnProcessExit() 
