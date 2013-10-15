@@ -219,15 +219,15 @@ class CapturaAvaluo(ModelForm):
     LongitudG = forms.DecimalField(required=False, label="Lat.G.")
     LongitudM = forms.DecimalField(required=False, label="Lat.M.")
     LongitudS = forms.DecimalField(required=False, label="Lat.S.")
-    Valor = forms.DecimalField(required=False)
-    Gastos = forms.DecimalField(required=False)
-    Importe = forms.DecimalField(required=False)
+    #Valor = forms.DecimalField(required=False)
+    #Gastos = forms.DecimalField(required=False)
+    #Importe = forms.DecimalField(required=False)
     Observaciones = forms.CharField(widget=forms.Textarea, required=False)
     Valuador = forms.ModelChoiceField(queryset=Valuador.objects.filter(is_active='True'))
 
     class Meta:
         model = Avaluo
-        exclude = ('Salida', 'Visita', 'Pagado', 'Cliente', 'Depto', 'Factura', 'FolioK')
+        exclude = ('Salida', 'Visita', 'Pagado', 'Cliente', 'Depto', 'Factura', 'FolioK','Valor','Gastos','Importe')
     def clean_Referencia(self):
         return self.cleaned_data['Referencia'] or None
     def __init__(self,  *args,  **kwargs):
@@ -269,9 +269,9 @@ class CapturaAvaluo(ModelForm):
                     'Mconstruccion',
                     css_class='span3'),
                 Div(
-                    'Valor',
-                    'Gastos',
-                    'Importe',
+                    #'Valor',
+                    #'Gastos',
+                    #'Importe',
                     css_class='span3'),
                 css_class='row-fluid'),
             'Observaciones',
@@ -284,6 +284,7 @@ class CapturaAvaluo(ModelForm):
 class SalidaAvaluo(ModelForm):
     Referencia = forms.CharField(required=True)
     Mterreno = forms.DecimalField(required=True)
+    Gastos = forms.DecimalField(required=True)
     Mconstruccion = forms.DecimalField(required=True)
     Observaciones = forms.CharField(widget=forms.Textarea, required=False)
     Salida = forms.DateField(label="Fecha Salida", widget=forms.DateInput(format='%d/%m/%Y'),  input_formats=['%d/%m/%Y'])
@@ -292,7 +293,7 @@ class SalidaAvaluo(ModelForm):
 
     class Meta:
         model = Avaluo
-        fields = ('Mterreno', 'Mconstruccion', 'Observaciones', 'Salida', 'Importe', 'Referencia','Valor')
+        fields = ('Mterreno', 'Mconstruccion', 'Observaciones', 'Salida', 'Importe', 'Referencia','Valor','Gastos')
     def clean_Referencia(self):
         return self.cleaned_data['Referencia'] or None
     def __init__(self,  *args,  **kwargs):
@@ -313,6 +314,8 @@ class SalidaAvaluo(ModelForm):
                     css_class='span3'),
                 Div('Valor',
                     'Importe',
+                    css_class='span3'),
+                Div('Gastos',
                     css_class='span3'),
                 css_class='row-fluid'),
             'Observaciones',

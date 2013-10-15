@@ -8,6 +8,8 @@
 
 {% block style %}
 
+{% load file_exists %}
+
 <style type="text/css" title="currentStyle">
 @import "{{ STATIC_URL }}CSS/smoothness/jquery-ui-1.8.24.custom.css";
 </style>
@@ -141,15 +143,13 @@ $(function() {
 
 {% block content %}
 
-{% for item in imagenes %}
-
-{% thumbnail item.imagen "1000" as big %}
-{% thumbnail item.imagen "100x100" crop="center" as small %}
-<a href="{{ big.url}}" title="{{item.avaluo_id}}"><img src="{{ small.url }}" style="padding:5px;"></a>
-{% endthumbnail %}
-{% endthumbnail %}
-
-{% endfor %}
+  {% for item in imagenes %}
+    {% if item.imagen.url|file_exists %}
+      {% thumbnail item.imagen "100x100" crop="center" as small %}
+      <a href="/{{item.imagen}}" title="{{item.avaluo_id}}"><img src="/{{ small.url }}" style="padding:5px;"></a>
+      {% endthumbnail %}
+    {% endif %}
+  {% endfor %}
 
 <div id="controls">
  <input class="btn btn-primary button white" type="button" id="slick-toggle" value="Mapas" />

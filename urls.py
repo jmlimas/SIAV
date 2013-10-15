@@ -1,4 +1,4 @@
-from django.conf.urls.defaults import *
+from django.conf.urls import *
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.contrib.auth.views import login
 from django.contrib import admin
@@ -23,7 +23,7 @@ urlpatterns = patterns(
 
     '', url(r'^SIAV/ajax_upload/(\w*\d+)/(\w*\d+)/$', 'app.uploads.ajax_upload', name="ajax_upload"),
 
-    url(r'^grappelli/', include('grappelli.urls')),
+    #url(r'^grappelli/', include('grappelli.urls')),
 
     url(r'^SIAV/admin/', include(admin.site.urls)),
 
@@ -84,7 +84,7 @@ urlpatterns = patterns(
     url(r'^api/get_deptos/', 'app.views.get_deptos', name='get_deptos'),
 
     url(r'^SIAV/media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT}),
-    url(r'^favicon\.ico$', 'django.views.generic.simple.redirect_to', {'url': '/static/img/favicon.ico'}),
+    #url(r'^favicon\.ico$', 'django.views.generic.simple.redirect_to', {'url': '/static/img/favicon.ico'}),
 
     #Url para eliminar imagen
     url(r'^SIAV/elimina_imagen/(\d+)/(\d+)/$', 'app.views.elimina_imagen', name='elimina_imagen'),
@@ -99,3 +99,7 @@ urlpatterns = patterns(
 
 # Add the static files pattern to the url.
 urlpatterns += staticfiles_urlpatterns()
+
+urlpatterns += patterns('',
+    url("", include('django_socketio.urls')),
+)

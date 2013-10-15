@@ -145,9 +145,11 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.humanize',
     'app',
+    'example_project',
     'south',
     'crispy_forms',
-    'grappelli',
+    'django_socketio',
+    #'grappelli',
     'sorl.thumbnail',
     # Uncomment the next line to enable the admin:
     'django.contrib.admin',

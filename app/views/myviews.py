@@ -58,7 +58,8 @@ def cantidades():
                .filter(Q(Visita__isnull=False))
                .filter(Q(Salida__isnull=True)))
 
-    avaluos = (avaluos.exclude(Valor=0.00)
+    avaluos = (avaluos
+               # .exclude(Valor=0.00)
                # .exclude(Q(Valor__isnull=True))
                # .exclude(Q(Referencia__isnull=True))
                 .exclude(Q(Mterreno__isnull=True))
@@ -209,7 +210,8 @@ def salida(request):
                .filter(Q(Visita__isnull=False))
                .filter(Q(Salida__isnull=True)))
 
-    avaluos = (avaluos.exclude(Valor=0.00)
+    avaluos = (avaluos
+               # .exclude(Valor=0.00)
                # .exclude(Q(Valor__isnull=True))
                # .exclude(Q(Referencia__isnull=True))
                 .exclude(Q(Mterreno__isnull=True))
