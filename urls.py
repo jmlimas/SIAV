@@ -99,4 +99,3 @@ urlpatterns = patterns(
 
 # Add the static files pattern to the url.
 urlpatterns += staticfiles_urlpatterns()
-
