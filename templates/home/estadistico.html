@@ -12,10 +12,6 @@
 
 {% load humanize %}
 
-{% load adder %}
-
-{% load graficas %}
-
 
 
 {% block script %}
@@ -172,92 +168,48 @@ data: [5, 7, 3]
         },
     });
 
-    
-        var colors = Highcharts.getOptions().colors,
-            categories = [{% for x in Something|grafica_por_cliente %}'{{x.Cliente__Cliente}}',{% endfor %}],
-            name = 'Balance de Facturación',
-            data = [{% for x in Something|grafica_por_cliente %}
-                    {
-                    y: {{x.total}},
-                    drilldown: {
-                        name: 'Por Facturar',
-                        color:'#0000FF',
-                        // Se envía el id del cliente a la funcion grafica_por_depto.
-                        categories: [{% for x in x.Cliente__Cliente|grafica_por_depto %}'{{x.Depto__Depto}}',{% endfor %}],
-                        data: [{% for x in x.Cliente__Cliente|grafica_por_depto %}{{x.total}},{% endfor %}],
-                        }
-                    },
-                    {% endfor %}
-                ];
-    
-    
-        // Build the data arrays
-        var browserData = [];
-        var versionsData = [];
-        for (var i = 0; i < data.length; i++) {
-    
-            // add browser data
-            browserData.push({
-                name: categories[i],
-                y: data[i].y,
-                color: data[i].color
-            });
-    
-            // add version data
-            for (var j = 0; j < data[i].drilldown.data.length; j++) {
-                var brightness = 0.2 - (j / data[i].drilldown.data.length) / 5 ;
-                versionsData.push({
-                    name: data[i].drilldown.categories[j],
-                    y: data[i].drilldown.data[j],
-                    color: Highcharts.Color(data[i].color).brighten(brightness).get()
-                });
-            }
-        }
-    
-        // Create the chart
-        $('#donut_container').highcharts({
+  $('#pie_container').highcharts({
             chart: {
-                type: 'pie'
+                plotBackgroundColor: null,
+                plotBorderWidth: null,
+                plotShadow: false,
+                backgroundColor: '#FFFFFF',
+                borderColor: '#D5D5D5',
+                borderWidth: 2,
             },
             title: {
-                text: 'Balance de Facturación'
+                text: ''
             },
-            yAxis: {
-                title: {
-                    text: 'Blance de Facturación'
-                }
+            tooltip: {
+                pointFormat: '{series.name}: <b>{point.percentage}%</b>',
+                percentageDecimals: 1
             },
             plotOptions: {
                 pie: {
-                    shadow: false,
-                    center: ['50%', '50%']
-                }
-            },
-            tooltip: {
-              valuePrefix: '$'
-            },
-            series: [{
-                name: 'Importe',
-                data: browserData,
-                size: '60%',
-                dataLabels: {
-                    formatter: function() {
-                        return this.y > 5 ? this.point.name : null;
-                    },
-                    color: 'white',
-                    distance: -30
-                }
-            }, {
-                name: 'Importe',
-                data: versionsData,
-                size: '80%',
-                innerSize: '60%',
-                dataLabels: {
-                    formatter: function() {
-                        // display only if larger than 1
-                        return '<b>' + this.point.name + '</b>: ' + this.percentage.toFixed(2) + ' %';
+                    size:'70%',
+                    allowPointSelect: true,
+                    cursor: 'pointer',
+                    dataLabels: {
+                        enabled: true,
+                        color: '#000000',
+                        connectorColor: '#000000',
+                        formatter: function() {
+                            return '<b>' + this.point.name + '</b>: ' + this.percentage.toFixed(2) + ' %';
+                        }
                     }
                 }
+            },
+            series: [{
+                type: 'pie',
+                name: 'Browser share',
+                data: [
+                {% for a in cliente %}
+                {% if a.Total %}
+                    ['{{a.Cliente__Cliente}}',{{a.Total}}],
+                {% endif %}
+                {% endfor %}
+
+                ]
             }]
         });
 
@@ -335,10 +287,10 @@ data: [5, 7, 3]
             <br>
             <div class="container">
                 <div class="row-fluid">
-                <div class="span12">
-                     <div id="donut_container"></div>
+                <div class="span6">
+                     <div id="pie_container"></div>
                 </div>
-      <!--           <div class="span6">
+                <div class="span6">
                     <table class="table table-hover" style="width:50%;margin-left:10px;">
                                         <thead>
                                             <th>Cliente</th>
@@ -351,7 +303,7 @@ data: [5, 7, 3]
                                         </tr>
                                         {% endfor %}
                     </table>
-                </div> -->
+                </div>
          
                 </div>
             </div>
