@@ -87,7 +87,7 @@ urlpatterns = patterns(
     #url(r'^favicon\.ico$', 'django.views.generic.simple.redirect_to', {'url': '/static/img/favicon.ico'}),
 
     #Url para eliminar imagen
-    url(r'^SIAV/elimina_imagen/(\d+)/(\d+)/$', 'app.views.elimina_imagen', name='elimina_imagen'),
+    url(r'^SIAV/elimina_imagen_captura/(\d+)/(\d+)/$', 'app.views.elimina_imagen_captura', name='elimina_imagen_captura'),
 
     #Urls del sitio web
     url(r'^$', 'website.views.index', name='index'),

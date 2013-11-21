@@ -47,7 +47,13 @@ def genera_foliok(avaluo_id, colonia):
 def cantidades():
 
     #Conteo avaluos de Captura
-    avaluos = Avaluo.objects.filter(Estatus__contains='PROCESO', Salida__isnull=True, Visita__isnull=False) | Avaluo.objects.filter(Estatus__contains='DETENIDO', Salida__isnull=True, Visita__isnull=False)
+    avaluos = (Avaluo.objects
+               .filter(Q(Estatus__contains='PROCESO') | Q(Estatus__contains='DETENIDO'))
+               .filter(Q(Salida__isnull=True))
+               .filter(Q(Visita__isnull=False))
+               .exclude(Q(Mterreno__isnull=False) & Q(Mconstruccion__isnull=False) & Q(Solicitud__isnull=False)))
+               
+
     por_capturar = avaluos.count()
     #Conteo avaluos de Visita
     avaluos = Avaluo.objects.filter(Estatus__contains='PROCESO', Visita__isnull=True, Salida__isnull=True) | Avaluo.objects.filter(Estatus__contains='DETENIDO', Visita__isnull=True, Salida__isnull=True)
@@ -75,9 +81,12 @@ def cantidades():
     return pendientes
 
 #   Eliminar Imagenes
-def elimina_imagen(request,folio,imagen_id):
-    ImagenAvaluo.objects.filter(imagen_id=imagen_id).delete()
-    return home(request,folio)
+def elimina_imagen_captura(request,folio,imagen_id):
+    imagen = ImagenAvaluo.objects.get(imagen_id=imagen_id)
+    url_imagen = str(imagen.imagen)
+    os.remove(url_imagen)
+    imagen.delete()
+    return actualiza_avaluo(request,folio)
 
 #   Vista de la pagina inicial (Muestra avaluos en proceso)
 @login_required
@@ -189,7 +198,11 @@ def estadistico(request, anio=2013):
 @login_required
 def captura(request):
     #lista_avaluos = Avaluo.objects.all()
-    avaluos = Avaluo.objects.filter(Estatus__contains='PROCESO', Salida__isnull=True, Visita__isnull=False) | Avaluo.objects.filter(Estatus__contains='DETENIDO', Salida__isnull=True, Visita__isnull=False)
+    avaluos = (Avaluo.objects
+               .filter(Q(Estatus__contains='PROCESO') | Q(Estatus__contains='DETENIDO'))
+               .filter(Q(Salida__isnull=True))
+               .filter(Q(Visita__isnull=False))
+               .exclude(Q(Mterreno__isnull=False) & Q(Mconstruccion__isnull=False) & Q(Solicitud__isnull=False)))
     avaluos = avaluos.order_by('-Solicitud')
     cantidad = cantidades()
     return render_to_response('home/captura.html', {'avaluos': avaluos, 'cantidad': cantidad}, context_instance=RequestContext(request))

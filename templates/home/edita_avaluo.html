@@ -182,9 +182,27 @@ google.maps.event.addListener(marker_{{x.1}}, "click", function (e) {
   {% for item in imagenes %}
     {% if item.imagen.url|file_exists %}
       {% thumbnail item.imagen "100x100" crop="center" as small %}
-      <a href="/SIAV/elimina_imagen/{{item.avaluo_id}}/{{item.imagen_id}}/" title="{{item.FolioK}}"><img src="{{ STATIC_URL }}CSS/images/delete.png" style='width:15px;height:15px;padding-bottom:70px;' style="padding:5px;"></a>
+      <a data-toggle="modal" data-target="#myModal_{{item.imagen_id}}" href="#myModal_{{item.imagen_id}}" title="{{item.FolioK}}"><img src="{{ STATIC_URL }}CSS/images/delete.png" style='width:15px;height:15px;padding-bottom:70px;' style="padding:5px;"></a>
       <a href="/{{item.imagen}}" title="{{item.avaluo_id}}"><img src="/{{ small.url }}" style="padding:5px;"></a>
       {% endthumbnail %}
+
+    <div class="modal fade" id="myModal_{{item.imagen_id}}">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          </div>
+          <div class="modal-body">
+            <p align="center">¿Estás seguro de que deseas eliminar esta imagen?</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+            <button type="button" class="btn btn-danger" onclick="location.href='/SIAV/elimina_imagen_captura/{{item.avaluo_id}}/{{item.imagen_id}}';">Eliminar</button>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
     {% endif %}
   {% endfor %}
 </div>
@@ -243,4 +261,5 @@ google.maps.event.addListener(marker_{{x.1}}, "click", function (e) {
 {% crispy form %}	
 <br>
 <br>
+
 {% endblock %}
