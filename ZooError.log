@@ -354,3 +354,484 @@ LastError:La operación de E/S se anuló por una salida de subproceso o por una so
 [20/11/2013 19:57:09] v3.0.98.472	WorkersManager - BeginGracefulShutdown() 
 [20/11/2013 19:57:28] v3.0.98.472	WorkersManager - BeginGracefulShutdown() 
 [20/11/2013 19:59:47] v3.0.98.472	WorkersManager - BeginGracefulShutdown() 
+[21/11/2013 07:25:06] v3.0.98.472	WorkersManager - OnProcessExit() 
+[21/11/2013 07:25:08] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Add:1 , needed:1 , current:0, Ready:0 , Creating: 0 
+[21/11/2013 07:25:08] v3.0.98.472	WorkersManager - Worker closed.
+[21/11/2013 14:40:55] v3.0.98.472	WorkersManager - OnProcessExit() 
+[21/11/2013 14:40:57] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Add:1 , needed:1 , current:0, Ready:0 , Creating: 0 
+[21/11/2013 14:40:57] v3.0.98.472	WorkersManager - Worker closed.
+[21/11/2013 14:57:42] v3.0.98.472	WorkersManager - OnProcessExit() 
+[21/11/2013 14:57:44] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Add:1 , needed:1 , current:0, Ready:0 , Creating: 0 
+[21/11/2013 14:57:44] v3.0.98.472	WorkersManager - Worker closed.
+[21/11/2013 15:30:21] v3.0.98.472	WorkersManager - OnProcessExit() 
+[21/11/2013 15:30:23] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Add:1 , needed:1 , current:0, Ready:0 , Creating: 0 
+[21/11/2013 15:30:23] v3.0.98.472	WorkersManager - Worker closed.
+[21/11/2013 16:02:56] v3.0.98.472	WorkersManager - OnProcessExit() 
+[21/11/2013 16:02:58] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Add:1 , needed:1 , current:0, Ready:0 , Creating: 0 
+[21/11/2013 16:02:58] v3.0.98.472	WorkersManager - Worker closed.
+[21/11/2013 19:13:24] v3.0.98.472	WorkersManager - OnProcessExit() 
+[21/11/2013 19:13:26] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Add:1 , needed:1 , current:0, Ready:0 , Creating: 0 
+[21/11/2013 19:13:26] v3.0.98.472	WorkersManager - Worker closed.
+[21/11/2013 19:46:52] v3.0.98.472	WorkersManager - OnProcessExit() 
+[21/11/2013 19:46:54] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Add:1 , needed:1 , current:0, Ready:0 , Creating: 0 
+[21/11/2013 19:46:54] v3.0.98.472	WorkersManager - Worker closed.
+[21/11/2013 20:19:29] v3.0.98.472	WorkersManager - OnProcessExit() 
+[21/11/2013 20:19:31] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Add:1 , needed:1 , current:0, Ready:0 , Creating: 0 
+[21/11/2013 20:19:31] v3.0.98.472	WorkersManager - Worker closed.
+[22/11/2013 03:41:23] v3.0.98.472	WorkersManager - OnProcessExit() 
+[22/11/2013 03:41:25] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Add:1 , needed:1 , current:0, Ready:0 , Creating: 0 
+[22/11/2013 03:41:25] v3.0.98.472	WorkersManager - Worker closed.
+[22/11/2013 08:31:40] v3.0.98.472	WorkersManager - OnProcessExit() 
+[22/11/2013 08:31:42] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Add:1 , needed:1 , current:0, Ready:0 , Creating: 0 
+[22/11/2013 08:31:42] v3.0.98.472	WorkersManager - Worker closed.
+[22/11/2013 09:58:37] v3.0.98.472	WorkersManager - OnProcessExit() 
+[22/11/2013 09:58:39] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Add:1 , needed:1 , current:0, Ready:0 , Creating: 0 
+[22/11/2013 09:58:39] v3.0.98.472	WorkersManager - Worker closed.
+[22/11/2013 16:28:22] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Add:1 , needed:2 , current:1, Ready:1 , Creating: 0 
+[22/11/2013 16:28:24] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Remove:1 , needed:1 , current:2, Ready:2 , Creating: 0 
+[22/11/2013 16:28:24] v3.0.98.472	WorkersManager - gracefulWorkerShutdown() 
+[22/11/2013 16:28:26] v3.0.98.472	WorkersManager - Worker closed.
+[22/11/2013 18:50:05] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Add:1 , needed:2 , current:1, Ready:1 , Creating: 0 
+[22/11/2013 18:50:07] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Add:1 , needed:3 , current:2, Ready:2 , Creating: 0 
+[22/11/2013 18:50:19] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Remove:1 , needed:2 , current:3, Ready:3 , Creating: 0 
+[22/11/2013 18:50:19] v3.0.98.472	WorkersManager - gracefulWorkerShutdown() 
+[22/11/2013 18:50:21] v3.0.98.472	WorkersManager - Worker closed.
+[22/11/2013 18:50:46] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Remove:1 , needed:1 , current:2, Ready:2 , Creating: 0 
+[22/11/2013 18:50:46] v3.0.98.472	WorkersManager - gracefulWorkerShutdown() 
+[22/11/2013 18:50:48] v3.0.98.472	WorkersManager - Worker closed.
+[22/11/2013 20:53:13] v3.0.98.472	WorkersManager - OnProcessExit() 
+[22/11/2013 20:53:15] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Add:1 , needed:1 , current:0, Ready:0 , Creating: 0 
+[22/11/2013 20:53:15] v3.0.98.472	WorkersManager - Worker closed.
+[22/11/2013 22:59:16] v3.0.98.472	WorkersManager - OnProcessExit() 
+[22/11/2013 22:59:18] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Add:1 , needed:1 , current:0, Ready:0 , Creating: 0 
+[22/11/2013 22:59:19] v3.0.98.472	WorkersManager - Worker closed.
+[23/11/2013 01:54:58] v3.0.98.472	WorkersManager - OnProcessExit() 
+[23/11/2013 01:55:00] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Add:1 , needed:1 , current:0, Ready:0 , Creating: 0 
+[23/11/2013 01:55:00] v3.0.98.472	WorkersManager - Worker closed.
+[23/11/2013 02:34:18] v3.0.98.472	WorkersManager - OnProcessExit() 
+[23/11/2013 02:34:20] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Add:1 , needed:1 , current:0, Ready:0 , Creating: 0 
+[23/11/2013 02:34:20] v3.0.98.472	WorkersManager - Worker closed.
+[23/11/2013 02:57:45] v3.0.98.472	WorkersManager - OnProcessExit() 
+[23/11/2013 02:57:47] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Add:1 , needed:1 , current:0, Ready:0 , Creating: 0 
+[23/11/2013 02:57:47] v3.0.98.472	WorkersManager - Worker closed.
+[23/11/2013 04:32:27] v3.0.98.472	WorkersManager - OnProcessExit() 
+[23/11/2013 04:32:29] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Add:1 , needed:1 , current:0, Ready:0 , Creating: 0 
+[23/11/2013 04:32:29] v3.0.98.472	WorkersManager - Worker closed.
+[23/11/2013 09:51:31] v3.0.98.472	WorkersManager - OnProcessExit() 
+[23/11/2013 09:51:33] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Add:1 , needed:1 , current:0, Ready:0 , Creating: 0 
+[23/11/2013 09:51:33] v3.0.98.472	WorkersManager - Worker closed.
+[23/11/2013 13:11:02] v3.0.98.472	WorkersManager - OnProcessExit() 
+[23/11/2013 13:11:04] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Add:1 , needed:1 , current:0, Ready:0 , Creating: 0 
+[23/11/2013 13:11:04] v3.0.98.472	WorkersManager - Worker closed.
+[23/11/2013 16:37:33] v3.0.98.472	WorkersManager - OnProcessExit() 
+[23/11/2013 16:37:35] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Add:1 , needed:1 , current:0, Ready:0 , Creating: 0 
+[23/11/2013 16:37:35] v3.0.98.472	WorkersManager - Worker closed.
+[24/11/2013 12:15:58] v3.0.98.472	WorkersManager - OnProcessExit() 
+[24/11/2013 12:16:00] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Add:1 , needed:1 , current:0, Ready:0 , Creating: 0 
+[24/11/2013 12:16:00] v3.0.98.472	WorkersManager - Worker closed.
+[24/11/2013 14:38:10] v3.0.98.472	WorkersManager - OnProcessExit() 
+[24/11/2013 14:38:12] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Add:1 , needed:1 , current:0, Ready:0 , Creating: 0 
+[24/11/2013 14:38:12] v3.0.98.472	WorkersManager - Worker closed.
+[24/11/2013 19:22:14] v3.0.98.472	WorkersManager - OnProcessExit() 
+[24/11/2013 19:22:17] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Add:1 , needed:1 , current:0, Ready:0 , Creating: 0 
+[24/11/2013 19:22:17] v3.0.98.472	WorkersManager - Worker closed.
+[24/11/2013 19:58:12] v3.0.98.472	WorkersManager - OnProcessExit() 
+[24/11/2013 19:58:14] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Add:1 , needed:1 , current:0, Ready:0 , Creating: 0 
+[24/11/2013 19:58:14] v3.0.98.472	WorkersManager - Worker closed.
+[25/11/2013 04:12:48] v3.0.98.472	WorkersManager - OnProcessExit() 
+[25/11/2013 04:12:50] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Add:1 , needed:1 , current:0, Ready:0 , Creating: 0 
+[25/11/2013 04:12:51] v3.0.98.472	WorkersManager - Worker closed.
+[25/11/2013 12:03:41] v3.0.98.472	WorkersManager - Ping Failed 
+[25/11/2013 12:03:42] v3.0.98.472	WorkersManager - #1 not ready to die, active connections:1
+[25/11/2013 12:03:44] v3.0.98.472	WorkersManager - Worker closed.
+[25/11/2013 12:12:09] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Add:7 , needed:8 , current:1, Ready:1 , Creating: 0 
+[25/11/2013 12:12:09] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Add:7 , needed:8 , current:1, Ready:1 , Creating: 0 
+[25/11/2013 12:12:09] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Add:7 , needed:8 , current:1, Ready:1 , Creating: 0 
+[25/11/2013 12:12:09] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Add:7 , needed:8 , current:1, Ready:1 , Creating: 0 
+[25/11/2013 12:12:09] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Add:7 , needed:8 , current:1, Ready:1 , Creating: 0 
+[25/11/2013 12:12:09] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Add:7 , needed:8 , current:1, Ready:1 , Creating: 0 
+[25/11/2013 12:12:09] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Add:7 , needed:8 , current:1, Ready:1 , Creating: 0 
+[25/11/2013 12:12:38] v3.0.98.472	WorkersManager - Ping Failed 
+[25/11/2013 12:12:38] v3.0.98.472	WorkersManager - #2 not ready to die, active connections:1
+[25/11/2013 12:12:40] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Add:1 , needed:8 , current:7, Ready:7 , Creating: 0 
+[25/11/2013 12:12:40] v3.0.98.472	WorkersManager - Ping Failed 
+[25/11/2013 12:12:41] v3.0.98.472	WorkersManager - Ping Failed 
+[25/11/2013 12:12:42] v3.0.98.472	WorkersManager - Ping Failed 
+[25/11/2013 12:12:42] v3.0.98.472	WorkersManager - Ping Failed 
+[25/11/2013 12:12:43] v3.0.98.472	WorkersManager - Worker closed.
+[25/11/2013 12:12:43] v3.0.98.472	WorkersManager - Worker closed.
+[25/11/2013 12:12:43] v3.0.98.472	WorkersManager - Worker closed.
+[25/11/2013 12:12:43] v3.0.98.472	WorkersManager - Worker closed.
+[25/11/2013 12:12:43] v3.0.98.472	WorkersManager - #3 not ready to die, active connections:1
+[25/11/2013 12:12:45] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Add:4 , needed:8 , current:4, Ready:4 , Creating: 0 
+[25/11/2013 12:12:45] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Add:4 , needed:8 , current:4, Ready:4 , Creating: 0 
+[25/11/2013 12:12:45] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Add:4 , needed:8 , current:4, Ready:4 , Creating: 0 
+[25/11/2013 12:12:45] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Add:4 , needed:8 , current:4, Ready:4 , Creating: 0 
+[25/11/2013 12:12:45] v3.0.98.472	WorkersManager - Ping Failed 
+[25/11/2013 12:12:46] v3.0.98.472	WorkersManager - Ping Failed 
+[25/11/2013 12:12:47] v3.0.98.472	WorkersManager - Ping Failed 
+[25/11/2013 12:12:48] v3.0.98.472	WorkersManager - Worker closed.
+[25/11/2013 12:12:48] v3.0.98.472	WorkersManager - Worker closed.
+[25/11/2013 12:12:48] v3.0.98.472	WorkersManager - Worker closed.
+[25/11/2013 12:12:48] v3.0.98.472	WorkersManager - #8 not ready to die, active connections:1
+[25/11/2013 12:12:50] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Add:3 , needed:8 , current:5, Ready:5 , Creating: 0 
+[25/11/2013 12:12:50] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Add:3 , needed:8 , current:5, Ready:5 , Creating: 0 
+[25/11/2013 12:12:50] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Add:3 , needed:8 , current:5, Ready:5 , Creating: 0 
+[25/11/2013 12:12:50] v3.0.98.472	WorkersManager - Worker closed.
+[25/11/2013 12:15:11] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Remove:1 , needed:7 , current:8, Ready:8 , Creating: 0 
+[25/11/2013 12:15:11] v3.0.98.472	WorkersManager - gracefulWorkerShutdown() 
+[25/11/2013 12:15:13] v3.0.98.472	WorkersManager - Worker closed.
+[25/11/2013 12:15:15] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Remove:1 , needed:6 , current:7, Ready:7 , Creating: 0 
+[25/11/2013 12:15:15] v3.0.98.472	WorkersManager - gracefulWorkerShutdown() 
+[25/11/2013 12:15:17] v3.0.98.472	WorkersManager - Worker closed.
+[25/11/2013 12:15:23] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Remove:1 , needed:5 , current:6, Ready:6 , Creating: 0 
+[25/11/2013 12:15:23] v3.0.98.472	WorkersManager - gracefulWorkerShutdown() 
+[25/11/2013 12:15:25] v3.0.98.472	WorkersManager - Worker closed.
+[25/11/2013 12:15:31] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Remove:1 , needed:4 , current:5, Ready:5 , Creating: 0 
+[25/11/2013 12:15:31] v3.0.98.472	WorkersManager - gracefulWorkerShutdown() 
+[25/11/2013 12:15:33] v3.0.98.472	WorkersManager - Worker closed.
+[25/11/2013 12:15:43] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Remove:1 , needed:3 , current:4, Ready:4 , Creating: 0 
+[25/11/2013 12:15:43] v3.0.98.472	WorkersManager - gracefulWorkerShutdown() 
+[25/11/2013 12:15:45] v3.0.98.472	WorkersManager - Worker closed.
+[25/11/2013 12:15:58] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Remove:1 , needed:2 , current:3, Ready:3 , Creating: 0 
+[25/11/2013 12:15:58] v3.0.98.472	WorkersManager - gracefulWorkerShutdown() 
+[25/11/2013 12:16:00] v3.0.98.472	WorkersManager - Worker closed.
+[25/11/2013 12:16:24] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Remove:1 , needed:1 , current:2, Ready:2 , Creating: 0 
+[25/11/2013 12:16:24] v3.0.98.472	WorkersManager - gracefulWorkerShutdown() 
+[25/11/2013 12:16:26] v3.0.98.472	WorkersManager - Worker closed.
+[25/11/2013 12:18:21] v3.0.98.472	WorkersManager - Ping Failed 
+[25/11/2013 12:18:22] v3.0.98.472	WorkersManager - #17 not ready to die, active connections:1
+[25/11/2013 12:18:24] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Add:1 , needed:2 , current:1, Ready:1 , Creating: 0 
+[25/11/2013 12:18:24] v3.0.98.472	WorkersManager - Worker closed.
+[25/11/2013 12:18:36] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Remove:1 , needed:1 , current:2, Ready:2 , Creating: 0 
+[25/11/2013 12:18:36] v3.0.98.472	WorkersManager - gracefulWorkerShutdown() 
+[25/11/2013 12:18:38] v3.0.98.472	WorkersManager - #18 not ready to die, active connections:1
+[25/11/2013 12:18:40] v3.0.98.472	WorkersManager - #18 not ready to die, active connections:1
+[25/11/2013 12:18:42] v3.0.98.472	WorkersManager - #18 not ready to die, active connections:1
+[25/11/2013 12:18:44] v3.0.98.472	WorkersManager - #18 not ready to die, active connections:1
+[25/11/2013 12:18:46] v3.0.98.472	WorkersManager - #18 not ready to die, active connections:1
+[25/11/2013 12:18:48] v3.0.98.472	WorkersManager - #18 not ready to die, active connections:1
+[25/11/2013 12:18:50] v3.0.98.472	WorkersManager - #18 not ready to die, active connections:1
+[25/11/2013 12:18:52] v3.0.98.472	WorkersManager - #18 not ready to die, active connections:1
+[25/11/2013 12:18:54] v3.0.98.472	WorkersManager - #18 not ready to die, active connections:1
+[25/11/2013 12:18:56] v3.0.98.472	WorkersManager - #18 not ready to die, active connections:1
+[25/11/2013 12:18:58] v3.0.98.472	WorkersManager - #18 not ready to die, active connections:1
+[25/11/2013 12:19:00] v3.0.98.472	WorkersManager - #18 not ready to die, active connections:1
+[25/11/2013 12:19:02] v3.0.98.472	WorkersManager - #18 not ready to die, active connections:1
+[25/11/2013 12:19:04] v3.0.98.472	WorkersManager - #18 not ready to die, active connections:1
+[25/11/2013 12:19:06] v3.0.98.472	WorkersManager - #18 not ready to die, active connections:1
+[25/11/2013 12:19:08] v3.0.98.472	WorkersManager - #18 not ready to die, active connections:1
+[25/11/2013 12:19:10] v3.0.98.472	WorkersManager - #18 not ready to die, active connections:1
+[25/11/2013 12:19:12] v3.0.98.472	WorkersManager - #18 not ready to die, active connections:1
+[25/11/2013 12:19:14] v3.0.98.472	WorkersManager - #18 not ready to die, active connections:1
+[25/11/2013 12:19:16] v3.0.98.472	WorkersManager - #18 not ready to die, active connections:1
+[25/11/2013 12:19:18] v3.0.98.472	WorkersManager - #18 not ready to die, active connections:1
+[25/11/2013 12:19:20] v3.0.98.472	WorkersManager - #18 not ready to die, active connections:1
+[25/11/2013 12:19:22] v3.0.98.472	WorkersManager - #18 not ready to die, active connections:1
+[25/11/2013 12:19:24] v3.0.98.472	WorkersManager - #18 not ready to die, active connections:1
+[25/11/2013 12:19:26] v3.0.98.472	WorkersManager - #18 not ready to die, active connections:1
+[25/11/2013 12:19:28] v3.0.98.472	WorkersManager - #18 not ready to die, active connections:1
+[25/11/2013 12:19:30] v3.0.98.472	WorkersManager - #18 not ready to die, active connections:1
+[25/11/2013 12:19:32] v3.0.98.472	WorkersManager - #18 not ready to die, active connections:1
+[25/11/2013 12:19:34] v3.0.98.472	WorkersManager - #18 not ready to die, active connections:1
+[25/11/2013 12:19:36] v3.0.98.472	WorkersManager - #18 not ready to die, active connections:1
+[25/11/2013 12:19:38] v3.0.98.472	WorkersManager - Ping Failed 
+[25/11/2013 12:19:39] v3.0.98.472	WorkersManager - #18 not ready to die, active connections:1
+[25/11/2013 12:19:39] v3.0.98.472	WorkersManager - #19 not ready to die, active connections:1
+[25/11/2013 12:19:41] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Add:4 , needed:5 , current:1, Ready:1 , Creating: 0 
+[25/11/2013 12:19:41] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Add:4 , needed:5 , current:1, Ready:1 , Creating: 0 
+[25/11/2013 12:19:41] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Add:4 , needed:5 , current:1, Ready:1 , Creating: 0 
+[25/11/2013 12:19:41] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Add:4 , needed:5 , current:1, Ready:1 , Creating: 0 
+[25/11/2013 12:19:41] v3.0.98.472	WorkersManager - #18 not ready to die, active connections:1
+[25/11/2013 12:19:41] v3.0.98.472	WorkersManager - #19 not ready to die, active connections:1
+[25/11/2013 12:19:43] v3.0.98.472	WorkersManager - #18 not ready to die, active connections:1
+[25/11/2013 12:19:43] v3.0.98.472	WorkersManager - #19 not ready to die, active connections:1
+[25/11/2013 12:19:45] v3.0.98.472	WorkersManager - #18 not ready to die, active connections:1
+[25/11/2013 12:19:45] v3.0.98.472	WorkersManager - #19 not ready to die, active connections:1
+[25/11/2013 12:19:47] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Remove:1 , needed:4 , current:5, Ready:5 , Creating: 0 
+[25/11/2013 12:19:47] v3.0.98.472	WorkersManager - #18 not ready to die, active connections:1
+[25/11/2013 12:19:47] v3.0.98.472	WorkersManager - #19 not ready to die, active connections:1
+[25/11/2013 12:19:47] v3.0.98.472	WorkersManager - gracefulWorkerShutdown() 
+[25/11/2013 12:19:49] v3.0.98.472	WorkersManager - #18 not ready to die, active connections:1
+[25/11/2013 12:19:49] v3.0.98.472	WorkersManager - #19 not ready to die, active connections:1
+[25/11/2013 12:19:49] v3.0.98.472	WorkersManager - #20 not ready to die, active connections:1
+[25/11/2013 12:19:51] v3.0.98.472	WorkersManager - #18 not ready to die, active connections:1
+[25/11/2013 12:19:51] v3.0.98.472	WorkersManager - #19 not ready to die, active connections:1
+[25/11/2013 12:19:51] v3.0.98.472	WorkersManager - #20 not ready to die, active connections:1
+[25/11/2013 12:19:53] v3.0.98.472	WorkersManager - #18 not ready to die, active connections:1
+[25/11/2013 12:19:53] v3.0.98.472	WorkersManager - #19 not ready to die, active connections:1
+[25/11/2013 12:19:53] v3.0.98.472	WorkersManager - #20 not ready to die, active connections:1
+[25/11/2013 12:19:55] v3.0.98.472	WorkersManager - #18 not ready to die, active connections:1
+[25/11/2013 12:19:55] v3.0.98.472	WorkersManager - #19 not ready to die, active connections:1
+[25/11/2013 12:19:55] v3.0.98.472	WorkersManager - #20 not ready to die, active connections:1
+[25/11/2013 12:19:57] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Remove:1 , needed:3 , current:4, Ready:4 , Creating: 0 
+[25/11/2013 12:19:57] v3.0.98.472	WorkersManager - #18 not ready to die, active connections:1
+[25/11/2013 12:19:57] v3.0.98.472	WorkersManager - #19 not ready to die, active connections:1
+[25/11/2013 12:19:57] v3.0.98.472	WorkersManager - #20 not ready to die, active connections:1
+[25/11/2013 12:19:57] v3.0.98.472	WorkersManager - gracefulWorkerShutdown() 
+[25/11/2013 12:19:59] v3.0.98.472	WorkersManager - #18 not ready to die, active connections:1
+[25/11/2013 12:19:59] v3.0.98.472	WorkersManager - #19 not ready to die, active connections:1
+[25/11/2013 12:19:59] v3.0.98.472	WorkersManager - #20 not ready to die, active connections:1
+[25/11/2013 12:19:59] v3.0.98.472	WorkersManager - Worker closed.
+[25/11/2013 12:20:01] v3.0.98.472	WorkersManager - #18 not ready to die, active connections:1
+[25/11/2013 12:20:01] v3.0.98.472	WorkersManager - #19 not ready to die, active connections:1
+[25/11/2013 12:20:01] v3.0.98.472	WorkersManager - #20 not ready to die, active connections:1
+[25/11/2013 12:20:03] v3.0.98.472	WorkersManager - #18 not ready to die, active connections:1
+[25/11/2013 12:20:03] v3.0.98.472	WorkersManager - #19 not ready to die, active connections:1
+[25/11/2013 12:20:03] v3.0.98.472	WorkersManager - #20 not ready to die, active connections:1
+[25/11/2013 12:20:05] v3.0.98.472	WorkersManager - #18 not ready to die, active connections:1
+[25/11/2013 12:20:05] v3.0.98.472	WorkersManager - #19 not ready to die, active connections:1
+[25/11/2013 12:20:05] v3.0.98.472	WorkersManager - #20 not ready to die, active connections:1
+[25/11/2013 12:20:07] v3.0.98.472	WorkersManager - #18 not ready to die, active connections:1
+[25/11/2013 12:20:07] v3.0.98.472	WorkersManager - #19 not ready to die, active connections:1
+[25/11/2013 12:20:07] v3.0.98.472	WorkersManager - #20 not ready to die, active connections:1
+[25/11/2013 12:20:09] v3.0.98.472	WorkersManager - #18 not ready to die, active connections:1
+[25/11/2013 12:20:09] v3.0.98.472	WorkersManager - #19 not ready to die, active connections:1
+[25/11/2013 12:20:09] v3.0.98.472	WorkersManager - #20 not ready to die, active connections:1
+[25/11/2013 12:20:11] v3.0.98.472	WorkersManager - #18 not ready to die, active connections:1
+[25/11/2013 12:20:11] v3.0.98.472	WorkersManager - #19 not ready to die, active connections:1
+[25/11/2013 12:20:11] v3.0.98.472	WorkersManager - #20 not ready to die, active connections:1
+[25/11/2013 12:20:13] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Remove:1 , needed:2 , current:3, Ready:3 , Creating: 0 
+[25/11/2013 12:20:13] v3.0.98.472	WorkersManager - #18 not ready to die, active connections:1
+[25/11/2013 12:20:13] v3.0.98.472	WorkersManager - #19 not ready to die, active connections:1
+[25/11/2013 12:20:13] v3.0.98.472	WorkersManager - #20 not ready to die, active connections:1
+[25/11/2013 12:20:13] v3.0.98.472	WorkersManager - gracefulWorkerShutdown() 
+[25/11/2013 12:20:15] v3.0.98.472	WorkersManager - #18 not ready to die, active connections:1
+[25/11/2013 12:20:15] v3.0.98.472	WorkersManager - #19 not ready to die, active connections:1
+[25/11/2013 12:20:15] v3.0.98.472	WorkersManager - #20 not ready to die, active connections:1
+[25/11/2013 12:20:15] v3.0.98.472	WorkersManager - #22 not ready to die, active connections:1
+[25/11/2013 12:20:17] v3.0.98.472	WorkersManager - #18 not ready to die, active connections:1
+[25/11/2013 12:20:17] v3.0.98.472	WorkersManager - #19 not ready to die, active connections:1
+[25/11/2013 12:20:17] v3.0.98.472	WorkersManager - #20 not ready to die, active connections:1
+[25/11/2013 12:20:17] v3.0.98.472	WorkersManager - #22 not ready to die, active connections:1
+[25/11/2013 12:20:19] v3.0.98.472	WorkersManager - #18 not ready to die, active connections:1
+[25/11/2013 12:20:19] v3.0.98.472	WorkersManager - #19 not ready to die, active connections:1
+[25/11/2013 12:20:19] v3.0.98.472	WorkersManager - #20 not ready to die, active connections:1
+[25/11/2013 12:20:19] v3.0.98.472	WorkersManager - #22 not ready to die, active connections:1
+[25/11/2013 12:20:21] v3.0.98.472	WorkersManager - #18 not ready to die, active connections:1
+[25/11/2013 12:20:21] v3.0.98.472	WorkersManager - #19 not ready to die, active connections:1
+[25/11/2013 12:20:21] v3.0.98.472	WorkersManager - #20 not ready to die, active connections:1
+[25/11/2013 12:20:21] v3.0.98.472	WorkersManager - #22 not ready to die, active connections:1
+[25/11/2013 12:20:23] v3.0.98.472	WorkersManager - #18 not ready to die, active connections:1
+[25/11/2013 12:20:23] v3.0.98.472	WorkersManager - #19 not ready to die, active connections:1
+[25/11/2013 12:20:23] v3.0.98.472	WorkersManager - #20 not ready to die, active connections:1
+[25/11/2013 12:20:23] v3.0.98.472	WorkersManager - #22 not ready to die, active connections:1
+[25/11/2013 12:20:25] v3.0.98.472	WorkersManager - #18 not ready to die, active connections:1
+[25/11/2013 12:20:25] v3.0.98.472	WorkersManager - #19 not ready to die, active connections:1
+[25/11/2013 12:20:25] v3.0.98.472	WorkersManager - #20 not ready to die, active connections:1
+[25/11/2013 12:20:25] v3.0.98.472	WorkersManager - #22 not ready to die, active connections:1
+[25/11/2013 12:20:27] v3.0.98.472	WorkersManager - #18 not ready to die, active connections:1
+[25/11/2013 12:20:27] v3.0.98.472	WorkersManager - #19 not ready to die, active connections:1
+[25/11/2013 12:20:27] v3.0.98.472	WorkersManager - #20 not ready to die, active connections:1
+[25/11/2013 12:20:27] v3.0.98.472	WorkersManager - #22 not ready to die, active connections:1
+[25/11/2013 12:20:29] v3.0.98.472	WorkersManager - #18 not ready to die, active connections:1
+[25/11/2013 12:20:29] v3.0.98.472	WorkersManager - #19 not ready to die, active connections:1
+[25/11/2013 12:20:29] v3.0.98.472	WorkersManager - #20 not ready to die, active connections:1
+[25/11/2013 12:20:29] v3.0.98.472	WorkersManager - #22 not ready to die, active connections:1
+[25/11/2013 12:20:31] v3.0.98.472	WorkersManager - #18 not ready to die, active connections:1
+[25/11/2013 12:20:31] v3.0.98.472	WorkersManager - #19 not ready to die, active connections:1
+[25/11/2013 12:20:31] v3.0.98.472	WorkersManager - #20 not ready to die, active connections:1
+[25/11/2013 12:20:31] v3.0.98.472	WorkersManager - #22 not ready to die, active connections:1
+[25/11/2013 12:20:33] v3.0.98.472	WorkersManager - #18 not ready to die, active connections:1
+[25/11/2013 12:20:33] v3.0.98.472	WorkersManager - #19 not ready to die, active connections:1
+[25/11/2013 12:20:33] v3.0.98.472	WorkersManager - #20 not ready to die, active connections:1
+[25/11/2013 12:20:33] v3.0.98.472	WorkersManager - #22 not ready to die, active connections:1
+[25/11/2013 12:20:35] v3.0.98.472	WorkersManager - #18 not ready to die, active connections:1
+[25/11/2013 12:20:35] v3.0.98.472	WorkersManager - #19 not ready to die, active connections:1
+[25/11/2013 12:20:35] v3.0.98.472	WorkersManager - #20 not ready to die, active connections:1
+[25/11/2013 12:20:35] v3.0.98.472	WorkersManager - #22 not ready to die, active connections:1
+[25/11/2013 12:20:37] v3.0.98.472	WorkersManager - #18 not ready to die, active connections:1
+[25/11/2013 12:20:37] v3.0.98.472	WorkersManager - #19 not ready to die, active connections:1
+[25/11/2013 12:20:37] v3.0.98.472	WorkersManager - #20 not ready to die, active connections:1
+[25/11/2013 12:20:37] v3.0.98.472	WorkersManager - #22 not ready to die, active connections:1
+[25/11/2013 12:20:39] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Remove:1 , needed:1 , current:2, Ready:2 , Creating: 0 
+[25/11/2013 12:20:39] v3.0.98.472	WorkersManager - Ping Failed 
+[25/11/2013 12:20:39] v3.0.98.472	WorkersManager - #18 not ready to die, active connections:1
+[25/11/2013 12:20:39] v3.0.98.472	WorkersManager - #19 not ready to die, active connections:1
+[25/11/2013 12:20:39] v3.0.98.472	WorkersManager - #20 not ready to die, active connections:1
+[25/11/2013 12:20:39] v3.0.98.472	WorkersManager - #22 not ready to die, active connections:1
+[25/11/2013 12:20:39] v3.0.98.472	WorkersManager - #24 not ready to die, active connections:1
+[25/11/2013 12:20:39] v3.0.98.472	WorkersManager - gracefulWorkerShutdown() 
+[25/11/2013 12:20:42] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Add:1 , needed:1 , current:0, Ready:0 , Creating: 0 
+[25/11/2013 12:20:42] v3.0.98.472	WorkersManager - #18 not ready to die, active connections:1
+[25/11/2013 12:20:42] v3.0.98.472	WorkersManager - #19 not ready to die, active connections:1
+[25/11/2013 12:20:42] v3.0.98.472	WorkersManager - #20 not ready to die, active connections:1
+[25/11/2013 12:20:42] v3.0.98.472	WorkersManager - #22 not ready to die, active connections:1
+[25/11/2013 12:20:42] v3.0.98.472	WorkersManager - Worker closed.
+[25/11/2013 12:20:42] v3.0.98.472	WorkersManager - Worker closed.
+[25/11/2013 12:20:44] v3.0.98.472	WorkersManager - #18 not ready to die, active connections:1
+[25/11/2013 12:20:44] v3.0.98.472	WorkersManager - #19 not ready to die, active connections:1
+[25/11/2013 12:20:44] v3.0.98.472	WorkersManager - #20 not ready to die, active connections:1
+[25/11/2013 12:20:44] v3.0.98.472	WorkersManager - #22 not ready to die, active connections:1
+[25/11/2013 12:20:46] v3.0.98.472	WorkersManager - #18 not ready to die, active connections:1
+[25/11/2013 12:20:46] v3.0.98.472	WorkersManager - #19 not ready to die, active connections:1
+[25/11/2013 12:20:46] v3.0.98.472	WorkersManager - #20 not ready to die, active connections:1
+[25/11/2013 12:20:46] v3.0.98.472	WorkersManager - #22 not ready to die, active connections:1
+[25/11/2013 12:20:48] v3.0.98.472	WorkersManager - #18 not ready to die, active connections:1
+[25/11/2013 12:20:48] v3.0.98.472	WorkersManager - #19 not ready to die, active connections:1
+[25/11/2013 12:20:48] v3.0.98.472	WorkersManager - #20 not ready to die, active connections:1
+[25/11/2013 12:20:48] v3.0.98.472	WorkersManager - #22 not ready to die, active connections:1
+[25/11/2013 12:21:53] v3.0.98.472	WorkersManager - Ping Failed 
+[25/11/2013 12:21:54] v3.0.98.472	WorkersManager - #18 not ready to die, active connections:1
+[25/11/2013 12:21:54] v3.0.98.472	WorkersManager - Worker closed.
+[25/11/2013 12:21:54] v3.0.98.472	WorkersManager - #20 not ready to die, active connections:1
+[25/11/2013 12:21:54] v3.0.98.472	WorkersManager - #22 not ready to die, active connections:1
+[25/11/2013 12:21:54] v3.0.98.472	WorkersManager - Worker closed.
+[25/11/2013 12:21:56] v3.0.98.472	WorkersManager - Worker closed.
+[25/11/2013 12:21:56] v3.0.98.472	WorkersManager - Worker closed.
+[25/11/2013 12:21:56] v3.0.98.472	WorkersManager - Worker closed.
+[25/11/2013 12:22:00] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Add:7 , needed:8 , current:1, Ready:1 , Creating: 0 
+[25/11/2013 12:22:00] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Add:7 , needed:8 , current:1, Ready:1 , Creating: 0 
+[25/11/2013 12:22:00] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Add:7 , needed:8 , current:1, Ready:1 , Creating: 0 
+[25/11/2013 12:22:00] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Add:7 , needed:8 , current:1, Ready:1 , Creating: 0 
+[25/11/2013 12:22:00] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Add:7 , needed:8 , current:1, Ready:1 , Creating: 0 
+[25/11/2013 12:22:00] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Add:7 , needed:8 , current:1, Ready:1 , Creating: 0 
+[25/11/2013 12:22:00] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Add:7 , needed:8 , current:1, Ready:1 , Creating: 0 
+[25/11/2013 12:22:20] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Remove:1 , needed:7 , current:8, Ready:8 , Creating: 0 
+[25/11/2013 12:22:20] v3.0.98.472	WorkersManager - gracefulWorkerShutdown() 
+[25/11/2013 12:22:22] v3.0.98.472	WorkersManager - Worker closed.
+[25/11/2013 12:22:26] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Remove:1 , needed:6 , current:7, Ready:7 , Creating: 0 
+[25/11/2013 12:22:26] v3.0.98.472	WorkersManager - gracefulWorkerShutdown() 
+[25/11/2013 12:22:28] v3.0.98.472	WorkersManager - Worker closed.
+[25/11/2013 12:22:33] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Remove:1 , needed:5 , current:6, Ready:6 , Creating: 0 
+[25/11/2013 12:22:33] v3.0.98.472	WorkersManager - gracefulWorkerShutdown() 
+[25/11/2013 12:22:35] v3.0.98.472	WorkersManager - Worker closed.
+[25/11/2013 12:23:16] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Remove:1 , needed:4 , current:5, Ready:5 , Creating: 0 
+[25/11/2013 12:23:16] v3.0.98.472	WorkersManager - gracefulWorkerShutdown() 
+[25/11/2013 12:23:18] v3.0.98.472	WorkersManager - Worker closed.
+[25/11/2013 12:23:28] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Remove:1 , needed:3 , current:4, Ready:4 , Creating: 0 
+[25/11/2013 12:23:28] v3.0.98.472	WorkersManager - gracefulWorkerShutdown() 
+[25/11/2013 12:23:30] v3.0.98.472	WorkersManager - Worker closed.
+[25/11/2013 12:23:43] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Remove:1 , needed:2 , current:3, Ready:3 , Creating: 0 
+[25/11/2013 12:23:43] v3.0.98.472	WorkersManager - gracefulWorkerShutdown() 
+[25/11/2013 12:23:45] v3.0.98.472	WorkersManager - Worker closed.
+[25/11/2013 12:24:09] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Remove:1 , needed:1 , current:2, Ready:2 , Creating: 0 
+[25/11/2013 12:24:09] v3.0.98.472	WorkersManager - gracefulWorkerShutdown() 
+[25/11/2013 12:24:11] v3.0.98.472	WorkersManager - Worker closed.
+[26/11/2013 12:28:19] v3.0.98.472	WorkersManager - OnProcessExit() 
+[26/11/2013 12:28:21] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Add:1 , needed:1 , current:0, Ready:0 , Creating: 0 
+[26/11/2013 12:28:21] v3.0.98.472	WorkersManager - Worker closed.
+[26/11/2013 14:00:43] v3.0.98.472	WorkersManager - Ping Failed 
+[26/11/2013 14:00:46] v3.0.98.472	WorkersManager - #1 not ready to die, active connections:1
+[26/11/2013 14:00:48] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Add:1 , needed:2 , current:1, Ready:1 , Creating: 0 
+[26/11/2013 14:00:58] v3.0.98.472	WorkersManager - Worker closed.
+[26/11/2013 14:01:00] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Add:1 , needed:3 , current:2, Ready:2 , Creating: 0 
+[26/11/2013 14:01:14] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Remove:1 , needed:2 , current:3, Ready:3 , Creating: 0 
+[26/11/2013 14:01:14] v3.0.98.472	WorkersManager - gracefulWorkerShutdown() 
+[26/11/2013 14:01:16] v3.0.98.472	WorkersManager - Worker closed.
+[26/11/2013 14:01:41] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Remove:1 , needed:1 , current:2, Ready:2 , Creating: 0 
+[26/11/2013 14:01:41] v3.0.98.472	WorkersManager - gracefulWorkerShutdown() 
+[26/11/2013 14:01:43] v3.0.98.472	WorkersManager - Worker closed.
+[26/11/2013 14:24:52] v3.0.98.472	WorkersManager - OnProcessExit() 
+[26/11/2013 14:24:54] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Add:1 , needed:1 , current:0, Ready:0 , Creating: 0 
+[26/11/2013 14:24:54] v3.0.98.472	WorkersManager - Worker closed.
+[26/11/2013 20:18:47] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Add:1 , needed:2 , current:1, Ready:1 , Creating: 0 
+[26/11/2013 20:19:13] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Remove:1 , needed:1 , current:2, Ready:2 , Creating: 0 
+[26/11/2013 20:19:13] v3.0.98.472	WorkersManager - gracefulWorkerShutdown() 
+[26/11/2013 20:19:15] v3.0.98.472	WorkersManager - Worker closed.
+[27/11/2013 09:24:27] v3.0.98.472	WorkersManager - OnProcessExit() 
+[27/11/2013 09:24:29] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Add:1 , needed:1 , current:0, Ready:0 , Creating: 0 
+[27/11/2013 09:24:29] v3.0.98.472	WorkersManager - Worker closed.
+[27/11/2013 15:59:05] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Add:2 , needed:3 , current:1, Ready:1 , Creating: 0 
+[27/11/2013 15:59:05] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Add:2 , needed:3 , current:1, Ready:1 , Creating: 0 
+[27/11/2013 15:59:09] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Remove:1 , needed:2 , current:3, Ready:3 , Creating: 0 
+[27/11/2013 15:59:09] v3.0.98.472	WorkersManager - gracefulWorkerShutdown() 
+[27/11/2013 15:59:11] v3.0.98.472	WorkersManager - Worker closed.
+[27/11/2013 15:59:33] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Remove:1 , needed:1 , current:2, Ready:2 , Creating: 0 
+[27/11/2013 15:59:33] v3.0.98.472	WorkersManager - gracefulWorkerShutdown() 
+[27/11/2013 15:59:35] v3.0.98.472	WorkersManager - Worker closed.
+[27/11/2013 16:03:43] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Add:1 , needed:2 , current:1, Ready:1 , Creating: 0 
+[27/11/2013 16:04:07] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Remove:1 , needed:1 , current:2, Ready:2 , Creating: 0 
+[27/11/2013 16:04:07] v3.0.98.472	WorkersManager - gracefulWorkerShutdown() 
+[27/11/2013 16:04:09] v3.0.98.472	WorkersManager - Worker closed.
+[27/11/2013 16:04:53] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Add:1 , needed:2 , current:1, Ready:1 , Creating: 0 
+[27/11/2013 16:05:43] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Add:6 , needed:8 , current:2, Ready:2 , Creating: 0 
+[27/11/2013 16:05:43] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Add:6 , needed:8 , current:2, Ready:2 , Creating: 0 
+[27/11/2013 16:05:43] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Add:6 , needed:8 , current:2, Ready:2 , Creating: 0 
+[27/11/2013 16:05:43] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Add:6 , needed:8 , current:2, Ready:2 , Creating: 0 
+[27/11/2013 16:05:43] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Add:6 , needed:8 , current:2, Ready:2 , Creating: 0 
+[27/11/2013 16:05:43] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Add:6 , needed:8 , current:2, Ready:2 , Creating: 0 
+[27/11/2013 16:05:49] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Remove:1 , needed:7 , current:8, Ready:8 , Creating: 0 
+[27/11/2013 16:05:49] v3.0.98.472	WorkersManager - gracefulWorkerShutdown() 
+[27/11/2013 16:05:51] v3.0.98.472	WorkersManager - Worker closed.
+[27/11/2013 16:05:56] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Remove:1 , needed:6 , current:7, Ready:7 , Creating: 0 
+[27/11/2013 16:05:56] v3.0.98.472	WorkersManager - gracefulWorkerShutdown() 
+[27/11/2013 16:05:58] v3.0.98.472	WorkersManager - Worker closed.
+[27/11/2013 16:06:04] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Remove:1 , needed:5 , current:6, Ready:6 , Creating: 0 
+[27/11/2013 16:06:04] v3.0.98.472	WorkersManager - gracefulWorkerShutdown() 
+[27/11/2013 16:06:06] v3.0.98.472	WorkersManager - Worker closed.
+[27/11/2013 16:06:13] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Remove:1 , needed:4 , current:5, Ready:5 , Creating: 0 
+[27/11/2013 16:06:13] v3.0.98.472	WorkersManager - gracefulWorkerShutdown() 
+[27/11/2013 16:06:15] v3.0.98.472	WorkersManager - Worker closed.
+[27/11/2013 16:06:23] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Remove:1 , needed:3 , current:4, Ready:4 , Creating: 0 
+[27/11/2013 16:06:23] v3.0.98.472	WorkersManager - gracefulWorkerShutdown() 
+[27/11/2013 16:06:25] v3.0.98.472	WorkersManager - Worker closed.
+[27/11/2013 16:06:40] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Remove:1 , needed:2 , current:3, Ready:3 , Creating: 0 
+[27/11/2013 16:06:40] v3.0.98.472	WorkersManager - gracefulWorkerShutdown() 
+[27/11/2013 16:06:42] v3.0.98.472	WorkersManager - Worker closed.
+[27/11/2013 16:07:06] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Remove:1 , needed:1 , current:2, Ready:2 , Creating: 0 
+[27/11/2013 16:07:06] v3.0.98.472	WorkersManager - gracefulWorkerShutdown() 
+[27/11/2013 16:07:08] v3.0.98.472	WorkersManager - Worker closed.
+[27/11/2013 16:53:24] v3.0.98.472	WorkersManager - OnProcessExit() 
+[27/11/2013 16:53:26] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Add:1 , needed:1 , current:0, Ready:0 , Creating: 0 
+[27/11/2013 16:53:26] v3.0.98.472	WorkersManager - Worker closed.
+[27/11/2013 18:29:16] v3.0.98.472	WorkersManager - OnProcessExit() 
+[27/11/2013 18:29:18] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Add:1 , needed:1 , current:0, Ready:0 , Creating: 0 
+[27/11/2013 18:29:18] v3.0.98.472	WorkersManager - Worker closed.
+[03/03/2012 05:18:01] v3.0.98.472	WorkersManager - OnProcessExit() 
+[03/03/2012 05:18:03] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Add:1 , needed:1 , current:0, Ready:0 , Creating: 0 
+[03/03/2012 05:18:03] v3.0.98.472	WorkersManager - Worker closed.
+[03/03/2012 06:01:09] v3.0.98.472	WorkersManager - OnProcessExit() 
+[03/03/2012 06:01:11] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Add:1 , needed:1 , current:0, Ready:0 , Creating: 0 
+[03/03/2012 06:01:11] v3.0.98.472	WorkersManager - Worker closed.
+[03/03/2012 06:35:38] v3.0.98.472	WorkersManager - OnProcessExit() 
+[03/03/2012 06:35:40] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Add:1 , needed:1 , current:0, Ready:0 , Creating: 0 
+[03/03/2012 06:35:40] v3.0.98.472	WorkersManager - Worker closed.
+[03/03/2012 07:32:12] v3.0.98.472	WorkersManager - OnProcessExit() 
+[03/03/2012 07:32:14] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Add:1 , needed:1 , current:0, Ready:0 , Creating: 0 
+[03/03/2012 07:32:14] v3.0.98.472	WorkersManager - Worker closed.
+[03/03/2012 07:47:22] v3.0.98.472	WorkersManager - OnProcessExit() 
+[03/03/2012 07:47:24] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Add:1 , needed:1 , current:0, Ready:0 , Creating: 0 
+[03/03/2012 07:47:24] v3.0.98.472	WorkersManager - Worker closed.
+[03/03/2012 07:58:58] v3.0.98.472	WorkersManager - OnProcessExit() 
+[03/03/2012 07:59:00] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Add:1 , needed:1 , current:0, Ready:0 , Creating: 0 
+[03/03/2012 07:59:00] v3.0.98.472	WorkersManager - Worker closed.
+[03/03/2012 08:12:13] v3.0.98.472	WorkersManager - OnProcessExit() 
+[03/03/2012 08:12:15] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Add:1 , needed:1 , current:0, Ready:0 , Creating: 0 
+[03/03/2012 08:12:15] v3.0.98.472	WorkersManager - Worker closed.
+[03/03/2012 08:26:59] v3.0.98.472	WorkersManager - OnProcessExit() 
+[03/03/2012 08:27:01] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Add:1 , needed:1 , current:0, Ready:0 , Creating: 0 
+[03/03/2012 08:27:01] v3.0.98.472	WorkersManager - Worker closed.
+[03/03/2012 08:38:17] v3.0.98.472	WorkersManager - OnProcessExit() 
+[03/03/2012 08:38:19] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Add:1 , needed:1 , current:0, Ready:0 , Creating: 0 
+[03/03/2012 08:38:19] v3.0.98.472	WorkersManager - Worker closed.
+[03/03/2012 10:44:26] v3.0.98.472	WorkersManager - OnProcessExit() 
+[03/03/2012 10:44:28] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Add:1 , needed:1 , current:0, Ready:0 , Creating: 0 
+[03/03/2012 10:44:28] v3.0.98.472	WorkersManager - Worker closed.
+[03/03/2012 21:43:33] v3.0.98.472	WorkersManager - OnProcessExit() 
+[03/03/2012 21:43:35] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Add:1 , needed:1 , current:0, Ready:0 , Creating: 0 
+[03/03/2012 21:43:35] v3.0.98.472	WorkersManager - Worker closed.
+[03/03/2012 23:53:19] v3.0.98.472	WorkersManager - OnProcessExit() 
+[03/03/2012 23:53:21] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Add:1 , needed:1 , current:0, Ready:0 , Creating: 0 
+[03/03/2012 23:53:21] v3.0.98.472	WorkersManager - Worker closed.
+[02/12/2013 16:27:27] v3.0.98.472	WorkersManager - OnProcessExit() 
+[02/12/2013 16:27:29] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Add:1 , needed:1 , current:0, Ready:0 , Creating: 0 
+[02/12/2013 16:27:29] v3.0.98.472	WorkersManager - Worker closed.
+[02/12/2013 19:58:29] v3.0.98.472	WorkersManager - OnProcessExit() 
+[02/12/2013 19:58:31] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Add:1 , needed:1 , current:0, Ready:0 , Creating: 0 
+[02/12/2013 19:58:31] v3.0.98.472	WorkersManager - Worker closed.
+[02/12/2013 20:42:20] v3.0.98.472	WorkersManager - OnProcessExit() 
+[02/12/2013 20:42:22] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Add:1 , needed:1 , current:0, Ready:0 , Creating: 0 
+[02/12/2013 20:42:22] v3.0.98.472	WorkersManager - Worker closed.
+[02/12/2013 21:26:36] v3.0.98.472	WorkersManager - OnProcessExit() 
+[02/12/2013 21:26:38] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Add:1 , needed:1 , current:0, Ready:0 , Creating: 0 
+[02/12/2013 21:26:38] v3.0.98.472	WorkersManager - Worker closed.
+[03/12/2013 03:07:50] v3.0.98.472	WorkersManager - OnProcessExit() 
+[03/12/2013 03:07:52] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Add:1 , needed:1 , current:0, Ready:0 , Creating: 0 
+[03/12/2013 03:07:52] v3.0.98.472	WorkersManager - Worker closed.
+[03/12/2013 03:20:14] v3.0.98.472	WorkersManager - OnProcessExit() 
+[03/12/2013 03:20:16] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Add:1 , needed:1 , current:0, Ready:0 , Creating: 0 
+[03/12/2013 03:20:16] v3.0.98.472	WorkersManager - Worker closed.
+[03/12/2013 14:25:49] v3.0.98.472	WorkersManager - OnProcessExit() 
+[03/12/2013 14:25:51] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Add:1 , needed:1 , current:0, Ready:0 , Creating: 0 
+[03/12/2013 14:25:51] v3.0.98.472	WorkersManager - Worker closed.
