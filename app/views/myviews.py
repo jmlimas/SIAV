@@ -60,7 +60,7 @@ def cantidades():
     por_visitar = avaluos.count()
     #Conteo avaluos de Salida
     avaluos = (Avaluo.objects
-               .filter(Estatus='PROCESO')
+               .filter(Q(Estatus='PROCESO') | Q(Estatus__contains='DETENIDO'))
                .filter(Q(Visita__isnull=False))
                .filter(Q(Salida__isnull=True)))
 
@@ -219,7 +219,7 @@ def visita(request):
 @login_required
 def salida(request):
     avaluos = (Avaluo.objects
-               .filter(Estatus='PROCESO')
+               .filter(Q(Estatus='PROCESO')| Q(Estatus__contains='DETENIDO'))
                .filter(Q(Visita__isnull=False))
                .filter(Q(Salida__isnull=True)))
 

@@ -844,3 +844,11 @@ LastError:La operación de E/S se anuló por una salida de subproceso o por una so
 [05/12/2013 06:54:39] v3.0.98.472	WorkersManager - OnProcessExit() 
 [05/12/2013 06:54:41] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Add:1 , needed:1 , current:0, Ready:0 , Creating: 0 
 [05/12/2013 06:54:41] v3.0.98.472	WorkersManager - Worker closed.
+[06/12/2013 10:58:41] v3.0.98.472	WorkersManager - OnProcessExit() 
+[06/12/2013 10:58:43] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Add:1 , needed:1 , current:0, Ready:0 , Creating: 0 
+[06/12/2013 10:58:43] v3.0.98.472	WorkersManager - Worker closed.
+[06/12/2013 21:33:39] v3.0.98.472	WorkersManager - OnProcessExit() 
+[06/12/2013 21:33:41] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Add:1 , needed:1 , current:0, Ready:0 , Creating: 0 
+[06/12/2013 21:33:41] v3.0.98.472	WorkersManager - Worker closed.
+[07/12/2013 13:38:24] v3.0.98.472	WorkersManager - BeginGracefulShutdown() 
+[07/12/2013 13:39:46] v3.0.98.472	WorkersManager - BeginGracefulShutdown() 
