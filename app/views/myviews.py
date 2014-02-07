@@ -2,7 +2,7 @@ import os
 from django.utils import timezone
 import datetime
 from datetime import date
-from django.conf.urls.defaults import *
+from django.conf.urls import patterns, url, include
 from django.db.models import Sum, Count, Q
 from app.forms import *
 from app.haversine import *
