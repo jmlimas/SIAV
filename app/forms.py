@@ -438,7 +438,7 @@ class RespuestaConsultaMaster(ModelForm):
 
     class Meta:
         model = Avaluo
-        exclude = ('')
+        exclude = ('',)
     def clean(self):
         cleaned_data = self.cleaned_data
         ref = cleaned_data.get('Referencia')
