@@ -145,6 +145,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.humanize',
     'app',
+    'websock',
     'example_project',
     'south',
     'crispy_forms',

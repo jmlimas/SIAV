@@ -39,8 +39,8 @@ def show_visita_pdf(request, id):
     elif(avaluo.Tipo_id == 4):
         return render_to_response('reports/visita_nave.html',{'folio_k':folio_k,'avaluo':avaluo}, context_instance=RequestContext(request))
     elif(avaluo.Tipo_id == 5):
-        return render_to_response('reports/visita_nave.html',{'avaluo':avaluo}, context_instance=RequestContext(request))
+        return render_to_response('reports/visita_nave.html',{'folio_k':folio_k,'avaluo':avaluo}, context_instance=RequestContext(request))
     elif(avaluo.Tipo_id == 6):
-        return render_to_response('reports/visita_nave.html',{'avaluo':avaluo}, context_instance=RequestContext(request))
+        return render_to_response('reports/visita_nave.html',{'folio_k':folio_k,'avaluo':avaluo}, context_instance=RequestContext(request))
     else:
         return HttpResponseNotFound('<h1>No se encontró el reporte.</h1>')

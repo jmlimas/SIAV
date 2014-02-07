@@ -15,7 +15,7 @@
 {% block style %}
 
 <style type="text/css" title="currentStyle">
-@import "{{ STATIC_URL }}CSS/smoothness/jquery-ui-1.8.24.custom.css";
+
 </style>
 
 <style>
@@ -28,7 +28,7 @@ div.ui-datepicker{
 {% block script %}
 
 
-<script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/jquery-ui-1.8.24.custom.min.js"></script> 
+
 <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/jquery-datepicker-es.js"></script>
 <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/fileuploader.js"></script>
 <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/ajax_estados_municipios.js"></script> <!-- Incluye  sugerencia de colonias.-->
@@ -119,7 +119,7 @@ src="https://maps.google.com/maps/api/js?sensor=true">
 
 {% block content %}
 
-{% for item in imagenes %}
+
 
   {% for item in imagenes %}
     {% if item.imagen.url|file_exists %}
@@ -129,7 +129,7 @@ src="https://maps.google.com/maps/api/js?sensor=true">
     {% endif %}
   {% endfor %}
 
-{% endfor %}
+
 
 
 <h1 style="text-align:center">Visita</h1>

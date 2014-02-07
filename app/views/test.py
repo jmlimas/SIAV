@@ -64,3 +64,4 @@ def get_deptos(request):
         data = 'fail'
     mimetype = 'application/json'
     return HttpResponse(data, mimetype)
+

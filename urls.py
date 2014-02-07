@@ -97,5 +97,11 @@ urlpatterns = patterns(
     url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': 'media/'})
 )
 
+    #Urls para sockets
+urlpatterns += patterns('',
+    url(r'^SIAV/chat/', 'websock.views.home', name='home'),
+    url(r'^node_api$', 'websock.views.node_api', name='node_api'),
+)
+
 # Add the static files pattern to the url.
 urlpatterns += staticfiles_urlpatterns()
