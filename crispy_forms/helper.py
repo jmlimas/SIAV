@@ -1,9 +1,14 @@
+# -*- coding: utf-8 -*-
+import re
+
 from django.core.urlresolvers import reverse, NoReverseMatch
 from django.utils.safestring import mark_safe
 
-from .layout import Layout, LayoutSlice
-from .utils import render_field, flatatt, TEMPLATE_PACK
-from .exceptions import FormHelpersException
+from crispy_forms.compatibility import string_types
+from crispy_forms.layout import Layout
+from crispy_forms.layout_slice import LayoutSlice
+from crispy_forms.utils import render_field, flatatt, TEMPLATE_PACK
+from crispy_forms.exceptions import FormHelpersException
 
 
 class DynamicLayoutHandler(object):
@@ -29,7 +34,8 @@ class DynamicLayoutHandler(object):
         """
         self._check_layout()
         max_level = kwargs.pop('max_level', 0)
-        filtered_layout_objects = self.layout.get_layout_objects(LayoutClasses, max_level=max_level)
+        greedy = kwargs.pop('greedy', False)
+        filtered_layout_objects = self.layout.get_layout_objects(LayoutClasses, max_level=max_level, greedy=greedy)
 
         return LayoutSlice(self.layout, filtered_layout_objects)
 
@@ -69,7 +75,7 @@ class DynamicLayoutHandler(object):
         and not a copy.
         """
         # when key is a string containing the field name
-        if isinstance(key, basestring):
+        if isinstance(key, string_types):
             # Django templates access FormHelper attributes using dictionary [] operator
             # This could be a helper['form_id'] access, not looking for a field
             if hasattr(self, key):
@@ -88,6 +94,18 @@ class DynamicLayoutHandler(object):
 
         return LayoutSlice(self.layout, key)
 
+    def __setitem__(self, key, value):
+        self.layout[key] = value
+
+    def __delitem__(self, key):
+        del self.layout.fields[key]
+
+    def __len__(self):
+        if self.layout is not None:
+            return len(self.layout.fields)
+        else:
+            return 0
+
 
 class FormHelper(DynamicLayoutHandler):
     """
@@ -103,7 +121,7 @@ class FormHelper(DynamicLayoutHandler):
             You can see it to 'POST' or 'GET'. Defaults to 'POST'
 
         **form_action**: Applied to the form action attribute:
-            - Can be a named url "in" your URLconf that can be executed via the `{% url "%}`" template tag. \
+            - Can be a named url in your URLconf that can be executed via the `{% url %}` template tag. \
             Example: 'show_my_profile'. In your URLconf you could have something like::
 
                 url(r'^show/profile/$', 'show_my_profile_view', name = 'show_my_profile')
@@ -174,9 +192,17 @@ class FormHelper(DynamicLayoutHandler):
     formset_error_title = None
     form_show_errors = True
     render_unmentioned_fields = False
+    render_hidden_fields = False
+    render_required_fields = False
     _help_text_inline = False
     _error_text_inline = True
     html5_required = False
+    form_show_labels = True
+    template = None
+    field_template = None
+    disable_csrf = False
+    label_class = ''
+    field_class = ''
 
     def __init__(self, form=None):
         self.attrs = {}
@@ -259,20 +285,36 @@ class FormHelper(DynamicLayoutHandler):
         Returns safe html of the rendering of the layout
         """
         form.rendered_fields = set()
+        form.crispy_field_template = self.field_template
 
-        # This renders the specifed Layout
-        html = self.layout.render(form, self.form_style, context,
-                                  template_pack=template_pack)
+        # This renders the specifed Layout strictly
+        html = self.layout.render(
+            form,
+            self.form_style,
+            context,
+            template_pack=template_pack
+        )
 
-        if self.render_unmentioned_fields:
+        # Rendering some extra fields if specified
+        if self.render_unmentioned_fields or self.render_hidden_fields or self.render_required_fields:
             fields = set(form.fields.keys())
             left_fields_to_render = fields - form.rendered_fields
             for field in left_fields_to_render:
-                html += render_field(field, form, self.form_style, context, template_pack=template_pack)
+                if (
+                    self.render_unmentioned_fields or
+                    self.render_hidden_fields and form.fields[field].widget.is_hidden or
+                    self.render_required_fields and form.fields[field].widget.is_required
+                ):
+                    html += render_field(
+                        field,
+                        form,
+                        self.form_style,
+                        context,
+                        template_pack=template_pack
+                    )
 
-        # If the user has Meta.fields defined, not included in the layout
-        # we suppose they need to be rendered. Otherwise we render the
-        # layout fields strictly
+        # If the user has Meta.fields defined, not included in the layout,
+        # we suppose they need to be rendered
         if hasattr(form, 'Meta'):
             if hasattr(form.Meta, 'fields'):
                 current_fields = set(getattr(form, 'fields', []))
@@ -298,6 +340,19 @@ class FormHelper(DynamicLayoutHandler):
         items['help_text_inline'] = self.help_text_inline
         items['error_text_inline'] = self.error_text_inline
         items['html5_required'] = self.html5_required
+        items['form_show_labels'] = self.form_show_labels
+        items['disable_csrf'] = self.disable_csrf
+        items['label_class'] = self.label_class
+        items['field_class'] = self.field_class
+        # col-[lg|md|sm|xs]-<number>
+        label_size_match = re.search('(\d+)', self.label_class)
+        device_type_match = re.search('(lg|md|sm|xs)', self.label_class)
+        if label_size_match and device_type_match:
+            try:
+                items['label_size'] = int(label_size_match.groups()[0])
+                items['bootstrap_device_type'] = device_type_match.groups()[0]
+            except:
+                pass
 
         items['attrs'] = {}
         if self.attrs:

@@ -5,7 +5,7 @@ import os
 # Set the DJANGO_SETTINGS_MODULE environment variable.
 os.environ['DJANGO_SETTINGS_MODULE'] = "SIAV.settings"
 
-#do your stuff
+CRISPY_TEMPLATE_PACK = 'bootstrap3'
 
 
 DEBUG = True
@@ -150,7 +150,7 @@ INSTALLED_APPS = (
     'south',
     'crispy_forms',
     #'django_socketio',
-    #'grappelli',
+    'grappelli',
     'sorl.thumbnail',
     # Uncomment the next line to enable the admin:
     'django.contrib.admin',

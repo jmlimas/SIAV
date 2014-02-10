@@ -53,6 +53,8 @@ $(document).ready(function () {
 <h1>Servicios por Facturar</h1>
 
 <table class="table table-hover">
+  <th>Cliente</th>
+  <th>Importe</th>
   {% for cliente in suma_de_monto %}
   <tr>
     <td>{{cliente.Cliente__Cliente}}</td>
@@ -60,13 +62,14 @@ $(document).ready(function () {
   </tr>
   {% endfor %}
   <tr>
-    <td><b>Total</td></b>
+    <td><b>Total:</td></b>
     <td>{{total_general|currency}}</td>
   </tr>
 </table>
 
 <h2 style="text-align:left"><span id="cantidad_tabla"></span>  Servicios</h2>
-<table id='avaluos_table' class="table table-striped">
+<div width="200px">
+<table id='avaluos_table' class="table table-striped col-md-20">
  <thead>
   <tr class='even'><th id="folio_type" filter-type="ddl" style="width:40px">Folio K</th><th style="width:150px" filter='false' >Ref.</th><th filter-type='ddl'>Cliente</th><th filter-type='ddl'>Depto</th><th filter="false">Calle</th><th filter='false'>Ext.</th><th filter='false'>Int.</th><th style="width:100px" filter='false'>Factura</th><th filter='false'>Municipio</th><th  filter='false'>Entrega</th><th filter='false'>Monto</th><th filter='false' class="tabla_opciones">Opciones</th></tr>
 </thead>
@@ -90,13 +93,14 @@ $(document).ready(function () {
      <td class="tabla_opciones"> <a href="/SIAV/guarda_master/{{a.avaluo_id}}" target="_blank">Editar</a></td>
    </tr>
    {% endfor %} 
+
    <input class='btn btn-primary' type="submit" name="submit" value="Facturar" />
 
  </form>
 </tbody>
 
 </table>
-
+</div>
 
 
 {% endblock %}

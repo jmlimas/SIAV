@@ -35,16 +35,6 @@ $(document).ready(function () {
   });
 
 
-  // Radialize the colors
-    Highcharts.getOptions().colors = Highcharts.map(Highcharts.getOptions().colors, function(color) {
-        return {
-            radialGradient: { cx: 0.5, cy: 0.3, r: 0.7 },
-            stops: [
-                [0, color],
-                [1, Highcharts.Color(color).brighten(-0.3).get('rgb')] // darken
-            ]
-        };
-    });
 
 
 $(function () {
@@ -173,11 +163,11 @@ $(function () {
 {% block content %}
 
 <h1>Facturas por Liquidar</h1>
-<h2 style="text-align:left"><span id="cantidad_tabla"></span>   Facturas</h2>
+<h2 style="text-align:left"><span id="cantidad_tabla" class="table"></span>   Facturas</h2>
 
 <div class="container">
-<div class="row-fluid span5">
-<table id='avaluos_table'>
+<div class="col-md-6">
+<table id='avaluos_table' class="table table-stripped">
  <thead>
   <tr>
    <td><b>Total:</b></td>
@@ -198,14 +188,17 @@ $(function () {
     <td> {{a.Total|currency }} </td>			  
     <td> <input type="checkbox" value="{{a.Factura}}" name="facturas_pagadas">	</td>  </tr>
     {% endfor %}
-    <input class='btn btn-primary' type="submit" name="submit" value="Liquidar" />
 
-  </form>
 </tbody>
 </table>
+    <input class='btn btn-primary' type="submit" name="submit" value="Liquidar" />
+  </form>
+
+
+  
 </div>
 
-<div class="row-fluid span7">
+<div class="col-md-6">
  <div id="donut_container"></div>
 </div>
 

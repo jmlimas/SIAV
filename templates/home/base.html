@@ -36,8 +36,9 @@
   <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/jquery.cookie.js"></script>
   <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/bootstrap.js"></script>
   <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/autoNumeric.js"></script>
-  <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/socket.io.js"></script>
+  <!--  <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/socket.io.js"></script> -->
   {% block script %}{% endblock %}
+  <!-- 
   <script type="text/javascript">
       $(document).ready(function(){
           var box = null;
@@ -62,6 +63,7 @@
 
 
   </script>
+  -->
   <script type="text/javascript">
 
   $(document).ready(function(){
@@ -117,18 +119,36 @@
     <div id="chat_div">
     </div>
   <!-- navigation -->
-  <div class="navbar navbar-inverse navbar-fixed-top">
-    <div class="navbar-inner">
-      <div class="container-fluid">
-        <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
-        <a class="brand" href="/SIAV/">SIAV<span class="badge badge-info">{{cantidad.3}}</span></a>
-        <div class="nav-collapse collapse">
-          <!-- <form class="navbar-search pull-right"><input type="text" class="search-query" placeholder="Buscar"></form> !-->
-          <ul class="nav">
+<nav class="navbar navbar-inverse navbar-fixed-top">
+  <div class="navbar-header">
+    <a class="navbar-brand" href="/SIAV/">SIAV<span class="badge badge-info">{{cantidad.3}}</span></a>
+    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </button>
+  </div>
+  <div class="navbar-header navbar-right">
+    
+     <p  class="navbar-text">
+      <a onclick="printDiv('printableArea')"><i class="glyphicon glyphicon-print"></i></a>
+    </p>
+    {% if user.is_staff %}
+    <p class="navbar-text">
+      <a href="/SIAV/admin"> <i class="glyphicon glyphicon-wrench"></i> Admin</a>
+    </p>
+    {% endif %}
+
+    <p class="navbar-text">Bienvenido,  
+      <a href="#">{{user.username }}</a>
+    </p>
+
+    <p class="navbar-text">
+      <a href="/SIAV/logout"> <i class="glyphicon glyphicon-eject"></i> Salir</a>
+    </p>
+  </div>
+  <div class="navbar-collapse collapse">
+     <ul class="nav navbar-nav">
             <li class="{% block alta %}{% endblock %}" ><a href="/SIAV/alta_avaluo/">Alta</a></li>
             <li class="{% block visita %}{% endblock %}"><a href="/SIAV/visita/" >Visita    <span class="badge badge-warning">{{cantidad.1}}</span></a></li>
             <li class="{% block captura %}{% endblock %}"><a href="/SIAV/captura/" >Captura    <span class="badge badge-warning">{{cantidad.0}}</span></a></li>
@@ -147,23 +167,14 @@
           </li> 
           {% endif %}
         </ul>
-        <ul class="n-logout nav pull-right">
-          <li><a onclick="printDiv('printableArea')"><i class="icon-print icon-white"></i>&nbsp;&nbsp;</a></li>
-          <li><p class="navbar-text pull-right">Bienvenido,  <a href="#">{{user.username }}</a></p></li>
-          {% if user.is_staff %}
-          <li><a href="/SIAV/admin"> <i class="icon-wrench icon-white"></i> Admin</a></li>
-          {% endif %}
-          <li><a href="/SIAV/logout"> <i class="icon-eject icon-white"></i> Salir</a></li>
-        </ul>
-      </div><!--/.nav-collapse -->
-    </div>
-  </div>
-</div>
-<div class="container-fluid">
-  <div class="row-fluid">
 
-    <div class="span12">
-      <div class="hero-unit">
+  </div>
+</nav>
+<div class="container">
+  <div class="row">
+
+    <div class="col-md-15">
+      <div class="jumbotron">
         <div id="printableArea">
           {% block content %}
           {% endblock %}
