@@ -13,6 +13,10 @@ TEMPLATE_DEBUG = DEBUG
 THUMBNAIL_DEBUG = True 
 THUMBNAIL_PREFIX ='media/cache/'
 
+DEFAULT_CHARSET = 'utf-8' 
+FILE_CHARSET = 'utf-8' 
+
+
 ADMINS = (
     # ('Your Name', 'your_email@example.com'),
 )

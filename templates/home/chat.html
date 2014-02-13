@@ -9,6 +9,9 @@
   </style>
   {% block script %}
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js" type="text/javascript"></script>
+  <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/jquery.noty.js"></script>
+  <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/topRight.js"></script>
+  <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/noty/themes/default.js"></script>
   <script>
     $(document).ready(function(){
 
@@ -30,6 +33,7 @@
       var entry_el = $('#comment');
                
       socket.on('message', function(message) {
+        generate('topRight');
         //Escape HTML characters
         var data = message.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
         
@@ -65,6 +69,33 @@
 
 
   </script>
+  <script type="text/javascript">
+
+    function generate(layout) {
+        var n = noty({
+            text        : 'Mónica dio un alta a FSIS1002',
+            type        : 'alert',
+            dismissQueue: true,
+            layout      : 'topRight',
+            theme       : 'defaultTheme',
+            timeout: '3000'
+        });
+        console.log('html: ' + n.options.id);
+    }
+
+    function generateAll() {
+        generate('topRight');
+        generate('topRight');
+        generate('topRight');
+    }
+
+    $(document).ready(function () {
+
+        generateAll();
+
+    });
+
+</script>
   {% endblock %} 
 </head>
 <body>

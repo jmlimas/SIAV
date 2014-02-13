@@ -1,6 +1,8 @@
+# -*- encoding: utf-8 -*-
 import os
-from django.utils import timezone
+import redis
 import datetime
+from django.utils import timezone
 from datetime import date
 from django.conf.urls import patterns, url, include
 from django.db.models import Sum, Count, Q
@@ -9,6 +11,7 @@ from app.haversine import *
 from django.template import RequestContext
 from django.shortcuts import render_to_response, redirect
 from django.http import HttpResponse, HttpResponseRedirect
+from django.contrib.sessions.models import Session
 from django.contrib.auth import logout
 from django.contrib.auth.models import User, Group
 from django.contrib.auth.decorators import login_required
@@ -320,6 +323,11 @@ def edita_visita(request, id):
             obj = form.save(commit=False)
             obj.FolioK = folio_k
             form.save()
+
+            # Enviar notificación a usuarios
+            r = redis.StrictRedis(host='localhost', port=6379, db=0)
+            r.publish('chat', request.user.username + ': ' + 'dio una visita.')
+
             return redirect('/SIAV/visita/')
     else:
         form = VisitaAvaluo(instance=avaluo)
