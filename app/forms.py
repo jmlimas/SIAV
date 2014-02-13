@@ -631,5 +631,5 @@ class FacturaForm(ModelForm):
         self.helper.layout = Layout(
             Div(Div('Factura',
                     css_class='col-md-3'),
-                css_class='row-fluid'))
+                css_class='row'))
         super(FacturaForm,  self).__init__(*args,  **kwargs)

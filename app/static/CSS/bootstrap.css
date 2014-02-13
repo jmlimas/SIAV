@@ -4340,7 +4340,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   text-align: center;
   white-space: nowrap;
   vertical-align: baseline;
-  background-color: #999;
+  background-color: #eb7501;
   border-radius: 10px;
 }
 .badge:empty {

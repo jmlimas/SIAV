@@ -78,16 +78,16 @@ h2 {
 
 
 input[type=text],input[type=password],input[type=number]{
-	width:167px;
+	width:200px;
 }
 
 #id_LatitudG,#id_LatitudM,#id_LatitudS,#id_LongitudG,#id_LongitudM,#id_LongitudS{
-  width:80px;
+  width:100px;
 }
 
 
 .select{
-	width:167px;
+	width:200px;
 }
 
 input#login {
