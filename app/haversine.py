@@ -59,7 +59,7 @@ def find_closest(avaluo):
         #avaluo = Avaluo.objects.get(FolioK='OLI20032')
         orig = decimal_conversion(avaluo)
         avaluos_todos = (Avaluo.objects
-                        .all()
+                        .only("FolioK","LatitudG","LatitudM","LatitudS","LongitudG","LongitudM","LongitudS","Declat","Declon","Valor")
                         .exclude(LatitudM__gte=avaluo.LatitudM+2)
                         .exclude(LatitudM__lte=avaluo.LatitudM-2)
                         .exclude(LongitudM__gte=avaluo.LongitudM+2)

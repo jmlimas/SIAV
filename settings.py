@@ -7,6 +7,12 @@ os.environ['DJANGO_SETTINGS_MODULE'] = "SIAV.settings"
 
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
 
+def show_toolbar(request):
+    return True
+SHOW_TOOLBAR_CALLBACK = show_toolbar
+
+INTERNAL_IPS = ('127.0.0.1',)
+DEBUG_TOOLBAR_PATCH_SETTINGS = False
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -123,6 +129,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
     #'django_pdb.middleware.PdbMiddleware',
     # Uncomment the next line for simple clickjacking protection:
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -154,6 +161,7 @@ INSTALLED_APPS = (
     'south',
     'crispy_forms',
     #'django_socketio',
+    'debug_toolbar',
     'grappelli',
     'sorl.thumbnail',
     # Uncomment the next line to enable the admin:

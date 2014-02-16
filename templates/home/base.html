@@ -37,9 +37,7 @@
   <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/bootstrap.js"></script>
   <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/autoNumeric.js"></script>
   <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/socket.io.js"></script>
-  <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/jquery.noty.js"></script>
-  <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/topRight.js"></script>
-  <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/noty/themes/default.js"></script>
+
 
  <script type="text/javascript">
 $(document).ready(function(){
@@ -55,13 +53,7 @@ $(document).ready(function(){
       $("#chat_div").chatbox("option", "boxManager").addMsg(id, msg);
     }});
 
-  $(window).load(function() {
     $('.ui-chatbox-content').toggle();
-    // {% for comment in comments %}
-    //   $("#chat_div").chatbox("option", "boxManager").addMsg('{{comment.user}}', '{{comment.text}}');
-    // {% endfor %}
-  });
-
 
 });
 
@@ -270,4 +262,8 @@ function printDiv(divName) {
   </div>
 </div>
 </body>
+
+  <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/jquery.noty.js"></script>
+  <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/topRight.js"></script>
+  <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/noty/themes/default.js"></script>
 </html>
