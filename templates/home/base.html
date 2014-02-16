@@ -36,100 +36,178 @@
   <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/jquery.cookie.js"></script>
   <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/bootstrap.js"></script>
   <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/autoNumeric.js"></script>
-   <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/socket.io.js"></script>
-  {% block script %}{% endblock %}
-  <!-- 
-  <script type="text/javascript">
-      $(document).ready(function(){
-          var box = null;
-                  box = $("#chat_div").chatbox({id:"chat_div", 
-                                                user:{key : "value"},
-                                                hidden: true,
-                                                title : "chat",
+  <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/socket.io.js"></script>
+  <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/jquery.noty.js"></script>
+  <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/topRight.js"></script>
+  <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/noty/themes/default.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){
+  var box = null;
+  box = $("#chat_div").chatbox({id:'{{user.username}}', 
+    user:{key : "value"},
+    hidden: true,
+    title : "chat",
 
 
-                                                messageSent : function(id, user, msg) {
-                                                    $("#log").append(id + " said: " + msg + "<br/>");
-                                                    $("#chat_div").chatbox("option", "boxManager").addMsg(id, msg);
+    messageSent : function(id, user, msg) {
+      $("#log").append(id + " said: " + msg + "<br/>");
+      $("#chat_div").chatbox("option", "boxManager").addMsg(id, msg);
+    }});
 
-                                                }});
+  $(window).load(function() {
+    $('.ui-chatbox-content').toggle();
+    // {% for comment in comments %}
+    //   $("#chat_div").chatbox("option", "boxManager").addMsg('{{comment.user}}', '{{comment.text}}');
+    // {% endfor %}
+  });
 
-                  $(window).load(function() {
-      $('.ui-chatbox-content').toggle();
+
 });
-                  
-
-          });
 
 
-  </script>
-  -->
+</script>
+
   <script type="text/javascript">
 
   $(document).ready(function(){
-    $(':input[type="text"]').live('focus',function(){
-     $(this).attr('autocomplete', 'off');
-   });
+
+    var objDiv = document.getElementById("comments");
+      // objDiv.scrollTop = objDiv.scrollHeight+10;
+
+      var socket = io.connect('{{ request.META.HTTP_HOST }}', {port: 4000});
+      
+      socket.on('connect', function(){
+        console.log("connect");
+      });
+      
+      var socket = io.connect();
+      console.log('Chequeo 1', socket.socket.connected);
+      socket.on('connect', function() {
+        console.log('Conectado', socket.socket.connected);
+      });
+      
+      var entry_el = $('#textBox');
+
+      socket.on('message', function(message) {
+        generate('topRight',message);
+        //Escape HTML characters
+        var data = message.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+        var data2 = data.substring(data.indexOf(":")+1,data.length);
+        
+        $("#chat_div").chatbox("option", "boxManager").addMsg('{{user.username}}',data2);
+        //Append message to the bottom of the list
+        $('#comments').append('<li>' + data + '</li>');
+        window.scrollBy(0, 10000000000);
+        entry_el.focus();
+
+        var objDiv = document.getElementById("comments");
+        objDiv.scrollTop = objDiv.scrollHeight+10;
+      });
+      
+
+        $("#textBox").keydown(function(event) {
+          console.log("keydown");
+          var msg = entry_el.attr('value');
+            if (event.keyCode && event.keyCode == $.ui.keyCode.ENTER) {
+                msg = $.trim($(this).val());
+                if (msg.length > 0) {
+                     socket.emit('send_message', msg, function(data){
+                    console.log(data);
+                  });
+                }
+                $(this).val('');
+                return false;
+            }
+        });
 
 
-    $('#submit-id-submit').click(function () {
-      $("input[type=text]").each(function () {
-        this.value = this.value.toUpperCase();
-
-    $("input[type=text]").each(function () {
-        var self = $(this);
-        try{
-            var v = self.autoNumeric('get');
-            self.autoNumeric('destroy');
-            self.val(v);
-            console.log(self.val(v));
-        }catch(err){
-            console.log("Not an autonumeric field: " + self.attr("name"));
-        }
     });
 
-        
+
+
+function generate(layout, message) {
+  var n = noty({
+    text        :  message,
+    type        : 'alert',
+    dismissQueue: true,
+    layout      : 'topRight',
+    theme       : 'defaultTheme',
+    timeout: '9000'
+  });
+  console.log('html: ' + n.options.id);
+}
+
+</script>
+{% block script %}{% endblock %}
+
+
+<script type="text/javascript">
+
+$(document).ready(function(){
+  $(':input[type="text"]').live('focus',function(){
+   $(this).attr('autocomplete', 'off');
+ });
+
+
+  $('#submit-id-submit').click(function () {
+    $("input[type=text]").each(function () {
+      this.value = this.value.toUpperCase();
+
+      $("input[type=text]").each(function () {
+        var self = $(this);
+        try{
+          var v = self.autoNumeric('get');
+          self.autoNumeric('destroy');
+          self.val(v);
+          console.log(self.val(v));
+        }catch(err){
+          console.log("Not an autonumeric field: " + self.attr("name"));
+        }
       });
 
 
-      $("#id_Valor").autoNumeric('destroy');
-
     });
 
-    $('#id_Valor').autoNumeric('init', {aSign: '$'}); 
-    $('#id_Gastos').autoNumeric('init', {aSign: '$'}); 
-    $('#id_Importe').autoNumeric('init', {aSign: '$'}); 
 
-
-
+    $("#id_Valor").autoNumeric('destroy');
 
   });
 
-  function printDiv(divName) {
-   var printContents = document.getElementById(divName).innerHTML;
-   var originalContents = document.body.innerHTML;
-   document.body.innerHTML = printContents;
-   window.print();
-   document.body.innerHTML = originalContents;
- }
- </script>
-</head>
-<body onload="initialize()">
+  $('#id_Valor').autoNumeric('init', {aSign: '$'}); 
+  $('#id_Gastos').autoNumeric('init', {aSign: '$'}); 
+  $('#id_Importe').autoNumeric('init', {aSign: '$'}); 
 
-    <div id="chat_div">
-    </div>
-  <!-- navigation -->
-<nav class="navbar navbar-inverse navbar-fixed-top">
-  <div class="navbar-header">
-    <a class="navbar-brand" href="/SIAV/">SIAV<span class="badge badge-info">{{cantidad.3}}</span></a>
-    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
-      <span class="icon-bar"></span>
-      <span class="icon-bar"></span>
-      <span class="icon-bar"></span>
-    </button>
+
+
+
+});
+
+function printDiv(divName) {
+ var printContents = document.getElementById(divName).innerHTML;
+ var originalContents = document.body.innerHTML;
+ document.body.innerHTML = printContents;
+ window.print();
+ document.body.innerHTML = originalContents;
+}
+</script>
+</head>
+<body >
+
+  <div id="chat_div">
   </div>
-  <div class="navbar-header navbar-right">
-    
+  <!-- navigation -->
+  <nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="/SIAV/">SIAV<span class="badge badge-info">{{cantidad.3}}</span></a>
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <div class="navbar-header navbar-right">
+
      <p  class="navbar-text">
       <a onclick="printDiv('printableArea')"><i class="glyphicon glyphicon-print"></i></a>
     </p>
@@ -148,27 +226,27 @@
     </p>
   </div>
   <div class="navbar-collapse collapse">
-     <ul class="nav navbar-nav">
-            <li class="{% block alta %}{% endblock %}" ><a href="/SIAV/alta_avaluo/">Alta</a></li>
-            <li class="{% block visita %}{% endblock %}"><a href="/SIAV/visita/" >Visita    <span class="badge badge-warning">{{cantidad.1}}</span></a></li>
-            <li class="{% block captura %}{% endblock %}"><a href="/SIAV/captura/" >Captura    <span class="badge badge-warning">{{cantidad.0}}</span></a></li>
-            <li class="{% block salida %}{% endblock %}"><a href="/SIAV/salida/">Salida    <span class="badge badge-warning">{{cantidad.2}}</span></a></li>
+   <ul class="nav navbar-nav">
+    <li class="{% block alta %}{% endblock %}" ><a href="/SIAV/alta_avaluo/">Alta</a></li>
+    <li class="{% block visita %}{% endblock %}"><a href="/SIAV/visita/" >Visita    <span class="badge badge-warning">{{cantidad.1}}</span></a></li>
+    <li class="{% block captura %}{% endblock %}"><a href="/SIAV/captura/" >Captura    <span class="badge badge-warning">{{cantidad.0}}</span></a></li>
+    <li class="{% block salida %}{% endblock %}"><a href="/SIAV/salida/">Salida    <span class="badge badge-warning">{{cantidad.2}}</span></a></li>
 
-            {% if user.is_staff %}
-            <li class="{% block consulta_master %}{% endblock %}"><a href="/SIAV/consulta_master/" >Consulta</a></li>
-            {% else %}
-            <li class="{% block consulta_sencilla %}{% endblock %}"><a href="/SIAV/consulta_sencilla/" >Consulta</a></li>              
-            {% endif %}
+    {% if user.is_staff %}
+    <li class="{% block consulta_master %}{% endblock %}"><a href="/SIAV/consulta_master/" >Consulta</a></li>
+    {% else %}
+    <li class="{% block consulta_sencilla %}{% endblock %}"><a href="/SIAV/consulta_sencilla/" >Consulta</a></li>              
+    {% endif %}
 
-            {% if user.is_staff %}
-            <li><a href="/SIAV/facturar/">Facturar</a></li>
-            <li><a href="/SIAV/liquidar/">Liquidar</a></li>
-            <li><a href="/SIAV/estadistico/{%now "Y"%}">Estadístico</a></li>
-          </li> 
-          {% endif %}
-        </ul>
+    {% if user.is_staff %}
+    <li><a href="/SIAV/facturar/">Facturar</a></li>
+    <li><a href="/SIAV/liquidar/">Liquidar</a></li>
+    <li><a href="/SIAV/estadistico/{%now "Y"%}">Estadístico</a></li>
+  </li> 
+  {% endif %}
+</ul>
 
-  </div>
+</div>
 </nav>
 <div class="container">
   <div class="row">
@@ -189,7 +267,7 @@
       </footer>
 
     </div>
+  </div>
 </div>
-</div>
-  </body>
-  </html>
+</body>
+</html>

@@ -186,17 +186,8 @@
                           'ui-chatbox-input-box ' +
                           'ui-corner-all'
                          )
+                .attr('id', 'textBox')
                 .appendTo(uiChatboxInput)
-                .keydown(function(event) {
-                    if (event.keyCode && event.keyCode == $.ui.keyCode.ENTER) {
-                        msg = $.trim($(this).val());
-                        if (msg.length > 0) {
-                            self.options.messageSent(self.options.id, self.options.user, msg);
-                        }
-                        $(this).val('');
-                        return false;
-                    }
-                })
                 .focusin(function() {
                     uiChatboxInputBox.addClass('ui-chatbox-input-focus');
                     var box = $(this).parent().prev();
