@@ -102,7 +102,7 @@ class AltaAvaluo(ModelForm):
 
     class Meta:
         model = Avaluo
-        exclude = ('avaluo_id', 'FolioK', 'LatitudG', 'LatitudM', 'LatitudS', 'LongitudG', 'LongitudM', 'LongitudS', 'Mterreno', 'Mconstruccion', 'Visita', 'Gastos', 'Importe', 'Salida', 'Pagado', 'Factura', )
+        exclude = ('avaluo_id', 'FolioK', 'LatitudG', 'LatitudM', 'LatitudS', 'LongitudG', 'LongitudM', 'LongitudS', 'Mterreno', 'Mconstruccion', 'Visita', 'Gastos', 'Importe', 'Salida', 'Pagado', 'Factura','Declat','Declon')
     def clean_Referencia(self):
         return self.cleaned_data['Referencia'] or None
     def __init__(self,  *args,  **kwargs):
@@ -160,7 +160,7 @@ class VisitaAvaluo(ModelForm):
 
     class Meta:
         model = Avaluo
-        exclude = ('avaluo_id', 'Solicitud', 'FolioK', 'Referencia', 'Prioridad', 'Colonia', 'Municipio', 'Estado', 'Servicio', 'Salida', 'Factura', 'Cliente', 'Depto', 'Valuador', 'Solicitud', 'Mterreno', 'Mconstruccion', 'Valor', 'Gastos', 'Importe', 'Pagado')
+        exclude = ('avaluo_id', 'Solicitud', 'FolioK', 'Referencia', 'Prioridad', 'Colonia', 'Municipio', 'Estado', 'Servicio', 'Salida', 'Factura', 'Cliente', 'Depto', 'Valuador', 'Solicitud', 'Mterreno', 'Mconstruccion', 'Valor', 'Gastos', 'Importe', 'Pagado','Declat','Declon')
     def clean_Referencia(self):
         return self.cleaned_data['Referencia'] or None
     def __init__(self,  *args,  **kwargs):
@@ -227,7 +227,7 @@ class CapturaAvaluo(ModelForm):
 
     class Meta:
         model = Avaluo
-        exclude = ('Salida', 'Visita', 'Pagado', 'Cliente', 'Depto', 'Factura', 'FolioK','Valor','Gastos','Importe')
+        exclude = ('Salida', 'Visita', 'Pagado', 'Cliente', 'Depto', 'Factura', 'FolioK','Valor','Gastos','Importe','Declat','Declon')
     def clean_Referencia(self):
         return self.cleaned_data['Referencia'] or None
     def __init__(self,  *args,  **kwargs):
@@ -359,7 +359,7 @@ class FormaConsultaMaster(ModelForm):
 
     class Meta:
         model = Avaluo
-        exclude = ('Salida', 'Prioridad', 'Pagado','NumExt','NumInt','Servicio')
+        exclude = ('Salida', 'Prioridad', 'Pagado','NumExt','NumInt','Servicio','Declat','Declon')
     def clean(self):
         cleaned_data = self.cleaned_data
         ref = cleaned_data.get('Referencia')
@@ -438,7 +438,7 @@ class RespuestaConsultaMaster(ModelForm):
 
     class Meta:
         model = Avaluo
-        exclude = ('',)
+        exclude = ('Declat','Declon',)
     def clean(self):
         cleaned_data = self.cleaned_data
         ref = cleaned_data.get('Referencia')
@@ -541,7 +541,7 @@ class FormaConsultaSencilla(ModelForm):
 
     class Meta:
         model = Avaluo
-        exclude = ('Salida', 'Pagado', 'Cliente', 'Depto', 'Factura', 'Prioridad')
+        exclude = ('Salida', 'Pagado', 'Cliente', 'Depto', 'Factura', 'Prioridad','Declat','Declon')
     def clean(self):
         cleaned_data = self.cleaned_data
         ref = cleaned_data.get('Referencia')

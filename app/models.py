@@ -118,6 +118,8 @@ class Avaluo(models.Model):
     LongitudG = models.DecimalField(null=True, max_digits=12, decimal_places=3)
     LongitudM = models.DecimalField(null=True, max_digits=12, decimal_places=3)
     LongitudS = models.DecimalField(null=True, max_digits=12, decimal_places=3)
+    Declat = models.DecimalField(null=True, max_digits=12, decimal_places=5)
+    Declon = models.DecimalField(null=True, max_digits=12, decimal_places=5)
     Visita = models.DateField(null=True)
     Valor = models.DecimalField(null=True, max_digits=15, decimal_places=2)
     Gastos = models.DecimalField(null=True, max_digits=15, decimal_places=2)

@@ -67,7 +67,12 @@ def find_closest(avaluo):
 
         for a in avaluos_todos:
                 if a.LatitudG and a.LatitudM and a.LatitudS and a.LongitudG and a.LongitudM and a.LongitudS:
-                    dest = decimal_conversion(a)
+                    if a.Declat and a.Declon:
+                        dest = {}
+                        dest['declat'] = a.Declat
+                        dest['declon'] = a.Declon
+                    else:
+                        dest = decimal_conversion(a)
                     distancia = haversine(orig['declat'], orig['declon'], dest['declat'], dest['declon'])
                     if len(cercanos) <= 10:
                         cercanos.append((round(distancia,3),a.avaluo_id, dest['declon'], dest['declat'], a.FolioK, a.Valor))
