@@ -1,4 +1,5 @@
 from django.db import models
+from decimal import Decimal
 import os
 
 # Create your models here.
@@ -121,7 +122,7 @@ class Avaluo(models.Model):
     Declat = models.DecimalField(null=True, max_digits=12, decimal_places=5)
     Declon = models.DecimalField(null=True, max_digits=12, decimal_places=5)
     Visita = models.DateField(null=True)
-    Valor = models.DecimalField(null=True, max_digits=15, decimal_places=2)
+    Valor = models.DecimalField(null=True,blank=True, max_digits=15, decimal_places=2,default=Decimal(0.00))
     Gastos = models.DecimalField(null=True, max_digits=15, decimal_places=2)
     Importe = models.DecimalField(null=True, max_digits=15, decimal_places=2)
     Salida = models.DateField(null=True)

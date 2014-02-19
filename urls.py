@@ -107,12 +107,6 @@ urlpatterns += patterns('',
     url(r'^node_api$', 'websock.views.node_api', name='node_api'),
 )
 
-if settings.DEBUG:
-    import debug_toolbar
-    urlpatterns += patterns('',
-        url(r'^__debug__/', include(debug_toolbar.urls)),
-    )
-
 
 # Add the static files pattern to the url.
 urlpatterns += staticfiles_urlpatterns()

@@ -395,3 +395,132 @@
 [16/02/2014 16:29:51] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Remove:1 , needed:1 , current:2, Ready:2 , Creating: 0 
 [16/02/2014 16:29:51] v3.0.98.472	WorkersManager - gracefulWorkerShutdown() 
 [16/02/2014 16:29:53] v3.0.98.472	WorkersManager - Worker closed.
+[16/02/2014 16:38:01] v3.0.98.472	WorkersManager - BeginGracefulShutdown() 
+[17/02/2014 12:28:13] v3.0.98.472	WorkersManager - Ping Failed 
+[17/02/2014 12:28:13] v3.0.98.472	WorkersManager - #1 not ready to die, active connections:1
+[17/02/2014 12:28:13] v3.0.98.472	BUG: BeginConnect failed. ZooException: NamedPipeConnection::BeginWrite error! 
+KEY:EnvironmentVariables
+VALUE:<tr><td class="key">ALLUSERSPROFILE</td><td class="value">C:\ProgramData</td></tr><tr><td class="key">APPDATA</td><td class="value">C:\Windows\system32\config\systemprofile\AppData\Roaming</td></tr><tr><td class="key">APPL_PHYSICAL_PATH</td><td class="value">C:\inetpub\wwwroot\SIAV</td></tr><tr><td class="key">APPL_PHYSICAL_SHORT_PATH</td><td class="value">C:\inetpub\wwwroot\SIAV</td></tr><tr><td class="key">APPL_VIRTUAL_PATH</td><td class="value"></td></tr><tr><td class="key">APP_POOL_ID</td><td class="value">SIAV</td></tr><tr><td class="key">COMMONPROGRAMFILES</td><td class="value">C:\Program Files\Common Files</td></tr><tr><td class="key">COMMONPROGRAMFILES(X86)</td><td class="value">C:\Program Files (x86)\Common Files</td></tr><tr><td class="key">COMPUTERNAME</td><td class="value">SERVER</td></tr><tr><td class="key">COMSPEC</td><td class="value">C:\Windows\system32\cmd.exe</td></tr><tr><td class="key">DEPLOY_FILE</td><td class="value">deploy.py</td></tr><tr><td class="key">DEPLOY_LOG</td><td class="value">log\deploy.log</td></tr><tr><td class="key">DJANGO.ROOT</td><td class="value"></td></tr><tr><td class="key">FP_NO_HOST_CHECK</td><td class="value">NO</td></tr><tr><td class="key">HOST</td><td class="value">127.0.0.1</td></tr><tr><td class="key">IDE</td><td class="value">C:\Windows\system32\cmd.exe</td></tr><tr><td class="key">LOCALAPPDATA</td><td class="value">C:\Windows\system32\config\systemprofile\AppData\Local</td></tr><tr><td class="key">NUMBER_OF_PROCESSORS</td><td class="value">8</td></tr><tr><td class="key">OS</td><td class="value">Windows_NT</td></tr><tr><td class="key">PATH</td><td class="value">C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Python27;C:\Python27\Scripts\;C:\Program Files\Microsoft\Web Platform Installer\;C:\Program Files\nodejs\</td></tr><tr><td class="key">PATHEXT</td><td class="value">.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC</td></tr><tr><td class="key">PROCESSOR_ARCHITECTURE</td><td class="value">AMD64</td></tr><tr><td class="key">PROCESSOR_IDENTIFIER</td><td class="value">Intel64 Family 6 Model 42 Stepping 7, GenuineIntel</td></tr><tr><td class="key">PROCESSOR_LEVEL</td><td class="value">6</td></tr><tr><td class="key">PROCESSOR_REVISION</td><td class="value">2a07</td></tr><tr><td class="key">PROGRAMDATA</td><td class="value">C:\ProgramData</td></tr><tr><td class="key">PROGRAMFILES</td><td class="value">C:\Program Files</td></tr><tr><td class="key">PROGRAMFILES(X86)</td><td class="value">C:\Program Files (x86)</td></tr><tr><td class="key">PSMODULEPATH</td><td class="value">C:\Windows\system32\WindowsPowerShell\v1.0\Modules\</td></tr><tr><td class="key">PUBLIC</td><td class="value">C:\Users\Public</td></tr><tr><td class="key">PYTHONPATH</td><td class="value">C:\inetpub\wwwroot\SIAV;C:\inetpub\wwwroot\SIAV\python_modules\Lib\site-packages;%PYTHONPATH%;;C:\inetpub\wwwroot\SIAV\SIAV\debug_toolbar;C:\inetpub\wwwroot\SIAV\SIAV\crispy_forms;</td></tr><tr><td class="key">SYSTEMDRIVE</td><td class="value">C:</td></tr><tr><td class="key">SYSTEMROOT</td><td class="value">C:\Windows</td></tr><tr><td class="key">TEMP</td><td class="value">C:\Windows\TEMP</td></tr><tr><td class="key">TMP</td><td class="value">C:\Windows\TEMP</td></tr><tr><td class="key">USERDOMAIN</td><td class="value">VALNORTE</td></tr><tr><td class="key">USERNAME</td><td class="value">SERVER$</td></tr><tr><td class="key">USERPROFILE</td><td class="value">C:\Windows\system32\config\systemprofile</td></tr><tr><td class="key">WATCH_FILE_CHANGES_MASK</td><td class="value">*.py</td></tr><tr><td class="key">WINDIR</td><td class="value">C:\Windows</td></tr><tr><td class="key">WSGI_APP</td><td class="value">wsgi.application</td></tr>
+KEY:HeliconZooEngineSettings
+VALUE:<tr><td class="key">appName</td> <td class="value">django.project</td></tr> 
+<tr><td class="key">appFullPath</td> <td class="value">C:\python27\python.exe</td></tr> 
+<tr><td class="key">appDirectory</td> <td class="value">C:\inetpub\wwwroot\SIAV</td></tr> 
+<tr><td class="key">appArguments</td> <td class="value">C:\Zoo\Workers\python\zoofcgi.py</td></tr> 
+<tr><td class="key">deployArguments</td> <td class="value"></td></tr> 
+<tr><td class="key">transportName</td> <td class="value">NamedPipe</td></tr> 
+<tr><td class="key">protocol</td> <td class="value">fastcgi</td></tr> 
+<tr><td class="key">scriptProcessor</td> <td class="value">python.2.7.wsgi</td></tr> 
+<tr><td class="key">errorLogDir</td> <td class="value"></td></tr> 
+<tr><td class="key">postBufferDir</td> <td class="value"></td></tr> 
+<tr><td class="key">watchFileChangesMask</td> <td class="value">*.py</td></tr> 
+<tr><td class="key">host</td> <td class="value">127.0.0.1</td></tr> 
+<tr><td class="key">port</td> <td class="value">%PORT%</td></tr> 
+<tr><td class="key">proxyPass</td> <td class="value"></td></tr> 
+<tr><td class="key">minInstances</td> <td class="value">1</td></tr> 
+<tr><td class="key">maxInstances</td> <td class="value">8</td></tr> 
+<tr><td class="key">minRequestsPerWorker</td> <td class="value">3</td></tr> 
+<tr><td class="key">maxRequestsPerWorker</td> <td class="value">15</td></tr> 
+<tr><td class="key">portLower</td> <td class="value">49152</td></tr> 
+<tr><td class="key">portUpper</td> <td class="value">65535</td></tr> 
+<tr><td class="key">workerRequestTimeout</td> <td class="value">30</td></tr> 
+<tr><td class="key">timeLimit</td> <td class="value">0</td></tr> 
+<tr><td class="key">postBuffer</td> <td class="value">1024</td></tr> 
+<tr><td class="key">memoryLimit</td> <td class="value">0</td></tr> 
+<tr><td class="key">gracefulShutdownTimeout</td> <td class="value">0</td></tr> 
+
+KEY:InternalmoduleError
+VALUE:message: NamedPipeConnection::BeginWrite error!
+type: ZooException
+file: NamedPipeConnection.cpp
+line: 60
+version: 3.0.98.472
+
+KEY:StdErr
+VALUE:C:\python27\lib\site-packages\sorl\thumbnail\helpers.py:5: DeprecationWarning: django.utils.simplejson is deprecated; use json instead.
+  from django.utils import simplejson
+
+WARNING:root:Could not resolve form field &apos;Edita Avaluo - Captura&apos;.
+Traceback (most recent call last):
+  File &quot;C:\inetpub\wwwroot\SIAV\crispy_forms\utils.py&quot;, line 78, in render_field
+    field_instance = form.fields[field]
+KeyError: u&apos;Edita Avaluo - Captura&apos;
+
+KEY:WebConfigVariables
+VALUE:<tr><td class="key">APPL_PHYSICAL_PATH</td><td class="value">C:\inetpub\wwwroot\SIAV</td></tr><tr><td class="key">APPL_PHYSICAL_SHORT_PATH</td><td class="value">C:\inetpub\wwwroot\SIAV</td></tr><tr><td class="key">APPL_VIRTUAL_PATH</td><td class="value"></td></tr><tr><td class="key">DEPLOY_FILE</td><td class="value">deploy.py</td></tr><tr><td class="key">DEPLOY_LOG</td><td class="value">log\deploy.log</td></tr><tr><td class="key">DJANGO.ROOT</td><td class="value"></td></tr><tr><td class="key">HOST</td><td class="value">127.0.0.1</td></tr><tr><td class="key">IDE</td><td class="value">C:\Windows\system32\cmd.exe</td></tr><tr><td class="key">PYTHONPATH</td><td class="value">C:\inetpub\wwwroot\SIAV;C:\inetpub\wwwroot\SIAV\python_modules\Lib\site-packages;%PYTHONPATH%;;C:\inetpub\wwwroot\SIAV\SIAV\debug_toolbar;C:\inetpub\wwwroot\SIAV\SIAV\crispy_forms;</td></tr><tr><td class="key">WATCH_FILE_CHANGES_MASK</td><td class="value">*.py</td></tr><tr><td class="key">WSGI_APP</td><td class="value">wsgi.application</td></tr>
+KEY:WindowsError
+VALUE:Se está cerrando la canalización.
+ (ERROR CODE: 232)
+
+KEY:WorkerStatus
+VALUE:Request timed out. 				The worker process did not respond within the required timeout period. 				You may increase timeout by setting WORKER_REQUEST_TIMEOUT environment variable in web.config file to the required amount of seconds.
+  Please send report to support@helicontech.com
+[17/02/2014 12:28:15] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Add:7 , needed:8 , current:1, Ready:1 , Creating: 0 
+[17/02/2014 12:28:15] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Add:7 , needed:8 , current:1, Ready:1 , Creating: 0 
+[17/02/2014 12:28:15] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Add:7 , needed:8 , current:1, Ready:1 , Creating: 0 
+[17/02/2014 12:28:15] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Add:7 , needed:8 , current:1, Ready:1 , Creating: 0 
+[17/02/2014 12:28:15] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Add:7 , needed:8 , current:1, Ready:1 , Creating: 0 
+[17/02/2014 12:28:15] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Add:7 , needed:8 , current:1, Ready:1 , Creating: 0 
+[17/02/2014 12:28:15] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Add:7 , needed:8 , current:1, Ready:1 , Creating: 0 
+[17/02/2014 12:28:15] v3.0.98.472	WorkersManager - Worker closed.
+[17/02/2014 12:28:57] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Remove:1 , needed:7 , current:8, Ready:8 , Creating: 0 
+[17/02/2014 12:28:57] v3.0.98.472	WorkersManager - gracefulWorkerShutdown() 
+[17/02/2014 12:28:59] v3.0.98.472	WorkersManager - Worker closed.
+[17/02/2014 12:29:03] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Remove:1 , needed:6 , current:7, Ready:7 , Creating: 0 
+[17/02/2014 12:29:03] v3.0.98.472	WorkersManager - gracefulWorkerShutdown() 
+[17/02/2014 12:29:05] v3.0.98.472	WorkersManager - Worker closed.
+[17/02/2014 12:29:10] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Remove:1 , needed:5 , current:6, Ready:6 , Creating: 0 
+[17/02/2014 12:29:10] v3.0.98.472	WorkersManager - gracefulWorkerShutdown() 
+[17/02/2014 12:29:12] v3.0.98.472	WorkersManager - Worker closed.
+[17/02/2014 12:29:21] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Remove:1 , needed:4 , current:5, Ready:5 , Creating: 0 
+[17/02/2014 12:29:21] v3.0.98.472	WorkersManager - gracefulWorkerShutdown() 
+[17/02/2014 12:29:23] v3.0.98.472	WorkersManager - Worker closed.
+[17/02/2014 12:29:31] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Remove:1 , needed:3 , current:4, Ready:4 , Creating: 0 
+[17/02/2014 12:29:31] v3.0.98.472	WorkersManager - gracefulWorkerShutdown() 
+[17/02/2014 12:29:33] v3.0.98.472	WorkersManager - Worker closed.
+[17/02/2014 12:29:47] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Remove:1 , needed:2 , current:3, Ready:3 , Creating: 0 
+[17/02/2014 12:29:47] v3.0.98.472	WorkersManager - gracefulWorkerShutdown() 
+[17/02/2014 12:29:49] v3.0.98.472	WorkersManager - Worker closed.
+[17/02/2014 12:30:12] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Remove:1 , needed:1 , current:2, Ready:2 , Creating: 0 
+[17/02/2014 12:30:12] v3.0.98.472	WorkersManager - gracefulWorkerShutdown() 
+[17/02/2014 12:30:14] v3.0.98.472	WorkersManager - Worker closed.
+[17/02/2014 14:02:44] v3.0.98.472	WorkersManager - BeginGracefulShutdown() 
+[17/02/2014 14:05:08] v3.0.98.472	WorkersManager - BeginGracefulShutdown() 
+[17/02/2014 14:05:19] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Add:1 , needed:2 , current:1, Ready:1 , Creating: 0 
+[17/02/2014 14:05:27] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Remove:1 , needed:1 , current:2, Ready:2 , Creating: 0 
+[17/02/2014 14:05:27] v3.0.98.472	WorkersManager - gracefulWorkerShutdown() 
+[17/02/2014 14:05:29] v3.0.98.472	WorkersManager - Worker closed.
+[17/02/2014 14:06:13] v3.0.98.472	WorkersManager - BeginGracefulShutdown() 
+[17/02/2014 14:06:40] v3.0.98.472	WorkersManager - BeginGracefulShutdown() 
+[17/02/2014 14:06:50] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Add:1 , needed:2 , current:1, Ready:1 , Creating: 0 
+[17/02/2014 14:07:00] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Remove:1 , needed:1 , current:2, Ready:2 , Creating: 0 
+[17/02/2014 14:07:00] v3.0.98.472	WorkersManager - gracefulWorkerShutdown() 
+[17/02/2014 14:07:02] v3.0.98.472	WorkersManager - Worker closed.
+[17/02/2014 14:07:36] v3.0.98.472	WorkersManager - BeginGracefulShutdown() 
+[17/02/2014 14:07:54] v3.0.98.472	WorkersManager - BeginGracefulShutdown() 
+[17/02/2014 14:08:01] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Add:1 , needed:2 , current:1, Ready:1 , Creating: 0 
+[17/02/2014 14:08:07] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Remove:1 , needed:1 , current:2, Ready:2 , Creating: 0 
+[17/02/2014 14:08:07] v3.0.98.472	WorkersManager - gracefulWorkerShutdown() 
+[17/02/2014 14:08:09] v3.0.98.472	WorkersManager - Worker closed.
+[17/02/2014 14:09:06] v3.0.98.472	WorkersManager - BeginGracefulShutdown() 
+[17/02/2014 14:11:13] v3.0.98.472	WorkersManager - BeginGracefulShutdown() 
+[17/02/2014 14:11:25] v3.0.98.472	WorkersManager - BeginGracefulShutdown() 
+[17/02/2014 14:11:37] v3.0.98.472	WorkersManager - BeginGracefulShutdown() 
+[17/02/2014 14:11:47] v3.0.98.472	WorkersManager - BeginGracefulShutdown() 
+[17/02/2014 14:11:50] v3.0.98.472	WorkersManager - BeginGracefulShutdown() 
+[17/02/2014 14:12:07] v3.0.98.472	WorkersManager - BeginGracefulShutdown() 
+[17/02/2014 19:20:54] v3.0.98.472	WorkersManager - BeginGracefulShutdown() 
+[18/02/2014 20:02:40] v3.0.98.472	WorkersManager - BeginGracefulShutdown() 
+[18/02/2014 20:03:23] v3.0.98.472	WorkersManager - BeginGracefulShutdown() 
+[18/02/2014 20:08:36] v3.0.98.472	WorkersManager - BeginGracefulShutdown() 
+[18/02/2014 20:08:58] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Add:1 , needed:2 , current:1, Ready:1 , Creating: 0 
+[18/02/2014 20:09:22] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Remove:1 , needed:1 , current:2, Ready:2 , Creating: 0 
+[18/02/2014 20:09:22] v3.0.98.472	WorkersManager - gracefulWorkerShutdown() 
+[18/02/2014 20:09:24] v3.0.98.472	WorkersManager - Worker closed.
+[18/02/2014 20:12:27] v3.0.98.472	WorkersManager - BeginGracefulShutdown() 
+[18/02/2014 20:13:03] v3.0.98.472	WorkersManager - BeginGracefulShutdown() 
+[18/02/2014 20:13:29] v3.0.98.472	WorkersManager - BeginGracefulShutdown() 
+[18/02/2014 20:13:44] v3.0.98.472	WorkersManager - BeginGracefulShutdown() 
+[18/02/2014 20:15:55] v3.0.98.472	WorkersManager - BeginGracefulShutdown() 
+[18/02/2014 20:24:21] v3.0.98.472	WorkersManager - BeginGracefulShutdown() 
+[18/02/2014 20:30:17] v3.0.98.472	WorkersManager - BeginGracefulShutdown() 
+[18/02/2014 20:37:57] v3.0.98.472	WorkersManager - BeginGracefulShutdown() 
