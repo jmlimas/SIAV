@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+	<head> 
+	<title>
+		{% block site_title %} SIAV Mobile {% endblock %}
+	</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	{% block page_css %}
+	  <!-- jQuery Mobile style sheet -->
+	  <style type="text/css" title="currentStyle">
+	  	@import "{{ STATIC_URL }}CSS/mobile/jquery.mobile-1.4.2.min.css";
+	  	@import "{{ STATIC_URL }}CSS/mobile/jquery.mobile.theme-1.4.2.min.css";
+	  </style>
+    {% endblock %}
+
+	{% block page_js %}
+	  <!-- jQuery mobile script includes -->
+	   <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/jquery-1.8.2.min.js"></script>
+	   <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/mobile/jquery.mobile-1.4.2.min.js"></script>
+	{% endblock %}
+
+</head>
+<body>
+
+{% block content %}{% endblock %}
+
+</body>
+</html>

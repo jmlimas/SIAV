@@ -691,3 +691,6 @@ VALUE:Request timed out. 				The worker process did not respond within the requi
 [26/02/2014 23:28:35] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Remove:1 , needed:1 , current:2, Ready:2 , Creating: 0 
 [26/02/2014 23:28:35] v3.0.98.472	WorkersManager - gracefulWorkerShutdown() 
 [26/02/2014 23:28:37] v3.0.98.472	WorkersManager - Worker closed.
+[03/03/2014 11:11:18] v3.0.98.472	WorkersManager - BeginGracefulShutdown() 
+[03/03/2014 11:11:27] v3.0.98.472	WorkersManager - BeginGracefulShutdown() 
+[03/03/2014 11:35:58] v3.0.98.472	WorkersManager - BeginGracefulShutdown() 

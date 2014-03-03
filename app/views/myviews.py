@@ -652,3 +652,9 @@ def pdf_view(avaluo_id):
     response['Content-Disposition'] = 'inline;filename=some_file.pdf'
     return response
     pdf.closed
+
+
+def mobile(request):
+    avaluos = Avaluo.objects.filter(Estatus__contains='PROCESO', Salida__isnull=True) | Avaluo.objects.filter(Estatus__contains='DETENIDO', Salida__isnull=True)
+    avaluos = avaluos.order_by('-Solicitud')
+    return render_to_response('mobile/page.html', {'avaluos':avaluos}, context_instance=RequestContext(request))

@@ -98,7 +98,10 @@ urlpatterns = patterns(
     url(r'^faq/', 'website.views.faq', name='faq'),
     url(r'^servicios/', 'website.views.servicios', name='servicios'),
     url(r'^contacto/', 'website.views.contacto', name='contacto'),
-    url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': 'media/'})
+    url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': 'media/'}),
+
+    #Urls del sitio movil
+    url(r'^SIAV/mobile/', 'app.views.mobile', name='mobile'),
 )
 
     #Urls para sockets
