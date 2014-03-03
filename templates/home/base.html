@@ -36,12 +36,12 @@
   <!-- navigation -->
   <nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="navbar-header">
-      <a class="navbar-brand" href="/SIAV/">SIAV<span class="badge badge-info">{{cantidad.3}}</span></a>
       <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
+      <a class="navbar-brand" href="/SIAV/">SIAV<span class="badge badge-info">{{cantidad.3}}</span></a>
     </div>
     <div class="navbar-header navbar-right">
 
@@ -62,7 +62,7 @@
       <a href="/SIAV/logout"> <i class="glyphicon glyphicon-eject"></i> Salir</a>
     </p>
   </div>
-  <div class="collapse navbar-collapse navbar-ex1-collapse">
+  <div class="nav-collapse">
    <ul class="nav navbar-nav">
     <li class="{% block alta %}{% endblock %}" ><a href="/SIAV/alta_avaluo/">Alta</a></li>
     <li class="{% block visita %}{% endblock %}"><a href="/SIAV/visita/" >Visita    <span class="badge badge-warning">{{cantidad.1}}</span></a></li>
