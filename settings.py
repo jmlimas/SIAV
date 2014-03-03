@@ -3,7 +3,7 @@
 import os
 
 # Set the DJANGO_SETTINGS_MODULE environment variable.
-os.environ['DJANGO_SETTINGS_MODULE'] = "SIAV.settings"
+os.environ['DJANGO_SETTINGS_MODULE'] = "settings"
 
 #do your stuff
 
@@ -127,7 +127,7 @@ MIDDLEWARE_CLASSES = (
 ROOT_URLCONF = 'urls'
 
 # Python dotted path to the WSGI application used by Django's runserver.
-WSGI_APPLICATION = 'SIAV.wsgi.application'
+WSGI_APPLICATION = 'wsgi.application'
 
 TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
