@@ -45,10 +45,6 @@
 
                 </script>
 	<script type="text/javascript"> 
-	    $(function(){
-	        $('form.uniForm').uniform();
-	    });
-	  
 	    $(function() {
 	  
 	        $('#slickbox').hide();
@@ -111,8 +107,8 @@
 		</div>
 	</div>
   
- 
-	<table id="datos_texto">
+  <div class="col-md-offset-0">
+	<table  class="table">
 		<tr>
 			<td>Avaluo Id : <b>{{ avaluo.avaluo_id }}</b></td>{% csrf_token %}
 			<td>Folio K : <b>{{ avaluo.FolioK }}</b></td>
@@ -144,6 +140,7 @@
 			<td>Observaciones : <b>{{ avaluo.Observaciones }}</b></td>
 		</tr>
 	</table>
+</div>
 	<br>
    <br>
        

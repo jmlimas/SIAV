@@ -1,6 +1,9 @@
+# -*- encoding: utf-8 -*-
 import os
-from django.utils import timezone
+import redis
 import datetime
+from websock.models import Eventos, Comments
+from django.utils import timezone
 from datetime import date
 from django.conf.urls import patterns, url, include
 from django.db.models import Sum, Count, Q
@@ -9,6 +12,7 @@ from app.haversine import *
 from django.template import RequestContext
 from django.shortcuts import render_to_response, redirect
 from django.http import HttpResponse, HttpResponseRedirect
+from django.contrib.sessions.models import Session
 from django.contrib.auth import logout
 from django.contrib.auth.models import User, Group
 from django.contrib.auth.decorators import login_required
@@ -94,7 +98,8 @@ def home(request):
     avaluos = Avaluo.objects.filter(Estatus__contains='PROCESO', Salida__isnull=True) | Avaluo.objects.filter(Estatus__contains='DETENIDO', Salida__isnull=True)
     avaluos = avaluos.order_by('-Solicitud')
     cantidad = cantidades()
-    return render_to_response('home/home.html', {'avaluos': avaluos, 'cantidad': cantidad}, context_instance=RequestContext(request))
+    comments = Comments.objects.select_related().all().reverse()[:3]
+    return render_to_response('home/home.html', {'avaluos': avaluos, 'cantidad': cantidad, 'comments':comments}, context_instance=RequestContext(request))
 
 
 #   Vista para cerrar sesion
@@ -264,6 +269,15 @@ def alta_avaluo(request):
             reciente.FolioK = folio_k
             reciente.save()
 
+            # Enviar notificación a usuarios
+            r = redis.StrictRedis(host='localhost', port=6379, db=0)
+            accion = (' dió de alta el avalúo con FolioK: ').decode("UTF-8", "ignore")
+
+            r.publish('chat', request.user.username + accion + '<b>' + reciente.FolioK + '</b>')
+
+            #Crear evento
+            Eventos.objects.create(user=request.user, evento='ALTA',avaluo=reciente)
+
             return redirect('/SIAV/alta_avaluo/')  # Redirect after POST
     else:
         forma = AltaAvaluo()  # An unbound form
@@ -289,6 +303,16 @@ def actualiza_avaluo(request, id):
             obj = form.save(commit=False)
             obj.FolioK = folio_k
             form.save()
+
+            # Enviar notificación a usuarios
+            r = redis.StrictRedis(host='localhost', port=6379, db=0)
+            accion = (' capturó el avalúo con FolioK: ').decode("UTF-8", "ignore")
+
+            r.publish('chat', request.user.username + accion + '<b>' + obj.FolioK + '</b>')
+
+            #Crear evento
+            Eventos.objects.create(user=request.user, evento='CAPTURA',avaluo=obj)
+
             return redirect('/SIAV/captura/')
     else:
         form = CapturaAvaluo(instance=avaluo)
@@ -320,6 +344,16 @@ def edita_visita(request, id):
             obj = form.save(commit=False)
             obj.FolioK = folio_k
             form.save()
+
+            # Enviar notificación a usuarios
+            r = redis.StrictRedis(host='localhost', port=6379, db=0)
+            accion = (' visitó el avalúo con FolioK: ').decode("UTF-8", "ignore")
+
+            r.publish('chat', request.user.username + accion + '<b>' + obj.FolioK + '</b>')
+
+            #Crear evento
+            Eventos.objects.create(user=request.user, evento='VISITA',avaluo=obj)
+
             return redirect('/SIAV/visita/')
     else:
         form = VisitaAvaluo(instance=avaluo)
@@ -348,6 +382,16 @@ def edita_salida(request, id):
             obj.FolioK = folio_k
             obj.Estatus = 'CONCLUIDO'
             form.save()
+
+            # Enviar notificación a usuarios
+            r = redis.StrictRedis(host='localhost', port=6379, db=0)
+            accion = (' dió salida al avalúo con FolioK: ').decode("UTF-8", "ignore")
+
+            #Crear evento
+            Eventos.objects.create(user=request.user, evento='SALIDA',avaluo=obj)
+
+            r.publish('chat', request.user.username + accion + '<b>' + obj.FolioK + '</b>')
+
             return redirect('/SIAV/salida/')
     else:
         form = SalidaAvaluo(instance=avaluo)
@@ -379,6 +423,16 @@ def guarda_master(request, id):
             obj = forma.save(commit=False)
             obj.FolioK = folio_k
             forma.save()
+
+            # Enviar notificación a usuarios
+            r = redis.StrictRedis(host='localhost', port=6379, db=0)
+            accion = (' editó el avalúo con FolioK: ').decode("UTF-8", "ignore")
+
+            r.publish('chat', request.user.username + accion + '<b>' + obj.FolioK + '</b>')
+
+            #Crear evento
+            Eventos.objects.create(user=request.user, evento='CONSULTA_MASTER',avaluo=obj)
+
             return redirect('/SIAV/consulta_master/')
     return render_to_response('home/consultas/respuesta_consulta_master.html', {'forma': forma, 'avaluo': avaluo, 'imagenes': imagenes}, context_instance=RequestContext(request))
 
@@ -598,3 +652,9 @@ def pdf_view(avaluo_id):
     response['Content-Disposition'] = 'inline;filename=some_file.pdf'
     return response
     pdf.closed
+
+
+def mobile(request):
+    avaluos = Avaluo.objects.filter(Estatus__contains='PROCESO', Salida__isnull=True) | Avaluo.objects.filter(Estatus__contains='DETENIDO', Salida__isnull=True)
+    avaluos = avaluos.order_by('-Solicitud')
+    return render_to_response('mobile/page.html', {'avaluos':avaluos}, context_instance=RequestContext(request))

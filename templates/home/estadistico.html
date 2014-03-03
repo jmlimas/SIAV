@@ -26,18 +26,6 @@ $(document).ready(function () {
     $('#avaluos_table').tableFilter();
     valor = 0;
 
-  // Radialize the colors
-    Highcharts.getOptions().colors = Highcharts.map(Highcharts.getOptions().colors, function(color) {
-        return {
-            radialGradient: { cx: 0.5, cy: 0.3, r: 0.7 },
-            stops: [
-                [0, color],
-                [1, Highcharts.Color(color).brighten(-0.3).get('rgb')] // darken
-            ]
-        };
-    });
-
-
     $(function () {
         $(document).ready(function() {
            var chart;
@@ -236,12 +224,12 @@ data: [5, 7, 3]
             <h1>Asignación ({{anio}})</h1>
             <br>
                 <div class="container">
-                    <div class="row-fluid span10">
-                        <div class="span6">
+                    <div class="row">
+                        <div class="col-md-6">
                             <div id="line_container" ></div>
                  
                         </div>
-                        <div class="span6">
+                        <div class="col-md-6">
                             <div id="bar_container"></div>
                         </div>
                     </div>
@@ -286,11 +274,11 @@ data: [5, 7, 3]
             <h1>Clientes {{anio}}</h1>
             <br>
             <div class="container">
-                <div class="row-fluid">
-                <div class="span6">
+                <div class="row">
+                <div class="col-md-8">
                      <div id="pie_container"></div>
                 </div>
-                <div class="span6">
+                <div class="col-md-3">
                     <table class="table table-hover" style="width:50%;margin-left:10px;">
                                         <thead>
                                             <th>Cliente</th>
@@ -312,11 +300,12 @@ data: [5, 7, 3]
             <h1>Historial ({{anio}})</h1>
             <br>
             <div class="container">
-                <div class="row-fluid">
-                    <div class="span6">
-                        <div id="todos_container"></div>
+                <div class="row">
+                    <div class="col-md-8">
+                        <div id="todos_container" >
+                        </div>
                     </div>
-                    <div class="span6">
+                    <div class="col-md-3">
                         <table class="table table-hover" style="width:50%;margin-left:10px;">
                                 <thead>
                                     <th>Año</th>

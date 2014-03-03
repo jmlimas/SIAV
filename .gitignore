@@ -38,6 +38,7 @@ local.properties
 # PDT-specific
 .buildpath
 
+ZooError.log
 
 #################
 ## Visual Studio
