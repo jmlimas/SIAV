@@ -107,18 +107,18 @@
   </div>
 </div>
 </body>
-  <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/jquery-1.8.2.min.js"></script>
-  <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/jquery.jdpicker.js"></script>
-  <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/jquery-ui-1.8.24.custom.min.js"></script> 
-  <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/jquery.ui.chatbox.js"></script>
-  <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/jquery.cookie.js"></script>
-  <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/bootstrap.js"></script>
-  <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/autoNumeric.js"></script>
-  <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/socket.io.js"></script>
-  <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/jquery.noty.js"></script>
-  <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/topRight.js"></script>
-  <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/noty/themes/default.js"></script>
-  <script type="text/javascript">
+<script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/jquery-1.8.2.min.js"></script>
+<script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/jquery.jdpicker.js"></script>
+<script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/jquery-ui-1.8.24.custom.min.js"></script> 
+<script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/jquery.ui.chatbox.js"></script>
+<script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/jquery.cookie.js"></script>
+<script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/bootstrap.js"></script>
+<script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/autoNumeric.js"></script>
+<script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/socket.io.js"></script>
+<script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/jquery.noty.js"></script>
+<script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/topRight.js"></script>
+<script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/noty/themes/default.js"></script>
+<script type="text/javascript">
 $(document).ready(function(){
   var box = null;
   box = $("#chat_div").chatbox({id:'{{user.username}}', 
@@ -133,18 +133,18 @@ $(document).ready(function(){
     }});
 
 
-    $('.ui-chatbox-content').toggle();
+  $('.ui-chatbox-content').toggle();
 
 });
 
 
- </script>
+</script>
 
-  <script type="text/javascript">
+<script type="text/javascript">
 
-  $(document).ready(function(){
+$(document).ready(function(){
 
-    var objDiv = document.getElementById("comments");
+  var objDiv = document.getElementById("comments");
       // objDiv.scrollTop = objDiv.scrollHeight+10;
 
       var socket = io.connect('{{ request.META.HTTP_HOST }}', {port: 4000});
@@ -178,20 +178,20 @@ $(document).ready(function(){
       });
       
 
-        $("#textBox").keydown(function(event) {
-          console.log("keydown");
-          var msg = entry_el.attr('value');
-            if (event.keyCode && event.keyCode == $.ui.keyCode.ENTER) {
-                msg = $.trim($(this).val());
-                if (msg.length > 0) {
-                     socket.emit('send_message', msg, function(data){
-                    console.log(data);
-                  });
-                }
-                $(this).val('');
-                return false;
-            }
-        });
+      $("#textBox").keydown(function(event) {
+        console.log("keydown");
+        var msg = entry_el.attr('value');
+        if (event.keyCode && event.keyCode == $.ui.keyCode.ENTER) {
+          msg = $.trim($(this).val());
+          if (msg.length > 0) {
+           socket.emit('send_message', msg, function(data){
+            console.log(data);
+          });
+         }
+         $(this).val('');
+         return false;
+       }
+     });
 
 
     });
@@ -242,7 +242,7 @@ $(document).ready(function(){
     });
 
 
-  $("#id_Valor").autoNumeric('destroy');
+    $("#id_Valor").autoNumeric('destroy');
 
   });
 
