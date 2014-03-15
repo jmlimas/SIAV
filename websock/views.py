@@ -1,5 +1,4 @@
-from websock.models import Comments, User
- 
+from websock.models import Comments, User, Eventos, Comments, EventoUsuario
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseServerError
 from django.views.decorators.csrf import csrf_exempt
@@ -32,4 +31,13 @@ def node_api(request):
     except Exception, e:
         return HttpResponseServerError(str(e))
 
+def get_notificaciones(request):
+    comments_enviar = EventoUsuario.objects.filter(recibe_id=request.user).order_by('-date')[:8]
+    comments = EventoUsuario.objects.filter(recibe_id=request.user,leido=False).order_by('-date')
+    response = render(request, 'home/consultas/notificaciones.html', locals())
+    comments.update(leido=True)
+    return response
 
+def get_conversaciones(request):
+    comments = Comments.objects.all()[:200]
+    return render(request, 'home/consultas/conversaciones.html', locals())

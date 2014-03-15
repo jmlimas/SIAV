@@ -1,11 +1,24 @@
 {% load groupcheck %}
 
+{% load cantidades_proceso %}
+
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>SIAV {% if avaluo.FolioK %}{{avaluo.FolioK}}{%endif%}</title>
+  <title>
+    SIAV 
+    {% if avaluo.FolioK %}
+    {{avaluo.FolioK}}
+    {%endif%}
+
+    {% if user.is_staff %}
+    {% if request.user|conteo_eventos_usuario > 0 %}
+    ({{request.user|conteo_eventos_usuario}})
+    {% endif %}
+    {% endif %}
+  </title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="">
   <meta name="author" content="">
@@ -25,6 +38,8 @@
 	@import "{{ STATIC_URL }}CSS/jdpicker.css";
   */
   </style>
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+
 
   {% block style %}{% endblock %}
   <!-- Common JS Libraries  -->
@@ -41,33 +56,32 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="/SIAV/">SIAV<span class="badge badge-info">{{cantidad.3}}</span></a>
+      <a class="navbar-brand" href="/SIAV/">SIAV<span class="badge badge-info">{{x|cantidades_proceso}}</span></a>
     </div>
-    <div class="navbar-header navbar-right">
+    <ul class="nav navbar-nav navbar-right">
+     <li>
+      <a onclick="printDiv('printableArea')" href="#"><i class="glyphicon glyphicon-print"></i></a>
+    </li>
 
-     <p  class="navbar-text">
-      <a onclick="printDiv('printableArea')"><i class="glyphicon glyphicon-print"></i></a>
-    </p>
     {% if user.is_staff %}
-    <p class="navbar-text">
-      <a href="/SIAV/admin"> <i class="glyphicon glyphicon-wrench"></i> Admin</a>
-    </p>
+    <li>
+      <a href="/SIAV/admin"> <i class="glyphicon glyphicon-wrench"></i></a>
+    </li>
     {% endif %}
 
     <p class="navbar-text">Bienvenido,  
       <a href="#">{{user.username }}</a>
     </p>
-
-    <p class="navbar-text">
-      <a href="/SIAV/logout"> <i class="glyphicon glyphicon-eject"></i> Salir</a>
-    </p>
-  </div>
+     <li>
+      <a href="/SIAV/logout"> <i class="glyphicon glyphicon-eject"></i></a>
+    </li>
+  </ul>
   <div class="nav-collapse">
    <ul class="nav navbar-nav">
     <li class="{% block alta %}{% endblock %}" ><a href="/SIAV/alta_avaluo/">Alta</a></li>
-    <li class="{% block visita %}{% endblock %}"><a href="/SIAV/visita/" >Visita    <span class="badge badge-warning">{{cantidad.1}}</span></a></li>
-    <li class="{% block captura %}{% endblock %}"><a href="/SIAV/captura/" >Captura    <span class="badge badge-warning">{{cantidad.0}}</span></a></li>
-    <li class="{% block salida %}{% endblock %}"><a href="/SIAV/salida/">Salida    <span class="badge badge-warning">{{cantidad.2}}</span></a></li>
+    <li class="{% block visita %}{% endblock %}"><a href="/SIAV/visita/" >Visita    <span class="badge badge-warning">{{x|cantidades_visita}}</span></a></li>
+    <li class="{% block captura %}{% endblock %}"><a href="/SIAV/captura/" >Captura    <span class="badge badge-warning">{{x|cantidades_captura}}</span></a></li>
+    <li class="{% block salida %}{% endblock %}"><a href="/SIAV/salida/">Salida    <span class="badge badge-warning">{{x|cantidades_salida}}</span></a></li>
 
     {% if user.is_staff %}
     <li class="{% block consulta_master %}{% endblock %}"><a href="/SIAV/consulta_master/" >Consulta</a></li>
@@ -79,15 +93,30 @@
     <li><a href="/SIAV/facturar/">Facturar</a></li>
     <li><a href="/SIAV/liquidar/">Liquidar</a></li>
     <li><a href="/SIAV/estadistico/{%now "Y"%}">Estadístico</a></li>
-  </li> 
+  </li>
+
   {% endif %}
 </ul>
+<ul class="nav navbar-nav pull-right">
+ <li class="dropdown" style="float:right">
+  <a href="#" class="dropdown-toggle notif_link" data-toggle="dropdown"><i class="glyphicon glyphicon-globe"></i>
+    {% if request.user|conteo_eventos_usuario > 0 %}
+    <span class="noty-manager-bubble" style="margin-left: 11px; top: 10px; opacity: 1;">
+      {{request.user|conteo_eventos_usuario}}
+    </span>
+    {% endif %}
 
+  </a>
+  <!-- <span id="spinner"><img src="{{ STATIC_URL }}spinner.gif"/></span> -->
+  <ul class="dropdown-menu" id="notif_dd">
+  </ul>
+</li>
+</ul>
 </div>
+
 </nav>
 <div class="container">
   <div class="row">
-
     <div class="col-md-15">
       <div class="jumbotron">
         <div id="printableArea">
@@ -107,18 +136,18 @@
   </div>
 </div>
 </body>
-  <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/jquery-1.8.2.min.js"></script>
-  <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/jquery.jdpicker.js"></script>
-  <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/jquery-ui-1.8.24.custom.min.js"></script> 
-  <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/jquery.ui.chatbox.js"></script>
-  <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/jquery.cookie.js"></script>
-  <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/bootstrap.js"></script>
-  <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/autoNumeric.js"></script>
-  <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/socket.io.js"></script>
-  <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/jquery.noty.js"></script>
-  <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/topRight.js"></script>
-  <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/noty/themes/default.js"></script>
-  <script type="text/javascript">
+<script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/jquery-1.8.2.min.js"></script>
+<script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/jquery.jdpicker.js"></script>
+<script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/jquery-ui-1.8.24.custom.min.js"></script> 
+<script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/jquery.ui.chatbox.js"></script>
+<script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/jquery.cookie.js"></script>
+<script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/bootstrap.js"></script>
+<script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/autoNumeric.js"></script>
+<script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/socket.io.js"></script>
+<script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/jquery.noty.js"></script>
+<script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/topRight.js"></script>
+<script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/noty/themes/default.js"></script>
+<script type="text/javascript">
 $(document).ready(function(){
   var box = null;
   box = $("#chat_div").chatbox({id:'{{user.username}}', 
@@ -133,18 +162,18 @@ $(document).ready(function(){
     }});
 
 
-    $('.ui-chatbox-content').toggle();
+  $('.ui-chatbox-content').toggle();
 
 });
 
 
- </script>
+</script>
 
-  <script type="text/javascript">
+<script type="text/javascript">
 
-  $(document).ready(function(){
+$(document).ready(function(){
 
-    var objDiv = document.getElementById("comments");
+  var objDiv = document.getElementById("comments");
       // objDiv.scrollTop = objDiv.scrollHeight+10;
 
       var socket = io.connect('{{ request.META.HTTP_HOST }}', {port: 4000});
@@ -163,35 +192,33 @@ $(document).ready(function(){
 
       socket.on('message', function(message) {
         generate('topRight',message);
-        //Escape HTML characters
-        var data = message.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
-        var data2 = data.substring(data.indexOf(":")+1,data.length);
         
-        $("#chat_div").chatbox("option", "boxManager").addMsg('{{user.username}}',data2);
-        //Append message to the bottom of the list
-        $('#comments').append('<li>' + data + '</li>');
-        window.scrollBy(0, 10000000000);
+        var regex = /(<([^>]+)>)/ig;
+        var data = message.replace(regex, "");
+        var user = data.substring(0,data.indexOf(":"));
+        var data2 = data.substring(data.indexOf(":")+1,data.length);
+        $("#chat_div").chatbox("option", "boxManager").addMsg(user,data2);
+        // $('#comments').append('<li>' + data + '</li>');
+        
+        
         entry_el.focus();
-
-        var objDiv = document.getElementById("comments");
-        objDiv.scrollTop = objDiv.scrollHeight+10;
       });
       
 
-        $("#textBox").keydown(function(event) {
-          console.log("keydown");
-          var msg = entry_el.attr('value');
-            if (event.keyCode && event.keyCode == $.ui.keyCode.ENTER) {
-                msg = $.trim($(this).val());
-                if (msg.length > 0) {
-                     socket.emit('send_message', msg, function(data){
-                    console.log(data);
-                  });
-                }
-                $(this).val('');
-                return false;
-            }
-        });
+      $("#textBox").keydown(function(event) {
+        console.log("keydown");
+        var msg = entry_el.attr('value');
+        if (event.keyCode && event.keyCode == $.ui.keyCode.ENTER) {
+          msg = $.trim($(this).val());
+          if (msg.length > 0) {
+           socket.emit('send_message', msg, function(data){
+            console.log(data);
+          });
+         }
+         $(this).val('');
+         return false;
+       }
+     });
 
 
     });
@@ -242,7 +269,7 @@ $(document).ready(function(){
     });
 
 
-  $("#id_Valor").autoNumeric('destroy');
+    $("#id_Valor").autoNumeric('destroy');
 
   });
 
@@ -262,5 +289,27 @@ function printDiv(divName) {
  window.print();
  document.body.innerHTML = originalContents;
 }
+</script>
+
+<script type="text/javascript">
+$(document).ready(function () {
+  $('#spinner').hide();
+  $('a.notif_link').click(function () {
+    $('#notif_dd').html('&nbsp;').load('/get_notificaciones');
+  });
+
+  $('.ui-widget-header').click(function () {
+    $('#chat_div').html('&nbsp;').load('/get_conversaciones');
+    $("#chat_div").animate({ scrollTop: $(document).height()*4 }, 300);
+  });
+
+});
+
+$(document).ajaxStart(function () {
+  $('#spinner').show();
+}).ajaxStop(function () {
+  $('#spinner').hide();
+});
+
 </script>
 </html>

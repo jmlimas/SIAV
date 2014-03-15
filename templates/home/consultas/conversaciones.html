@@ -1,0 +1,5 @@
+            {% for c in comments %}
+            <div class="ui-chatbox-msg" style="display: block; max-width: 300px;">
+            	<b>[{{c.date|date:"h:m"}}]{{c.user}}: </b><span> {{c.text}}</span>
+            </div>
+            {% endfor %}

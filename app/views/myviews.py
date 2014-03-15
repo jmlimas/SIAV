@@ -46,44 +46,6 @@ def genera_foliok(avaluo_id, colonia):
         folio_k = ""
         return folio_k
 
-
-#   Metodo para contar los avaluos en cada seccion.
-def cantidades():
-
-    #Conteo avaluos de Captura
-    avaluos = (Avaluo.objects
-               .filter(Q(Estatus__contains='PROCESO') | Q(Estatus__contains='DETENIDO'))
-               .filter(Q(Salida__isnull=True))
-               .filter(Q(Visita__isnull=False))
-               .exclude(Q(Mterreno__isnull=False) & Q(Mconstruccion__isnull=False) & Q(Solicitud__isnull=False)))
-               
-
-    por_capturar = avaluos.count()
-    #Conteo avaluos de Visita
-    avaluos = Avaluo.objects.filter(Estatus__contains='PROCESO', Visita__isnull=True, Salida__isnull=True) | Avaluo.objects.filter(Estatus__contains='DETENIDO', Visita__isnull=True, Salida__isnull=True)
-    por_visitar = avaluos.count()
-    #Conteo avaluos de Salida
-    avaluos = (Avaluo.objects
-               .filter(Q(Estatus='PROCESO') | Q(Estatus__contains='DETENIDO'))
-               .filter(Q(Visita__isnull=False))
-               .filter(Q(Salida__isnull=True)))
-
-    avaluos = (avaluos
-               # .exclude(Valor=0.00)
-               # .exclude(Q(Valor__isnull=True))
-               # .exclude(Q(Referencia__isnull=True))
-                .exclude(Q(Mterreno__isnull=True))
-               # .exclude(Q(Importe__isnull=True))
-                .exclude(Q(Mconstruccion__isnull=True))
-                #.exclude(Q(Valor__exact=''))
-                )
-    por_salida = avaluos.count()
-    avaluos = Avaluo.objects.filter(Estatus__contains='PROCESO', Salida__isnull=True) | Avaluo.objects.filter(Estatus__contains='DETENIDO', Salida__isnull=True)
-    en_proceso = avaluos.count()
-    pendientes = [por_capturar, por_visitar, por_salida, en_proceso]
-
-    return pendientes
-
 #   Eliminar Imagenes
 def elimina_imagen_captura(request,folio,imagen_id):
     imagen = ImagenAvaluo.objects.get(imagen_id=imagen_id)
@@ -97,9 +59,8 @@ def elimina_imagen_captura(request,folio,imagen_id):
 def home(request):
     avaluos = Avaluo.objects.filter(Estatus__contains='PROCESO', Salida__isnull=True) | Avaluo.objects.filter(Estatus__contains='DETENIDO', Salida__isnull=True)
     avaluos = avaluos.order_by('-Solicitud')
-    cantidad = cantidades()
-    comments = Comments.objects.select_related().all().reverse()[:3]
-    return render_to_response('home/home.html', {'avaluos': avaluos, 'cantidad': cantidad, 'comments':comments}, context_instance=RequestContext(request))
+    comments = Eventos.objects.select_related().all().reverse()[:3]
+    return render_to_response('home/home.html', {'avaluos': avaluos,'comments':comments}, context_instance=RequestContext(request))
 
 
 #   Vista para cerrar sesion
@@ -131,7 +92,6 @@ def facturar(request):
     else:
         factura_formset = FacturaFormset(queryset=avaluos, prefix="formas")
         example_formset = FacturaFormset(queryset=avaluos, prefix="formas")
-        cantidad = avaluos.count()
         olist = zip(avaluos, factura_formset)
 
         suma_de_monto = avaluos.values('Cliente__Cliente').order_by('Cliente').annotate(total=Sum('Importe'))
@@ -143,7 +103,7 @@ def facturar(request):
             else:
                 total_general += float(str(x['total']))
 
-        return render_to_response('home/lista_factura.html', {'olist': olist, 'cantidad': cantidad, 'example_formset': example_formset, 'suma_de_monto': suma_de_monto, 'total_general': total_general}, context_instance=RequestContext(request))
+        return render_to_response('home/lista_factura.html', {'olist': olist,'example_formset': example_formset, 'suma_de_monto': suma_de_monto, 'total_general': total_general}, context_instance=RequestContext(request))
 
 
 #   Vista que se encarga de liquidar las facturas ya pagadas
@@ -209,16 +169,14 @@ def captura(request):
                .filter(Q(Visita__isnull=False))
                .exclude(Q(Mterreno__isnull=False) & Q(Mconstruccion__isnull=False) & Q(Solicitud__isnull=False)))
     avaluos = avaluos.order_by('-Solicitud')
-    cantidad = cantidades()
-    return render_to_response('home/captura.html', {'avaluos': avaluos, 'cantidad': cantidad}, context_instance=RequestContext(request))
+    return render_to_response('home/captura.html', {'avaluos': avaluos}, context_instance=RequestContext(request))
 
 
 @login_required
 def visita(request):
     avaluos = Avaluo.objects.filter(Estatus__contains='PROCESO', Visita__isnull=True, Salida__isnull=True) | Avaluo.objects.filter(Estatus__contains='DETENIDO', Visita__isnull=True, Salida__isnull=True)
     avaluos = avaluos.order_by('-Solicitud')
-    cantidad = cantidades()
-    return render_to_response('home/visita.html', {'avaluos': avaluos, 'cantidad': cantidad}, context_instance=RequestContext(request))
+    return render_to_response('home/visita.html', {'avaluos': avaluos}, context_instance=RequestContext(request))
 
 
 @login_required
@@ -241,8 +199,7 @@ def salida(request):
 
 
     avaluos = avaluos.order_by('-Solicitud')
-    cantidad = cantidades()
-    return render_to_response('home/salida.html', {'avaluos': avaluos, 'cantidad': cantidad}, context_instance=RequestContext(request))
+    return render_to_response('home/salida.html', {'avaluos': avaluos}, context_instance=RequestContext(request))
 
 def salida_efectiva(request, id):
     avaluo = Avaluo.objects.get(avaluo_id=id)
@@ -256,7 +213,6 @@ def salida_efectiva(request, id):
 def alta_avaluo(request):
 
     # Si la forma es enviada...
-    cantidad = cantidades()
     if request.method == 'POST':
         # La forma ligada a los datos enviados en el POST
         forma = AltaAvaluo(request.POST)
@@ -282,7 +238,7 @@ def alta_avaluo(request):
     else:
         forma = AltaAvaluo()  # An unbound form
 
-    return render_to_response('home/alta_avaluo.html', {'forma': forma, 'cantidad': cantidad, }, context_instance=RequestContext(request))
+    return render_to_response('home/alta_avaluo.html', {'forma': forma, }, context_instance=RequestContext(request))
 
 
 @login_required
@@ -501,7 +457,6 @@ def consulta_master(request):
 
 @login_required
 def consulta_sencilla(request):
-    cantidad = cantidades()
     if request.method == 'POST':
         forma = FormaConsultaSencilla(request.POST)
         if('Buscar' in request.POST):
@@ -553,13 +508,11 @@ def consulta_sencilla(request):
                         dias = "31"
                     fin = str(anio)+"-"+str(mes)+"-"+dias
                     avaluos = avaluos.filter(Solicitud__range=(inicio, fin))
-                cantidad = avaluos.count()
                 avaluos = avaluos.order_by('-Solicitud')
-                return render_to_response('home/consultas/lista_consultaS.html', {'forma': forma, 'avaluos': avaluos, 'cantidad': cantidad}, context_instance=RequestContext(request))
+                return render_to_response('home/consultas/lista_consultaS.html', {'forma': forma, 'avaluos': avaluos}, context_instance=RequestContext(request))
     else:
         forma = FormaConsultaSencilla()
-        cantidad = cantidades()
-    return render_to_response('home/consultas/consulta_sencilla.html', {'forma': forma, 'cantidad': cantidad}, context_instance=RequestContext(request))
+    return render_to_response('home/consultas/consulta_sencilla.html', {'forma': forma}, context_instance=RequestContext(request))
 
 
 @login_required
@@ -602,26 +555,6 @@ def alta_usuario(request):
 def lista_usuario(request):
     usuarios = User.objects.all()
     return render_to_response('home/lista_usuario.html', {'usuarios': usuarios}, context_instance=RequestContext(request))
-
-
-#   Vista para dar de alta a un valuador.
-#   Se contempla incluir esta funcionalidad en el admin
-@login_required
-def alta_valuador(request):
-    # Si la forma es enviada...
-    cantidad = Valuador.objects.count()
-    if request.method == 'POST':
-        # La forma ligada a los datos enviados en el POST
-        forma = AltaValuador(request.POST)
-        # Todas las reglas de validacion aprobadas
-        if forma.is_valid():
-            forma.save()
-            return redirect('/SIAV/submitted/')  # Redirect after POST
-    else:
-        forma = AltaValuador()  # An unbound form
-
-    return render_to_response('home/alta_valuador.html', {'forma': forma, 'cantidad': cantidad}, context_instance=RequestContext(request))
-
 
 @login_required
 def lista_valuador(request):
