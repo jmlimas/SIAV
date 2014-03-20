@@ -565,6 +565,7 @@ class FormaConsultaSencilla(ModelForm):
                     css_class='col-md-3'),
                 Div(
                     'Edita Avaluo - Captura',
+                    'FolioK',
                     'Referencia',
                     'Calle',
                     'NumExt',
