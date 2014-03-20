@@ -1,5 +1,9 @@
 var http = require('http');
-var server = http.createServer().listen(4000);
+var server = http.createServer(function (req, res) {
+  res.writeHead(200, {'Content-Type': 'text/plain'});
+  res.end('Hello World\n');
+}).listen(4000, "0.0.0.0");
+console.log('Server running at http://0.0.0.0:4000/');
 var io = require('socket.io').listen(server);
 var cookie_reader = require('cookie');
 var querystring = require('querystring');
@@ -37,8 +41,8 @@ io.sockets.on('connection', function (socket) {
         });
         
         var options = {
-            host: 'localhost',
-            port: 3000,
+            host: "localhost",
+            port: 80,
             path: '/node_api',
             method: 'POST',
             headers: {
