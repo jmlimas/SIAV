@@ -22,6 +22,8 @@ from django.core.files import File
 from django.core.files.storage import default_storage
 from django.core.files.base import ContentFile
 from io import FileIO, BufferedWriter
+from decimal import Decimal
+
 
 
 current_directory = os.path.dirname(os.path.abspath(__file__))
@@ -142,12 +144,17 @@ def liquidar(request):
 def estadistico(request, anio=2013):
     anios = Avaluo.objects.all().dates('Salida', 'year')
     avaluos = Avaluo.objects.extra(select={'month': 'extract( month from Salida )'}).values('month').filter(Salida__year=anio).order_by('month').annotate(dcount=Count('Solicitud'), Total=Sum('Importe'))
+    #avaluos = Avaluo.objects.extra(select={'month': 'extract( month from Salida )'}).values('month').filter(Salida__year=anio).order_by('month').annotate(dcount=Count('Solicitud'), Total=Sum('Importe'))
     cliente = Avaluo.objects.filter(Salida__year=anio).values('Cliente__Cliente').annotate(Total=Sum('Importe'), Cantidad=Count('Cliente'))
     tiempo_respuesta = Avaluo.objects.filter(Salida__year=anio).values('Depto__Depto','Solicitud','Salida').annotate(Total=Sum('Importe'), Cantidad=Count('Cliente'))
     monto_todos_anios = Avaluo.objects.extra(select={'year': 'extract( year from Salida )'}).values('year').annotate(Total=Sum('Importe')).order_by('year')
 
+
     total_general = 0.00
     total_avaluos = 0
+    totales = []
+
+
     for x in avaluos:
         if not x['Total']:
             total_general += 0.00
@@ -159,6 +166,15 @@ def estadistico(request, anio=2013):
     totales = [total_avaluos, total_general]
     return render_to_response('home/estadistico.html', {'avaluos': avaluos, 'totales': totales, 'anio': anio, 'anios': anios, 'monto_todos_anios': monto_todos_anios, 'cliente': cliente, 'tiempo_respuesta': tiempo_respuesta}, context_instance=RequestContext(request))
 
+@login_required
+def estadistico_js(request, anio=2013):
+    anios_list = request.GET.get('anio', '').split(',')
+    anios_list = filter(None, anios_list) # fastest
+    anios_list = map(int, anios_list)
+    #anios = Avaluo.objects.dates('Salida', 'year').filter(Salida__gt=datetime.date(2011, 1, 1))
+    avaluos = [Avaluo.objects.extra(select={'month': 'extract( month from Salida )','anio': 'extract( year from Salida )'}).values('month','anio').filter(Salida__year=a).order_by('month').annotate(dcount=Count('Solicitud'), Total=Sum('Importe')) for a in anios_list]
+    
+    return render_to_response('home/consultas/estadistico/estadistico.js', locals())
 
 @login_required
 def captura(request):

@@ -76,6 +76,7 @@ urlpatterns = patterns(
 
     url(r'^SIAV/liquidar/', 'app.views.liquidar', name='liquidar'),
 
+    url(r'^SIAV/estadistico_js/', 'app.views.estadistico_js', name='estadistico_js'),
     url(r'^SIAV/estadistico/(\d+)/$', 'app.views.estadistico', name='estadistico'),
     #url(r'^SIAV/estadistico/', 'app.views.estadistico', name = 'estadistico'),
 
