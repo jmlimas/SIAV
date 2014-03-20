@@ -3,6 +3,10 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.contrib.auth.views import login
 from django.contrib import admin
 from django.conf import settings
+from django.conf import settings
+from django.conf.urls import include, patterns, url
+
+
 
 admin.autodiscover()
 
@@ -94,7 +98,10 @@ urlpatterns = patterns(
     url(r'^faq/', 'website.views.faq', name='faq'),
     url(r'^servicios/', 'website.views.servicios', name='servicios'),
     url(r'^contacto/', 'website.views.contacto', name='contacto'),
-    url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': 'media/'})
+    url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': 'media/'}),
+
+    #Urls del sitio movil
+    url(r'^SIAV/mobile/', 'app.views.mobile', name='mobile'),
 )
 
     #Urls para sockets
@@ -102,6 +109,7 @@ urlpatterns += patterns('',
     url(r'^SIAV/chat/', 'websock.views.home', name='home'),
     url(r'^node_api$', 'websock.views.node_api', name='node_api'),
 )
+
 
 # Add the static files pattern to the url.
 urlpatterns += staticfiles_urlpatterns()

@@ -1,0 +1,63 @@
+{% extends "mobile/basemobile.html" %}
+
+{% block content %}
+
+  <!-- every "page" looks something like this -->
+  <script>
+  $( "#mypanel" ).panel( "open" );
+  </script>
+  <div data-role="page" id="page0" data-theme="a">
+	<div data-role="header">
+	  <a href="#mypanel" data-icon="home">Menú</a>
+	  <h1>Avalúos en Proceso</h1>
+	</div><!-- /header -->
+	<table data-role="table" id="movie-table" data-mode="reflow" class="ui-responsive">
+		<thead>
+			<th>FolioK</th>
+			<th>Referencia</th>
+			<th>Cliente</th>
+			<th>Colonia</th>
+		</thead>
+		<tbody>
+		{% for a in avaluos %}
+		
+		<tr>
+			<td>
+				{{a.FolioK}}
+			</td>
+			<td>
+				{{a.Referencia}}
+			</td>
+			<td>
+				{{a.Cliente}}
+			</td>
+			<td>
+				{{a.Colonia}}
+			</td>
+		</tr>
+		{% endfor %}
+		</tbody>
+	</table><!-- /content -->
+
+	<div data-role="footer" data-theme="a">
+	  <div data-role="navbar">
+	  </div><!-- /navbar -->
+
+
+<!--     <div data-role="panel" id="mypanel">
+    	<div class="ui-btn-text">
+    		<a>Visita</a>
+    	</div>
+    	<div class="ui-btn-text">
+    		<a>Captura</a>
+    	</div>
+    	<div class="ui-btn-text">
+    		<a>Salida</a>
+    	</div>
+    </div> -->
+    <!-- /panel -->
+	</div><!-- /footer -->
+  </div><!-- /page -->
+
+
+{% endblock %}

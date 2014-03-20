@@ -5,13 +5,23 @@ import os
 # Set the DJANGO_SETTINGS_MODULE environment variable.
 os.environ['DJANGO_SETTINGS_MODULE'] = "settings"
 
-#do your stuff
+CRISPY_TEMPLATE_PACK = 'bootstrap3'
 
+#def show_toolbar(request):
+#    return True
+#SHOW_TOOLBAR_CALLBACK = show_toolbar
+
+#INTERNAL_IPS = ('127.0.0.1',)
+#DEBUG_TOOLBAR_PATCH_SETTINGS = False
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 THUMBNAIL_DEBUG = True 
 THUMBNAIL_PREFIX ='media/cache/'
+
+DEFAULT_CHARSET = 'utf-8' 
+FILE_CHARSET = 'utf-8' 
+
 
 ADMINS = (
     # ('Your Name', 'your_email@example.com'),
@@ -48,7 +58,7 @@ LOGIN_REDIRECT_URL = '/SIAV/captura/'
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
 # although not all choices may be available on all operating systems.
 # In a Windows environment this must be set to your system time zone.
-TIME_ZONE = 'America/Chicago'
+TIME_ZONE = 'America/Monterrey'
 
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
@@ -60,12 +70,14 @@ SITE_ID = 1
 # to load the internationalization machinery.
 USE_I18N = True
 
+USE_THOUSAND_SEPARATOR = False
+
 # If you set this to False, Django will not format dates, numbers and
 # calendars according to the current locale.
 USE_L10N = True
 
 # If you set this to False, Django will not use timezone-aware datetimes.
-USE_TZ = True
+USE_TZ = False
 
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/home/media/media.lawrence.com/media/"
@@ -119,6 +131,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+    #'debug_toolbar.middleware.DebugToolbarMiddleware',
     #'django_pdb.middleware.PdbMiddleware',
     # Uncomment the next line for simple clickjacking protection:
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -150,7 +163,8 @@ INSTALLED_APPS = (
     'south',
     'crispy_forms',
     #'django_socketio',
-    #'grappelli',
+    #'debug_toolbar',
+    'grappelli',
     'sorl.thumbnail',
     # Uncomment the next line to enable the admin:
     'django.contrib.admin',

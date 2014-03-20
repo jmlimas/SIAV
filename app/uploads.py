@@ -44,7 +44,7 @@ def ajax_upload( request,avaluo_id,folio_k ):
     # save the file
     #success = save_upload( upload, filename, is_raw, folio_k)
 
-    file_contents = SimpleUploadedFile(filename, request.raw_post_data)
+    file_contents = SimpleUploadedFile(filename, request.body)
 
     ext = os.path.splitext(filename)[1]
 

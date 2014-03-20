@@ -136,8 +136,8 @@ marker_{{x.1}} = new google.maps.Marker({
 marker_{{x.1}}.setMap(map);
 
 var boxText = document.createElement("div");
-boxText.style.cssText = "border: 1px solid black; margin-top: 8px; background: yellow; padding: 5px;";
-boxText.innerHTML = "<a href='/SIAV/respuesta_consulta_sencilla/{{x.1}}' target='_blank' >{{x.4}}</a>";
+boxText.style.cssText = "border: 1px solid black; margin-top: 8px; background: #0A1B2A; padding: 5px;font-size:15px;";
+boxText.innerHTML = "<a href='/SIAV/respuesta_consulta_sencilla/{{x.1}}' target='_blank' >{{x.4}} <br> Valor: {{x.5|currency}}</a>";
 
 var myOptions_{{x.1}} = {
  content: boxText
@@ -146,7 +146,7 @@ var myOptions_{{x.1}} = {
  ,pixelOffset: new google.maps.Size(-140, 0)
  ,zIndex: null
  ,boxStyle: { 
-  background: "url('tipbox.gif') no-repeat"
+  background: "url('http://google-maps-utility-library-v3.googlecode.com/svn/trunk/infobox/examples/tipbox.gif') no-repeat"
   ,opacity: 0.75
   ,width: "280px"
 }
@@ -168,6 +168,8 @@ google.maps.event.addListener(marker_{{x.1}}, "click", function (e) {
 });
 
 
+
+
 {% endfor %}
 }
 </script>
@@ -176,33 +178,45 @@ google.maps.event.addListener(marker_{{x.1}}, "click", function (e) {
 {% endblock %}     
 
 {% block content %}
-<div style=display:block>
+
+<div class="row">
+  
   {% for item in imagenes %}
-    {% if item.imagen.url|file_exists %}
+  {% if item.imagen.url|file_exists %}
+
+  <div class="col-xs-3 col-md-2">
+    <div class="thumbnail">
       {% thumbnail item.imagen "100x100" crop="center" as small %}
-      <a data-toggle="modal" data-target="#myModal_{{item.imagen_id}}" href="#myModal_{{item.imagen_id}}" title="{{item.FolioK}}"><img src="{{ STATIC_URL }}CSS/images/delete.png" style='width:15px;height:15px;padding-bottom:70px;' style="padding:5px;"></a>
-      <a href="/{{item.imagen}}" title="{{item.avaluo_id}}"><img src="/{{ small.url }}" style="padding:5px;"></a>
+      <a class="thumbnail" href="/{{item.imagen}}" title="{{item.avaluo_id}}" margin-bottom:0px;>
+        <img src="/{{ small.url }}">
+      </a>
+      <div class="caption">
+        <p><a data-toggle="modal" data-target="#myModal_{{item.imagen_id}}" href="#myModal_{{item.imagen_id}}" title="{{item.FolioK}}" class="btn btn-xs btn-danger" style="margin-left:15px" role="button"><span class="glyphicon glyphicon-remove"></span></a></p>
+      </div>
       {% endthumbnail %}
+    </div>
+  </div>
+  
+  <div class="modal fade" id="myModal_{{item.imagen_id}}">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        </div>
+        <div class="modal-body">
+          <p align="center">¿Estás seguro de que deseas eliminar esta imagen?</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-danger" onclick="location.href='/SIAV/elimina_imagen_captura/{{item.avaluo_id}}/{{item.imagen_id}}';">Eliminar</button>
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div><!-- /.modal -->
 
-    <div class="modal fade" id="myModal_{{item.imagen_id}}">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-          </div>
-          <div class="modal-body">
-            <p align="center">¿Estás seguro de que deseas eliminar esta imagen?</p>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-            <button type="button" class="btn btn-danger" onclick="location.href='/SIAV/elimina_imagen_captura/{{item.avaluo_id}}/{{item.imagen_id}}';">Eliminar</button>
-          </div>
-        </div><!-- /.modal-content -->
-      </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
-
-    {% endif %}
+  {% endif %}
   {% endfor %}
+
 </div>
 <br>
 {% for item in archivos %}
@@ -215,21 +229,24 @@ google.maps.event.addListener(marker_{{x.1}}, "click", function (e) {
 <div id="controls" style="display:block;">
 	<input class="btn btn-primary button white" type="button" id="slick-toggle" value="Mapas" />
   <div id="slickbox" >
-   <table style="float:right;">
-    <th>Distancia</th>
-    <th>Id</th>
-    <th>FolioK</th>
-    <th>Valor</th>
-    {% for x in cercanos %}
-    <tr>
-      <td>{{x.0}}</td>
-      <td>{{x.1}}</td>
-      <td><a href='/SIAV/respuesta_consulta_sencilla/{{x.1}}' target='_blank' >{{x.4}}</a></td>
-      <td>{{x.5|currency}}</td>
-    </tr>
-    {%endfor%}
-  </table>
-  <div id="map_canvas" style="width: 700px; height: 500px;"  ></div>
+    <div class="col-md-6" id="map_canvas" style="width: 700px; height: 500px;"  ></div>
+    <div class="col-md-4">
+     <table class="table" style="float:right;">
+      <th>Distancia</th>
+      <th>Id</th>
+      <th>FolioK</th>
+      <th>Valor</th>
+      {% for x in cercanos %}
+      <tr>
+        <td>{{x.0}}</td>
+        <td>{{x.1}}</td>
+        <td><a href='/SIAV/respuesta_consulta_sencilla/{{x.1}}' target='_blank' >{{x.4}}</a></td>
+        <td>{{x.5|currency}}</td>
+      </tr>
+      {%endfor%}
+    </table>
+  </div>
+  
 </div>
 <div id="file-uploader" style="float:right;">		
  <noscript>			
@@ -239,9 +256,9 @@ google.maps.event.addListener(marker_{{x.1}}, "click", function (e) {
 </div>
 </div>
 
-<div class="span12">
-  <div class="offset2 span8">
-   <table class="table table-striped" id="datos_texto">
+<div class="col-md-12">
+  <div class="col-md-offset-2">
+   <table class="table" id="datos_texto">
     <tr>
      <td>Avaluo Id : <b>{{ avaluo.avaluo_id }}</b></td>
      <td>Folio K : <b>{{ folio_k }}</b></td>

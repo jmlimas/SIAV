@@ -77,13 +77,17 @@ h2 {
 }
 
 
-input[type=text],input[type=password]{
-	width:152px;
+input[type=text],input[type=password],input[type=number]{
+	width:200px;
+}
+
+#id_LatitudG,#id_LatitudM,#id_LatitudS,#id_LongitudG,#id_LongitudM,#id_LongitudS{
+  width:100px;
 }
 
 
 .select{
-	width:167px;
+	width:200px;
 }
 
 input#login {
@@ -92,22 +96,8 @@ input#login {
 }
 
 table#datos_texto {
-
-    border-collapse:separate; 
-    border-spacing:1px;
-    margin-top:30px;
-    margin-bottom:30px;
-}
-
-table#datos_texto td{
-	width:240px;
-	margin-right:15px;
-    border-radius: 5px;
-    -moz-border-radius: 5px;
-    padding-bottom:5px;	
-    text-align:center;
-    background-color:#d9d9d9;
-    color:black;
+    margin-top:60px;
+    margin-bottom:60px;
 }
 
 td {
