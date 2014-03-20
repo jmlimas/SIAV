@@ -178,7 +178,7 @@ google.maps.event.addListener(marker_{{x.1}}, "click", function (e) {
 {% endblock %}     
 
 {% block content %}
-
+<h1 style="text-align:center">Captura</h1>
 <div class="row">
   
   {% for item in imagenes %}
@@ -222,10 +222,10 @@ google.maps.event.addListener(marker_{{x.1}}, "click", function (e) {
 {% for item in archivos %}
 
 <a href="/{{item.file}}" target="_blank" >{{item.file}}</a><br>
-
+<!-- <embed src="/{{item.file}}" width="400" height="500" alt="pdf"> -->
 {% endfor %}
 
-<h1 style="text-align:center">Captura</h1>
+
 <div id="controls" style="display:block;">
 	<input class="btn btn-primary button white" type="button" id="slick-toggle" value="Mapas" />
   <div id="slickbox" >

@@ -5,6 +5,7 @@ from django.contrib import admin
 from django.conf import settings
 from django.conf import settings
 from django.conf.urls import include, patterns, url
+from django.core.urlresolvers import reverse
 
 
 
@@ -27,7 +28,7 @@ urlpatterns = patterns(
 
     '', url(r'^SIAV/ajax_upload/(\w*\d+)/(\w*\d+)/$', 'app.uploads.ajax_upload', name="ajax_upload"),
 
-    #url(r'^grappelli/', include('grappelli.urls')),
+    url(r'^grappelli/', include('grappelli.urls')),
 
     url(r'^SIAV/admin/', include(admin.site.urls)),
 
@@ -67,7 +68,6 @@ urlpatterns = patterns(
     url(r'^SIAV/alta_usuario/', 'app.views.alta_usuario', name='alta_usuario'),
     url(r'^SIAV/lista_usuario/', 'app.views.lista_usuario', name='lista_usuario'),
 
-    url(r'^SIAV/alta_valuador/', 'app.views.alta_valuador', name='alta_valuador'),
     url(r'^SIAV/lista_valuador/', 'app.views.lista_valuador', name='lista_valuador'),
 
     url(r'^SIAV/mapas/', 'app.views.mapas', name='mapas'),
@@ -76,6 +76,7 @@ urlpatterns = patterns(
 
     url(r'^SIAV/liquidar/', 'app.views.liquidar', name='liquidar'),
 
+    url(r'^SIAV/estadistico_js/', 'app.views.estadistico_js', name='estadistico_js'),
     url(r'^SIAV/estadistico/(\d+)/$', 'app.views.estadistico', name='estadistico'),
     #url(r'^SIAV/estadistico/', 'app.views.estadistico', name = 'estadistico'),
 
@@ -107,6 +108,10 @@ urlpatterns = patterns(
     #Urls para sockets
 urlpatterns += patterns('',
     url(r'^SIAV/chat/', 'websock.views.home', name='home'),
+    url(r'^get_notificaciones/', 'websock.views.get_notificaciones', name='get_notificaciones'),
+    url(r'^notificaciones_ind/', 'websock.views.notificaciones_ind', name='notificaciones_ind'),
+    url(r'^get_conversaciones/', 'websock.views.get_conversaciones', name='get_conversaciones'),
+    #url(r'^marca_leidos/', 'websock.views.marca_leidos', name='marca_leidos'),
     url(r'^node_api$', 'websock.views.node_api', name='node_api'),
 )
 
