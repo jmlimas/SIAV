@@ -1,24 +1,18 @@
 {% load groupcheck %}
 
 {% load cantidades_proceso %}
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>
-    SIAV 
+  <title>SIAV 
     {% if avaluo.FolioK %}
     {{avaluo.FolioK}}
     {%endif%}
-
-    {% if user.is_staff %}
     {% if request.user|conteo_eventos_usuario > 0 %}
     ({{request.user|conteo_eventos_usuario}})
     {% endif %}
-    {% endif %}
-  </title>
+    </title> 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="">
   <meta name="author" content="">
@@ -34,20 +28,17 @@
   @import "{{ STATIC_URL }}CSS/fileuploader.css";
   @import "{{ STATIC_URL }}CSS/Style.css";
   @import "{{ STATIC_URL }}CSS/table_style.css";
-	/*
-	@import "{{ STATIC_URL }}CSS/jdpicker.css";
+  /*
+  @import "{{ STATIC_URL }}CSS/jdpicker.css";
   */
   </style>
   <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
-
-
   {% block style %}{% endblock %}
   <!-- Common JS Libraries  -->
 </head>
 <body >
 
-  <div id="chat_div">
-  </div>
+  <div id="chat_div"></div>
   <!-- navigation -->
   <nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="navbar-header">
@@ -56,89 +47,122 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="/SIAV/">SIAV<span class="badge badge-info">{{x|cantidades_proceso}}</span></a>
+      <a class="navbar-brand" href="/SIAV/">
+        SIAV
+        <span class="badge badge-info">{{x|cantidades_proceso}}</span>
+      </a>
     </div>
     <ul class="nav navbar-nav navbar-right">
-     <li>
-      <a onclick="printDiv('printableArea')" href="#"><i class="glyphicon glyphicon-print"></i></a>
-    </li>
+      <li>
+        <a onclick="printDiv('printableArea')" href="#"> <i class="glyphicon glyphicon-print"></i>
+        </a>
+      </li>
+      {% if user.is_staff %}
+      <li>
+        <a href="/SIAV/admin"> <i class="glyphicon glyphicon-wrench"></i>
+        </a>
+      </li>
+      {% endif %}
+      <p class="navbar-text">
+        Bienvenido,
+        <a href="#">{{user.username }}</a>
+      </p>
+      <li>
+        <a href="/SIAV/logout">
+          <i class="glyphicon glyphicon-eject"></i>
+        </a>
+      </li>
+    </ul>
+    <div class="nav-collapse">
+      <ul class="nav navbar-nav">
+        <li class="{% block alta %}{% endblock %}" >
+          <a href="/SIAV/alta_avaluo/">Alta</a>
+        </li>
+        <li class="{% block visita %}{% endblock %}">
+          <a href="/SIAV/visita/" >
+            Visita
+            <span class="badge badge-warning">{{x|cantidades_visita}}</span>
+          </a>
+        </li>
+        <li class="{% block captura %}{% endblock %}">
+          <a href="/SIAV/captura/" >
+            Captura
+            <span class="badge badge-warning">{{x|cantidades_captura}}</span>
+          </a>
+        </li>
+        <li class="{% block salida %}{% endblock %}">
+          <a href="/SIAV/salida/">
+            Salida
+            <span class="badge badge-warning">{{x|cantidades_salida}}</span>
+          </a>
+        </li>
+        {% if user.is_staff %}
+        <li class="{% block consulta_master %}{% endblock %}">
+          <a href="/SIAV/consulta_master/" >Consulta</a>
+        </li>
+        {% else %}
+        <li class="{% block consulta_sencilla %}{% endblock %}">
+          <a href="/SIAV/consulta_sencilla/" >Consulta</a>
+        </li>
+        {% endif %}
 
     {% if user.is_staff %}
-    <li>
-      <a href="/SIAV/admin"> <i class="glyphicon glyphicon-wrench"></i></a>
-    </li>
-    {% endif %}
-
-    <p class="navbar-text">Bienvenido,  
-      <a href="#">{{user.username }}</a>
-    </p>
-     <li>
-      <a href="/SIAV/logout"> <i class="glyphicon glyphicon-eject"></i></a>
+        <li>
+          <a href="/SIAV/facturar/">Facturar</a>
+        </li>
+        <li>
+          <a href="/SIAV/liquidar/">Liquidar</a>
+        </li>
+        <li>
+          <a href="/SIAV/estadistico/{%now "Y"%}">Estadístico</a>
+        </li>
+      </li>
+      {% endif %}
+    </ul>
+    <ul class="nav navbar-nav pull-right">
+      <li class="dropdown" style="float:right">
+        <a href="#" class="dropdown-toggle notif_link" data-toggle="dropdown">
+          <i class="glyphicon glyphicon-globe"></i>
+          {% if request.user|conteo_eventos_usuario > 0 %}
+          <div id="noti_ind">
+            <span class="noty-manager-bubble" style="margin-left: 11px; top: 10px; opacity: 1;">{{request.user|conteo_eventos_usuario}}</span>
+          </div>
+          {% endif %}
+        </a>
+        <!-- <span id="spinner">
+        <img src="{{ STATIC_URL }}spinner.gif"/>
+      </span>
+      -->
+      <ul class="dropdown-menu" id="notif_dd"></ul>
     </li>
   </ul>
-  <div class="nav-collapse">
-   <ul class="nav navbar-nav">
-    <li class="{% block alta %}{% endblock %}" ><a href="/SIAV/alta_avaluo/">Alta</a></li>
-    <li class="{% block visita %}{% endblock %}"><a href="/SIAV/visita/" >Visita    <span class="badge badge-warning">{{x|cantidades_visita}}</span></a></li>
-    <li class="{% block captura %}{% endblock %}"><a href="/SIAV/captura/" >Captura    <span class="badge badge-warning">{{x|cantidades_captura}}</span></a></li>
-    <li class="{% block salida %}{% endblock %}"><a href="/SIAV/salida/">Salida    <span class="badge badge-warning">{{x|cantidades_salida}}</span></a></li>
-
-    {% if user.is_staff %}
-    <li class="{% block consulta_master %}{% endblock %}"><a href="/SIAV/consulta_master/" >Consulta</a></li>
-    {% else %}
-    <li class="{% block consulta_sencilla %}{% endblock %}"><a href="/SIAV/consulta_sencilla/" >Consulta</a></li>              
-    {% endif %}
-
-    {% if user.is_staff %}
-    <li><a href="/SIAV/facturar/">Facturar</a></li>
-    <li><a href="/SIAV/liquidar/">Liquidar</a></li>
-    <li><a href="/SIAV/estadistico/{%now "Y"%}">Estadístico</a></li>
-  </li>
-
-  {% endif %}
-</ul>
-<ul class="nav navbar-nav pull-right">
- <li class="dropdown" style="float:right">
-  <a href="#" class="dropdown-toggle notif_link" data-toggle="dropdown"><i class="glyphicon glyphicon-globe"></i>
-    {% if request.user|conteo_eventos_usuario > 0 %}
-    <span class="noty-manager-bubble" style="margin-left: 11px; top: 10px; opacity: 1;">
-      {{request.user|conteo_eventos_usuario}}
-    </span>
-    {% endif %}
-
-  </a>
-  <!-- <span id="spinner"><img src="{{ STATIC_URL }}spinner.gif"/></span> -->
-  <ul class="dropdown-menu" id="notif_dd">
-  </ul>
-</li>
-</ul>
 </div>
 
 </nav>
 <div class="container">
-  <div class="row">
-    <div class="col-md-15">
-      <div class="jumbotron">
-        <div id="printableArea">
-          {% block content %}
+<div class="row">
+  <div class="col-md-15">
+    <div class="jumbotron">
+      <div id="printableArea">
+        {% block content %}
           {% endblock %}
-        </div> <!-- Se cierra printable area -->
-      </div>  
+      </div>
+      <!-- Se cierra printable area --> </div>
 
-      <br>
-      <br>
+    <br>
+    <br>
 
-      <footer>
-        <p style="color:white;text-align:center;">&copy; Copyright 2013 Valuadores del Norte S.C. </p>
-      </footer>
+    <footer>
+      <p style="color:white;text-align:center;">&copy; Copyright 2013 Valuadores del Norte S.C.</p>
+    </footer>
 
-    </div>
   </div>
+</div>
 </div>
 </body>
 <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/jquery-1.8.2.min.js"></script>
 <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/jquery.jdpicker.js"></script>
-<script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/jquery-ui-1.8.24.custom.min.js"></script> 
+<script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/jquery-ui-1.8.24.custom.min.js"></script>
 <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/jquery.ui.chatbox.js"></script>
 <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/jquery.cookie.js"></script>
 <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/bootstrap.js"></script>
@@ -199,6 +223,8 @@ $(document).ready(function(){
         var data2 = data.substring(data.indexOf(":")+1,data.length);
         $("#chat_div").chatbox("option", "boxManager").addMsg(user,data2);
         // $('#comments').append('<li>' + data + '</li>');
+
+        $('#noti_ind').html('&nbsp;').load('/notificaciones_ind')
         
         
         entry_el.focus();
@@ -239,8 +265,6 @@ function generate(layout, message) {
 
 </script>
 {% block script %}{% endblock %}
-
-
 <script type="text/javascript">
 
 $(document).ready(function(){

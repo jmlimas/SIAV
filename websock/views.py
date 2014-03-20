@@ -38,6 +38,9 @@ def get_notificaciones(request):
     comments.update(leido=True)
     return response
 
+def notificaciones_ind(request):
+    return render(request, 'home/consultas/notificaciones_ind.html', locals())
+
 def get_conversaciones(request):
     comments = Comments.objects.all()[:200]
     return render(request, 'home/consultas/conversaciones.html', locals())

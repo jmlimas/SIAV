@@ -144,7 +144,6 @@ $(function () {
 });
 
 </script>
-
 {% endblock %}      
 {% block content %}
 <ul id="tabs" class="nav nav-tabs" data-tabs="tabs">
@@ -165,19 +164,17 @@ $(function () {
     -->
     <br>
 
-<div class="row">
-<div class="control-group">
-    {% for a in anios %}
-    <div class="controls span2">
-        <label class="checkbox">
-            <input type="checkbox" name="anio_check" value="{{a.year}}" id="check_{{a.year}}">{{a.year}}
-        </label>
-    </div>
-    {%endfor%}
-</div>
-<br>
-<br>
-</div>
+    <div class="row">
+        <div class="control-group">
+            {% for a in anios %}
+            <div class="controls span2">
+                <label class="checkbox">
+                    <input type="checkbox" name="anio_check" value="{{a.year}}" id="check_{{a.year}}">{{a.year}}</label>
+            </div>
+            {%endfor%}
+        </div>
+        <br>
+        <br></div>
 
     <div class="container">
         <div class="row">
@@ -285,9 +282,12 @@ $(function () {
 
 <br>
 <br>
-    <ul class="breadcrumb">
-        {% for a in anios %}
-        <li><a href="/SIAV/estadistico/{{a.year}}">{{a.year}}</a> <span class="divider">/</span></li>
-        {% endfor %}
-    </ul>
+<ul class="breadcrumb">
+{% for a in anios %}
+<li>
+    <a href="/SIAV/estadistico/{{a.year}}">{{a.year}}</a>
+    <span class="divider">/</span>
+</li>
+{% endfor %}
+</ul>
 {% endblock %}
