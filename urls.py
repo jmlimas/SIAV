@@ -51,6 +51,7 @@ urlpatterns = patterns(
     url(r'^SIAV/respuesta_consulta_sencilla/?(\d+)/?$', 'app.views.respuesta_consulta_sencilla', name='respuesta_consulta_sencilla'),
 
     url(r'^SIAV/alta_avaluo/', 'app.views.alta_avaluo', name='alta_avaluo'),
+    url(r'^SIAV/alta_avaluo_paquete/', 'app.views.alta_avaluo_paquete', name='alta_avaluo_paquete'),
     url(r'^SIAV/actualiza_avaluo/(\d+)/$', 'app.views.actualiza_avaluo', name='actualiza_avaluo'),
 
     url(r'^SIAV/visita/', 'app.views.visita', name='visita'),

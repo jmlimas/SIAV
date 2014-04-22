@@ -23,6 +23,7 @@ from django.core.files.storage import default_storage
 from django.core.files.base import ContentFile
 from io import FileIO, BufferedWriter
 from decimal import Decimal
+from django.forms.models import model_to_dict
 
 
 
@@ -227,7 +228,8 @@ def salida_efectiva(request, id):
 
 @login_required
 def alta_avaluo(request):
-
+    formset_sencilla = FormaSencillaPaquete(prefix='formset_sencilla')  # An unbound form
+    formset = PaqueteFormset(prefix='formset')  # An unbound form
     # Si la forma es enviada...
     if request.method == 'POST':
         # La forma ligada a los datos enviados en el POST
@@ -253,9 +255,26 @@ def alta_avaluo(request):
             return redirect('/SIAV/alta_avaluo/')  # Redirect after POST
     else:
         forma = AltaAvaluo()  # An unbound form
+    return render_to_response('home/alta_avaluo.html', {'forma': forma,'formset_sencilla': formset_sencilla,'formset': formset, }, context_instance=RequestContext(request))
 
-    return render_to_response('home/alta_avaluo.html', {'forma': forma, }, context_instance=RequestContext(request))
 
+def alta_avaluo_paquete(request):
+    forma = AltaAvaluo() 
+    formset_sencilla = FormaSencillaPaquete(request.POST, prefix='formset_sencilla') 
+    formset = PaqueteFormset(request.POST, prefix='formset')
+    if formset_sencilla.is_valid() and formset.is_valid():
+        for form in formset:
+             avaluo = Avaluo()
+             
+
+             avaluo.Referencia = form.cleaned_data['Referencia']
+             avaluo.Calle = form.cleaned_data['Calle']
+             avaluo.NumExt = form.cleaned_data['NumExt']
+             avaluo.NumInt = form.cleaned_data['NumInt']
+
+
+             return HttpResponse(avaluo.Referencia)
+    return render_to_response('home/alta_avaluo.html', {'forma': forma,'formset_sencilla': formset_sencilla,'formset': formset, }, context_instance=RequestContext(request))
 
 @login_required
 def actualiza_avaluo(request, id):

@@ -19,6 +19,7 @@ $(function () {
 	$("#id_Cliente").change(function () {
 		$.getJSON("/api/get_deptos/", { id: $(this).val(), ajax: 'true' }, function (j) {
 			var options = '';
+				options += '<option value="' + '' + '">' + "---------" + '</option>';
 			for (var i = 0; i < j.length; i++) {
 				options += '<option value="' + j[i].optionValue + '">' + j[i].optionDisplay + '</option>';
 			}

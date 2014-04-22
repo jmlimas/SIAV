@@ -3,6 +3,7 @@ from django import forms
 from django.forms import ModelForm
 from crispy_forms.helper import FormHelper, reverse
 from crispy_forms.layout import *
+from django.forms import fields, models, formsets, widgets
 
 
 SERVICIOS = (
@@ -36,11 +37,13 @@ ESTATUS = (
     ('PROCESO', 'PROCESO'),
     ('DETENIDO', 'DETENIDO'),
     ('CONCLUIDO', 'CONCLUIDO'),
+    ('CANCELADO', 'CANCELADO'),
 )
 
 ESTATUSV = (
     ('PROCESO', 'PROCESO'),
     ('DETENIDO', 'DETENIDO'),
+    ('CANCELADO', 'CANCELADO'),
 )
 
 PRIORIDAD = (
@@ -143,6 +146,53 @@ class AltaAvaluo(ModelForm):
         super(AltaAvaluo,  self).__init__(*args,  **kwargs)
         self.fields['Municipio'] = forms.ModelChoiceField(queryset=Municipio.objects.filter(estado_id__is_active='True'))
         self.fields['Depto'] = forms.ModelChoiceField(queryset=Depto.objects.all())
+
+
+################################
+## Plain 'ole Formset example ##
+################################
+
+class FormaSencillaPaquete(forms.Form):
+    Referencia = forms.CharField(required=False)
+    # Calle = forms.CharField()
+    NumExt = forms.CharField(label="Num. Ext.", required=False)
+    NumInt = forms.CharField(label="Num. Int.", required=False)
+    Colonia = forms.CharField()
+    Tipo = forms.ModelChoiceField(required=True, label="Tipo Inmueble",  queryset=Tipo.objects.all())
+    Municipio = forms.ModelChoiceField(queryset=Municipio.objects.filter(estado_id__is_active='True'))
+    Estado = forms.ModelChoiceField(queryset=Estado.objects.filter(is_active='True'))
+    Servicio = forms.ChoiceField(choices=SERVICIOS, label="Tipo Servicio")
+    Estatus = forms.ChoiceField(choices=ESTATUS)
+    Prioridad = forms.ChoiceField(choices=PRIORIDAD)
+    Cliente = forms.ModelChoiceField(queryset=Cliente.objects.all())
+    Depto = forms.ModelChoiceField(queryset=Depto.objects.filter(is_active='True'))
+    Solicitud = forms.DateField(label="Fecha Solicitud", widget=forms.DateInput(format='%d/%m/%Y'),  input_formats=['%d/%m/%Y'])
+    Observaciones = forms.CharField(widget=forms.Textarea, required=False)
+    Valor = forms.DecimalField(required=False, widget=forms.TextInput())
+    Valuador = forms.ModelChoiceField(queryset=Valuador.objects.filter(is_active='True'))
+
+    class Meta:
+        model = Avaluo
+        exclude = ('avaluo_id', 'FolioK', 'LatitudG', 'LatitudM', 'LatitudS', 'LongitudG', 'LongitudM', 'LongitudS', 
+                   'Mterreno', 'Mconstruccion', 'Visita', 'Gastos', 'Importe', 'Salida', 'Pagado', 'Factura','Declat','Declon',
+                   'Referencia','NumExt','NumInt','Calle')
+    def clean_Referencia(self):
+        return self.cleaned_data['Referencia'] or None
+
+class FormaPaquete(forms.Form):
+    Referencia = forms.CharField(required=False)
+    Calle = forms.CharField()
+    NumExt = forms.CharField(label="Num. Ext.", required=False)
+    NumInt = forms.CharField(label="Num. Int.", required=False)
+    class Meta:
+        model = Avaluo
+        fields = ('Referencia','NumExt','NumInt','Calle')
+    def clean_Referencia(self):
+        return self.cleaned_data['Referencia'] or None
+PaqueteFormset = formsets.formset_factory(FormaPaquete)
+# Define the same formset, with no forms (so we can demo the form template):
+EmptyPaqueteFormset = formsets.formset_factory(FormaPaquete, extra=0)
+
 
 class VisitaAvaluo(ModelForm):
     Calle = forms.CharField( )
@@ -429,6 +479,8 @@ class RespuestaConsultaMaster(ModelForm):
     LongitudG = forms.DecimalField(required=False, label="Lat.G.")
     LongitudM = forms.DecimalField(required=False, label="Lat.M.")
     LongitudS = forms.DecimalField(required=False, label="Lat.S.")
+    Cliente = forms.ModelChoiceField( queryset=Cliente.objects.all())
+    #Depto = forms.ModelChoiceField(required=False, queryset=Depto.objects.filter(is_active='False'))
     Valor = forms.DecimalField(required=False, widget=forms.TextInput())
     Gastos = forms.DecimalField(required=False, widget=forms.TextInput())
     Importe = forms.DecimalField(required=False, widget=forms.TextInput())
@@ -505,7 +557,7 @@ class RespuestaConsultaMaster(ModelForm):
             ))
         super(RespuestaConsultaMaster,  self).__init__(*args,  **kwargs)
         self.fields['Municipio'] = forms.ModelChoiceField(queryset=Municipio.objects.filter(estado_id__is_active='True'))
-        self.fields['Depto'] = forms.ModelChoiceField(queryset=Depto.objects.all())
+        self.fields['Depto'] = forms.ModelChoiceField(required=False, queryset=Depto.objects.all())
 
 
 class FormaConsultaSencilla(ModelForm):
