@@ -2846,3 +2846,27 @@ VALUE:Request timed out. 				The worker process did not respond within the requi
 [19/03/2014 20:30:47] v3.0.98.472	WorkersManager - Worker closed.
 [20/03/2014 09:28:46] v3.0.98.472	WorkersManager - BeginGracefulShutdown() 
 >>>>>>> 5f54dcc79b73278fd88ee169d03adb2cc2d2d9e4
+[24/04/2014 12:16:09] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Add:1 , needed:2 , current:1, Ready:1 , Creating: 0 
+[24/04/2014 12:16:17] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Remove:1 , needed:1 , current:2, Ready:2 , Creating: 0 
+[24/04/2014 12:16:17] v3.0.98.472	WorkersManager - gracefulWorkerShutdown() 
+[24/04/2014 12:16:19] v3.0.98.472	WorkersManager - Worker closed.
+[24/04/2014 12:23:52] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Add:1 , needed:2 , current:1, Ready:1 , Creating: 0 
+[24/04/2014 12:23:54] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Add:1 , needed:3 , current:2, Ready:2 , Creating: 0 
+[24/04/2014 12:24:08] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Remove:1 , needed:2 , current:3, Ready:3 , Creating: 0 
+[24/04/2014 12:24:08] v3.0.98.472	WorkersManager - gracefulWorkerShutdown() 
+[24/04/2014 12:24:10] v3.0.98.472	WorkersManager - Worker closed.
+[24/04/2014 12:24:34] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Remove:1 , needed:1 , current:2, Ready:2 , Creating: 0 
+[24/04/2014 12:24:34] v3.0.98.472	WorkersManager - gracefulWorkerShutdown() 
+[24/04/2014 12:24:36] v3.0.98.472	WorkersManager - Worker closed.
+[24/04/2014 12:34:35] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Add:1 , needed:2 , current:1, Ready:1 , Creating: 0 
+[24/04/2014 12:34:37] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Remove:1 , needed:1 , current:2, Ready:2 , Creating: 0 
+[24/04/2014 12:34:37] v3.0.98.472	WorkersManager - gracefulWorkerShutdown() 
+[24/04/2014 12:34:39] v3.0.98.472	WorkersManager - Worker closed.
+[24/04/2014 12:43:42] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Add:1 , needed:2 , current:1, Ready:1 , Creating: 0 
+[24/04/2014 12:43:46] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Remove:1 , needed:1 , current:2, Ready:2 , Creating: 0 
+[24/04/2014 12:43:46] v3.0.98.472	WorkersManager - gracefulWorkerShutdown() 
+[24/04/2014 12:43:48] v3.0.98.472	WorkersManager - Worker closed.
+[24/04/2014 12:44:44] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Add:1 , needed:2 , current:1, Ready:1 , Creating: 0 
+[24/04/2014 12:44:56] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Remove:1 , needed:1 , current:2, Ready:2 , Creating: 0 
+[24/04/2014 12:44:56] v3.0.98.472	WorkersManager - gracefulWorkerShutdown() 
+[24/04/2014 12:44:58] v3.0.98.472	WorkersManager - Worker closed.
