@@ -7,8 +7,17 @@
 	        $(':input').live('focus', function () {
 	            $(this).attr('autocomplete', 'off');
 	        });
+          $('#id_username').val("admin");
+          $('#id_password').val("admin");
 	    });
 	</script>
+  <style>
+  #logo{
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+  }
+  </style>
 
  <div class="container">
 
@@ -20,11 +29,12 @@
         {% endif %}
 
       <form class="form-signin" method="POST" action="{% url "django.contrib.auth.views.login" %}" > {% csrf_token %}
+        <img id="logo" src="{{ STATIC_URL }}CSS/images/alluxi_dark.png" id="logo" width='200px' /> 
         <h1 class="form-signin-heading">Inicia sesión</h1>
         {{ form.username }}
         {{ form.password }}
         <label class="checkbox">
-          <input type="checkbox" value="remember-me"> Recordarme
+          <input type="checkbox" value="remember-me" checked="true"> Recordarme
         </label>
         <button class="btn btn-large btn-primary" type="submit">Inicio</button>
       </form>
