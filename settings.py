@@ -168,6 +168,7 @@ INSTALLED_APPS = (
     'sorl.thumbnail',
     # Uncomment the next line to enable the admin:
     'django.contrib.admin',
+    'bootstrap3',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
 )

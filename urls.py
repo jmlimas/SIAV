@@ -56,6 +56,7 @@ urlpatterns = patterns(
 
     url(r'^SIAV/visita/', 'app.views.visita', name='visita'),
     url(r'^SIAV/edita_visita/(\d+)/$', 'app.views.edita_visita', name='edita_visita'),
+    url(r'^SIAV/visita_masiva/$', 'app.views.visita_masiva', name='visita_masiva'),
     url(r'^SIAV/show_visita_pdf/(\d+)/$', 'app.views.show_visita_pdf', name='show_visita_pdf'),
 
     url(r'^SIAV/captura/', 'app.views.captura', name='captura'),

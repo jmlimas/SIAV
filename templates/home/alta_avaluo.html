@@ -16,6 +16,20 @@
 div.ui-datepicker{
   font-size:10px;
 }
+
+table#id_contact_info_table tbody tr td{
+
+  padding-right:60px;
+  padding-bottom:10px;
+  width:200px;
+}
+
+table#table_single_formset tbody tr td{
+  padding-right:60px;
+  padding-bottom:10px;
+  width:200px;
+}
+
 </style>
 {% endblock %}
 
@@ -25,6 +39,17 @@ div.ui-datepicker{
 <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/ajax_estados_municipios.js"></script>
 <script type="text/javascript" src="{{ STATIC_URL }}JS/jquery.formset.js"></script>
 <!-- Incluye  sugerencia de colonias.-->
+
+<script type="text/javascript">
+    $(function() {
+        $('#id_contact_info_table tbody tr').formset({
+            formCssClass: 'dynamic-contact-form',
+            prefix: "{{ formset.prefix }}"
+        });
+    });
+
+</script>
+
 <script type="text/javascript"> 
 
 $(document).ready( function() {
@@ -58,18 +83,21 @@ $(function() {
      $('#id_NumInt').attr('disabled', 'disabled');
    }
  });
+ 
+
+   $('input[type=text]').addClass('form-control');
+   $('select').addClass('form-control');
+   $('select').width('174px');
+   
+
 
 });
 </script>
-<script type="text/javascript">
-    $(function() {
-        $('#id_contact_info_table tbody tr').formset({
-            extraClasses: ['row1', 'row2', 'row3', 'row4']
-        })
-    })
-</script>
 <!-- Here's an example of how you can style add/delete buttons with CSS -->
 <style type="text/css">
+    .help-block{
+      color: #a94442;  
+    }
     .add-row {
         padding-left:18px;
         background:url({{ STATIC_URL }}images/add.png) no-repeat left center;
@@ -91,6 +119,9 @@ $(function() {
 {% endblock %}      
 
 {% block content %}
+ {% if formset.errors or formset_sencilla.errors  or forma.errors %}
+    <p style="color: red;">Porfavor completa los campos faltantes.</p>
+    {% endif %}
 <ul id="tabs" class="nav nav-tabs" data-tabs="tabs">
   <li class="active">
     <a href="#individual" data-toggle="tab">Individual</a>
@@ -104,125 +135,78 @@ $(function() {
   <div class="tab-pane active" id="individual">
     <h1>Alta Avalúo</h1>
     <br />
-    {% if forma.errors %}
-    <p style="color: red;">Porfavor completa los campos faltantes.</p>
-    {% endif %}
-{% crispy forma %}
+    {% crispy forma %}
     <br></div>
   <div class="tab-pane" id="paquete">
     <h1>Paquete</h1>
-    {% if formset.errors %}
-    <p style="color: red;">Porfavor completa los campos faltantes en formset.</p>
-    {% endif %}
-    {% if formset.errors %}
-    <div class="non-field-errors">
-      {% for err in formset.errors %}
-      <p class="form-error">Soy yo {{ err }}</p>
-      {% endfor %}
-    </div>
-    {% endif %}
-    {% if formset_sencilla.errors %}
-    <p style="color: red;">Porfavor completa los campos faltantes en formset_sencilla.</p>
-    {% endif %}
+    <br>
+   
     <div id="content">
-      <div class="entry">
         <form method="post" action="/SIAV/alta_avaluo_paquete/">
           {% csrf_token %}
-          <table>
+          <table id='table_single_formset'>
             <tr>
-              <th>{{formset_sencilla.Tipo.label_tag}}</th>
-              <th>{{formset_sencilla.Colonia.label_tag}}</th>
-              <th>{{formset_sencilla.Estado.label_tag}}</th>
-              <th>{{formset_sencilla.Municipio.label_tag}}</th>
-            </tr>
-            <tr>
-              <td>{{formset_sencilla.Tipo}} {{formset_sencilla.Tipo.errors}}</td>
               <td>
-                {{formset_sencilla.Colonia}} {{formset_sencilla.Colonia.errors}}
+                {{formset_sencilla.Tipo.label_tag}} {{formset_sencilla.Tipo}} <span class="help-block"><strong>{{formset_sencilla.Tipo.errors}}</strong></span>
               </td>
               <td>
-                {{formset_sencilla.Estado}} {{formset_sencilla.Estado.errors}}
+                {{formset_sencilla.Colonia.label_tag}} {{formset_sencilla.Colonia}} <span class="help-block"><strong>{{formset_sencilla.Colonia.errors}}</strong></span>
               </td>
               <td>
-                {{formset_sencilla.Municipio}} {{formset_sencilla.Municipio.errors}}
+                {{formset_sencilla.Estado.label_tag}} {{formset_sencilla.Estado}} <span class="help-block"><strong>{{formset_sencilla.Estado.errors}}</strong></span>
+              </td>
+              <td>
+                {{formset_sencilla.Prioridad.label_tag}} {{formset_sencilla.Prioridad}} <span class="help-block"><strong>{{formset_sencilla.Prioridad.errors}}</strong></span>
               </td>
             </tr>
             <tr>
-              <th>{{formset_sencilla.Servicio.label_tag}}</th>
-              <th>{{formset_sencilla.Estatus.label_tag}}</th>
-              <th>{{formset_sencilla.Prioridad.label_tag}}</th>
-            </tr>
-            <tr>
               <td>
-                {{formset_sencilla.Servicio}} {{formset_sencilla.Servicio.errors}}
+                {{formset_sencilla.Servicio.label_tag}} {{formset_sencilla.Servicio}} <span class="help-block"><strong>{{formset_sencilla.Servicio.errors}}</strong></span>
               </td>
               <td>
-                {{formset_sencilla.Estatus}} {{formset_sencilla.Estatus.errors}}
+                {{formset_sencilla.Estatus.label_tag}} {{formset_sencilla.Estatus}} <span class="help-block"><strong>{{formset_sencilla.Estatus.errors}}</strong></span>
               </td>
               <td>
-                {{formset_sencilla.Prioridad}} {{formset_sencilla.Prioridad.errors}}
+                {{formset_sencilla.Municipio.label_tag}} {{formset_sencilla.Municipio}} <span class="help-block"><strong>{{formset_sencilla.Municipio.errors}}</strong></span>
               </td>
-            </tr>
-            <tr>
-              <th>{{formset_sencilla.Cliente.label_tag}}</th>
-              <th>{{formset_sencilla.Depto.label_tag}}</th>
-              <th>{{formset_sencilla.Valuador.label_tag}}</th>
-            </tr>
-            <tr>
-              <td>
-                {{formset_sencilla.Cliente}} {{formset_sencilla.Cliente.errors}}
-              </td>
-              <td>{{formset_sencilla.Depto}} {{formset_sencilla.Depto.errors}}</td>
-              <td>
-                {{formset_sencilla.Valuador}} {{formset_sencilla.Valuador.errors}}
-              </td>
-            </tr>
-            <tr>
-              <th>{{formset_sencilla.Valor.label_tag}}</th>
-              <th>{{formset_sencilla.Solicitud.label_tag}}</th>
-            </tr>
-            <tr>
-              <td>{{formset_sencilla.Valor}} {{formset_sencilla.Valor.errors}}</td>
-              <td>
-                {{formset_sencilla.Solicitud}} {{formset_sencilla.Solicitud.errors}}
-              </td>
-            </tr>
-          </table>
 
-          <table id="id_contact_info_table" border="0" cellpadding="0" cellspacing="15" >
-            <thead>
-              <tr>
-                <th style="text-align:left;padding:5px" scope="col">
-                  <label>Referencia</label>
-                </th>
-                <th style="text-align:left;padding:5px" scope="col">Calle</th>
-                <th style="text-align:left;padding:5px" scope="col">Num. Ext</th>
-                <th style="text-align:left;padding:5px" scope="col">Num. Int</th>
-                <!-- <th scope="col">Ciudad</th>
-              -->
-            </tr>
-          </thead>
-          <tbody>
-            {{ formset.management_form }}
-            {% for form in formset.forms %}
-            <tr id="{{ form.prefix }}-row" style="padding:5px;">
-              <td style="text-align:center;padding:10px">{{ form.Referencia }}</td>
-              <td style="text-align:center;padding:10px">{{ form.Calle }}</td>
-              <td style="text-align:center;padding:10px">{{ form.NumExt }}</td>
-              <td style="text-align:center;padding:10px">{{ form.NumInt }}</td>
-              <!-- <td>{{ form. }}</td>
-            -->
+              <td>{{formset_sencilla.Valor.label_tag}} {{formset_sencilla.Valor}} <span class="help-block"><strong>{{formset_sencilla.Valor.errors}}</strong></span></td>
+            </div>
           </tr>
-          {% endfor %}
-        </tbody>
-      </table>
-      <p>
+          <tr>
+            <td>{{formset_sencilla.Cliente.label_tag}} {{formset_sencilla.Cliente}} <span class="help-block"><strong>{{formset_sencilla.Cliente.errors}}</strong></span> </td>
+            <td>{{formset_sencilla.Depto.label_tag}} {{formset_sencilla.Depto}} <span class="help-block"><strong>{{formset_sencilla.Depto.errors}}</strong></span></td>
+            <td>{{formset_sencilla.Valuador.label_tag}} {{formset_sencilla.Valuador}} <span class="help-block"><strong>{{formset_sencilla.Valuador.errors}}</strong></span>
+            </td>
+              <td>{{formset_sencilla.Solicitud.label_tag}} {{formset_sencilla.Solicitud}} <span class="help-block"><strong>{{formset_sencilla.Solicitud.errors}}</strong></span>
+            </td>
+          </tr>
+        </table>
+        <br>
+        <h2 id="cant_servicios">1 Servicio</h2>
+        <br>
+        <table id="id_contact_info_table" border="0" cellpadding="0" cellspacing="15" >
+        <tbody>
 
-        <input type="submit" value="Submit" />
-      </p>
-    </form>
-  </div>
+          {% for form in formset.forms %}
+          <tr id="{{ form.prefix }}-row" style="padding:5px;" id="form-0-row">
+            <td style="text-align:left;padding:10px">{{form.Referencia.label_tag}} {{form.Referencia}} <span class="help-block"><strong>{{form.Referencia.errors}}</strong></span></td>
+            <td style="text-align:left;padding:10px">{{form.Calle.label_tag}} {{form.Calle}}  <span class="help-block"><strong>{{form.Calle.errors}}</strong></span></td>
+            <td style="text-align:left;padding:10px">{{form.NumExt.label_tag}} {{form.NumExt}} <span class="help-block"><strong>{{form.NumExt.errors}}</strong></span></td>
+            <td style="text-align:left;padding:10px">{{form.NumInt.label_tag}} {{form.NumInt}} <span class="help-block"><strong>{{form.NumInt.errors}}</strong></span></td>
+            <td style="width: 60px;padding-top: 15px;"></td>
+        </tr>
+        {% endfor %}
+        {{ formset.management_form }}
+      </tbody>
+    </table>
+      <br>
+      <input id="id_form-TOTAL_FORMS" name="form-TOTAL_FORMS" type="hidden" value="1" /><input id="id_form-INITIAL_FORMS" name="form-INITIAL_FORMS" type="hidden" value="0" /><input id="id_form-MAX_NUM_FORMS" name="form-MAX_NUM_FORMS" type="hidden" value="1000" />
+      <input class="btn btn-success" type="submit" value="Enviar" />
+    </p>
+  </form>
 </div>
 </div>
 </div>
+
 {% endblock %}

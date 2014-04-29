@@ -178,6 +178,10 @@ class FormaSencillaPaquete(forms.Form):
                    'Referencia','NumExt','NumInt','Calle')
     def clean_Referencia(self):
         return self.cleaned_data['Referencia'] or None
+    def __init__(self,  *args,  **kwargs):
+        super(FormaSencillaPaquete,  self).__init__(*args,  **kwargs)
+        self.fields['Municipio'] = forms.ModelChoiceField(queryset=Municipio.objects.filter(estado_id__is_active='True'))
+        self.fields['Depto'] = forms.ModelChoiceField(queryset=Depto.objects.all())
 
 class FormaPaquete(forms.Form):
     Referencia = forms.CharField(required=False)
@@ -188,8 +192,12 @@ class FormaPaquete(forms.Form):
         model = Avaluo
         fields = ('Referencia','NumExt','NumInt','Calle')
     def clean_Referencia(self):
-        return self.cleaned_data['Referencia'] or None
-PaqueteFormset = formsets.formset_factory(FormaPaquete)
+        if Avaluo.objects.filter(Referencia=self.cleaned_data['Referencia']).count() > 0:
+            raise forms.ValidationError("Ya existe un Avaluo con esta Referencia.")
+        else:
+            return self.cleaned_data['Referencia'] or None
+
+PaqueteFormset = formsets.formset_factory(FormaPaquete,can_delete=True)
 # Define the same formset, with no forms (so we can demo the form template):
 EmptyPaqueteFormset = formsets.formset_factory(FormaPaquete, extra=0)
 
@@ -686,3 +694,37 @@ class FacturaForm(ModelForm):
                     css_class='col-md-3'),
                 css_class='row'))
         super(FacturaForm,  self).__init__(*args,  **kwargs)
+
+
+class VisitaMasiva(ModelForm):
+    LatitudG = forms.DecimalField(required=True, label="Lon.G.")
+    LatitudM = forms.DecimalField(required=True, label="Lon.M.")
+    LatitudS = forms.DecimalField(required=True, label="Lon.S.")
+    LongitudG = forms.DecimalField(required=True, label="Lat.G.")
+    LongitudM = forms.DecimalField(required=True, label="Lat.M.")
+    LongitudS = forms.DecimalField(required=True, label="Lat.S.")
+    Visita = forms.DateField(label="Fecha Visita", widget=forms.DateInput(format='%d/%m/%Y'),  input_formats=['%d/%m/%Y'], required=True)
+
+    class Meta:
+        model = Avaluo
+        fields = ('LatitudG', 'LatitudM', 'LatitudS', 'LongitudG', 'LongitudM', 'LongitudS','Visita')
+
+    def __init__(self,  *args,  **kwargs):
+        self.helper = FormHelper()
+        self.helper.form_id = 'id-VisitaMasiva'
+        self.helper.form_class = 'blueForms'
+        self.helper.form_method = 'POST'
+        self.helper.form_tag = False
+        self.helper.layout = Layout(
+            Div(Div('LatitudG',
+                    'LatitudM',
+                    'LatitudS',
+                    css_class='col-md-3'),
+                Div('LongitudG',
+                    'LongitudM',
+                    'LongitudS',
+                    'Visita',
+                    css_class='col-md-3'),
+                css_class='row'))
+        super(VisitaMasiva,  self).__init__(*args,  **kwargs)
+
