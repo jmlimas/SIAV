@@ -347,7 +347,7 @@ class SalidaAvaluo(ModelForm):
     Observaciones = forms.CharField(widget=forms.Textarea, required=False)
     Salida = forms.DateField(label="Fecha Salida", widget=forms.DateInput(format='%d/%m/%Y'),  input_formats=['%d/%m/%Y'])
     Valor = forms.DecimalField(required=True, widget=forms.TextInput())
-    Importe = forms.DecimalField(required=True, widget=forms.TextInput())
+    Importe = forms.DecimalField(required=True, widget=forms.TextInput(),  max_value=100000)
 
     class Meta:
         model = Avaluo

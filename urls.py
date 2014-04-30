@@ -6,8 +6,8 @@ from django.conf import settings
 from django.conf import settings
 from django.conf.urls import include, patterns, url
 from django.core.urlresolvers import reverse
-
-
+from django.utils.functional import curry
+from django.views.defaults import *
 
 admin.autodiscover()
 
@@ -31,7 +31,6 @@ urlpatterns = patterns(
     url(r'^grappelli/', include('grappelli.urls')),
 
     url(r'^SIAV/admin/', include(admin.site.urls)),
-
 
 
 
@@ -120,3 +119,5 @@ urlpatterns += patterns('',
 
 # Add the static files pattern to the url.
 urlpatterns += staticfiles_urlpatterns()
+
+# handler404 = 'app.views.errors.not_found_error'
