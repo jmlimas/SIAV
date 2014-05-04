@@ -51,10 +51,12 @@ urlpatterns = patterns(
     url(r'^SIAV/respuesta_consulta_sencilla/?(\d+)/?$', 'app.views.respuesta_consulta_sencilla', name='respuesta_consulta_sencilla'),
 
     url(r'^SIAV/alta_avaluo/', 'app.views.alta_avaluo', name='alta_avaluo'),
+    url(r'^SIAV/alta_avaluo_paquete/', 'app.views.alta_avaluo_paquete', name='alta_avaluo_paquete'),
     url(r'^SIAV/actualiza_avaluo/(\d+)/$', 'app.views.actualiza_avaluo', name='actualiza_avaluo'),
 
     url(r'^SIAV/visita/', 'app.views.visita', name='visita'),
     url(r'^SIAV/edita_visita/(\d+)/$', 'app.views.edita_visita', name='edita_visita'),
+    url(r'^SIAV/visita_masiva/$', 'app.views.visita_masiva', name='visita_masiva'),
     url(r'^SIAV/show_visita_pdf/(\d+)/$', 'app.views.show_visita_pdf', name='show_visita_pdf'),
 
     url(r'^SIAV/captura/', 'app.views.captura', name='captura'),

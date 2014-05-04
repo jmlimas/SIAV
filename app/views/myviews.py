@@ -23,7 +23,9 @@ from django.core.files.storage import default_storage
 from django.core.files.base import ContentFile
 from io import FileIO, BufferedWriter
 from decimal import Decimal
-
+from django.forms.models import model_to_dict
+from django.shortcuts import render
+from django.forms.util import ErrorList
 
 
 current_directory = os.path.dirname(os.path.abspath(__file__))
@@ -190,9 +192,10 @@ def captura(request):
 
 @login_required
 def visita(request):
+    visita_masiva = VisitaMasiva() 
     avaluos = Avaluo.objects.filter(Estatus__contains='PROCESO', Visita__isnull=True, Salida__isnull=True) | Avaluo.objects.filter(Estatus__contains='DETENIDO', Visita__isnull=True, Salida__isnull=True)
     avaluos = avaluos.order_by('-Solicitud')
-    return render_to_response('home/visita.html', {'avaluos': avaluos}, context_instance=RequestContext(request))
+    return render_to_response('home/visita.html', {'avaluos': avaluos,'visita_masiva':visita_masiva}, context_instance=RequestContext(request))
 
 
 @login_required
@@ -227,7 +230,8 @@ def salida_efectiva(request, id):
 
 @login_required
 def alta_avaluo(request):
-
+    formset_sencilla = FormaSencillaPaquete(prefix='formset_sencilla')  # An unbound form
+    formset = PaqueteFormset(prefix='formset')  # An unbound form
     # Si la forma es enviada...
     if request.method == 'POST':
         # La forma ligada a los datos enviados en el POST
@@ -253,9 +257,67 @@ def alta_avaluo(request):
             return redirect('/SIAV/alta_avaluo/')  # Redirect after POST
     else:
         forma = AltaAvaluo()  # An unbound form
+    return render_to_response('home/alta_avaluo.html', {'forma': forma,'formset_sencilla': formset_sencilla,'formset': formset, }, context_instance=RequestContext(request))
 
-    return render_to_response('home/alta_avaluo.html', {'forma': forma, }, context_instance=RequestContext(request))
 
+def alta_avaluo_paquete(request):
+    conteo = 0
+    forma = AltaAvaluo() 
+    formset_sencilla = FormaSencillaPaquete(request.POST, prefix='formset_sencilla') 
+    formset = PaqueteFormset(request.POST, prefix='formset')
+    values = []
+
+    if formset_sencilla.is_valid() and formset.is_valid():
+        for form in formset:
+            if form.is_valid():
+
+                if form.cleaned_data['Referencia'] != '':
+                    if form.cleaned_data['Referencia'] in values:
+                        form._errors["Referencia"] = ErrorList([u"Referencia Repetida."])
+                    else:
+                        values.append(form.cleaned_data["Referencia"])
+
+                avaluo = Avaluo()
+
+                avaluo.Tipo = formset_sencilla.cleaned_data['Tipo']
+                avaluo.Colonia = formset_sencilla.cleaned_data['Colonia']
+                avaluo.Servicio = formset_sencilla.cleaned_data['Servicio']
+                avaluo.Estatus = formset_sencilla.cleaned_data['Estatus']
+                avaluo.Estado = formset_sencilla.cleaned_data['Estado']
+                avaluo.Municipio = formset_sencilla.cleaned_data['Municipio']
+                avaluo.Prioridad = formset_sencilla.cleaned_data['Prioridad']
+                avaluo.Cliente = formset_sencilla.cleaned_data['Cliente']
+                avaluo.Depto = formset_sencilla.cleaned_data['Depto']
+                avaluo.Valuador = formset_sencilla.cleaned_data['Valuador']
+                avaluo.Solicitud = formset_sencilla.cleaned_data['Solicitud']
+                avaluo.Valor = formset_sencilla.cleaned_data['Valor']
+
+                avaluo.Referencia = form.cleaned_data['Referencia']
+                avaluo.Calle = form.cleaned_data['Calle']
+                avaluo.NumExt = form.cleaned_data['NumExt']
+                avaluo.NumInt = form.cleaned_data['NumInt']
+
+                #FolioK
+                avaluo.save()
+                conteo += 1
+
+                reciente = Avaluo.objects.latest('avaluo_id')
+                folio_k = genera_foliok(reciente.avaluo_id, reciente.Colonia)
+                reciente.FolioK = folio_k
+                reciente.save()
+
+                # Enviar notificación a usuarios
+                r = redis.StrictRedis(host='localhost', port=6379, db=0)
+                accion = (' dió de alta el avalúo con FolioK: ').decode("UTF-8", "ignore")
+
+                r.publish('chat', request.user.username + accion + '<b>' + reciente.FolioK + '</b>')
+
+                #Crear evento
+                Eventos.objects.create(user=request.user, evento='ALTA',avaluo=reciente)
+        return redirect('/SIAV/alta_avaluo/')
+        
+
+    return render_to_response('home/alta_avaluo.html', {'forma': forma,'formset_sencilla': formset_sencilla,'formset': formset, }, context_instance=RequestContext(request))
 
 @login_required
 def actualiza_avaluo(request, id):
@@ -607,3 +669,32 @@ def mobile(request):
     avaluos = Avaluo.objects.filter(Estatus__contains='PROCESO', Salida__isnull=True) | Avaluo.objects.filter(Estatus__contains='DETENIDO', Salida__isnull=True)
     avaluos = avaluos.order_by('-Solicitud')
     return render_to_response('mobile/page.html', {'avaluos':avaluos}, context_instance=RequestContext(request))
+
+def visita_masiva(request):
+    visita_masiva = VisitaMasiva(request.POST)
+    if visita_masiva.is_valid():
+        avaluo_visitado = request.POST.getlist('avaluo_visitado')
+        avaluos_visitados = (Avaluo.objects
+            .filter(avaluo_id__in=avaluo_visitado)
+            .update(LatitudG=visita_masiva.cleaned_data['LatitudG'],
+                    LatitudM=visita_masiva.cleaned_data['LatitudM'],
+                    LatitudS=visita_masiva.cleaned_data['LatitudS'],
+                    LongitudG=visita_masiva.cleaned_data['LongitudG'],
+                    LongitudS=visita_masiva.cleaned_data['LongitudS'],
+                    LongitudM=visita_masiva.cleaned_data['LongitudM'],
+                    Visita=visita_masiva.cleaned_data['Visita']))
+        for a1 in avaluo_visitado:
+
+            a = Avaluo.objects.get(avaluo_id=a1)
+            r = redis.StrictRedis(host='localhost', port=6379, db=0)
+            accion = (' visitó el avalúo con FolioK: ').decode("UTF-8", "ignore")
+
+            r.publish('chat', request.user.username + accion + '<b>' + a.FolioK + '</b>')
+
+            #Crear evento
+            Eventos.objects.create(user=request.user, evento='VISITA',avaluo=a)
+        return redirect('/SIAV/visita/')
+
+    avaluos = Avaluo.objects.filter(Estatus__contains='PROCESO', Visita__isnull=True, Salida__isnull=True) | Avaluo.objects.filter(Estatus__contains='DETENIDO', Visita__isnull=True, Salida__isnull=True)
+    avaluos = avaluos.order_by('-Solicitud')
+    return render_to_response('home/visita.html', {'avaluos': avaluos,'visita_masiva':visita_masiva,'visita_masiva':visita_masiva}, context_instance=RequestContext(request))
