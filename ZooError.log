@@ -2891,6 +2891,7 @@ VALUE:Request timed out. 				The worker process did not respond within the requi
 [24/04/2014 14:42:51] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Remove:1 , needed:1 , current:2, Ready:2 , Creating: 0 
 [24/04/2014 14:42:51] v3.0.98.472	WorkersManager - gracefulWorkerShutdown() 
 [24/04/2014 14:42:53] v3.0.98.472	WorkersManager - Worker closed.
+<<<<<<< HEAD
 =======
 [20/03/2014 14:33:50] v3.0.98.472	WorkersManager - BeginGracefulShutdown() 
 [20/03/2014 14:33:54] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Add:2 , needed:3 , current:1, Ready:1 , Creating: 0 
@@ -3569,3 +3570,57 @@ VALUE:Request timed out. 				The worker process did not respond within the requi
 [28/04/2014 16:37:01] v3.0.98.472	WorkersManager - gracefulWorkerShutdown() 
 [28/04/2014 16:37:03] v3.0.98.472	WorkersManager - Worker closed.
 >>>>>>> 3d41d1cca47d71c7f4d6ab9d0d0a7a6979de8b65
+=======
+[07/05/2014 16:09:55] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Add:1 , needed:2 , current:1, Ready:1 , Creating: 0 
+[07/05/2014 16:10:07] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Remove:1 , needed:1 , current:2, Ready:2 , Creating: 0 
+[07/05/2014 16:10:07] v3.0.98.472	WorkersManager - gracefulWorkerShutdown() 
+[07/05/2014 16:10:09] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Add:1 , needed:2 , current:1, Ready:1 , Creating: 0 
+[07/05/2014 16:10:09] v3.0.98.472	WorkersManager - Worker closed.
+[07/05/2014 16:10:52] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Remove:1 , needed:1 , current:2, Ready:2 , Creating: 0 
+[07/05/2014 16:10:52] v3.0.98.472	WorkersManager - gracefulWorkerShutdown() 
+[07/05/2014 16:10:54] v3.0.98.472	WorkersManager - Worker closed.
+[07/05/2014 16:32:33] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Add:2 , needed:3 , current:1, Ready:1 , Creating: 0 
+[07/05/2014 16:32:33] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Add:2 , needed:3 , current:1, Ready:1 , Creating: 0 
+[07/05/2014 16:32:51] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Remove:1 , needed:2 , current:3, Ready:3 , Creating: 0 
+[07/05/2014 16:32:51] v3.0.98.472	WorkersManager - gracefulWorkerShutdown() 
+[07/05/2014 16:32:53] v3.0.98.472	WorkersManager - Worker closed.
+[07/05/2014 16:33:15] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Remove:1 , needed:1 , current:2, Ready:2 , Creating: 0 
+[07/05/2014 16:33:15] v3.0.98.472	WorkersManager - gracefulWorkerShutdown() 
+[07/05/2014 16:33:17] v3.0.98.472	WorkersManager - Worker closed.
+[07/05/2014 16:34:19] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Add:1 , needed:2 , current:1, Ready:1 , Creating: 0 
+[07/05/2014 16:34:31] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Remove:1 , needed:1 , current:2, Ready:2 , Creating: 0 
+[07/05/2014 16:34:31] v3.0.98.472	WorkersManager - gracefulWorkerShutdown() 
+[07/05/2014 16:34:33] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Add:1 , needed:2 , current:1, Ready:1 , Creating: 0 
+[07/05/2014 16:34:33] v3.0.98.472	WorkersManager - Worker closed.
+[07/05/2014 16:34:40] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Remove:1 , needed:1 , current:2, Ready:2 , Creating: 0 
+[07/05/2014 16:34:40] v3.0.98.472	WorkersManager - gracefulWorkerShutdown() 
+[07/05/2014 16:34:42] v3.0.98.472	WorkersManager - Worker closed.
+[07/05/2014 16:34:44] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Add:1 , needed:2 , current:1, Ready:1 , Creating: 0 
+[07/05/2014 16:35:16] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Remove:1 , needed:1 , current:2, Ready:2 , Creating: 0 
+[07/05/2014 16:35:16] v3.0.98.472	WorkersManager - gracefulWorkerShutdown() 
+[07/05/2014 16:35:18] v3.0.98.472	WorkersManager - Worker closed.
+[07/05/2014 16:35:27] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Add:1 , needed:2 , current:1, Ready:1 , Creating: 0 
+[07/05/2014 16:35:47] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Remove:1 , needed:1 , current:2, Ready:2 , Creating: 0 
+[07/05/2014 16:35:47] v3.0.98.472	WorkersManager - gracefulWorkerShutdown() 
+[07/05/2014 16:35:49] v3.0.98.472	WorkersManager - Worker closed.
+[07/05/2014 16:35:55] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Add:1 , needed:2 , current:1, Ready:1 , Creating: 0 
+[07/05/2014 16:35:57] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Remove:1 , needed:1 , current:2, Ready:2 , Creating: 0 
+[07/05/2014 16:35:57] v3.0.98.472	WorkersManager - gracefulWorkerShutdown() 
+[07/05/2014 16:35:59] v3.0.98.472	WorkersManager - Worker closed.
+[07/05/2014 16:36:07] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Add:1 , needed:2 , current:1, Ready:1 , Creating: 0 
+[07/05/2014 16:36:09] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Add:1 , needed:3 , current:2, Ready:2 , Creating: 0 
+[07/05/2014 16:36:11] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Remove:1 , needed:2 , current:3, Ready:3 , Creating: 0 
+[07/05/2014 16:36:11] v3.0.98.472	WorkersManager - gracefulWorkerShutdown() 
+[07/05/2014 16:36:13] v3.0.98.472	WorkersManager - Worker closed.
+[07/05/2014 16:36:53] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Remove:1 , needed:1 , current:2, Ready:2 , Creating: 0 
+[07/05/2014 16:36:53] v3.0.98.472	WorkersManager - gracefulWorkerShutdown() 
+[07/05/2014 16:36:55] v3.0.98.472	WorkersManager - Worker closed.
+[07/05/2014 16:36:59] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Add:1 , needed:2 , current:1, Ready:1 , Creating: 0 
+[07/05/2014 16:37:03] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Remove:1 , needed:1 , current:2, Ready:2 , Creating: 0 
+[07/05/2014 16:37:03] v3.0.98.472	WorkersManager - gracefulWorkerShutdown() 
+[07/05/2014 16:37:05] v3.0.98.472	WorkersManager - Worker closed.
+[07/05/2014 16:38:06] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Add:1 , needed:2 , current:1, Ready:1 , Creating: 0 
+[07/05/2014 16:38:28] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Remove:1 , needed:1 , current:2, Ready:2 , Creating: 0 
+[07/05/2014 16:38:28] v3.0.98.472	WorkersManager - gracefulWorkerShutdown() 
+[07/05/2014 16:38:30] v3.0.98.472	WorkersManager - Worker closed.
+>>>>>>> 375e180c6cbb84bfa777ed30b5e9ce1714194045
