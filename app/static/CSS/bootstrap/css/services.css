@@ -76,7 +76,7 @@
 	margin-left: 0;
 }
 #service_2 .circle{
-	background: #1189D9;
+	background: #333333;
 	text-align: center;
 	border-radius: 100%;
 	margin: 14px 0 0 0;
@@ -85,7 +85,7 @@
 	box-shadow: 1px 1px 2px 0px #E0E0E0;
 }
 #service_2 .circle img{
-	margin-top: 42px;
+	margin-top: 40px;
 }
 #service_2 .circle1 img{
 	margin-top:49px;

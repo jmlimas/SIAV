@@ -3646,3 +3646,13 @@ VALUE:Request timed out. 				The worker process did not respond within the requi
 [08/05/2014 10:48:00] v3.0.98.472	WorkersManager - gracefulWorkerShutdown() 
 [08/05/2014 10:48:02] v3.0.98.472	WorkersManager - Worker closed.
 >>>>>>> 11900827005053140189f6e38badef5999aabe64
+[09/05/2014 12:35:45] v3.0.98.472	WorkersManager - OnProcessExit() 
+[09/05/2014 12:35:45] v3.0.98.472	WorkersManager - OnProcessExit() 
+[09/05/2014 12:35:47] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Add:1 , needed:1 , current:0, Ready:0 , Creating: 0 
+[09/05/2014 12:35:47] v3.0.98.472	WorkersManager - Worker closed.
+[09/05/2014 12:35:47] v3.0.98.472	WorkersManager - Worker closed.
+[09/05/2014 12:47:56] v3.0.98.472	WorkersManager - OnProcessExit() 
+[09/05/2014 12:47:56] v3.0.98.472	WorkersManager - OnProcessExit() 
+[09/05/2014 12:47:58] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Add:1 , needed:1 , current:0, Ready:0 , Creating: 0 
+[09/05/2014 12:47:58] v3.0.98.472	WorkersManager - Worker closed.
+[09/05/2014 12:47:58] v3.0.98.472	WorkersManager - Worker closed.
