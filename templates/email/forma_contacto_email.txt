@@ -1,0 +1,7 @@
+Estimado(a) {{ nombre }},
+ 
+Se le ha asignado un Avalúo con Folio:  {{ folio }} 
+
+El url para visitarlo es el siguiente: {{ url }}
+ 
+- Colegio Mexicano de Valuación de Nuevo Léon A.C. 

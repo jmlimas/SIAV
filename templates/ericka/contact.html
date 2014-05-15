@@ -77,15 +77,16 @@
                 <p>
                     Nos encantaría saber de ti. ¿Quieres trabajar con nosotros? Danos un poco de información sobre tu proyecto y te contactaremos lo antes posible.</p>
 
-                <form>
+                <form action="" method="post">
+                    {% csrf_token %}
                     <div class="row form">
                         <div class="span6 box">
-                            <input class="name" type="text" placeholder="Nombre">
-                            <input class="mail" type="text" placeholder="Correo">
-                            <input class="phone" type="text" placeholder="Teléfono">
+                            {{forma.Nombre}}
+                            {{forma.Correo}}
+                            {{forma.Telefono}}
                         </div>
                         <div class="span6 box box_r">
-                            <textarea placeholder="Escribe aqui tu mensaje..."></textarea>
+                             {{forma.Mensaje}}
                         </div>
                     </div>
 
@@ -119,7 +120,7 @@
                             </li>
                             <li class="icon">
                                 <span class="contacticos ico2"></span>
-                                <a class="text" href="#">gusreyes01@gmail.com</a>
+                                <a class="text" href="#">hola@alluxi.com</a>
                             </li>
                         </ul>
 

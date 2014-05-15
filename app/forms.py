@@ -728,3 +728,4 @@ class VisitaMasiva(ModelForm):
                 css_class='row'))
         super(VisitaMasiva,  self).__init__(*args,  **kwargs)
 
+

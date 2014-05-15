@@ -29,6 +29,13 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'gusreyes01@gmail.com'
+EMAIL_HOST_PASSWORD = 'ESCUELA20'
+
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',  # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
@@ -147,6 +154,7 @@ TEMPLATE_DIRS = (
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
     "/home/SIAV/templates",
+    "templates",
 )
 
 INSTALLED_APPS = (
