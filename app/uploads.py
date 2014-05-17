@@ -52,14 +52,15 @@ def ajax_upload( request,avaluo_id,folio_k ):
       imagen_avaluo = ImagenAvaluo()
       imagen_avaluo.avaluo_id = avaluo_id
       imagen_avaluo.FolioK = folio_k
-      imagen_avaluo.imagen.save(filename, file_contents)
+      imagen_avaluo.imagen.save(filename.replace(' ','_'), file_contents)
     else:
       archivo_avaluo = ArchivoAvaluo()
       archivo_avaluo.avaluo_id = avaluo_id
       archivo_avaluo.FolioK = folio_k
-      archivo_avaluo.file.save(filename, file_contents)
+      archivo_avaluo.file.save(filename.replace(' ','_'), file_contents)
  
     # let Ajax Upload know whether we saved it or not
     import json
     ret_json = { 'success': 'test','ext':ext }
     return HttpResponse( json.dumps( ret_json ) )
+

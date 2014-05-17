@@ -10,7 +10,7 @@ color:#444;
 h1,h2,h3,h4,h5,h6{
 font-family: "Oswald", sans-serif;
 font-weight:normal;
-color:#666;
+color:#000C61;
 margin:3px 0px;
 padding:3px 0px;
 }
@@ -126,12 +126,12 @@ a.btn-inverse,a.btn-inverse:visited,a.btn-inverse:hover{
 
 header{
 padding:25px 0px 0px 0px;
-border-bottom:1px solid #ddd;
+border-bottom:1px solid #000C61;
 background:url('../img/header-back.png') repeat;
 }
 
 header h1 a, header h1 a:visited, header h1 a:hover{
-color:#777;
+color:#000C61;
 text-decoration:none;
 font-size:45px;
 line-height:55px;
@@ -610,12 +610,12 @@ text-decoration:none;
 border-radius:0px;
 border:none;
 margin:10px 0px;
-color:#666;
+color:#000C61;
 }
 
 .faq .accordion-heading h5{
 font-size:16px;
-color:#888;
+color:#000C61;
 }
 
 .faq .accordion-heading .accordion-toggle {

@@ -31,10 +31,10 @@ def node_api(request):
     except Exception, e:
         return HttpResponseServerError(str(e))
 
-def get_notificaciones(request):
-    comments_enviar = EventoUsuario.objects.filter(recibe_id=request.user).order_by('-date')[:8]
+def get_notificaciones(request,template='home/consultas/notificaciones.html'):
+    comments_enviar = EventoUsuario.objects.filter(recibe_id=request.user).order_by('-date')
     comments = EventoUsuario.objects.filter(recibe_id=request.user,leido=False).order_by('-date')
-    response = render(request, 'home/consultas/notificaciones.html', locals())
+    response = render(request,template, locals())
     comments.update(leido=True)
     return response
 

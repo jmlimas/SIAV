@@ -32,10 +32,10 @@
   <!-- HTML5 Support for IE -->
   <!--[if lt IE 9]>
   <script src="js/html5shim.js"></script>
-  <![endif]-->
+  <![endif] #050074 -->
 
   <!-- Favicon -->
-  <link rel="shortcut icon" href="{{ STATIC_URL }}/ericka_styles/img/favicon/favicon.png">
+  <link rel="shortcut icon" href="{{ STATIC_URL }}img/favicon.ico">
 </head>
 
 <body>
@@ -46,13 +46,14 @@
    <div class="container">
 
  <div class="row">
-         <div class="span4">
+         <div class="span5">
             <!-- Logo and site link -->
             <div class="logo">
-               <h1><a href="index.html">Valuadores del Norte<span class="color">.</span></a></h1>
+               <img src="{{ STATIC_URL }}CSS/images/logo.png" width="100px" id="logo" />
+               <h1><a href="index.html" style="float:right;">Valuadores del Norte<span class="color">.</span></a></h1>
             </div>
          </div>
-         <div class="span4 offset4">
+         <div class="span5 offset2">
             <div class="list">
                <!-- Add your phone number here -->
                <div class="phone">
@@ -162,7 +163,6 @@
 <script src="{{ STATIC_URL }}/ericka_styles/js/jquery.isotope.js"></script>
 <script src="{{ STATIC_URL }}/ericka_styles/js/jquery.prettyPhoto.js"></script>
 <script src="{{ STATIC_URL }}/ericka_styles/js/filter.js"></script>
-<script src="{{ STATIC_URL }}/ericka_styles/js/jquery.tweet.js"></script>
 <script src="{{ STATIC_URL }}/ericka_styles/js/jquery.cslider.js"></script>
 <script src="{{ STATIC_URL }}/ericka_styles/js/modernizr.custom.28468.js"></script>
 <script src="{{ STATIC_URL }}/ericka_styles/js/custom.js"></script>

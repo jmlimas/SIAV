@@ -45,14 +45,14 @@ function createUploader(){
     multiple: true,
     onComplete: function( id, fileName, responseJSON ) {
       if( responseJSON.success )
-        alert( "success!" ) ;
+        alert( "Carga exitosa." ) ;
       else
-        alert( "upload failed!" ) ;
+        alert( "Carga fallida!" ) ;
     },
     onAllComplete: function( uploads ) {
                     // uploads is an array of maps
                     // the maps look like this: { file: FileObject, response: JSONServerResponse }
-                    alert( "All complete!" ) ;
+                    //alert( "All complete!" ) ;
                   },
                   params: {
                     'csrf_token': '{{ csrf_token }}',

@@ -1,15 +1,15 @@
 /* Green Color CSS */
 
 body{
-border-top:3px solid #30add1;
+border-top:3px solid #DA0000;
 }
 
 .color{
-color:#30add1;
+color:#000C61;
 }
 
 a, a:visited{
-color:#30add1;
+color:#000C61;
 }
 
 a:hover{
@@ -17,9 +17,9 @@ color:#29a1c4;
 }
 
 .navbar-inner{
-background: #30add1 !important;
-border-top:1px solid #29a1c4 !important;
-border-bottom:1px solid #29a1c4 !important; 
+background: #050074 !important;
+border-top:1px solid #DA0000 !important;
+border-bottom:1px solid #DA0000 !important; 
 }
 
 .navbar .btn{
@@ -31,16 +31,16 @@ background:#30add1 !important;
 }
 
 .navbar .nav{
-border-right:1px solid #3ba4c2;
+border-right:1px solid #000C61;
 }
 
 .navbar .nav > li > a{
-background: #30add1; 
-border-left:1px solid #3ba4c2;
+background: #050074; 
+border-left:1px solid #000C61;
 }
 
 .navbar .nav > li > a:hover{
-background:#29a1c4 !important;
+background:#0800B1 !important;
 }
 
 .navbar .nav .active > a,
@@ -69,7 +69,7 @@ background:#29a1c4 !important;
 }
 
 .social i{
-background:#30add1;
+background:#DA0000;
 }
 
 .social i:hover{
@@ -97,18 +97,18 @@ border-bottom:2px solid #30add1;
 /* Events - Accordion*/
 
 .events .accordion-heading h5{
-background:#30add1;
+background:#DA0000;
 }
 
 /* Slider */
 
 .da-slider{
-border-top: 4px solid #30add1;
-border-bottom: 4px solid #30add1;
+border-top: 4px solid #000C61;
+border-bottom: 4px solid #000C61;
 }
 
 .da-slide h2{
-color:#30add1;
+color:#000C61;
 }
 
 .da-slide .da-link{
@@ -128,11 +128,11 @@ border-top-color: #30add1;
 /* Feature alt */
 
 .afeature:hover{
-border:5px solid #30add1;
+border:5px solid #000C61;
 }
 
 .afmatter i{
-color:#30add1;
+color:#000C61;
 }
 
 .rpost1:hover,.rpost2:hover{
@@ -140,7 +140,7 @@ border-bottom:2px solid #30add1;
 }
 
 .accordion-heading i{
-color:#30add1;
+color:#DA0000;
 }
 
 .process i{
@@ -212,7 +212,7 @@ background:#30add1;
 }
 
 .about .asocial i{
-background:#30add1;
+background:#DA0000;
 }
 
 .resume h4{
@@ -224,7 +224,7 @@ color:#30add1;
 }
 
 footer{
-border-top:3px solid #30add1;
+border-top:3px solid #DA0000;
 }
 
 footer ul li{
