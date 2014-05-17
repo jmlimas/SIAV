@@ -1,6 +1,7 @@
 from django.db import models
 from decimal import Decimal
 import os
+from PIL import Image
 
 # Create your models here.
 class Estado(models.Model):
@@ -142,6 +143,18 @@ class ImagenAvaluo(models.Model):
 
     def __unicode__(self):
         return unicode(self.FolioK)
+    def save(self):
+        if not self.imagen:
+            return            
+
+        super(ImagenAvaluo, self).save()
+
+        imagen = Image.open(self.imagen)
+        if (imagen.size[0] > 1024):
+            (width, height) = imagen.size     
+            size = ( 1024, 768)
+            imagen = imagen.resize(size, Image.ANTIALIAS)
+        imagen.save(self.imagen.path)   
 
 class ArchivoAvaluo(models.Model):
     archivo_id = models.AutoField(primary_key=True)
@@ -151,6 +164,17 @@ class ArchivoAvaluo(models.Model):
 
     def __unicode__(self):
         return unicode(self.FolioK)
+    def save(self):
+        if not self.imagen:
+            return            
 
+        super(ArchivoAvaluo, self).save()
+
+        imagen = Image.open(self.imagen)
+        if (imagen.size[0] > 1024):
+            (width, height) = imagen.size     
+            size = ( 1024, 768)
+            imagen = imagen.resize(size, Image.ANTIALIAS)
+        imagen.save(self.imagen.path) 
 
 

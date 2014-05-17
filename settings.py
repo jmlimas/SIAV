@@ -159,12 +159,14 @@ INSTALLED_APPS = (
     'django.contrib.humanize',
     'app',
     'websock',
+    'endless_pagination',
     'example_project',
     'south',
     'crispy_forms',
     #'django_socketio',
     #'debug_toolbar',
     'grappelli',
+
     'sorl.thumbnail',
     # Uncomment the next line to enable the admin:
     'django.contrib.admin',
