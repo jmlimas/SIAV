@@ -1,3 +1,12 @@
+<<<<<<< HEAD
+[17.05.2014 17:22:22.020464] [v 3.1.98.508] [tid 0x00001f6c] [sev 3] # a54c50d0 Application has been deployed
+[17.05.2014 17:22:22.021465] [v 3.1.98.508] [tid 0x0000029c] [sev 2] WorkersManager - CreateFirst Worker.
+[17.05.2014 17:23:46.054172] [v 3.1.98.508] [tid 0x00001394] [sev 2] WorkersManager - Ping Failed 
+[17.05.2014 17:23:48.054949] [v 3.1.98.508] [tid 0x00001394] [sev 2] WorkersManager - Worker closed. #1
+[17.05.2014 17:25:17.298286] [v 3.1.98.508] [tid 0x00001488] [sev 3] # a54c50d0 Restarting the application due to changes to file ;__init__.py
+[17.05.2014 17:25:17.298286] [v 3.1.98.508] [tid 0x00001488] [sev 3] # a54c50d0 Application begin gracefulshutdown
+[17.05.2014 17:25:17.298286] [v 3.1.98.508] [tid 0x00001488] [sev 2] WorkersManager - begin bracefulshutdown Application going to shutdown due to changed '__init__.py'
+=======
 [12/02/2014 23:52:18] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Add:1 , needed:2 , current:1, Ready:1 , Creating: 0 
 [12/02/2014 23:52:32] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Remove:1 , needed:1 , current:2, Ready:2 , Creating: 0 
 [12/02/2014 23:52:32] v3.0.98.472	WorkersManager - gracefulWorkerShutdown() 
@@ -2903,6 +2912,7 @@ VALUE:Request timed out. 				The worker process did not respond within the requi
 [16/05/2014 17:51:46] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Remove:1 , needed:1 , current:2, Ready:2 , Creating: 0 
 [16/05/2014 17:51:46] v3.0.98.472	WorkersManager - gracefulWorkerShutdown() 
 [16/05/2014 17:51:48] v3.0.98.472	WorkersManager - Worker closed.
+<<<<<<< HEAD
 [17/05/2014 17:29:22] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Add:1 , needed:2 , current:1, Ready:1 , Creating: 0 
 [17/05/2014 17:29:48] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Remove:1 , needed:1 , current:2, Ready:2 , Creating: 0 
 [17/05/2014 17:29:48] v3.0.98.472	WorkersManager - gracefulWorkerShutdown() 
@@ -3255,3 +3265,6 @@ VALUE:Request timed out. 				The worker process did not respond within the requi
 [20/05/2014 11:30:52] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Remove:1 , needed:1 , current:2, Ready:2 , Creating: 0 
 [20/05/2014 11:30:52] v3.0.98.472	WorkersManager - gracefulWorkerShutdown() 
 [20/05/2014 11:30:54] v3.0.98.472	WorkersManager - Worker closed.
+=======
+>>>>>>> 08efcef6708ef97bbd42a3fd680a5c6c51987ef7
+>>>>>>> 1e94cb385ee6e5ca21b6577e3094ef35ec192564
