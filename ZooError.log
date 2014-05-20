@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 [03/12/2012 16:49:28] v1.1.58.270	ZooApplication I/O Error (500):
  Job:JobFastCgi[#1] - /ALTA 
 
@@ -3783,3 +3784,9 @@ VALUE:Request timed out. 				The worker process did not respond within the requi
 [20/05/2014 12:09:22] v3.0.98.472	WorkersManager AddOrDeleteWorkers() Remove:1 , needed:1 , current:2, Ready:2 , Creating: 0 
 [20/05/2014 12:09:22] v3.0.98.472	WorkersManager - gracefulWorkerShutdown() 
 [20/05/2014 12:09:24] v3.0.98.472	WorkersManager - Worker closed.
+=======
+[17.05.2014 17:22:22.020464] [v 3.1.98.508] [tid 0x00001f6c] [sev 3] # a54c50d0 Application has been deployed
+[17.05.2014 17:22:22.021465] [v 3.1.98.508] [tid 0x0000029c] [sev 2] WorkersManager - CreateFirst Worker.
+[17.05.2014 17:23:46.054172] [v 3.1.98.508] [tid 0x00001394] [sev 2] WorkersManager - Ping Failed 
+[17.05.2014 17:23:48.054949] [v 3.1.98.508] [tid 0x00001394] [sev 2] WorkersManager - Worker closed. #1
+>>>>>>> 54a5fba6357da4902cbd16f2301e2fa6caf7f903
