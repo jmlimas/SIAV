@@ -16,21 +16,21 @@
 
     <style>
       div.ui-datepicker{
-	font-size:10px;
+    font-size:10px;
       }
     </style>
  
  {% endblock %}
  
  {% block script %}
-	
+    
     <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/jquery-datepicker-es.js"></script>
     <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/ajax_estados_municipios.js"></script> <!-- Incluye  sugerencia de colonias.-->
 
     
     <script type="text/javascript"> 
-	
-	$(document).ready( function() {
+    
+    $(document).ready( function() {
     var now = new Date();
     var month = (now.getMonth())+01;               
     var day = now.getDate();
@@ -43,24 +43,24 @@
 
     //$('#id_Mes>option:eq(' + month + ')').prop('selected', true);
     $("#id_Anio").val(year);
-	});
+    });
 
     $(function() {
 
-	  $('#id_Solicitud').datepicker({ autoSize: true });
-	  $('#id_Inicial').datepicker({ autoSize: true });
-	  $('#id_Visita').datepicker({ autoSize: true });
-	  $('#id_Salida').datepicker({ autoSize: true });
-	  $('#id_Final').datepicker({ autoSize: true });
+      $('#id_Solicitud').datepicker({ autoSize: true });
+      $('#id_Inicial').datepicker({ autoSize: true });
+      $('#id_Visita').datepicker({ autoSize: true });
+      $('#id_Salida').datepicker({ autoSize: true });
+      $('#id_Final').datepicker({ autoSize: true });
 
-	$(":input").blur(function() {
-	if(this.id != 'id_Observaciones') {
-	  this.value = this.value.toUpperCase();
-	  }
-	});
-	  
+    $(":input").blur(function() {
+    if(this.id != 'id_Observaciones') {
+      this.value = this.value.toUpperCase();
+      }
     });
-	
+      
+    });
+    
     </script>
 
 <script type="text/javascript">
@@ -91,9 +91,9 @@
         $('#spinner').hide();
     });
 </script>
-	
+    
  <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/mapas.js"></script>
-	
+    
  {% endblock %}      
 
 {% block content %}
@@ -107,14 +107,14 @@
         </p>
     {% endif %}
 
-	{% crispy forma %}	
+    {% crispy forma %}  
    <br>
 
   <div>
     <input id="submit-id-submit" type="submit" value="Buscar" class="btn btn-primary"/>
     <br/>
-    <div class="margin">
-        <span id="spinner"><img src="{{ STATIC_URL }}spinner.gif"/></span>
+    <div class="margin" align="center">
+        <span id="spinner"><img src="{{ STATIC_URL }}spinner_large.gif"/ width="50px"></span>
         <div id="results"></div>
     </div>
 </div>
