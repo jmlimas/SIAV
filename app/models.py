@@ -83,7 +83,7 @@ class Depto(models.Model):
     Digitos = models.CharField(null=True, max_length=15)
     Tolerancia = models.CharField(null=False, max_length=255)
     base = models.DecimalField(null=True, max_digits=15, decimal_places=2)
-    factor = models.DecimalField(null=True, max_digits=5, decimal_places=2)
+    factor = models.DecimalField(null=True, max_digits=6, decimal_places=3)
 
     def __unicode__(self):
         if self.Depto is None:
