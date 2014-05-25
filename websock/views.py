@@ -32,7 +32,7 @@ def node_api(request):
         return HttpResponseServerError(str(e))
 
 def get_notificaciones(request,template='home/consultas/notificaciones.html'):
-    comments_enviar = EventoUsuario.objects.filter(recibe_id=request.user).order_by('-date')
+    comments_enviar = EventoUsuario.objects.filter(recibe_id=request.user).order_by('-date')[:40]
     comments = EventoUsuario.objects.filter(recibe_id=request.user,leido=False).order_by('-date')
     response = render(request,template, locals())
     comments.update(leido=True)

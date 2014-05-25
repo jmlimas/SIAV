@@ -15,7 +15,7 @@ CRISPY_TEMPLATE_PACK = 'bootstrap3'
 #DEBUG_TOOLBAR_PATCH_SETTINGS = False
 
 ALLOWED_HOSTS = ['*']
-DEBUG = True
+DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 THUMBNAIL_DEBUG = True 
 THUMBNAIL_PREFIX ='media/cache/'
@@ -92,12 +92,14 @@ MEDIA_URL = os.path.dirname("media")
 # Don't put anything in this directory yourself; store your static files
 # in apps' "static/" subdirectories and in STATICFILES_DIRS.
 # Example: "/home/media/media.lawrence.com/static/"
-#STATIC_ROOT = 'C:/inetpub/wwwroot/static/'
+STATIC_ROOT = 'C:/inetpub/wwwroot/static/'
 
 # URL prefix for static files.
 # Example: "http://media.lawrence.com/static/"
-#STATIC_URL = 'http://localhost:100/'
-STATIC_URL = '/static/'
+STATIC_URL = 'http://valnorte.net:100/'
+
+# Url para desarrollo
+#STATIC_URL = '/static/'
 
 # Additional locations of static files
 STATICFILES_DIRS = (
