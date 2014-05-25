@@ -5,27 +5,51 @@
 {% block script %}
 <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/jquery.dataTables.js"></script>
 <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}CSS/bootstrap/css/dataTables.boostrap.css">
+<script type="text/javascript" language="javascript" src="{{ STATIC_URL }}/JS/dataTables.tableTools.js"></script>
 <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}/JS/dataTables.bootstrap.js"></script>
-
+<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}CSS/smart-admin.css">
 <script type="text/javascript">
 $(document).ready(function () {
 $(document).ready( function() {
-     $('#avaluos_table').dataTable( {
-        "dom": '&t;"tof"i&gtlp;'
+     oTable = $('#avaluos_table').dataTable( {
+        //"dom": 'T<"clear">lfrtip',
+        "dom": '&t;"tof"T<"clear">i&gtlp;',
+         "language": {
+                "url": "//cdn.datatables.net/plug-ins/28e7751dbec/i18n/Spanish.json"
+            },
+         "tableTools": {
+            "sSwfPath": "{{ STATIC_URL }}swf/copy_csv_xls_pdf.swf"
+        }
      } );
+
      } );
 
   $('#id_Visita').datepicker({ autoSize: true , dateFormat: 'dd/mm/yy'});
+
+
+
 });
 
 
 
 </script>
 {% endblock %}      
+
 {% block content %}
-<h1>Servicios en Proceso</h1>
 <div class="table-responsive">
-  <table id='avaluos_table' class="table">
+<div class="jarviswidget jarviswidget-color-darken jarviswidget-sortable" id="wid-id-0" data-widget-editbutton="false" role="widget">
+<div align="center">
+<h1>Servicios en Proceso</h1>
+</div>
+<span class="jarviswidget-loader">
+  <i class="fa fa-refresh fa-spin"></i>
+</span>
+<div role="content" id="table-my-content">
+<div class="jarviswidget-editbox"></div>
+<div id="dt_basic_wrapper" class="dataTables_wrapper form-inline" role="grid">
+<div class="dt-wrapper">
+  <div class="table-responsive ">
+   <table id='avaluos_table' class="table table-hover">
     <thead>
       <tr class='even'>
         <th>Folio K</th>
@@ -55,11 +79,34 @@ $(document).ready( function() {
       <td>{{a.Colonia}}</td>
       <td>{{a.Municipio}}</td>
       <td>{{a.Prioridad}}</td>
-      <td>{{a.Estatus}}</td>
+      <td ><span class="label label-{%if a.Estatus = 'PROCESO'%}success{%elif a.Estatus = 'DETENIDO'%}default{%endif%}">{{a.Estatus}}</span></td>
       <td>{{ a.Solicitud|dayssince }}</td>
     </tr>
     {% endfor %}
 </body>
   </table>
+    </div>
+  </div>
 </div>
+</div>
+</div>
+</div>
+{% for a in avaluos %}
+<!-- Modal1 -->
+<div id="myModal{{a.FolioK}}" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 align="center" id="myModalLabel">{{a.FolioK}}</h3>
+  </div>
+  <div class="modal-body">
+    <p align="center">¿Estás seguro que deseas dar salida a este servicio?</p>
+  </div>
+  <div class="modal-footer">
+    <button class="btn" data-dismiss="modal" aria-hidden="true">Cancelar</button>
+    <a href="/SIAV/salida_efectiva/{{a.avaluo_id}}" role="button" class="btn btn-primary">Confirmar</a>
+  </div>
+</div>
+{% endfor %}
+
+
 {% endblock %}

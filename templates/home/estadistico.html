@@ -6,6 +6,8 @@
 
 {% load month_convert %}
 
+{% block estadistico %}active{% endblock %}
+
 {% load currency %}
 
 {% load elapsed %}
@@ -165,14 +167,14 @@ $(function () {
     <br>
 
     <div class="row">
-        <div class="control-group">
+            
             {% for a in anios %}
             <div class="controls span2">
                 <label class="checkbox">
                     <input type="checkbox" name="anio_check" value="{{a.year}}" id="check_{{a.year}}">{{a.year}}</label>
             </div>
             {%endfor%}
-        </div>
+
         <br>
         <br></div>
 

@@ -25,6 +25,7 @@ local.properties
 .classpath
 .settings/
 .loadpath
+*.log
 
 # External tool builders
 .externalToolBuilders/
@@ -177,3 +178,4 @@ ZooError.log
 ZooError.log
 ZooError.log
 ZooError.log
+xolch1so.fw5.txt

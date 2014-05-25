@@ -4401,20 +4401,23 @@ a.list-group-item.active > .badge,
   font-weight: 200;
 }
 .container .jumbotron {
-  border-radius: 6px;
+  border-radius: 0px;
 }
 .jumbotron .container {
   max-width: 100%;
 }
 @media screen and (min-width: 768px) {
   .jumbotron {
-    padding-top: 48px;
+    padding-top: 15px;
     padding-bottom: 48px;
+
   }
-  .container .jumbotron {
-    padding-right: 30px;
-    padding-left: 30px;
-  }
+
+
+html,body {height:100%;}
+.special,.special .jumbotron {height:100%;}
+
+
   .jumbotron h1,
   .jumbotron .h1 {
     font-size: 33px;

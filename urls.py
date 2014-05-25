@@ -8,6 +8,9 @@ from django.conf.urls import include, patterns, url
 from django.core.urlresolvers import reverse
 from django.utils.functional import curry
 from django.views.defaults import *
+from django.views.generic import TemplateView
+from django.conf import settings
+from django.conf.urls.static import static
 
 admin.autodiscover()
 
@@ -104,6 +107,8 @@ urlpatterns = patterns(
 
     #Urls del sitio movil
     url(r'^SIAV/mobile/', 'app.views.mobile', name='mobile'),
+
+    url(r'^swf/', 'app.views.swf', name='swf'),
 )
 
     #Urls para sockets
@@ -118,6 +123,5 @@ urlpatterns += patterns('',
 
 
 # Add the static files pattern to the url.
-urlpatterns += staticfiles_urlpatterns()
-
+urlpatterns += staticfiles_urlpatterns() 
 # handler404 = 'app.views.errors.not_found_error'

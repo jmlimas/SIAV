@@ -107,13 +107,13 @@
         {% endif %}
 
     {% if user.is_staff %}
-        <li>
+        <li class="{% block lista_factura %}{% endblock %}">
           <a href="/SIAV/facturar/">Facturar</a>
         </li>
-        <li>
+        <li class="{% block liquidar %}{% endblock %}">
           <a href="/SIAV/liquidar/">Liquidar</a>
         </li>
-        <li>
+        <li class="{% block estadistico %}{% endblock %}">
           <a href="/SIAV/estadistico/{%now "Y"%}">Estadístico</a>
         </li>
       </li>
@@ -147,7 +147,7 @@
 </div>
 
 </nav>
-<div class="container">
+<div class="container special">
 <div class="row">
   <div class="col-md-15">
     <div class="jumbotron">

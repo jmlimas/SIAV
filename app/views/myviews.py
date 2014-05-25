@@ -698,3 +698,6 @@ def visita_masiva(request):
     avaluos = Avaluo.objects.filter(Estatus__contains='PROCESO', Visita__isnull=True, Salida__isnull=True) | Avaluo.objects.filter(Estatus__contains='DETENIDO', Visita__isnull=True, Salida__isnull=True)
     avaluos = avaluos.order_by('-Solicitud')
     return render_to_response('home/visita.html', {'avaluos': avaluos,'visita_masiva':visita_masiva,'visita_masiva':visita_masiva}, context_instance=RequestContext(request))
+
+def swf(request):
+    return HttpResponse('templates/swf/copy_csv_xls_pdf.swf/', content_type="application/x-shockwave-flash")

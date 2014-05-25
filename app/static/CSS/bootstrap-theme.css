@@ -4,6 +4,12 @@
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  */
 
+.btn-group {
+padding-bottom: 5px;
+padding-right: 5px;
+padding-left: 5px;
+}
+
 .btn-default,
 .btn-primary,
 .btn-success,

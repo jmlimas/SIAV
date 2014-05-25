@@ -4,6 +4,12 @@ div.dataTables_length label {
 	text-align: left;
 }
 
+div.DTTT {
+padding-bottom: 5px;
+padding-right: 5px;
+padding-left: 5px;
+}
+
 
 div.dataTables_length select {
 	width: 75px;
@@ -12,6 +18,7 @@ div.dataTables_length select {
 div.dataTables_filter label {
 	font-weight: normal;
 	float: right;
+	padding-right: 5px;
 }
 
 div.dataTables_filter input {
@@ -19,8 +26,8 @@ div.dataTables_filter input {
 }
 
 div.dataTables_info {
-	padding-top: 8px;
-	font-size: 25px;
+
+	font-size: 15px;
 }
 
 div.dataTables_paginate {
@@ -46,6 +53,32 @@ table.dataTable {
 	margin-top: 6px !important;
 	margin-bottom: 6px !important;
 	max-width: none !important;
+
+}
+
+
+.dt-wrapper{
+	background-color: #eee;	
+
+}
+#dt_basic_wrapper{
+	background-color: #eee;	
+
+}
+
+#wid-id-0{
+	background-color: #eee;	
+
+}
+
+#avaluos_table_info{
+	background-color: #eee;	
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+#table-my-content{
+	background-color: #eee;	
+	padding-top: 10px;
 }
 
 table.dataTable thead .sorting,
