@@ -31,15 +31,26 @@
 		  }
 		});
 
+/*
 		if('{{avaluo.Tipo}}' == 'TERRENO'){
 			$("#valor_sugerido").html('<b>Importe Sugerido:  $</b>'+({{avaluo.Depto.base|default_if_none:0}} + 
 				 ({{avaluo.Depto.factor|default_if_none:0}} * {{avaluo.Mconstruccion|default_if_none:0}})));
 		}else{
 			$("#valor_sugerido").html('<b>Importe Sugerido:  $</b>'+({{avaluo.Depto.base|default_if_none:0}} + 
 				 ({{avaluo.Depto.factor|default_if_none:0}} * {{avaluo.Mconstruccion|default_if_none:0}})));
-
 		}
-
+*/
+		if('{{avaluo.Depto.Metodo}}' == 'F'){
+			$("#id_Importe").val((0+{{avaluo.Depto.base|default_if_none:0}})*{{avaluo.Depto.factor|default_if_none:0}})
+		}else if('{{avaluo.Depto.Metodo}}' == 'S'){
+				if('{{avaluo.Tipo}}' == 'TERRENO'){
+					$("#id_Importe").val(({{avaluo.Mterreno}}+{{avaluo.Depto.base|default_if_none:0}})*{{avaluo.Depto.factor|default_if_none:0}})
+				}else{
+					$("#id_Importe").val(({{avaluo.Mconstruccion}}+{{avaluo.Depto.base|default_if_none:0}})*{{avaluo.Depto.factor|default_if_none:0}})				
+				}
+		}else if('{{avaluo.Depto.Metodo}}' == 'V'){
+			$("#id_Importe").val(({{avaluo.Valor}}+{{avaluo.Depto.base|default_if_none:0}})*{{avaluo.Depto.factor|default_if_none:0}})
+		}
 
 		  
     });
@@ -70,7 +81,7 @@
 		<table id="datos_texto" class="table">
 		<tbody>
 		<tr>
-			<td>Avaluo Id : <b>{{ avaluo.avaluo_id }}</b></td>
+			<td>Metodo : {{avaluo.Depto.base}}</td>
 			<td>Folio K : <b>{{ folio_k}}</b></td>
 			<td>Referencia : <b>{{ avaluo.Referencia}}</b></td>
 		</tr>

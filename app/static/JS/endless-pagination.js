@@ -70,18 +70,24 @@
             // On scroll pagination.
             if (settings.paginateOnScroll) {
                 var win = $(window),
-                    doc = $(document);
-                win.scroll(function(){
-                    if (doc.height() - win.height() -
-                        win.scrollTop() <= settings.paginateOnScrollMargin) {
-                        // Do not paginate on scroll if chunks are used and
-                        // the current chunk is complete.
-                        var chunckSize = settings.paginateOnScrollChunkSize;
-                        if (!chunckSize || loadedPages % chunckSize) {
-                            element.find(settings.moreSelector).click();
-                        }
+                    doc = $(document),
+                    div = $('#notification-list');
+
+            jQuery(function($) {
+                div.bind('scroll', function() {
+                    if($(this).scrollTop() + $(this).innerHeight() >= this.scrollHeight) {
+                                    // Do not paginate on scroll if chunks are used and
+                                    // the current chunk is complete.
+                                    var chunckSize = settings.paginateOnScrollChunkSize;
+                                    if (!chunckSize || loadedPages % chunckSize) {
+                                        element.find(settings.moreSelector).click();
+                                    }
+                                
                     }
-                });
+                })
+            });
+
+
             }
 
             // Digg-style pagination.
