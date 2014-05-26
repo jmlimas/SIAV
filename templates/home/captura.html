@@ -16,17 +16,39 @@
 <script type="text/javascript">
 $(document).ready(function () {
 $(document).ready( function() {
-     oTable = $('#avaluos_table').dataTable( {
-        //"dom": 'T<"clear">lfrtip',
+    var oTable = $('#avaluos_table').DataTable({
         "dom": '&t;"tof"T<"clear">i&gtlp;',
-         "language": {
-                "url": "//cdn.datatables.net/plug-ins/28e7751dbec/i18n/Spanish.json"
-            },
-         "tableTools": {
+        "tableTools": {
             "sSwfPath": "{{ STATIC_URL }}swf/copy_csv_xls_pdf.swf"
-        }
+        },
+     }
+
+      );
+
+ $("#avaluos_table #thead_2 th").each( function ( i ) {
+        var select = $('<select style="max-width:60px; ><option style="max-width:60px; value=""></option></select>')
+            .appendTo( $(this).empty() )
+            .on( 'change', function () {
+                oTable.column( i )
+                    .search( $(this).val() )
+                    .draw();
+            } );
+
+           oTable.column( i ).data().unique().sort().each( function ( d, j ) {
+            select.append( '<option value="'+d+'" style="max-width:60px;">'+d+'</option>' )
+
+        } );
+
+
+
+      } );      
+
+    
+
+
      } );
-     } );
+
+
 
   $('#id_Visita').datepicker({ autoSize: true , dateFormat: 'dd/mm/yy'});
 
@@ -53,11 +75,11 @@ $(document).ready( function() {
 <div class="dt-wrapper">
   <div class="table-responsive ">
  <table id='avaluos_table' class="table table-hover">
+    
     <thead>
-      <tr>
-        <th >Folio K</th>
-        <th  >Ref.</th>
-        <th >Cliente</th>
+        <th>Folio K</th>
+        <th>Ref.</th>
+        <th>Cliente</th>
         <th>Calle</th>
         <th >Ext.</th>
         <th >Int.</th>
@@ -67,9 +89,23 @@ $(document).ready( function() {
         <th >Estatus</th>
         <th>Dias</th>
         <th >Captura</th>
-      </tr>
     </thead>
-<body>
+    <thead id="thead_2">
+        <th>Folio K</th>
+        <th>Ref.</th>
+        <th>Cliente</th>
+        <th>Calle</th>
+        <th >Ext.</th>
+        <th >Int.</th>
+        <th >Colonia</th>
+        <th >Municipio</th>
+        <th >Prio.</th>
+        <th >Estatus</th>
+        <th>Dias</th>
+        <th></th>
+        </thead>
+<tbody>
+
     {% for a in avaluos %}
     <tr class="{% if a.Solicitud|dayssince|add:"0" > a.Depto.Tolerancia|add:"0" and a.Estatus != 'DETENIDO' %}danger{% endif%}">
       <td >{{a.FolioK}}</td>
@@ -89,7 +125,8 @@ $(document).ready( function() {
       </td>
     </tr>
     {% endfor %}
-</body>
+</tbody>
+
   </table>
     </div>
   </div>

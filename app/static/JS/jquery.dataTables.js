@@ -10678,7 +10678,7 @@
 			 *      } );
 			 *    } );
 			 */
-			"sEmptyTable": "No hay datos para mostrar.",
+			"sEmptyTable": "NingÃºn dato disponible en esta tabla",
 	
 	
 			/**
@@ -10710,7 +10710,7 @@
 			 *      } );
 			 *    } );
 			 */
-			"sInfo": "_END_ Servicios",
+			"sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
 	
 	
 			/**
@@ -10731,7 +10731,7 @@
 			 *      } );
 			 *    } );
 			 */
-			"sInfoEmpty": "0 Servicios",
+			"sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
 	
 	
 			/**
@@ -10753,7 +10753,7 @@
 			 *      } );
 			 *    } );
 			 */
-			"sInfoFiltered": "(Total de _MAX_ Servicios)",
+			"sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
 	
 	
 			/**
@@ -10998,7 +10998,7 @@
 			 *      } );
 			 *    } );
 			 */
-			"sZeroRecords": "Ningún registro coincide con la búsqueda"
+			"sZeroRecords": "No se encontraron resultados"
 		},
 	
 	

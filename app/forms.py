@@ -269,8 +269,8 @@ class CapturaAvaluo(ModelForm):
     Prioridad = forms.ChoiceField(choices=PRIORIDAD)
     Referencia = forms.CharField(required=False)
     Solicitud = forms.DateField(label="Fecha Solicitud", widget=forms.DateInput(format='%d/%m/%Y'),  input_formats=['%d/%m/%Y'])
-    Mterreno = forms.DecimalField(required=False)
-    Mconstruccion = forms.DecimalField(required=False)
+    Mterreno = forms.DecimalField(required=False, widget=forms.TextInput())
+    Mconstruccion = forms.DecimalField(required=False, widget=forms.TextInput())
     LatitudG = forms.DecimalField(required=False, label="Lon.G.")
     LatitudM = forms.DecimalField(required=False, label="Lon.M.")
     LatitudS = forms.DecimalField(required=False, label="Lon.S.")
@@ -341,9 +341,9 @@ class CapturaAvaluo(ModelForm):
 
 class SalidaAvaluo(ModelForm):
     Referencia = forms.CharField(required=True)
-    Mterreno = forms.DecimalField(required=True)
+    Mterreno = forms.DecimalField(required=True, widget=forms.TextInput())
     Gastos = forms.DecimalField(required=True, widget=forms.TextInput())
-    Mconstruccion = forms.DecimalField(required=True)
+    Mconstruccion = forms.DecimalField(required=True, widget=forms.TextInput())
     Observaciones = forms.CharField(widget=forms.Textarea, required=False)
     Salida = forms.DateField(label="Fecha Salida", widget=forms.DateInput(format='%d/%m/%Y'),  input_formats=['%d/%m/%Y'])
     Valor = forms.DecimalField(required=True, widget=forms.TextInput())
