@@ -131,7 +131,6 @@ class Avaluo(models.Model):
     Pagado = models.NullBooleanField(null=True)
     Observaciones = models.CharField(null=True, max_length=255)
 
-
 def get_image_path(folder, filename):
     return os.path.join('media/',str(folder), filename)
 

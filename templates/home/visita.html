@@ -35,7 +35,7 @@ $(document).ready(function () {
                     .search( $(this).val() )
                     .draw();
             } );
-
+            select.append( '<option value="'+" "+'" style="max-width:60px;">'+"---"+'</option>' )
            oTable.column( i ).data().unique().sort().each( function ( d, j ) {
             select.append( '<option value="'+d+'" style="max-width:60px;">'+d+'</option>' )
 
@@ -150,19 +150,18 @@ $('#visita_masiva_button').click(function () {
       </tr>
     </thead>
     <thead id="thead_2">
-        <th>Folio K</th>
-        <th>Ref.</th>
-        <th>Cliente</th>
-        <th>Calle</th>
-        <th >Ext.</th>
-        <th >Int.</th>
-        <th >Colonia</th>
-        <th >Municipio</th>
-        <th >Prio.</th>
-        <th >Estatus</th>
-        <th>Dias</th>
-        <th></th>
-        <th></th>
+        <th ></th>
+        <th class="sh">Cliente</th>
+        <th class="sh">Calle</th>
+        <th class="sh" >Ext.</th>
+        <th class="sh" >Int.</th>
+        <th class="sh" >Colonia</th>
+        <th class="sh" >Municipio</th>
+        <th class="sh" >Prio.</th>
+        <th class="sh" >Estatus</th>
+        <th class="sh">Dias</th>
+        <th class="sh"></th>
+        <th class="sh"></th>
         </thead>
 <body>
     {% for a in avaluos %}

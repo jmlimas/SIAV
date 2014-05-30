@@ -15,9 +15,9 @@
 */
 border-separate thead tr, .table thead tr {
 background-color: #eee;
-background-image: -webkit-gradient(linear,0 0,0 100%,from(#f2f2f2),to(#fafafa));
+/*background-image: -webkit-gradient(linear,0 0,0 100%,from(#f2f2f2),to(#fafafa));
 background-image: -webkit-linear-gradient(top,#f2f2f2 0,#fafafa 100%);
-background-image: -linear-gradient(top,#f2f2f2 0,#fafafa 100%);
+background-image: -linear-gradient(top,#f2f2f2 0,#fafafa 100%);*/
 font-size: 12px;
 }
 

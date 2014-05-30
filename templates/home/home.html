@@ -28,7 +28,7 @@ $(document).ready( function() {
                     .search( $(this).val() )
                     .draw();
             } );
-
+           select.append( '<option value="'+" "+'" style="max-width:60px;">'+"-----"+'</option>' )
            oTable.column( i ).data().unique().sort().each( function ( d, j ) {
             select.append( '<option value="'+d+'" style="max-width:60px;">'+d+'</option>' )
 

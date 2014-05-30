@@ -216,13 +216,13 @@ $(function () {
 
         <table class="table table-hover" style="width:83%;margin-top:50px">
             <thead>
-                <th>Departamento</th>
-                <th>Tiempo Promedio de Respuesta (Ultimos 30 dias)</th>
+                <th>Cliente</th>
+                <th>Pasados en Tolerancia</th>
             </thead>
-            {% for a,b in anio|elapsed %}
+            {% for a in en_tiempo %}
             <tr>
-                <td>{{ a }}</td>
-                <td>{{ b }} dias</td>
+                <td>{{a.1}}</td>
+                <td>{{a.2}}</td>
             </tr>
             {% endfor %}
         </table>

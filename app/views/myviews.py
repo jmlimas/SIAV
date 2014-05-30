@@ -26,7 +26,7 @@ from decimal import Decimal
 from django.forms.models import model_to_dict
 from django.shortcuts import render
 from django.forms.util import ErrorList
-
+from django.db.models import F
 
 current_directory = os.path.dirname(os.path.abspath(__file__))
 
@@ -144,6 +144,24 @@ def liquidar(request):
 #   Se planea segmentar para generar diferentes clases de estadistico.
 @staff_member_required
 def estadistico(request, anio=2013):
+
+    def dayssince(value):
+        if value is None:
+            return '0'
+        #"Returns number of days between today and value."
+        today = datetime.date.today()
+        diff  = today - value
+        if diff.days > 1:
+            return '%s' % diff.days
+        elif diff.days == 1:
+            return '1'
+        elif diff.days == 0:
+            return '0'
+        else:
+            # Date is in the future; return formatted date.
+            return value.strftime("%B %d, %Y")
+
+
     anios = Avaluo.objects.all().dates('Salida', 'year')
     avaluos = Avaluo.objects.extra(select={'month': 'extract( month from Salida )'}).values('month').filter(Salida__year=anio).order_by('month').annotate(dcount=Count('Solicitud'), Total=Sum('Importe'))
     #avaluos = Avaluo.objects.extra(select={'month': 'extract( month from Salida )'}).values('month').filter(Salida__year=anio).order_by('month').annotate(dcount=Count('Solicitud'), Total=Sum('Importe'))
@@ -151,6 +169,16 @@ def estadistico(request, anio=2013):
     tiempo_respuesta = Avaluo.objects.filter(Salida__year=anio).values('Depto__Depto','Solicitud','Salida').annotate(Total=Sum('Importe'), Cantidad=Count('Cliente'))
     monto_todos_anios = Avaluo.objects.extra(select={'year': 'extract( year from Salida )'}).values('year').annotate(Total=Sum('Importe')).order_by('year')
 
+
+    #en_proceso = Avaluo.objects.filter(Estatus__contains='PROCESO', Salida__isnull=True) | Avaluo.objects.filter(Estatus__contains='DETENIDO', Salida__isnull=True)
+    #cantidad_en_proceso =  en_proceso.values('Cliente__Cliente')
+    #en_tiempo = cantidad_en_proceso.filter(Solicitud__gt=F('Solicitud') + datetime.timedelta(days=int(F('Tolerancia')))).annotate(Cantidad=Count('Cliente'))
+
+    from django.db import connection, transaction
+    cursor = connection.cursor()
+    cursor.execute('SELECT t1.avaluo_id, t3.Cliente as Cliente, Count(t1.avaluo_id) as Cantidad FROM siavdb.app_avaluo t1 INNER JOIN siavdb.app_depto t2 on t1.Depto_id = t2.Depto_id INNER JOIN siavdb.app_cliente t3 on t2.Cliente_id_id = t3.Cliente_id WHERE t1.Estatus in ("PROCESO","DETENIDO") AND t1.Salida is null AND CURDATE() > DATE_ADD(t1.Solicitud,INTERVAL t2.tolerancia DAY) GROUP BY t3.Cliente WITH ROLLUP;')
+    en_tiempo = cursor.fetchall()
+    #pasados = cantidad_en_proceso.filter(Solicitud__lt=F('Solicitud') + datetime.timedelta(days=int(3))).annotate(Cantidad=Count('Cliente'))
 
     total_general = 0.00
     total_avaluos = 0
@@ -166,7 +194,7 @@ def estadistico(request, anio=2013):
             total_general += float(str(x['Total']))
             total_avaluos += x['dcount']
     totales = [total_avaluos, total_general]
-    return render_to_response('home/estadistico.html', {'avaluos': avaluos, 'totales': totales, 'anio': anio, 'anios': anios, 'monto_todos_anios': monto_todos_anios, 'cliente': cliente, 'tiempo_respuesta': tiempo_respuesta}, context_instance=RequestContext(request))
+    return render_to_response('home/estadistico.html', locals(), context_instance=RequestContext(request))
 
 @login_required
 def estadistico_js(request, anio=2013):
@@ -701,3 +729,4 @@ def visita_masiva(request):
 
 def swf(request):
     return HttpResponse('templates/swf/copy_csv_xls_pdf.swf/', content_type="application/x-shockwave-flash")
+
