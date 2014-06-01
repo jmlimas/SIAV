@@ -4386,7 +4386,9 @@ a.list-group-item.active > .badge,
   margin-left: 3px;
 }
 .jumbotron {
-  padding: 30px;
+  padding-left: 55px;
+  padding-top: 30px;
+  padding-right: 30px;
   margin-bottom: 30px;
   color: #666;
   background-color: #eee;
