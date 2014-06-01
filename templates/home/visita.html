@@ -10,19 +10,23 @@
 {% block visita %}active{% endblock %}
 
 {% block script %}
+
+  <style type="text/css">
+    @import "{{ STATIC_URL }}CSS/fileuploader.css";
+  </style>
+
+
 <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/jquery.dataTables.js"></script>
 <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}CSS/bootstrap/css/dataTables.boostrap.css">
-<script type="text/javascript" language="javascript" src="{{ STATIC_URL }}/JS/dataTables.tableTools.js"></script>
 <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}/JS/dataTables.bootstrap.js"></script>
+
+
 <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}CSS/smart-admin.css">
 
 <script type="text/javascript">
 $(document).ready(function () {
     var oTable = $('#avaluos_table').DataTable({
         "dom": '&t;"tof"T<"clear">i&gtlp;',
-        "tableTools": {
-            "sSwfPath": "{{ STATIC_URL }}swf/copy_csv_xls_pdf.swf"
-        },
      }
 
       );

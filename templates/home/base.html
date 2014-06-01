@@ -24,11 +24,10 @@
   @import "{{ STATIC_URL }}CSS/bootstrap.css";
   @import "{{ STATIC_URL }}CSS/bootstrap-responsive.css";
   @import "{{ STATIC_URL }}CSS/smoothness/jquery-ui-1.8.24.custom.css";
-  @import "{{ STATIC_URL }}CSS/jquery.ui.chatbox.css";
-  @import "{{ STATIC_URL }}CSS/fileuploader.css";
+/*  @import "{{ STATIC_URL }}CSS/jquery.ui.chatbox.css";*/
   @import "{{ STATIC_URL }}CSS/Style.css";
-  @import "{{ STATIC_URL }}CSS/table_style.css";
-  /*
+/*  @import "{{ STATIC_URL }}CSS/table_style.css";
+*/  /*
   @import "{{ STATIC_URL }}CSS/jdpicker.css";
   */
   </style>
@@ -171,8 +170,9 @@
 <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/jquery-1.8.2.min.js"></script>
 <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/jquery.jdpicker.js"></script>
 <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/jquery-ui-1.8.24.custom.min.js"></script>
-<script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/jquery.ui.chatbox.js"></script>
-<script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/jquery.cookie.js"></script>
+<!-- <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/jquery.ui.chatbox.js"></script>
+ -->
+ <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/jquery.cookie.js"></script>
 <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/bootstrap.js"></script>
 <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/autoNumeric.js"></script>
 <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/socket.io.js"></script>
@@ -180,23 +180,23 @@
 <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/topRight.js"></script>
 <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/noty/themes/default.js"></script>
 <script type="text/javascript">
-$(document).ready(function(){
-  var box = null;
-  box = $("#chat_div").chatbox({id:'{{user.username}}', 
-    user:{key : "value"},
-    hidden: true,
-    title : "chat",
+// $(document).ready(function(){
+//   var box = null;
+//   box = $("#chat_div").chatbox({id:'{{user.username}}', 
+//     user:{key : "value"},
+//     hidden: true,
+//     title : "chat",
 
 
-    messageSent : function(id, user, msg) {
-      $("#log").append(id + " said: " + msg + "<br/>");
-      $("#chat_div").chatbox("option", "boxManager").addMsg(id, msg);
-    }});
+//     messageSent : function(id, user, msg) {
+//       $("#log").append(id + " said: " + msg + "<br/>");
+//       $("#chat_div").chatbox("option", "boxManager").addMsg(id, msg);
+//     }});
 
 
-  $('.ui-chatbox-content').toggle();
+//   $('.ui-chatbox-content').toggle();
 
-});
+// });
 
 
 </script>
