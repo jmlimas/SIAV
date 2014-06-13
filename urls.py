@@ -58,7 +58,11 @@ urlpatterns = patterns(
 
     url(r'^SIAV/visita/', 'app.views.visita', name='visita'),
     url(r'^SIAV/edita_visita/(\d+)/$', 'app.views.edita_visita', name='edita_visita'),
+
+    #Url para eventos masivos
     url(r'^SIAV/visita_masiva/$', 'app.views.visita_masiva', name='visita_masiva'),
+    url(r'^SIAV/captura_masiva/$', 'app.views.captura_masiva', name='captura_masiva'),
+
     url(r'^SIAV/show_visita_pdf/(\d+)/$', 'app.views.show_visita_pdf', name='show_visita_pdf'),
 
     url(r'^SIAV/captura/', 'app.views.captura', name='captura'),
@@ -80,8 +84,8 @@ urlpatterns = patterns(
 
     url(r'^SIAV/liquidar/', 'app.views.liquidar', name='liquidar'),
 
-    url(r'^SIAV/estadistico_js/', 'app.views.estadistico_js', name='estadistico_js'),
-    url(r'^SIAV/estadistico/(\d+)/$', 'app.views.estadistico', name='estadistico'),
+    url(r'^SIAV/estadistico_anio_js/', 'app.views.estadistico_anio_js', name='estadistico_anio_js'),
+    url(r'^SIAV/estadistico/(\d+)/(\d+)/$', 'app.views.estadistico', name='estadistico'),
     #url(r'^SIAV/estadistico/', 'app.views.estadistico', name = 'estadistico'),
 
     url(r'^SIAV/submitted/', 'app.views.submitted', name='submitted'),

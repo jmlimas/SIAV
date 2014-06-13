@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 from app.models import *
 from django import forms
 from django.forms import ModelForm
@@ -185,7 +186,7 @@ class FormaSencillaPaquete(forms.Form):
 
 class FormaPaquete(forms.Form):
     Referencia = forms.CharField(required=False)
-    Calle = forms.CharField()
+    Calle = forms.CharField(required=True)
     NumExt = forms.CharField(label="Num. Ext.", required=False)
     NumInt = forms.CharField(label="Num. Int.", required=False)
     class Meta:
@@ -196,8 +197,24 @@ class FormaPaquete(forms.Form):
             raise forms.ValidationError("Ya existe un Avaluo con esta Referencia.")
         else:
             return self.cleaned_data['Referencia'] or None
-
-PaqueteFormset = formsets.formset_factory(FormaPaquete,can_delete=True)
+    def __init__(self,  *args,  **kwargs):
+        self.helper = FormHelper()
+        self.helper.form_method = 'post'
+        self.helper.form_tag = False
+        self.helper.layout = Layout(
+                Div(
+                    'Referencia',
+                    css_class='col-md-3'),
+                Div(
+                    'Calle',
+                    css_class='col-md-3'),
+                Div(
+                    'NumExt',
+                    css_class='col-md-3'),
+                Div('NumInt',
+                    css_class='col-md-3'))
+        super(FormaPaquete,  self).__init__(*args,  **kwargs)
+PaqueteFormset = formsets.formset_factory(FormaPaquete,can_delete=True, extra=1)
 # Define the same formset, with no forms (so we can demo the form template):
 EmptyPaqueteFormset = formsets.formset_factory(FormaPaquete, extra=0)
 
@@ -337,7 +354,9 @@ class CapturaAvaluo(ModelForm):
                 Submit('submit',  'Enviar',  css_class='btn-success')
             ))
         super(CapturaAvaluo,  self).__init__(*args,  **kwargs)
-        self.fields['Municipio'] = forms.ModelChoiceField(queryset=Municipio.objects.filter(estado_id__is_active='True'))
+        if self.instance:
+            estado = self.instance.Estado
+        self.fields['Municipio'] = forms.ModelChoiceField(queryset=Municipio.objects.filter(estado_id__is_active='True',estado_id=estado))
 
 class SalidaAvaluo(ModelForm):
     Referencia = forms.CharField(required=True)
@@ -495,7 +514,6 @@ class RespuestaConsultaMaster(ModelForm):
     Observaciones = forms.CharField(widget=forms.Textarea, required=False)
     Factura = forms.CharField( required=False)
     Pagado = forms.BooleanField(required=False)
-
     class Meta:
         model = Avaluo
         exclude = ('Declat','Declon',)
@@ -508,6 +526,7 @@ class RespuestaConsultaMaster(ModelForm):
     def clean_Referencia(self):
         return self.cleaned_data['Referencia'] or None
     def __init__(self,  *args,  **kwargs):
+
         self.helper = FormHelper()
         self.helper.form_id = 'id-RespuestaConsultaMaster'
         self.helper.form_class = 'blueForms'
@@ -563,9 +582,14 @@ class RespuestaConsultaMaster(ModelForm):
             ButtonHolder(
                 Submit('submit',  'Guardar',  css_class='btn-success')
             ))
+
+
         super(RespuestaConsultaMaster,  self).__init__(*args,  **kwargs)
-        self.fields['Municipio'] = forms.ModelChoiceField(queryset=Municipio.objects.filter(estado_id__is_active='True'))
-        self.fields['Depto'] = forms.ModelChoiceField(required=False, queryset=Depto.objects.all())
+        if self.instance:
+            estado = self.instance.Estado
+            cliente = self.instance.Cliente
+        self.fields['Municipio'] = forms.ModelChoiceField(queryset=Municipio.objects.filter(estado_id__is_active='True',estado_id=estado))
+        self.fields['Depto'] = forms.ModelChoiceField(required=False, queryset=Depto.objects.filter(cliente_id=cliente))
 
 
 class FormaConsultaSencilla(ModelForm):
@@ -728,3 +752,21 @@ class VisitaMasiva(ModelForm):
                 css_class='row'))
         super(VisitaMasiva,  self).__init__(*args,  **kwargs)
 
+class CapturaMasiva(ModelForm):
+    Mterreno = forms.DecimalField(required=False, label="Mts. Terreno")
+    Mconstruccion = forms.DecimalField(required=False, label="Mts. Construcción")
+    class Meta:
+        model = Avaluo
+        fields = ('Mterreno', 'Mconstruccion')
+
+    def __init__(self,  *args,  **kwargs):
+        self.helper = FormHelper()
+        self.helper.form_id = 'id-CapturaMasiva'
+        self.helper.form_class = 'blueForms'
+        self.helper.form_method = 'POST'
+        self.helper.form_tag = False
+        self.helper.layout = Layout(
+            Div(Div('Mterreno'),
+                Div('Mconstruccion'),
+                css_class='row'))
+        super(CapturaMasiva,  self).__init__(*args,  **kwargs)

@@ -22,7 +22,7 @@
 <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/highcharts.js"></script>
 <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/boostrap-tab.js"></script>
 <script>
-var pre_url = "/SIAV/estadistico_js/?anio="+{{anio}};
+var pre_url = "/SIAV/estadistico_anio_js/?anio="+{{anio}};
 $.getScript( pre_url, function() {});
 
 $('input[name="anio_check"]').each(function() {
@@ -31,13 +31,23 @@ $('input[name="anio_check"]').each(function() {
     }
 });
 
-$( ":checkbox" ).change(function() {
+$( ".anio" ).change(function() {
     check_anio = "";
     $('input[name="anio_check"]:checked').each(function() {
        check_anio += (this.value+",");
        console.log(check_anio);
     });
-    var url = "/SIAV/estadistico_js/?anio="+check_anio;
+    var url = "/SIAV/estadistico_anio_js/?anio="+check_anio;
+    $.getScript( url, function() {});
+});
+
+$( ".mes" ).change(function() {
+    check_anio = "";
+    $('input[name="mes_check"]:checked').each(function() {
+       check_mes += (this.value+",");
+       console.log(check_mes);
+    });
+    var url = "/SIAV/estadistico_mes_js/?mes="+check_mes;
     $.getScript( url, function() {});
 });
 </script>
@@ -130,7 +140,7 @@ $(function () {
             },
             series: [{
                 type: 'pie',
-                name: 'Browser share',
+                name: 'Porcentaje',
                 data: [
                 {% for a in cliente %}
                 {% if a.Total %}
@@ -158,6 +168,9 @@ $(function () {
     <li>
         <a href="#historial" data-toggle="tab">Historial</a>
     </li>
+    <li>
+        <a href="#tolerancia" data-toggle="tab">Tolerancia</a>
+    </li>
 </ul>
 
 <div id="my-tab-content" class="tab-content">
@@ -171,7 +184,7 @@ $(function () {
             {% for a in anios %}
             <div class="controls span2">
                 <label class="checkbox">
-                    <input type="checkbox" name="anio_check" value="{{a.year}}" id="check_{{a.year}}">{{a.year}}</label>
+                    <input type="checkbox" class="anio" name="anio_check" value="{{a.year}}" id="check_{{a.year}}">{{a.year}}</label>
             </div>
             {%endfor%}
 
@@ -190,6 +203,7 @@ $(function () {
         </div>
         <br>
         <table class="table table-hover" style="width:83%;margin-top:50px">
+
             <thead>
                 <th>Mes</th>
                 <th>Cantidad Avaluos</th>
@@ -213,26 +227,19 @@ $(function () {
                 </td>
             </tr>
         </table>
-
-        <table class="table table-hover" style="width:83%;margin-top:50px">
-            <thead>
-                <th>Cliente</th>
-                <th>Pasados en Tolerancia</th>
-            </thead>
-            {% for a in en_tiempo %}
-            <tr>
-                <td>{{a.1}}</td>
-                <td>{{a.2}}</td>
-            </tr>
-            {% endfor %}
-        </table>
-
     </div>
 </div>
 <div class="tab-pane" id="cliente">
-    <h1>Clientes {{anio}}</h1>
+    <h1>Clientes /{{mes}}/{{anio}}</h1>
     <br>
-    <div class="container">
+    <div align="right" class="container">
+                    <select onChange="" class="select">
+                    {% for m in meses %}
+                    <option name="{{m.1}}" value="{{m.0}}">{{m.1}}</option>
+                    {%endfor%}
+                </select>
+        <br>
+        <br>
         <div class="row">
             <div class="col-md-8">
                 <div id="pie_container"></div>
@@ -241,11 +248,13 @@ $(function () {
                 <table class="table table-hover" style="width:50%;margin-left:10px;">
                     <thead>
                         <th>Cliente</th>
+                        <th>Cantidad</th>
                         <th>Importe</th>
                     </thead>
                     {% for a in cliente %}
                     <tr>
                         <td>{{a.Cliente__Cliente}}</td>
+                        <td>{{a.Cantidad}}</td>
                         <td>{{ a.Total|currency }}</td>
                     </tr>
                     {% endfor %}
@@ -280,8 +289,36 @@ $(function () {
         </div>
     </div>
 </div>
+
+<div class="tab-pane" id="tolerancia">
+    <h1>Tolerancia</h1>
+    <br>
+    <div class="container">
+        <div class="row">
+            <table class="table table-hover" style="width:83%;margin-top:50px">
+            <thead>
+                <th>Cliente</th>
+                
+                <th>En tiempo</th>
+                <th> < 3 dias</th>
+                <th> > 3 dias</th>  
+                <th>Total</th>        
+            </thead>
+            {% for a in en_tiempo %}
+            <tr>
+                <td>{{a.1}}</td>
+                <td>{{a.3}}</td>
+                <td>{{a.4}}</td>
+                <td>{{a.5}}</td>
+                <td><b>{{a.2}}</b></td>
+            </tr>
+            {% endfor %}
+        </table>
 </div>
 
+</div>
+</div>
+</div>
 <br>
 <br>
 <ul class="breadcrumb">

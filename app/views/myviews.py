@@ -143,42 +143,19 @@ def liquidar(request):
 #   Vista para generar estadisticos en Highcharts
 #   Se planea segmentar para generar diferentes clases de estadistico.
 @staff_member_required
-def estadistico(request, anio=2013):
-
-    def dayssince(value):
-        if value is None:
-            return '0'
-        #"Returns number of days between today and value."
-        today = datetime.date.today()
-        diff  = today - value
-        if diff.days > 1:
-            return '%s' % diff.days
-        elif diff.days == 1:
-            return '1'
-        elif diff.days == 0:
-            return '0'
-        else:
-            # Date is in the future; return formatted date.
-            return value.strftime("%B %d, %Y")
-
+def estadistico(request, anio=2013, mes=01):
 
     anios = Avaluo.objects.all().dates('Salida', 'year')
+    meses = MESES
     avaluos = Avaluo.objects.extra(select={'month': 'extract( month from Salida )'}).values('month').filter(Salida__year=anio).order_by('month').annotate(dcount=Count('Solicitud'), Total=Sum('Importe'))
-    #avaluos = Avaluo.objects.extra(select={'month': 'extract( month from Salida )'}).values('month').filter(Salida__year=anio).order_by('month').annotate(dcount=Count('Solicitud'), Total=Sum('Importe'))
-    cliente = Avaluo.objects.filter(Salida__year=anio).values('Cliente__Cliente').annotate(Total=Sum('Importe'), Cantidad=Count('Cliente'))
+    cliente = Avaluo.objects.filter(Salida__year=anio).filter(Salida__month=mes).values('Cliente__Cliente').annotate(Total=Sum('Importe'), Cantidad=Count('Cliente'))
     tiempo_respuesta = Avaluo.objects.filter(Salida__year=anio).values('Depto__Depto','Solicitud','Salida').annotate(Total=Sum('Importe'), Cantidad=Count('Cliente'))
     monto_todos_anios = Avaluo.objects.extra(select={'year': 'extract( year from Salida )'}).values('year').annotate(Total=Sum('Importe')).order_by('year')
 
-
-    #en_proceso = Avaluo.objects.filter(Estatus__contains='PROCESO', Salida__isnull=True) | Avaluo.objects.filter(Estatus__contains='DETENIDO', Salida__isnull=True)
-    #cantidad_en_proceso =  en_proceso.values('Cliente__Cliente')
-    #en_tiempo = cantidad_en_proceso.filter(Solicitud__gt=F('Solicitud') + datetime.timedelta(days=int(F('Tolerancia')))).annotate(Cantidad=Count('Cliente'))
-
     from django.db import connection, transaction
     cursor = connection.cursor()
-    cursor.execute('SELECT t1.avaluo_id, t3.Cliente as Cliente, Count(t1.avaluo_id) as Cantidad FROM siavdb.app_avaluo t1 INNER JOIN siavdb.app_depto t2 on t1.Depto_id = t2.Depto_id INNER JOIN siavdb.app_cliente t3 on t2.Cliente_id_id = t3.Cliente_id WHERE t1.Estatus in ("PROCESO","DETENIDO") AND t1.Salida is null AND CURDATE() > DATE_ADD(t1.Solicitud,INTERVAL t2.tolerancia DAY) GROUP BY t3.Cliente WITH ROLLUP;')
+    cursor.execute('SELECT t1.avaluo_id, IFNULL(t3.Cliente, "TOTAL") AS name, COUNT(*), SUM(IF(DATEDIFF(CURDATE(),DATE_ADD(t1.Solicitud,INTERVAL t2.tolerancia DAY)) <= 0,1, 0)) as "= 0", SUM(IF(DATEDIFF(CURDATE(),DATE_ADD(t1.Solicitud,INTERVAL t2.tolerancia DAY)) BETWEEN 1 AND 3,1, 0) )as "< 3", SUM(IF(DATEDIFF(CURDATE(),DATE_ADD(t1.Solicitud,INTERVAL t2.tolerancia DAY)) > 3,1, 0)) as "> 3" FROM siavdb.app_avaluo t1 INNER JOIN siavdb.app_depto t2 on t1.Depto_id = t2.Depto_id INNER JOIN siavdb.app_cliente t3 on t2.Cliente_id_id = t3.Cliente_id WHERE t1.Estatus in ("PROCESO") GROUP BY t3.Cliente WITH ROLLUP;')
     en_tiempo = cursor.fetchall()
-    #pasados = cantidad_en_proceso.filter(Solicitud__lt=F('Solicitud') + datetime.timedelta(days=int(3))).annotate(Cantidad=Count('Cliente'))
 
     total_general = 0.00
     total_avaluos = 0
@@ -197,25 +174,37 @@ def estadistico(request, anio=2013):
     return render_to_response('home/estadistico.html', locals(), context_instance=RequestContext(request))
 
 @login_required
-def estadistico_js(request, anio=2013):
+def estadistico_anio_js(request, anio=2013):
     anios_list = request.GET.get('anio', '').split(',')
     anios_list = filter(None, anios_list) # fastest
     anios_list = map(int, anios_list)
     #anios = Avaluo.objects.dates('Salida', 'year').filter(Salida__gt=datetime.date(2011, 1, 1))
     avaluos = [Avaluo.objects.extra(select={'month': 'extract( month from Salida )','anio': 'extract( year from Salida )'}).values('month','anio').filter(Salida__year=a).order_by('month').annotate(dcount=Count('Solicitud'), Total=Sum('Importe')) for a in anios_list]
     
-    return render_to_response('home/consultas/estadistico/estadistico.js', locals())
+    return render_to_response('home/consultas/estadistico/estadistico_anio.js', locals())
+
+@login_required
+def estadistico_mes_js(request, anio=2013):
+    mes_list = request.GET.get('anio', '').split(',')
+    mes_list = filter(None, mes_list) # fastest
+    mes_list = map(int, mes_list)
+    #anios = Avaluo.objects.dates('Salida', 'year').filter(Salida__gt=datetime.date(2011, 1, 1))
+    avaluos = [Avaluo.objects.extra(select={'month': 'extract( month from Salida )','anio': 'extract( year from Salida )'}).values('month','anio').filter(Salida__month=m).filter(Salida__year=anio).order_by('month').annotate(dcount=Count('Solicitud'), Total=Sum('Importe')) for m in mes_list]
+    
+    return render_to_response('home/consultas/estadistico/estadistico_anio.js', locals())
+
 
 @login_required
 def captura(request):
     #lista_avaluos = Avaluo.objects.all()
+    captura_masiva = CapturaMasiva() 
     avaluos = (Avaluo.objects
                .filter(Q(Estatus__contains='PROCESO') | Q(Estatus__contains='DETENIDO'))
                .filter(Q(Salida__isnull=True))
                .filter(Q(Visita__isnull=False))
                .exclude(Q(Mterreno__isnull=False) & Q(Mconstruccion__isnull=False) & Q(Solicitud__isnull=False)))
     avaluos = avaluos.order_by('-Solicitud')
-    return render_to_response('home/captura.html', {'avaluos': avaluos}, context_instance=RequestContext(request))
+    return render_to_response('home/captura.html', {'avaluos': avaluos,'captura_masiva': captura_masiva}, context_instance=RequestContext(request))
 
 
 @login_required
@@ -298,13 +287,11 @@ def alta_avaluo_paquete(request):
     if formset_sencilla.is_valid() and formset.is_valid():
         for form in formset:
             if form.is_valid():
-
-                if form.cleaned_data['Referencia'] != '':
-                    if form.cleaned_data['Referencia'] in values:
+                if form.cleaned_data.get("Referencia"):
+                    if form.cleaned_data.get("Referencia") in values:
                         form._errors["Referencia"] = ErrorList([u"Referencia Repetida."])
                     else:
-                        values.append(form.cleaned_data["Referencia"])
-
+                        values.append(form.cleaned_data.get("Referencia"))
                 avaluo = Avaluo()
 
                 avaluo.Tipo = formset_sencilla.cleaned_data['Tipo']
@@ -320,10 +307,10 @@ def alta_avaluo_paquete(request):
                 avaluo.Solicitud = formset_sencilla.cleaned_data['Solicitud']
                 avaluo.Valor = formset_sencilla.cleaned_data['Valor']
 
-                avaluo.Referencia = form.cleaned_data['Referencia']
-                avaluo.Calle = form.cleaned_data['Calle']
-                avaluo.NumExt = form.cleaned_data['NumExt']
-                avaluo.NumInt = form.cleaned_data['NumInt']
+                avaluo.Referencia = form.cleaned_data.get("Referencia")
+                avaluo.Calle = form.cleaned_data["Calle"]
+                avaluo.NumExt = form.cleaned_data["NumExt"]
+                avaluo.NumInt = form.cleaned_data["NumInt"]
 
                 #FolioK
                 avaluo.save()
@@ -726,6 +713,38 @@ def visita_masiva(request):
     avaluos = Avaluo.objects.filter(Estatus__contains='PROCESO', Visita__isnull=True, Salida__isnull=True) | Avaluo.objects.filter(Estatus__contains='DETENIDO', Visita__isnull=True, Salida__isnull=True)
     avaluos = avaluos.order_by('-Solicitud')
     return render_to_response('home/visita.html', {'avaluos': avaluos,'visita_masiva':visita_masiva,'visita_masiva':visita_masiva}, context_instance=RequestContext(request))
+
+
+
+def captura_masiva(request):
+    captura_masiva = CapturaMasiva(request.POST)
+    if captura_masiva.is_valid():
+        avaluo_capturado = request.POST.getlist('avaluo_capturado')
+        avaluo_capturados = (Avaluo.objects
+            .filter(avaluo_id__in=avaluo_capturado)
+            .update(Mterreno=captura_masiva.cleaned_data['Mterreno'],
+                    Mconstruccion=captura_masiva.cleaned_data['Mconstruccion'],))
+        for a1 in avaluo_capturado:
+
+            a = Avaluo.objects.get(avaluo_id=a1)
+            r = redis.StrictRedis(host='localhost', port=6379, db=0)
+            accion = (' capturó el avalúo con FolioK: ').decode("UTF-8", "ignore")
+
+            r.publish('chat', request.user.username + accion + '<b>' + a.FolioK + '</b>')
+
+            #Crear evento
+            Eventos.objects.create(user=request.user, evento='CAPTURA',avaluo=a)
+        return redirect('/SIAV/captura/')
+
+    avaluos = (Avaluo.objects
+               .filter(Q(Estatus__contains='PROCESO') | Q(Estatus__contains='DETENIDO'))
+               .filter(Q(Salida__isnull=True))
+               .filter(Q(Visita__isnull=False))
+               .exclude(Q(Mterreno__isnull=False) & Q(Mconstruccion__isnull=False) & Q(Solicitud__isnull=False)))
+    avaluos = avaluos.order_by('-Solicitud')
+    return render_to_response('home/captura.html', {'avaluos': avaluos,'captura_masiva':captura_masiva}, context_instance=RequestContext(request))
+
+
 
 def swf(request):
     return HttpResponse('templates/swf/copy_csv_xls_pdf.swf/', content_type="application/x-shockwave-flash")

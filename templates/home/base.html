@@ -113,7 +113,7 @@
           <a href="/SIAV/liquidar/">Liquidar</a>
         </li>
         <li class="{% block estadistico %}{% endblock %}">
-          <a href="/SIAV/estadistico/{%now "Y"%}">Estadístico</a>
+          <a href="/SIAV/estadistico/{%now "Y"%}/{%now "m"%}">Estadístico</a>
         </li>
       </li>
       {% endif %}
@@ -400,6 +400,8 @@ $(document).ajaxStart(function () {
 }).ajaxStop(function () {
   $('#spinner').hide();
 });
+
+
 
 </script>
 </html>

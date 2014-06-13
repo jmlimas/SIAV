@@ -3,110 +3,67 @@
 {% load dayssince %}
 
 {% block script %}
-<script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/jquery.dataTables.js"></script>
-<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}CSS/bootstrap/css/dataTables.boostrap.css">
-<!-- <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}/JS/dataTables.tableTools.js"></script>
- --><script type="text/javascript" language="javascript" src="{{ STATIC_URL }}/JS/dataTables.bootstrap.js"></script>
-<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}CSS/smart-admin.css">
+<script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/picnet.table.filter.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function () {
-$(document).ready( function() {
-    var oTable = $('#avaluos_table').DataTable({
-        "dom": '&t;"tof"T<"clear">i&gtlp;',
-     }
+  $('#avaluos_table').tableFilter();
+  valor = 0;
 
-      );
+  var rowCount = { p: $('#avaluos_table tbody tr:visible').length };
+  valor = ($('#avaluos_table tbody tr:visible').length);
 
- $("#avaluos_table #thead_2 th").each( function ( i ) {
-        var select = $('<select style="max-width:60px; ><option style="max-width:60px; value=""></option></select>')
-            .appendTo( $(this).empty() )
-            .on( 'change', function () {
-                oTable.column( i )
-                    .search( $(this).val() )
-                    .draw();
-            } );
-           select.append( '<option value="'+" "+'" style="max-width:60px;">'+"-----"+'</option>' )
-           oTable.column( i ).data().unique().sort().each( function ( d, j ) {
-            select.append( '<option value="'+d+'" style="max-width:60px;">'+d+'</option>' )
+  $('#cantidad_tabla').html(valor);
 
-        } );
-
-
-
-      } );      
-
-    
-
-
-     } );
-
-  $('#id_Visita').datepicker({ autoSize: true , dateFormat: 'dd/mm/yy'});
-
-
-
+  $('#avaluos_table thead').on("change", function () {
+    setTimeout(function () {
+      window.location = '/SIAV/';
+    }, 1000);
+  });
 });
-
-
-
 </script>
 {% endblock %}      
-
 {% block content %}
-<div class="table-responsive">
-<div class="jarviswidget jarviswidget-color-darken jarviswidget-sortable" id="wid-id-0" data-widget-editbutton="false" role="widget">
-<div align="center">
 <h1>Servicios en Proceso</h1>
-</div>
-<span class="jarviswidget-loader">
-  <i class="fa fa-refresh fa-spin"></i>
-</span>
-<div role="content" id="table-my-content">
-<div class="jarviswidget-editbox"></div>
-<div id="dt_basic_wrapper" class="dataTables_wrapper form-inline" role="grid">
-<div class="dt-wrapper">
-  <div class="table-responsive ">
-   <table id='avaluos_table' class="table table-hover">
+<h2 style="text-align:left">
+  <span id="cantidad_tabla"></span>
+  Servicios
+</h2>
+<div class="table-responsive">
+  <table id='avaluos_table' class="table table-striped">
     <thead>
       <tr class='even'>
-        <th>Folio K</th>
-        <th>Ref.</th>
-        <th>Cliente</th>
-        <th>Depto</th>
+        <th style="width:40px">Folio K</th>
+        <th style="width:40px" filter='false' >Ref.</th>
+        <th filter-type='ddl'>Cliente</th>
+        <th filter-type='ddl'>Depto</th>
         <th>Calle</th>
-        <th>Ext.</th>
-        <th>Int.</th>
-        <th>Colonia</th>
-        <th>Municipio</th>
-        <th>Prio.</th>
-        <th>Estatus</th>
-        <th>Dias</th>
+        <th filter='false'>Ext.</th>
+        <th filter='false'>Int.</th>
+        <th style="width:100px" filter-type='ddl'>Colonia</th>
+        <th filter-type='ddl'>Municipio</th>
+        <th filter='false'>Prioridad</th>
+        <th style="width:10px" filter-type='ddl'>Estatus</th>
+        <th filter='false'>Dias</th>
       </tr>
     </thead>
-    <thead id="thead_2">
-        <th>Folio K</th>
-        <th>Ref.</th>
-        <th>Cliente</th>
-        <th>Calle</th>
-        <th >Ext.</th>
-        <th >Int.</th>
-        <th >Colonia</th>
-        <th >Municipio</th>
-        <th >Prio.</th>
-        <th >Estatus</th>
-        <th>Dias</th>
-        <th></th>
-        </thead>
 <body>
     {% for a in avaluos %}
-    <tr class="{% if a.Solicitud|dayssince|add:"0" > a.Depto.Tolerancia|add:"0" and a.Estatus != 'DETENIDO' %}danger{% endif%}"><td>{{a.FolioK}}</td><td>{{a.Referencia}}</td><td>{{a.Cliente}}</td><td>{{a.Depto}}</td><td>{{a.Calle}}</td> <td>{{a.NumExt}}</td><td>{{a.NumInt}}</td><td>{{a.Colonia}}</td><td>{{a.Municipio}}</td><td>{{a.Prioridad}}</td><td ><span class="label label-{%if a.Estatus = 'PROCESO'%}success{%elif a.Estatus = 'DETENIDO'%}default{%endif%}">{{a.Estatus}}</span></td><td>{{ a.Solicitud|dayssince }}</td></tr>
+    <tr class="{% if a.Solicitud|dayssince|add:"0" > a.Depto.Tolerancia|add:"0" and a.Estatus != 'DETENIDO' %}danger{% endif%}">
+      <td>{{a.FolioK}}</td>
+      <td style="width:100px;">{{a.Referencia}}</td>
+      <td style="width:10px;">{{a.Cliente}}</td>
+      <td style="width:10px;">{{a.Depto}}</td>
+      <td style="width:200px">{{a.Calle}}</td>
+      <td style="width:3px;">{{a.NumExt}}</td>
+      <td style="width:10px;">{{a.NumInt}}</td>
+      <td style="width:200px;">{{a.Colonia}}</td>
+      <td style="width:200px;">{{a.Municipio}}</td>
+      <td style="width:3px;">{{a.Prioridad}}</td>
+      <td ><span class="label label-{%if a.Estatus = 'PROCESO'%}success{%elif a.Estatus = 'DETENIDO'%}default{%endif%}">{{a.Estatus}}</span></td>
+      <td style="width:35px;">{{ a.Solicitud|dayssince }}</td>
+    </tr>
     {% endfor %}
 </body>
   </table>
-    </div>
-  </div>
 </div>
-</div>
-</div>
-</div>
-
 {% endblock %}
