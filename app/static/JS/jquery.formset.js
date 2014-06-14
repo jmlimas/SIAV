@@ -209,12 +209,12 @@
                 console.log ( '#someButton was clicked' );
 
                 $('#cant_servicios').html(
-                      ($('.formset-div').length).toString()+" Servicios");
+                      ($('#printableArea div.formset-div-child').length).toString()+" Servicios");
 
         },      // Function called each time a new form is added
         removed: function(){
                 $('#cant_servicios').html(
-                      ($('.formset-div').length).toString()+" Servicios");
+                      ($('#printableArea div.formset-div-child').length).toString()+" Servicios");
 
         },                    // Function called each time a form is deleted
     };

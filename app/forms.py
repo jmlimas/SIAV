@@ -180,6 +180,9 @@ class FormaSencillaPaquete(forms.Form):
     def clean_Referencia(self):
         return self.cleaned_data['Referencia'] or None
     def __init__(self,  *args,  **kwargs):
+        self.helper = FormHelper()
+        self.helper.form_method = 'post'
+        self.helper.form_tag = False
         super(FormaSencillaPaquete,  self).__init__(*args,  **kwargs)
         self.fields['Municipio'] = forms.ModelChoiceField(queryset=Municipio.objects.filter(estado_id__is_active='True'))
         self.fields['Depto'] = forms.ModelChoiceField(queryset=Depto.objects.all())

@@ -77,14 +77,14 @@ $('#captura_masiva_button').click(function () {
   </a>
 <h1>Captura</h1>
 <h2 style="text-align:left"><span id="cantidad_tabla"></span>  Servicios</h2>
-<div class="table-responsive">
+<div id='printableArea' class="table-responsive">
 <form id="modal-form" class="" method="post" action="/SIAV/captura_masiva/">
-<table id='avaluos_table' class="table table-striped">
+<table id='avaluos_table' class="table table-striped table-hover">
   <thead>
     <tr class='even'>
       <th style="width:40px" filter='false'></th>
       <th style="width:40px">Folio K</th>
-      <th style="width:40px" filter='false' >Ref.</th>
+      <th style="width:40px" filter='true' >Referencia</th>
       <th filter-type='ddl'>Cliente</th>
       <th>Calle</th>
       <th filter='false'>Ext.</th>

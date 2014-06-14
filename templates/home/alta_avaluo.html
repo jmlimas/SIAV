@@ -191,13 +191,16 @@ $(function() {
         <h2 id="cant_servicios">1 Servicio</h2>
         <br>
         <input class="btn btn-success" type="submit" value="Enviar" />
+        <div id="printableArea">
         {% for form in formset %}
-          {{ formset.management_form}}   
+            
 
           <div id="{{ form.prefix }}-row"  class="formset-div-child container" style="padding-bottom:6px; border-bottom:1px dotted #ccc; margin-bottom:6px;" id="form-0-row">
         {% crispy form %}
         </div>
+        </div>
         {% endfor %}
+        {{ formset.management_form}} 
       <br>
 
       
@@ -206,5 +209,4 @@ $(function() {
 </form>
 </div>
 </div>
-
 {% endblock %}
