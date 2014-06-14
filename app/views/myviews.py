@@ -217,6 +217,7 @@ def visita(request):
 
 @login_required
 def salida(request):
+    salida_masiva = SalidaMasiva() 
     avaluos = (Avaluo.objects
                .filter(Q(Estatus='PROCESO')| Q(Estatus__contains='DETENIDO'))
                .filter(Q(Visita__isnull=False))
@@ -235,7 +236,7 @@ def salida(request):
 
 
     avaluos = avaluos.order_by('-Solicitud')
-    return render_to_response('home/salida.html', {'avaluos': avaluos}, context_instance=RequestContext(request))
+    return render_to_response('home/salida.html', {'avaluos': avaluos,'salida_masiva':salida_masiva}, context_instance=RequestContext(request))
 
 def salida_efectiva(request, id):
     avaluo = Avaluo.objects.get(avaluo_id=id)
@@ -496,6 +497,7 @@ def consulta_master(request):
         factura = request.GET.get('factura', '')
         edo = request.GET.get('edo', '')
         mun = request.GET.get('mun', '')
+        val = request.GET.get('val', '')
         cli = request.GET.get('cli', '')
         dep = request.GET.get('dep', '')
         imp = request.GET.get('imp', '')
@@ -518,6 +520,14 @@ def consulta_master(request):
             results = results.filter((Q(Estado=edo)))    
         if mun:
             results = results.filter((Q(Municipio=mun)))
+        if val:
+            final_val = val[1:len(val)]
+            if val[:1] == '<':
+                results = results.filter((Q(Valor__lte=final_val)))
+            elif val[:1] == '>':
+                results = results.filter((Q(Valor__gte=final_val)))
+            else:
+                results = results.filter((Q(Valor=val[0:len(val)])))
         if cli:
             results = results.filter((Q(Cliente=cli)))    
         if dep:
@@ -745,7 +755,37 @@ def captura_masiva(request):
     return render_to_response('home/captura.html', {'avaluos': avaluos,'captura_masiva':captura_masiva}, context_instance=RequestContext(request))
 
 
+def salida_masiva(request):
+    salida_masiva = SalidaMasiva(request.POST)
+    if salida_masiva.is_valid():
+        avaluo_salida = request.POST.getlist('avaluo_salida')
+        avaluo_salidas = (Avaluo.objects
+            .filter(avaluo_id__in=avaluo_salida)
+            .update(Valor=salida_masiva.cleaned_data['Valor'],
+                    Importe=salida_masiva.cleaned_data['Importe'],
+                    Gastos=salida_masiva.cleaned_data['Gastos'],
+                    Salida=salida_masiva.cleaned_data['Salida'],
+                    Estatus='CONCLUIDO'))
+        for a1 in avaluo_salida:
+
+            a = Avaluo.objects.get(avaluo_id=a1)
+            r = redis.StrictRedis(host='localhost', port=6379, db=0)
+            accion = (' dió salida al avalúo con FolioK: ').decode("UTF-8", "ignore")
+
+            r.publish('chat', request.user.username + accion + '<b>' + a.FolioK + '</b>')
+
+            #Crear evento
+            Eventos.objects.create(user=request.user, evento='SALIDA',avaluo=a)
+        return redirect('/SIAV/salida/')
+
+    avaluos = (Avaluo.objects
+               .filter(Q(Estatus='PROCESO')| Q(Estatus__contains='DETENIDO'))
+               .filter(Q(Visita__isnull=False))
+               .filter(Q(Salida__isnull=True))
+               .exclude(Q(Mterreno__isnull=True))
+               .exclude(Q(Mconstruccion__isnull=True)))
+    avaluos = avaluos.order_by('-Solicitud')
+    return render_to_response('home/salida.html', {'avaluos': avaluos,'salida_masiva':salida_masiva}, context_instance=RequestContext(request))
 
 def swf(request):
-    return HttpResponse('templates/swf/copy_csv_xls_pdf.swf/', content_type="application/x-shockwave-flash")
-
+    return ""

@@ -2,6 +2,10 @@
 
 {% load dayssince %}
 
+{% load bootstrap3 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
 {% block salida %}active{% endblock %}
 
 {% block script %}
@@ -10,6 +14,7 @@
 <script type="text/javascript">
 $(document).ready(function () {
   $('#avaluos_table').tableFilter();
+  $('#id_Salida').datepicker({ autoSize: true , dateFormat: 'dd/mm/yy'});
   valor = 0;
 
   var rowCount = { p: $('#avaluos_table tbody tr:visible').length };
@@ -22,6 +27,45 @@ $(document).ready(function () {
       window.location = '/SIAV/salida/';
     }, 1000);
   });
+
+$('#salida_masiva_button').click(function () {
+
+    // Some code
+
+    if($(".form-checkbox").is(':checked')) {
+
+      var selected = [];
+      $('input:checked').each(function() {
+          selected.push($(this).parent().next().next().next().next().next().next().next().html());
+      });
+      var bandera = true;
+      for ( var i = 0; i < selected.length; i++ ) {
+          // Logs "try 0", "try 1", ..., "try 4".
+          if(selected[0] != selected[i]){
+              bandera = false;
+              console.log( selected[i] );
+              //console.log( bandera );
+          }
+      }
+
+      if(bandera == false){
+        alert("Todos los servicios deben pertenecer a la misma colonia.");
+      }else{
+        $('#salida_masiva').modal('show');
+        console.log( selected.toString());
+      }
+      
+      var selected = [];
+
+       // $('#visita_masiva').modal('show');
+    }else{
+        alert("Selecciona al menos una casilla.");
+    }
+
+});
+
+
+
 });
 
 </script>
@@ -29,12 +73,19 @@ $(document).ready(function () {
 {% endblock %}      
 
 {% block content %}
+  <a id="salida_masiva_button"  title="Visita" style="float:right" class="btn btn-success" role="button">
+    <span class="glyphicon glyphicon-ok"></span>
+    SALIDA
+  </a>
+
 <h1>Salida</h1>
 <h2 style="text-align:left"><span id="cantidad_tabla"></span>  Servicios</h2>
 <div id='printableArea' class="table-responsive">
+<form id="modal-form" class="" method="post" action="/SIAV/salida_masiva/">
 <table id='avaluos_table' class="table table-striped table-hover">
   <thead>
     <tr class="{% if a.Solicitud|dayssince|add:"0" > a.Depto.Tolerancia|add:"0" and a.Estatus != 'DETENIDO' %}danger{% endif%}">
+      <th></th>
       <th style="width:40px">Folio K</th>
       <th style="width:40px" filter='true' >Referencia</th>
       <th filter-type='ddl'>Cliente</th>
@@ -52,6 +103,7 @@ $(document).ready(function () {
   <tbody>
     {% for a in avaluos %}
     <tr class="{% if a.Solicitud|dayssince|add:"0" > a.Depto.Tolerancia|add:"0" and a.Estatus != 'DETENIDO' %}danger{% endif%}">
+      <td style="width:40px" filter='false'><input class="form-checkbox" type="checkbox" value="{{ a.avaluo_id }}" name="avaluo_salida"></td>
       <td > {{a.FolioK}} </td>
       <td style="width:100px;"> {{a.Referencia}} </td>
       <td style="width:10px;"> {{a.Cliente}} </td>
@@ -89,6 +141,36 @@ $(document).ready(function () {
   </div>
 </div>
 {% endfor %}
+
+
+<div class="modal fade" id="salida_masiva">
+
+<div class="modal-dialog">
+<div class="modal-content">
+  <div class="modal-body">
+
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h2 style="text-align:center">Salida Múltiple</h2>
+    <div class="modal-body">
+      <span style="display: block">
+        {% if not visita_masiva.is_valid %}
+        <div class='hide'>invalid_form</div>
+        {% endif %}
+          {% csrf_token %}
+          {% bootstrap_form salida_masiva layout='vertical'  %}
+      </span>
+    </div>
+    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+    <button type="submit" class="btn btn-success" id="submit-id-submit" style="float:right">Enviar</button>
+  </form>
+</div>
+</div>
+<!-- /.modal-content -->
+</div>
+<!-- /.modal-dialog -->
+
+</div>
+<!-- /.modal -->
 
 
 {% endblock %}

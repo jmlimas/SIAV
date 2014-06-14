@@ -62,6 +62,7 @@ urlpatterns = patterns(
     #Url para eventos masivos
     url(r'^SIAV/visita_masiva/$', 'app.views.visita_masiva', name='visita_masiva'),
     url(r'^SIAV/captura_masiva/$', 'app.views.captura_masiva', name='captura_masiva'),
+    url(r'^SIAV/salida_masiva/$', 'app.views.salida_masiva', name='salida_masiva'),
 
     url(r'^SIAV/show_visita_pdf/(\d+)/$', 'app.views.show_visita_pdf', name='show_visita_pdf'),
 

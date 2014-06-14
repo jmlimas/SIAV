@@ -391,6 +391,8 @@ $(document).ready(function () {
     $("#chat_div").animate({ scrollTop: $(document).height()*4 }, 300);
   });
 
+{% block script_bottom %}{% endblock %}
+
 });
 
 $(document).ajaxStart(function () {

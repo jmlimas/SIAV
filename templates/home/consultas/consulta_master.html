@@ -53,7 +53,9 @@
       $('#id_Salida').datepicker({ autoSize: true });
       $('#id_Final').datepicker({ autoSize: true });
 
+
     $(":input").blur(function() {
+    
     if(this.id != 'id_Observaciones') {
       this.value = this.value.toUpperCase();
       }
@@ -77,11 +79,12 @@
             cli = $('#id_Cliente').val();
             dep = $('#id_Depto').val();
             imp = $('#id_Importe').val();
+            val = encodeURIComponent($('#id_Valor').val());
             tipo = $('#id_Tipo').val();
             mes = $('#id_Mes').val();
             anio = $('#id_Anio').val();
             //$('#results').html('&nbsp;').load('/SIAV/consulta_master/?q1=' + q1);
-            $('#results').html('&nbsp;').load('/SIAV/consulta_master/?foliok='+foliok+"&ref="+ref+"&calle="+calle+"&col="+col+"&edo="+edo+"&mun="+mun+"&factura="+factura+"&cli="+cli+"&dep="+dep+"&imp="+imp+"&tipo="+tipo+"&mes="+mes+"&anio="+anio);
+            $('#results').html('&nbsp;').load('/SIAV/consulta_master/?foliok='+foliok+"&ref="+ref+"&calle="+calle+"&col="+col+"&edo="+edo+"&mun="+mun+"&factura="+factura+"&cli="+cli+"&dep="+dep+"&imp="+imp+"&val="+val+"&tipo="+tipo+"&mes="+mes+"&anio="+anio);
         });
     });
         
@@ -90,12 +93,16 @@
     }).ajaxStop(function () {
         $('#spinner').hide();
     });
+
 </script>
     
  <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/mapas.js"></script>
     
- {% endblock %}      
-
+      
+{%endblock%}
+    {% block script_bottom %}
+    $("#id_Valor").autoNumeric('destroy');
+    {% endblock %} 
 {% block content %}
 
 
@@ -118,5 +125,8 @@
         <div id='printableArea'><div id="results"></div></div>
     </div>
 </div>
+
+<script>
+</script>
     
 {% endblock %}

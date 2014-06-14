@@ -475,6 +475,7 @@ class FormaConsultaMaster(ModelForm):
                     css_class='col-md-3'),
                 Div(
                     'Tipo',
+                    'Valor',
                     'Factura',
                     'Importe',
                     css_class='col-md-3'), css_class='row-fluid'),
@@ -773,3 +774,26 @@ class CapturaMasiva(ModelForm):
                 Div('Mconstruccion'),
                 css_class='row'))
         super(CapturaMasiva,  self).__init__(*args,  **kwargs)
+
+class SalidaMasiva(ModelForm):
+    Valor = forms.DecimalField(required=True, widget=forms.TextInput())
+    Gastos = forms.DecimalField(required=True, widget=forms.TextInput())
+    Importe = forms.DecimalField(required=True, widget=forms.TextInput())
+    Salida = forms.DateField(label="Fecha Salida", widget=forms.DateInput(format='%d/%m/%Y'),  input_formats=['%d/%m/%Y'])
+    class Meta:
+        model = Avaluo
+        fields = ('Valor', 'Gastos','Importe','Salida')
+
+    def __init__(self,  *args,  **kwargs):
+        self.helper = FormHelper()
+        self.helper.form_id = 'id-SalidaMasiva'
+        self.helper.form_class = 'blueForms'
+        self.helper.form_method = 'POST'
+        self.helper.form_tag = False
+        self.helper.layout = Layout(
+            Div(Div('Valor'),
+                Div('Gastos'),
+                Div('Importe'),
+                Div('Salida'),
+                css_class=''))
+        super(SalidaMasiva,  self).__init__(*args,  **kwargs)
