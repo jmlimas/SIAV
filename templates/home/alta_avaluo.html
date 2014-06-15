@@ -125,8 +125,8 @@ $(function() {
 
 {% block content %}
  {% if formset.errors or formset_sencilla.errors  or forma.errors %}
-    <p style="color: red;">Porfavor completa los campos faltantes.</p>
-    {% endif %}
+<p style="color: red;">Porfavor completa los campos faltantes.</p>
+{% endif %}
 <ul id="tabs" class="nav nav-tabs" data-tabs="tabs">
   <li class="active">
     <a href="#individual" data-toggle="tab">Individual</a>
@@ -141,72 +141,105 @@ $(function() {
     <h1>Alta Avalúo</h1>
     <br />
     {% crispy forma %}
-    <br></div>
+    <br>
+  </div>
   <div class="tab-pane" id="paquete">
     <h1>Paquete</h1>
     <br>
-   
-    <div id="content">
-        <form method="post" action="/SIAV/alta_avaluo_paquete/">
-          {% csrf_token %}
-          <table id='table_single_formset'>
-            <tr>
-              <td>
-                {{formset_sencilla.Tipo.label_tag}} {{formset_sencilla.Tipo}} <span class="help-block"><strong>{{formset_sencilla.Tipo.errors}}</strong></span>
-              </td>
-              <td>
-                {{formset_sencilla.Colonia.label_tag}} {{formset_sencilla.Colonia}} <span class="help-block"><strong>{{formset_sencilla.Colonia.errors}}</strong></span>
-              </td>
-              <td>
-                {{formset_sencilla.Estado.label_tag}} {{formset_sencilla.Estado}} <span class="help-block"><strong>{{formset_sencilla.Estado.errors}}</strong></span>
-              </td>
-              <td>
-                {{formset_sencilla.Prioridad.label_tag}} {{formset_sencilla.Prioridad}} <span class="help-block"><strong>{{formset_sencilla.Prioridad.errors}}</strong></span>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                {{formset_sencilla.Servicio.label_tag}} {{formset_sencilla.Servicio}} <span class="help-block"><strong>{{formset_sencilla.Servicio.errors}}</strong></span>
-              </td>
-              <td>
-                {{formset_sencilla.Estatus.label_tag}} {{formset_sencilla.Estatus}} <span class="help-block"><strong>{{formset_sencilla.Estatus.errors}}</strong></span>
-              </td>
-              <td>
-                {{formset_sencilla.Municipio.label_tag}} {{formset_sencilla.Municipio}} <span class="help-block"><strong>{{formset_sencilla.Municipio.errors}}</strong></span>
-              </td>
-
-              <td>{{formset_sencilla.Valor.label_tag}} {{formset_sencilla.Valor}} <span class="help-block"><strong>{{formset_sencilla.Valor.errors}}</strong></span></td>
-            </div>
+      <form method="post" action="/SIAV/alta_avaluo_paquete/">
+        {% csrf_token %}
+        <table id='table_single_formset'>
+          <tr>
+            <td>
+              {{formset_sencilla.Tipo.label_tag}} {{formset_sencilla.Tipo}}
+              <span class="help-block"> <strong>{{formset_sencilla.Tipo.errors}}</strong>
+              </span>
+            </td>
+            <td>
+              {{formset_sencilla.Colonia.label_tag}} {{formset_sencilla.Colonia}}
+              <span class="help-block"> <strong>{{formset_sencilla.Colonia.errors}}</strong>
+              </span>
+            </td>
+            <td>
+              {{formset_sencilla.Estado.label_tag}} {{formset_sencilla.Estado}}
+              <span class="help-block">
+                <strong>{{formset_sencilla.Estado.errors}}</strong>
+              </span>
+            </td>
+            <td>
+              {{formset_sencilla.Prioridad.label_tag}} {{formset_sencilla.Prioridad}}
+              <span class="help-block">
+                <strong>{{formset_sencilla.Prioridad.errors}}</strong>
+              </span>
+            </td>
           </tr>
           <tr>
-            <td>{{formset_sencilla.Cliente.label_tag}} {{formset_sencilla.Cliente}} <span class="help-block"><strong>{{formset_sencilla.Cliente.errors}}</strong></span> </td>
-            <td>{{formset_sencilla.Depto.label_tag}} {{formset_sencilla.Depto}} <span class="help-block"><strong>{{formset_sencilla.Depto.errors}}</strong></span></td>
-            <td>{{formset_sencilla.Valuador.label_tag}} {{formset_sencilla.Valuador}} <span class="help-block"><strong>{{formset_sencilla.Valuador.errors}}</strong></span>
+            <td>
+              {{formset_sencilla.Servicio.label_tag}} {{formset_sencilla.Servicio}}
+              <span class="help-block">
+                <strong>{{formset_sencilla.Servicio.errors}}</strong>
+              </span>
             </td>
-              <td>{{formset_sencilla.Solicitud.label_tag}} {{formset_sencilla.Solicitud}} <span class="help-block"><strong>{{formset_sencilla.Solicitud.errors}}</strong></span>
+            <td>
+              {{formset_sencilla.Estatus.label_tag}} {{formset_sencilla.Estatus}}
+              <span class="help-block">
+                <strong>{{formset_sencilla.Estatus.errors}}</strong>
+              </span>
             </td>
-          </tr>
-        </table>
-        <br>
-        <h2 id="cant_servicios">1 Servicio</h2>
-        <br>
-        <input class="btn btn-success" type="submit" value="Enviar" />
-        <div id="printableArea">
-        {% for form in formset %}
-            
+            <td>
+              {{formset_sencilla.Municipio.label_tag}} {{formset_sencilla.Municipio}}
+              <span class="help-block">
+                <strong>{{formset_sencilla.Municipio.errors}}</strong>
+              </span>
+            </td>
 
-          <div id="{{ form.prefix }}-row"  class="formset-div-child container" style="padding-bottom:6px; border-bottom:1px dotted #ccc; margin-bottom:6px;" id="form-0-row">
-        {% crispy form %}
-        </div>
-        </div>
-        {% endfor %}
-        {{ formset.management_form}} 
+            <td>
+              {{formset_sencilla.Valor.label_tag}} {{formset_sencilla.Valor}}
+              <span class="help-block">
+                <strong>{{formset_sencilla.Valor.errors}}</strong>
+              </span>
+            </td>
+        </tr>
+        <tr>
+          <td>
+            {{formset_sencilla.Cliente.label_tag}} {{formset_sencilla.Cliente}}
+            <span class="help-block">
+              <strong>{{formset_sencilla.Cliente.errors}}</strong>
+            </span>
+          </td>
+          <td>
+            {{formset_sencilla.Depto.label_tag}} {{formset_sencilla.Depto}}
+            <span class="help-block">
+              <strong>{{formset_sencilla.Depto.errors}}</strong>
+            </span>
+          </td>
+          <td>
+            {{formset_sencilla.Valuador.label_tag}} {{formset_sencilla.Valuador}}
+            <span class="help-block">
+              <strong>{{formset_sencilla.Valuador.errors}}</strong>
+            </span>
+          </td>
+          <td>
+            {{formset_sencilla.Solicitud.label_tag}} {{formset_sencilla.Solicitud}}
+            <span class="help-block">
+              <strong>{{formset_sencilla.Solicitud.errors}}</strong>
+            </span>
+          </td>
+        </tr>
+      </table>
       <br>
+      <h2 id="cant_servicios">1 Servicio</h2>
+      <br>
+      <input class="btn btn-success" type="submit" value="Enviar" />
+      <div id="printableArea">
+        {% for form in formset %}
+        <div id="{{ form.prefix }}-row"  class="formset-div-child container" style="padding-bottom:6px; border-bottom:1px dotted #ccc; margin-bottom:6px;" id="form-0-row">{% crispy form %}</div>   
+      {% endfor %}
+      </div>
+        {{ formset.management_form}}
+      <br></p>
+      </form>
 
-      
-    </p>
-</div>
-</form>
-</div>
+  </div>
 </div>
 {% endblock %}

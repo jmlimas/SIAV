@@ -147,12 +147,11 @@
 
 </nav>
 <div class="container-full special">
-<div class="row">
   <div class="col-md-15">
-    <div class="jumbotron">
+    <div class="jumbotron container-full special">
         {% block content %}
           {% endblock %}
-      <!-- Se cierra printable area --> </div>
+    </div>
 
     <br>
     <br>
@@ -162,7 +161,6 @@
     </footer>
 
   </div>
-</div>
 </div>
 </body>
 <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/jquery-1.8.2.min.js"></script>

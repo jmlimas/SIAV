@@ -73,7 +73,7 @@ $('#salida_masiva_button').click(function () {
 {% endblock %}      
 
 {% block content %}
-  <a id="salida_masiva_button"  title="Visita" style="float:right" class="btn btn-success" role="button">
+  <a id="salida_masiva_button"  title="Visita" style="float:right" class="btn btn-primary" role="button">
     <span class="glyphicon glyphicon-ok"></span>
     SALIDA
   </a>
@@ -97,7 +97,7 @@ $('#salida_masiva_button').click(function () {
       <th filter-type='ddl'>Prioridad</th>
       <th style="width:10px" filter-type='ddl'>Status</th>
       <th filter='false'>Dias</th>
-      <th filter='false' class="tabla_opciones">Opciones</th>
+      <th filter='false' class="tabla_opciones"></th>
     </tr>
   </thead>
   <tbody>
@@ -113,10 +113,16 @@ $('#salida_masiva_button').click(function () {
       <td style="width:200px;"> {{a.Colonia}} </td>
       <td style="width:200px;"> {{a.Municipio}} </td>
       <td style="width:3px;"> {{a.Prioridad}} </td>
-      <td ><span class="label label-{%if a.Estatus = 'PROCESO'%}success{%elif a.Estatus = 'DETENIDO'%}default{%endif%}">{{a.Estatus}}</span></td>
-      <td style="width:35px;"> {{ a.Solicitud|dayssince }}</td>       
-      <td style="width:60px;" class="tabla_opciones"> 
-        <a href="/SIAV/edita_salida/{{a.avaluo_id}}">Salida</a>
+      <td >
+        <span class="label label-{%if a.Estatus = 'PROCESO'%}success{%elif a.Estatus = 'DETENIDO'%}default{%endif%}">{{a.Estatus}}</span>
+      </td>
+      <td style="width:35px;">{{ a.Solicitud|dayssince }}</td>
+      <td style="width:60px;" class="tabla_opciones">
+        <a href="/SIAV/edita_salida/{{a.avaluo_id}}">
+          <button type="button" class="btn btn-primary btn-sm">
+            <span class="glyphicon glyphicon-edit"></span>
+          </button>
+        </a>
       </td>
     </tr>
     {% endfor %}
