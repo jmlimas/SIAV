@@ -78,26 +78,24 @@ def logout_view(request):
 #   Vista de facturacion.
 @staff_member_required
 def facturar(request):
+    b = FacturaForm()
     avaluos = (Avaluo.objects
                .filter(Estatus='CONCLUIDO')
                .filter(Q(Salida__isnull=False))
                .filter(Q(Factura='') | Q(Factura__isnull=True))
                .filter(Q(Pagado=False) | Q(Pagado__isnull=True)))
     avaluos = avaluos.order_by('-Salida')
-    FacturaFormset = modelformset_factory(Avaluo, form=FacturaForm, extra=0)
 
     if request.method == 'POST':
-        factura_formset = FacturaFormset(request.POST, prefix="formas")
-        for form in factura_formset:
-            if form.is_valid():
-                form.save()
-        return HttpResponseRedirect('.')
+        b = FacturaForm(request.POST)
+        if b.is_valid():
+            avaluo_factura = request.POST.getlist('avaluo_facturado')
+            avaluo_facturas = (Avaluo.objects
+                .filter(avaluo_id__in=avaluo_factura)
+                .update(Factura=b.cleaned_data['Factura']))
+            return redirect('/SIAV/facturar/')
 
     else:
-        factura_formset = FacturaFormset(queryset=avaluos, prefix="formas")
-        example_formset = FacturaFormset(queryset=avaluos, prefix="formas")
-        olist = zip(avaluos, factura_formset)
-
         suma_de_monto = avaluos.values('Cliente__Cliente').order_by('Cliente').annotate(total=Sum('Importe'))
         total_general = 0.00
         for x in suma_de_monto:
@@ -107,7 +105,7 @@ def facturar(request):
             else:
                 total_general += float(str(x['total']))
 
-        return render_to_response('home/lista_factura.html', {'olist': olist,'example_formset': example_formset, 'suma_de_monto': suma_de_monto, 'total_general': total_general}, context_instance=RequestContext(request))
+        return render_to_response('home/lista_factura.html', {'avaluos': avaluos,'suma_de_monto': suma_de_monto, 'total_general': total_general,'b': b}, context_instance=RequestContext(request))
 
 
 #   Vista que se encarga de liquidar las facturas ya pagadas

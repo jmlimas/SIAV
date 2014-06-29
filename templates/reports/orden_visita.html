@@ -1,0 +1,120 @@
+﻿<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Orden de Visita</title>
+<style type="text/css">
+@media print{@page {size: portrait}}
+
+.myTable tr td p strong {
+	font-size: 10px;
+}
+.myTable tr td p strong {
+	font-size: 25px;
+	font-style: italic;
+}
+.myTable {
+	font-weight: bold;
+	font-size: 11px;
+}
+.myTable1 {	font-weight: bold;
+	font-size: 12px;
+}
+.myTable2 {	font-weight: bold;
+	font-size: 11px;
+}
+</style>
+</head>
+
+<body>
+<style type="text/css">
+table.myTable { border-collapse:collapse; }
+table.myTable td, table.myTable th { border:3px solid black;padding:5px;
+border-spacing:8px; }
+</style>
+<style type="text/css">
+table.myTable2 { border-collapse:collapse; }
+table.myTable2 td, table.myTable2 th { border:1px groove black;padding:5px;
+border-spacing:10px; }
+</style>
+<!-- Be sure to place the above styles (i.e. everything between the <style></style> tags) into the document 'head' (i.e. between the <head></head> tags. Everything below goes inside the <body></body> tags) -->
+<table width="801" height="699" class="myTable">
+<tr align="justify">
+<td width="728" height="120" align="center"><div><img src="{{STATIC_URL}}CSS/images/logo.png" width="59" height="58" style="float: left; font-size: 9px;" /></div>
+  <p class="title"><span class="myTable" style="text-align: center"><strong style=""> Orden de Visita </strong>({{avaluo.Tipo}})</span>
+  <p class="title">
+  <span class="myTable" style="text-align: center">Fecha:
+    <input type="text" name="1" id="1" /> 
+    Hora:
+    <input type="text" name="14" id="14" />
+    <span class="myTable2" style="text-align: center">
+    
+        <label style="position: absolute; left: 612px; top: 87px;">N.</label>
+        <label style="position: absolute; left: 612px; top: 120px;">W.</label>
+        <input name="1222" type="text" id="1222" style="position: absolute; float: right; left: 634px; top: 81px; width: 33px;" value="        °" size="3" />
+    
+        <input name="1222" type="text" id="1222" style="position: absolute; float: right; left: 678px; top: 81px; width: 33px;" value="        '" size="3" />
+        
+                <input name="1222" type="text" id="1222" style="position: absolute; float: right; left: 722px; top: 81px; width: 33px;" value="        &quot;" size="3" />
+                
+        <input name="1222" type="text" id="1222" style="position: absolute; float: right; left: 634px; top: 114px; width: 33px;" value="        °" size="3" />
+    
+        <input name="1222" type="text" id="1222" style="position: absolute; float: right; left: 678px; top: 114px; width: 33px;" value="        '" size="3" />
+        
+                <input name="1222" type="text" id="1222" style="position: absolute; float: right; left: 722px; top: 114px; width: 33px;" value="        &quot;" size="3" />
+                
+    
+    </span><br>
+  </span>     
+    Contacto:
+  <input name="12" type="text" id="12" size="51" />
+  <br>
+      Telefonos:
+      <input name="122" type="text" id="122" size="51" />
+  </td>
+</tr>
+<tr>
+<td height="68" align="center"><p><span><span class="myTable">
+      <span class="myTable1"> Ref:
+      <input name="1343" type="text" id="1343" value=" {{avaluo.Referencia}}" size="20" />
+      </span>
+    Cliente:
+    <input name="13222" type="text" id="13222" value=" {{avaluo.Cliente}}" size="13" /> 
+    <input name="1322" type="text" id="1322" value=" {{avaluo.Servicio}}" size="16" />
+</span></span><br><span class="myTable">
+  Colonia:
+  <input name="1342" type="text" id="1342" value=" {{avaluo.Colonia}}" size="16" />
+  Municipio:
+  <input name="13422" type="text" id="13422" value=" {{avaluo.Municipio}}" size="10" />
+  </span><br><span class="myTable"><span class="myTable">Observaciones:</span></span><span class="myTable"><span class="myTable">
+    <input name="133" type="text" id="133" value="{{avaluo.Observaciones}}" size="80" />
+  </span></span></p></td>
+</tr>
+<td height="487" align=""><table class="myTable2" width="632" border="1" cellpadding="0.0" cellspacing="0.0">
+  <tr style="border-width:3px">
+    <th width="150">Folio K</th>
+    <th width="80">Referencia</th>
+    <th width="78">Calle</th>
+    <th width="78">Num.Ext</th>
+    <th width="78">Num.Int</th>
+    <th width="137">#Fotografía</th>
+    </tr>
+    {% for a in avaluos_visitados%}
+  <tr>
+    <td>{{a.FolioK}}</td>
+    <td>{{a.Referencia}}</td>
+    <td>{{a.Calle}}</td>
+    <td>{{a.NumExt}}</td>
+    <td>{{a.NumInt}}</td>
+    <td>&nbsp;</td>
+    </tr>
+ 
+    {%endfor%}
+ </td>
+</table>
+  <br>
+  </table>
+
+</body>
+</html>

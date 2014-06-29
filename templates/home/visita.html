@@ -38,31 +38,42 @@ $(document).ready(function(){
 
       });
 $('#id_Visita').datepicker({ autoSize: true , dateFormat: 'dd/mm/yy'});
-$('#visita_masiva_button').click(function () {
+$('#visita_masiva_button, #button_orden_visita').click(function () {
 
     // Some code
-
+    var id_button = this.id;
     if($(".form-checkbox").is(':checked')) {
 
       var selected = [];
+      var selected2 = [];
       $('input:checked').each(function() {
           selected.push($(this).parent().next().next().next().next().next().next().next().html());
+          selected2.push($(this).parent().next().html());
+          console.log( selected2[i] );
       });
       var bandera = true;
+      var url = "";
       for ( var i = 0; i < selected.length; i++ ) {
           // Logs "try 0", "try 1", ..., "try 4".
           if(selected[0] != selected[i]){
               bandera = false;
-              console.log( selected[i] );
+              
               //console.log( bandera );
           }
+          url += "avaluo_visitado="+selected2[i]+"&";
       }
 
       if(bandera == false){
         alert("Todos los servicios deben pertenecer a la misma colonia.");
       }else{
-        $('#visita_masiva').modal('show');
-        console.log( selected.toString());
+          if(id_button == "visita_masiva_button"){
+              $('#visita_masiva').modal('show');
+              console.log( selected.toString());
+              }
+          else{
+              console.log("URL:"+url);
+              window.location.href = "/SIAV/show_orden_visita/?"+url;
+          }
       }
       
       var selected = [];
@@ -85,6 +96,7 @@ $('#visita_masiva_button').click(function () {
 {% if forma.errors %}
 <p style="color: red;">Porfavor completa los campos faltantes.</p>
 {% endif %}
+   <input id="button_orden_visita" type="submit" value="Orden Visita" class="btn btn-info"/>
   <a id="visita_masiva_button"  title="Visita" style="float:right" class="btn btn-primary" role="button">
     <span class="glyphicon glyphicon-ok"></span>
     VISITAR
@@ -112,14 +124,14 @@ $('#visita_masiva_button').click(function () {
         <th style="width:10px" filter-type='ddl'>Prio.</th>
         <th style="width:10px" filter-type='ddl'>Status</th>
         <th filter='false'>Dias</th>
-        <th filter='false' class="tabla_opciones"></th>
+        <th style="width:10px" filter='false' class="tabla_opciones"></th>
       </tr>
     </thead>
 <tbody>
   {% for a in avaluos %}
   <tr class="{% if a.Solicitud|dayssince|add:"0" > a.Depto.Tolerancia|add:"0" and a.Estatus != 'DETENIDO' %}danger{% endif%}">
     <td style="width:40px" filter='false'><input class="form-checkbox" type="checkbox" value="{{ a.avaluo_id }}" name="avaluo_visitado"></td>
-    <td > {{a.FolioK}} </td>
+    <td >{{a.FolioK}}</td>
     <td style="width:100px;"> {{a.Referencia}} </td>
     <td style="width:10px;"> {{a.Cliente}} </td>
     <td style="width:200px"> {{a.Calle}} </td>

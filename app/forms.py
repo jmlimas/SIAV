@@ -705,7 +705,7 @@ class AltaUsuario(forms.Form):
 
 
 class FacturaForm(ModelForm):
-    Factura = forms.CharField( label="")
+    Factura = forms.CharField(label="Factura",required=True)
 
     class Meta:
         model = Avaluo

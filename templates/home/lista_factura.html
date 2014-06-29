@@ -4,6 +4,11 @@
 
 {% load dayssince %}
 
+{% load bootstrap3 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+
 {% load currency %}
 
 {% block lista_factura %}active{% endblock %}
@@ -50,6 +55,45 @@ $(document).ready(function () {
   });
 
 
+
+
+$('#factura_masiva_button').click(function () {
+
+    // Some code
+
+    if($(".form-checkbox").is(':checked')) {
+
+      var selected = [];
+      $('input:checked').each(function() {
+          selected.push($(this).parent().next().next().next().next().html());
+      });
+      var bandera = true;
+      for ( var i = 0; i < selected.length; i++ ) {
+          // Logs "try 0", "try 1", ..., "try 4".
+          if(selected[0] != selected[i]){
+              bandera = false;
+              console.log( selected[i] );
+              //console.log( bandera );
+          }
+      }
+
+      if(bandera == false){
+        alert("Todos los servicios deben pertenecer al mismo cliente.");
+      }else{
+        $('#factura_masiva').modal('show');
+        console.log( selected.toString());
+      }
+      
+      var selected = [];
+
+       // $('#visita_masiva').modal('show');
+    }else{
+        alert("Selecciona al menos una casilla.");
+    }
+
+});
+
+
 });
 
 </script>
@@ -73,12 +117,16 @@ $(document).ready(function () {
     <td>{{total_general|currency}}</td>
   </tr>
 </table>
-
+  <a id="factura_masiva_button"  title="captura" style="float:right" class="btn btn-primary" role="button">
+    <span class="glyphicon glyphicon-ok"></span>
+    FACTURAR
+  </a>
 <h2 style="text-align:left"><span id="cantidad_tabla"></span>  Servicios</h2>
 <div id='printableArea' class="table-responsive">
 <table id='avaluos_table' class="table table-striped table-hover col-md-20">
   <thead>
     <tr class='even'>
+      <th></th>
       <th id="folio_type" filter-type="ddl" style="width:40px">Folio K</th>
       <th style="width:150px" filter='true' >Referencia</th>
       <th filter-type='ddl'>Cliente</th>
@@ -86,7 +134,6 @@ $(document).ready(function () {
       <th filter="false">Calle</th>
       <th filter='false'>Ext.</th>
       <th filter='false'>Int.</th>
-      <th style="width:100px" filter='false'>Factura</th>
       <th filter='false'>Municipio</th>
       <th  filter='false'>Entrega</th>
       <th filter='false'>Monto</th>
@@ -96,30 +143,55 @@ $(document).ready(function () {
   <tbody>
   <form action="/SIAV/facturar/" method="post">
     {{example_formset.management_form }}
-    {% for a,b in olist %}
-    {{ b.id }}
+    {% for a in avaluos %}
     <tr class="{% cycle 'odd' 'even' %}">
+      <td><input class="form-checkbox" type="checkbox" value="{{ a.avaluo_id }}" name="avaluo_facturado"></td>
      <td> {{a.FolioK}} </td>
      <td> {{a.Referencia}} </td>
      <td> {{a.Cliente}} </td>
-	 <td> {{a.Depto}} </td>
+	   <td> {{a.Depto}} </td>
      <td> {{a.Calle}} </td>
      <td style="width:3px;"> {{a.NumExt}} </td>
      <td style="width:10px;"> {{a.NumInt}} </td>
-     <td style="width:10px;"> {% crispy b %} </td>
      <td> {{a.Municipio}} </td>
      <td> {{a.Salida|date:"d/m/y"}} </td>
      <td> {{a.Importe|currency }}</td>			  
-     <td class="tabla_opciones"> <a href="/SIAV/guarda_master/{{a.avaluo_id}}" target="_blank">Editar</a></td>
+     <td class="tabla_opciones"> <a href="/SIAV/guarda_master/{{a.avaluo_id}}">Editar</a></td>
    </tr>
    {% endfor %} 
-
-   <input class='btn btn-primary' type="submit" name="submit" value="Facturar" />
-
- </form>
 </tbody>
-
 </table>
+
+   <div class="modal fade" id="factura_masiva">
+
+<div class="modal-dialog">
+<div class="modal-content">
+  <div class="modal-body">
+
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h2 style="text-align:center">Factura</h2>
+    <div class="modal-body">
+      <span style="display: block">
+        {% if not b.is_valid %}
+        <div class='hide'>invalid_form</div>
+        {% endif %}
+          {% csrf_token %}
+          {% bootstrap_form b layout='vertical'  %}
+      </span>
+    </div>
+    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+    <button type="submit" class="btn btn-success" id="submit-id-submit" style="float:right">Enviar</button>
+  </form>
+</div>
+</div>
+<!-- /.modal-content -->
+</div>
+<!-- /.modal-dialog -->
+
+</div>
+<!-- /.modal -->
+
+
 </div>
 
 
