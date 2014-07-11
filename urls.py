@@ -11,9 +11,12 @@ from django.views.defaults import *
 from django.views.generic import TemplateView
 from django.conf import settings
 from django.conf.urls.static import static
+from app.api import *
+
+
 
 admin.autodiscover()
-
+avaluo = AvaluoResource()
 
     # Examples:
     # url(r'^$', 'SIAV.views.home', name='home'),
@@ -126,6 +129,8 @@ urlpatterns += patterns('',
     url(r'^get_conversaciones/', 'websock.views.get_conversaciones', name='get_conversaciones'),
     #url(r'^marca_leidos/', 'websock.views.marca_leidos', name='marca_leidos'),
     url(r'^node_api$', 'websock.views.node_api', name='node_api'),
+
+
 )
 
 

@@ -793,7 +793,7 @@ class SalidaMasiva(ModelForm):
         self.helper.layout = Layout(
             Div(Div('Valor'),
                 Div('Gastos'),
-                Div('Importe'),
+                Div(Field('Importe',css_id='id_Importe'),css_id='div_id_Importe'),
                 Div('Salida'),
                 css_class=''))
         super(SalidaMasiva,  self).__init__(*args,  **kwargs)

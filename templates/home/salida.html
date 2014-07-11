@@ -35,22 +35,44 @@ $('#salida_masiva_button').click(function () {
     if($(".form-checkbox").is(':checked')) {
 
       var selected = [];
+      var selected_depto = [];
       $('input:checked').each(function() {
-          selected.push($(this).parent().next().next().next().next().next().next().next().html());
+          selected.push($(this).parent().next().next().next().next().next().next().next().next().html());
+          selected_depto.push($(this).parent().next().next().next().next().html());
       });
       var bandera = true;
+      var bandera_depto = true;
       for ( var i = 0; i < selected.length; i++ ) {
           // Logs "try 0", "try 1", ..., "try 4".
+          
+          // Comprueba que pertenezcan a la misma colonia
           if(selected[0] != selected[i]){
               bandera = false;
               console.log( selected[i] );
-              //console.log( bandera );
+          }
+          // Comprueba que pertenezcan al mismo departamento
+          if(selected_depto[0] != selected_depto[i]){
+              bandera_depto = false;
+              console.log( selected_depto[i] );
           }
       }
 
       if(bandera == false){
         alert("Todos los servicios deben pertenecer a la misma colonia.");
       }else{
+          if(bandera_depto != false){
+            if(selected_depto[0]  == 54){
+              //$( "#id_Importe" ).hide();
+              //$("label[for='id_Importe']").hide();
+              $("#id_Importe").val(696);
+              $("#id_Importe").attr('readonly', true);
+            }else{
+              //$( "#id_Importe" ).show();
+              //$("label[for='id_Importe']").show();
+              $('#id_Importe').removeAttr('value');
+              $("#id_Importe").attr('readonly', false);
+            }
+          }
         $('#salida_masiva').modal('show');
         console.log( selected.toString());
       }
@@ -89,6 +111,7 @@ $('#salida_masiva_button').click(function () {
       <th style="width:40px">Folio K</th>
       <th style="width:40px" filter='true' >Referencia</th>
       <th filter-type='ddl'>Cliente</th>
+      <th hidden="true" filter-type='ddl'>Depto</th>
       <th>Calle</th>
       <th filter='false'>Ext.</th>
       <th filter='false'>Int.</th>
@@ -107,6 +130,7 @@ $('#salida_masiva_button').click(function () {
       <td > {{a.FolioK}} </td>
       <td style="width:100px;"> {{a.Referencia}} </td>
       <td style="width:10px;"> {{a.Cliente}} </td>
+      <td hidden="true" style="width:10px;"> {{a.Depto_id}} </td>
       <td style="width:200px"> {{a.Calle}} </td>
       <td style="width:3px;"> {{a.NumExt}} </td>
       <td style="width:10px;"> {{a.NumInt}} </td>

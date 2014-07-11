@@ -159,38 +159,3 @@ colors: [
 
     
 });
-    /**
-     * Decifra un string, cifrado con el método cifraLlaveHex Se usa para los
-     * logs. Creation date: (1/13/2001 10:30:52 AM)
-     */
-    public static String descifraLlaveHex(String palabraCifrada) {
-        try {
-            byte[] buffer = hexStrToBytes(palabraCifrada);
-            byte llave = 61;
-            // int tamano = buffer.length;
-            for (int n = 0; n < buffer.length; n++)
-                buffer[n] = (byte) (buffer[n] ^ llave);
-            String str = new String(buffer);
-            return str;
-        } catch (Exception e) {
-            return "";
-        }
-    }
-
-
-    /**
-     * Convierte un string en hexadecimal a un arreglo de Bytes Creation date:
-     * (1/30/2001 9:10:22 AM)
-     */
-    public static final byte[] hexStrToBytes(String s) {
-        byte[] bytes;
-
-        bytes = new byte[s.length() / 2];
-
-        for (int i = 0; i < bytes.length; i++) {
-            bytes[i] = (byte) Integer.parseInt(s.substring(2 * i, 2 * i + 2),
-                    16);
-        }
-
-        return bytes;
-    }

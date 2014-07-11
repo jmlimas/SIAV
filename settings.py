@@ -170,7 +170,6 @@ INSTALLED_APPS = (
     #'django_socketio',
     #'debug_toolbar',
     'grappelli',
-
     'sorl.thumbnail',
     # Uncomment the next line to enable the admin:
     'django.contrib.admin',

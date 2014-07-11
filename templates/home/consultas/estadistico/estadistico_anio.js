@@ -13,12 +13,10 @@ colors: [
 ]
 
 
-    $('#avaluos_table').tableFilter();
-    valor = 0;
-
     $(function () {
         $(document).ready(function() {
            var chart;
+
            $('#line_container').highcharts({
             chart: {
                 type: 'line',
@@ -94,7 +92,7 @@ colors: [
 
             },
             title: {
-                // text: 'Importes {{anio}}'
+                text: 'Importes {{anio}}'
             },
             xAxis: {
                    categories: [
@@ -138,7 +136,7 @@ colors: [
                 name: {{a.anio}},
                 {% endfor %}
                 data: [  {% for data in anio %}
-                {{data.Total}},
+                {{data.Total|default_if_none:"0"}},
                 {% endfor %}
                 ]
             },
@@ -146,10 +144,7 @@ colors: [
             name: 'John',
             data: [5, 7, 3]
         }*/],
-        tooltip: {
-            pointFormat: '<b>${point.y:,.2f}<b/>',
-            shared: false
-        },
+
     });
 
 });

@@ -146,7 +146,7 @@ def estadistico(request, anio=2013, mes=01):
     anios = Avaluo.objects.all().dates('Salida', 'year')
     meses = MESES
     avaluos = Avaluo.objects.extra(select={'month': 'extract( month from Salida )'}).values('month').filter(Salida__year=anio).order_by('month').annotate(dcount=Count('Solicitud'), Total=Sum('Importe'))
-    cliente = Avaluo.objects.filter(Salida__year=anio).filter(Salida__month=mes).values('Cliente__Cliente').annotate(Total=Sum('Importe'), Cantidad=Count('Cliente'))
+    #cliente = Avaluo.objects.filter(Salida__year=anio).filter(Salida__month=mes).values('Cliente__Cliente').annotate(Total=Sum('Importe'), Cantidad=Count('Cliente'))
     tiempo_respuesta = Avaluo.objects.filter(Salida__year=anio).values('Depto__Depto','Solicitud','Salida').annotate(Total=Sum('Importe'), Cantidad=Count('Cliente'))
     monto_todos_anios = Avaluo.objects.extra(select={'year': 'extract( year from Salida )'}).values('year').annotate(Total=Sum('Importe')).order_by('year')
 
@@ -154,6 +154,12 @@ def estadistico(request, anio=2013, mes=01):
     cursor = connection.cursor()
     cursor.execute('SELECT t1.avaluo_id, IFNULL(t3.Cliente, "TOTAL") AS name, COUNT(*), SUM(IF(DATEDIFF(CURDATE(),DATE_ADD(t1.Solicitud,INTERVAL t2.tolerancia DAY)) <= 0,1, 0)) as "= 0", SUM(IF(DATEDIFF(CURDATE(),DATE_ADD(t1.Solicitud,INTERVAL t2.tolerancia DAY)) BETWEEN 1 AND 3,1, 0) )as "< 3", SUM(IF(DATEDIFF(CURDATE(),DATE_ADD(t1.Solicitud,INTERVAL t2.tolerancia DAY)) > 3,1, 0)) as "> 3" FROM siavdb.app_avaluo t1 INNER JOIN siavdb.app_depto t2 on t1.Depto_id = t2.Depto_id INNER JOIN siavdb.app_cliente t3 on t2.Cliente_id_id = t3.Cliente_id WHERE t1.Estatus in ("PROCESO") GROUP BY t3.Cliente WITH ROLLUP;')
     en_tiempo = cursor.fetchall()
+
+    cursor.execute('SELECT Cliente,Ene_Ct,Feb_Ct,Mzo_Ct,Abr_Ct,May_Ct,Jun_Ct,Jul_Ct,Ago_Ct,Sept_Ct,Oct_Ct,Nov_Ct,Dic_Ct from ISALIDA_CLIENTES_X_MES_EXT WHERE año_salida = %s ORDER BY Cliente',[anio])
+    cliente = cursor.fetchall()
+
+    cursor.execute('SELECT Cliente,Ene,Feb,Mzo,Abr,May,Jun,Jul,Ago,Sept,Oct,Nov,Dic from ISALIDA_CLIENTES_X_MES_EXT WHERE año_salida = %s ORDER BY Cliente',[anio])
+    cliente = cursor.fetchall()
 
     total_general = 0.00
     total_avaluos = 0
