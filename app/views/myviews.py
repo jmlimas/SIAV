@@ -84,7 +84,7 @@ def facturar(request):
                .filter(Q(Salida__isnull=False))
                .filter(Q(Factura='') | Q(Factura__isnull=True))
                .filter(Q(Pagado=False) | Q(Pagado__isnull=True)))
-    avaluos = avaluos.order_by('-Salida')
+    avaluos = avaluos.order_by('Referencia')
 
     if request.method == 'POST':
         b = FacturaForm(request.POST)
@@ -105,7 +105,7 @@ def facturar(request):
             else:
                 total_general += float(str(x['total']))
 
-        return render_to_response('home/lista_factura.html', {'avaluos': avaluos,'suma_de_monto': suma_de_monto, 'total_general': total_general,'b': b}, context_instance=RequestContext(request))
+        return render_to_response('home/lista_factura.html', locals(), context_instance=RequestContext(request))
 
 
 #   Vista que se encarga de liquidar las facturas ya pagadas
@@ -372,7 +372,7 @@ def actualiza_avaluo(request, id):
         form = CapturaAvaluo(instance=avaluo)
     decimal = decimal_conversion(avaluo)
     cercanos = find_closest(avaluo)
-    imagenes = ImagenAvaluo.objects.filter(avaluo = avaluo.avaluo_id)[:3]
+    imagenes = ImagenAvaluo.objects.filter(avaluo = avaluo.avaluo_id)[:5]
     archivos = ArchivoAvaluo.objects.filter(avaluo = avaluo.avaluo_id)
     return render_to_response('home/edita_avaluo.html', {'form': form, 'avaluo': avaluo, 'decimal': decimal, 'cercanos': cercanos,'imagenes': imagenes,'archivos': archivos, 'folio_k': folio_k}, context_instance=RequestContext(request))
 

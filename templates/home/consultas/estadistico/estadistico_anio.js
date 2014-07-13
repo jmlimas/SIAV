@@ -128,7 +128,12 @@ colors: [
                     text: 'Cantidad'
                 }
             },
-
+            tooltip: {
+                formatter: function() {
+                    return '<b>'+ this.x +'</b><br/>'+
+                        this.series.name +': $'+ this.y.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+                }
+            },
             series: [
             {% for anio in avaluos %}
                 {

@@ -8,7 +8,6 @@
 {% bootstrap_css %}
 {% bootstrap_javascript %}
 
-
 {% load currency %}
 
 {% block lista_factura %}active{% endblock %}
@@ -38,6 +37,8 @@ input[type=text]{
 <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/picnet-table.js"></script>
 <!-- <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/jquery.livequery.js"></script> 
  -->
+ <link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet"/>
+<script src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function () {
   $('#avaluos_table').tableFilter();
@@ -47,6 +48,13 @@ $(document).ready(function () {
   valor = ($('#avaluos_table tbody tr:visible').length);
 
   $('#cantidad_tabla').html(valor);
+
+$('.importe').editable({
+    type: 'text',
+    url: '/monto_inline/',
+    title: 'Nuevo importe',
+    params: "{csrfmiddlewaretoken:'{{csrf_token}}'}"
+});
 
   $('#avaluos_table thead').on("change", function () {
     setTimeout(function () {
@@ -155,7 +163,7 @@ $('#factura_masiva_button').click(function () {
      <td style="width:10px;"> {{a.NumInt}} </td>
      <td> {{a.Municipio}} </td>
      <td> {{a.Salida|date:"d/m/y"}} </td>
-     <td> {{a.Importe|currency }}</td>			  
+     <td><a href="#" class="importe" data-pk="{{a.avaluo_id}}" data-value="{{a.Importe}}">{{a.Importe|currency}}</a></td>		
      <td class="tabla_opciones"> <a href="/SIAV/guarda_master/{{a.avaluo_id}}">Editar</a></td>
    </tr>
    {% endfor %} 

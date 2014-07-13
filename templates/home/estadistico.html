@@ -22,6 +22,16 @@
 <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/boostrap-tab.js"></script>
 
 <script>
+
+var openTab = $(location.hash).filter(".tab_content");
+
+$(function(){
+  var hash = window.location.hash;
+  hash && $('ul.nav a[href="' + hash + '"]').tab('show');
+   $('html, body').animate({scrollTop : 0},1);
+   //location.reload();
+});
+
 var pre_url = "/SIAV/estadistico_anio_js/?anio="+{{anio}};
 $.getScript( pre_url, function() {});
 

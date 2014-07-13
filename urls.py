@@ -130,7 +130,7 @@ urlpatterns += patterns('',
     #url(r'^marca_leidos/', 'websock.views.marca_leidos', name='marca_leidos'),
     url(r'^node_api$', 'websock.views.node_api', name='node_api'),
 
-
+    url(r'^monto_inline/', 'app.views.inline.monto_inline', name='monto_inline'),
 )
 
 
