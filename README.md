@@ -1,4 +1,4 @@
-SIAV v.2.0
+SIAV v2.0
 ====
 
 Sistema de Administración de Avalúos es una herramienta basada en web desarrollada en Python/Django que permite llevar el proceso administrativo de valuación de inmuebles.
