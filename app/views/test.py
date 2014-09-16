@@ -52,7 +52,7 @@ def get_deptos(request):
     if request.is_ajax():
         q = request.GET.get('id', '')
         print q
-        deptos = Depto.objects.filter(cliente_id = q )
+        deptos = Depto.objects.filter(cliente_id = q ,is_active=True)
         results = []
         for depto in deptos:
             depto_json = {}

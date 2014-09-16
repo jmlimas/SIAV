@@ -521,12 +521,6 @@ class RespuestaConsultaMaster(ModelForm):
     class Meta:
         model = Avaluo
         exclude = ('Declat','Declon',)
-    def clean(self):
-        cleaned_data = self.cleaned_data
-        ref = cleaned_data.get('Referencia')
-        if ref in self._errors:
-            del self._errors['Referencia']
-        return self.cleaned_data 
     def clean_Referencia(self):
         return self.cleaned_data['Referencia'] or None
     def __init__(self,  *args,  **kwargs):
