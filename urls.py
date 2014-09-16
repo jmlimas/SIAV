@@ -12,11 +12,16 @@ from django.views.generic import TemplateView
 from django.conf import settings
 from django.conf.urls.static import static
 from app.api import *
-
+from tastypie.api import Api
 
 
 admin.autodiscover()
-avaluo = AvaluoResource()
+
+v1_api = Api(api_name='v1')
+v1_api.register(AvaluoResource())
+v1_api.register(DeptoResource())
+v1_api.register(ImagenAvaluoResource())
+v1_api.register(ProcesoResource())
 
     # Examples:
     # url(r'^$', 'SIAV.views.home', name='home'),
@@ -32,10 +37,10 @@ avaluo = AvaluoResource()
 urlpatterns = patterns(
 
 
-    '', url(r'^SIAV/ajax_upload/(\w*\d+)/(\w*\d+)/$', 'app.uploads.ajax_upload', name="ajax_upload"),
+    '', url(r'^SIAV/ajax_upload/(\w*\d+)/(\@*\w*\d+)/$', 'app.uploads.ajax_upload', name="ajax_upload"),
 
     url(r'^grappelli/', include('grappelli.urls')),
-
+    url(r'^api/', include(v1_api.urls)),
     url(r'^SIAV/admin/', include(admin.site.urls)),
 
 
@@ -51,6 +56,11 @@ urlpatterns = patterns(
     url(r'^SIAV/guarda_master/?(\d+)/?$', 'app.views.guarda_master', name='guarda_master'),
     url(r'^SIAV/consulta_master/', 'app.views.consulta_master', name='consulta_master'),
     url(r'^SIAV/consulta_master/(?P<query>)/?$', 'app.views.consulta_master', name='consulta_master'),
+
+    #Consulta de comparables
+    url(r'^SIAV/consulta_comparable/', 'app.views.consulta_comparable', name='consulta_comparable'),
+    url(r'^SIAV/consulta_comparable/(?P<query>)/?$', 'app.views.consulta_comparable', name='consulta_comparable'),
+
 
     url(r'^SIAV/consulta_sencilla/', 'app.views.consulta_sencilla', name='consulta_sencilla'),
     url(r'^SIAV/respuesta_consulta_sencilla/?(\d+)/?$', 'app.views.respuesta_consulta_sencilla', name='respuesta_consulta_sencilla'),
@@ -131,6 +141,7 @@ urlpatterns += patterns('',
     url(r'^node_api$', 'websock.views.node_api', name='node_api'),
 
     url(r'^monto_inline/', 'app.views.inline.monto_inline', name='monto_inline'),
+    url(r'^factura_inline/', 'app.views.inline.factura_inline', name='factura_inline'),
 )
 
 

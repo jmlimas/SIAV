@@ -93,6 +93,7 @@ class AltaAvaluo(ModelForm):
     NumExt = forms.CharField(label="Num. Ext.", required=False)
     NumInt = forms.CharField(label="Num. Int.", required=False)
     Colonia = forms.CharField()
+    Tipo = forms.ModelChoiceField(required=True, label="Tipo Inmueble",  queryset=Tipo.objects.all())
     Municipio = forms.ModelChoiceField(queryset=Municipio.objects.filter(estado_id__is_active='True'))
     Estado = forms.ModelChoiceField(queryset=Estado.objects.filter(is_active='True'))
     Servicio = forms.ChoiceField(choices=SERVICIOS, label="Tipo Servicio")
@@ -146,7 +147,7 @@ class AltaAvaluo(ModelForm):
             ))
         super(AltaAvaluo,  self).__init__(*args,  **kwargs)
         self.fields['Municipio'] = forms.ModelChoiceField(queryset=Municipio.objects.filter(estado_id__is_active='True'))
-        self.fields['Depto'] = forms.ModelChoiceField(queryset=Depto.objects.all())
+        self.fields['Depto'] = forms.ModelChoiceField(queryset=Depto.objects.filter(is_active='True'))
 
 
 ################################
@@ -183,9 +184,32 @@ class FormaSencillaPaquete(forms.Form):
         self.helper = FormHelper()
         self.helper.form_method = 'post'
         self.helper.form_tag = False
+        self.helper.layout = Layout(
+                        Div(
+                            'Tipo',
+                            'Servicio',
+                            'Cliente',
+                            css_class='col-md-3'),
+                        Div(
+                            'Depto',
+                            'Colonia',
+                            'Estado',
+                            
+                            css_class='col-md-3'),
+                        Div(
+                            'Municipio',
+                            'Estatus',
+                            'Prioridad',
+
+                            css_class='col-md-3'),
+                        Div( 
+                            'Valuador'  ,                                        
+                            'Valor',
+                            'Solicitud',
+                            css_class='col-md-3'))
         super(FormaSencillaPaquete,  self).__init__(*args,  **kwargs)
         self.fields['Municipio'] = forms.ModelChoiceField(queryset=Municipio.objects.filter(estado_id__is_active='True'))
-        self.fields['Depto'] = forms.ModelChoiceField(queryset=Depto.objects.all())
+        self.fields['Depto'] = forms.ModelChoiceField(queryset=Depto.objects.filter(is_active='True'))
 
 class FormaPaquete(forms.Form):
     Referencia = forms.CharField(required=False)
@@ -407,6 +431,7 @@ class SalidaAvaluo(ModelForm):
 
 class FormaConsultaMaster(ModelForm):
     FolioK = forms.CharField(required=False)
+    Referencia = forms.CharField(required=False)
     Calle = forms.CharField(required=False)
     #NumExt = forms.CharField(label="Num. Ext.", required=False)
     #NumInt = forms.CharField(label="Num. Int.", required=False)
@@ -488,6 +513,7 @@ class FormaConsultaMaster(ModelForm):
 
 class RespuestaConsultaMaster(ModelForm):
     FolioK = forms.CharField( required=False)
+    Referencia = forms.CharField(required=False)
     Calle = forms.CharField( required=False)
     NumExt = forms.CharField( label="Num. Ext.", required=False)
     NumInt = forms.CharField( label="Num. Int.", required=False)
@@ -587,7 +613,7 @@ class RespuestaConsultaMaster(ModelForm):
             estado = self.instance.Estado
             cliente = self.instance.Cliente
         self.fields['Municipio'] = forms.ModelChoiceField(queryset=Municipio.objects.filter(estado_id__is_active='True',estado_id=estado))
-        self.fields['Depto'] = forms.ModelChoiceField(required=False, queryset=Depto.objects.filter(cliente_id=cliente))
+        self.fields['Depto'] = forms.ModelChoiceField(required=False, queryset=Depto.objects.filter(is_active='True'))
 
 
 class FormaConsultaSencilla(ModelForm):

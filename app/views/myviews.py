@@ -297,6 +297,8 @@ def alta_avaluo_paquete(request):
                         form._errors["Referencia"] = ErrorList([u"Referencia Repetida."])
                     else:
                         values.append(form.cleaned_data.get("Referencia"))
+                        if (len(values) > 1):
+                            return HttpResponse(values)
                 avaluo = Avaluo()
 
                 avaluo.Tipo = formset_sencilla.cleaned_data['Tipo']
@@ -560,6 +562,46 @@ def consulta_master(request):
     else:
         forma = FormaConsultaMaster()
         return render_to_response('home/consultas/consulta_master.html', {'forma': forma}, context_instance=RequestContext(request))
+
+
+
+def consulta_comparable(request):
+    if request.is_ajax():
+        zona = request.GET.get('zona', '')
+        col = request.GET.get('col', '')
+        col = col.replace(' ','%20')
+        col = col.encode('utf-8')
+
+        from BeautifulSoup import BeautifulSoup
+        import urllib2
+        from django.utils.encoding import smart_str, smart_unicode
+        results = []
+        list_child = []
+        for desplaza in range(1,2):
+            print "Pag."+str(desplaza)
+            url="http://www.century21libra.com/catalogo/index.php?Desplazamiento="+str(desplaza)+"&BZona="+zona+"&BColonia="+col+"&BInmueble=&BPrecio=&Idioma=1&Area=&BClave=&"
+            page=urllib2.urlopen(url)
+            soup = BeautifulSoup(page.read())
+            inmuebles=soup.findAll("div",style="width:170px;float:left;margin-left:5px; margin-top:5px;margin-bottom:10px")
+
+
+            for i in inmuebles:
+                results.append(list_child)
+                list_child = []
+                counter = 0
+                for i_child in i.findAll("div"):
+                    list_child.append(i_child.text.encode('utf-8'))
+                    counter +=1
+                    for i_child in i_child.findAll('a', href=True):
+                        list_child.append("http://www.century21libra.com"+i_child['href'].encode('utf-8'))
+                try:
+                      list_child.remove("Ver mas")
+                except:
+                    pass
+        return render_to_response('home/consultas/results_comparable.html', {'results': results, 'url':url}, context_instance=RequestContext(request))
+    else:
+        forma = FormaConsultaMaster()
+        return render_to_response('home/consultas/consulta_comparable.html', context_instance=RequestContext(request))
 
 
 @login_required
