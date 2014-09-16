@@ -106,12 +106,12 @@ $('#salida_masiva_button').click(function () {
 <form id="modal-form" class="" method="post" action="/SIAV/salida_masiva/">
 <table id='avaluos_table' class="table table-striped table-hover">
   <thead>
-    <tr class="{% if a.Solicitud|dayssince|add:"0" > a.Depto.Tolerancia|add:"0" and a.Estatus != 'DETENIDO' %}danger{% endif%}">
-      <th></th>
+    <tr class='even'>
+      <th style="width:40px" filter='false'></th>
       <th style="width:40px">Folio K</th>
       <th style="width:40px" filter='true' >Referencia</th>
       <th filter-type='ddl'>Cliente</th>
-      <th hidden="true" filter-type='ddl'>Depto</th>
+      <th style="width:40px;display:none;" filter-type='ddl'>Depto</th>
       <th>Calle</th>
       <th filter='false'>Ext.</th>
       <th filter='false'>Int.</th>
@@ -126,11 +126,11 @@ $('#salida_masiva_button').click(function () {
   <tbody>
     {% for a in avaluos %}
     <tr class="{% if a.Solicitud|dayssince|add:"0" > a.Depto.Tolerancia|add:"0" and a.Estatus != 'DETENIDO' %}danger{% endif%}">
-      <td style="width:40px" filter='false'><input class="form-checkbox" type="checkbox" value="{{ a.avaluo_id }}" name="avaluo_salida"></td>
+      <td ><input class="form-checkbox" type="checkbox" value="{{ a.avaluo_id }}" name="avaluo_salida"></td>
       <td > {{a.FolioK}} </td>
       <td style="width:100px;"> {{a.Referencia}} </td>
       <td style="width:10px;"> {{a.Cliente}} </td>
-      <td hidden="true" style="width:10px;"> {{a.Depto_id}} </td>
+      <td style="width:10px;display:none;"> {{a.Depto_id}} </td>
       <td style="width:200px"> {{a.Calle}} </td>
       <td style="width:3px;"> {{a.NumExt}} </td>
       <td style="width:10px;"> {{a.NumInt}} </td>
@@ -153,25 +153,6 @@ $('#salida_masiva_button').click(function () {
   </tbody>
 </table>
 </div>
-
-
-{% for a in avaluos %}
-<!-- Modal1 -->
-<div id="myModal{{a.FolioK}}" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
- <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-     <h3 align="center" id="myModalLabel">{{a.FolioK}}</h3> 
-  </div>
-  <div class="modal-body">
-    <p align="center">¿Estás seguro que deseas dar salida a este servicio? </p>
-  </div>
-  <div class="modal-footer">
-    <button class="btn" data-dismiss="modal" aria-hidden="true">Cancelar</button>
-    <a href="/SIAV/salida_efectiva/{{a.avaluo_id}}" role="button" class="btn btn-primary">Confirmar</a>
-  </div>
-</div>
-{% endfor %}
-
 
 <div class="modal fade" id="salida_masiva">
 

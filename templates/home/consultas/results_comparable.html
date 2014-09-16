@@ -1,0 +1,49 @@
+﻿{% load currency %}
+{% load adder %}
+
+<div id="table-responsive">
+{% if results|length %}
+	<table class="table table-striped">
+	<tr class='even'>
+		<td colspan="9" class="right">
+			<strong>Se encontraron {{ results|length }} avalúos.</strong>
+		</td>
+		<td colspan="3" class="right">
+			<strong> </strong>
+		</td>
+	</tr>
+	<tr>
+		<th></th>
+		<th>Nombre</th>
+		<th>Oferta</th>
+		<th>Descripción</th>
+		<th>Clave</th>
+		<th>Valor</th>
+		<th>M.Terreno</th>
+		<th>M.Construccion</th>
+	</tr>
+	{% for r in results|slice:"1:" %}
+	<tr class="{% cycle 'odd' 'even' %}">
+		<td><img padding-bottom="65px" width="70px" src="{{ STATIC_URL }}/CSS/images/century21_logo.jpg"></td>
+		{% for x in r %}<!-- 
+		<td><strong>{{ forloop.counter }}.</strong></td> -->
+		{% if forloop.last %}
+		<td>
+			<a href="{{x}}">Ver más</a>
+		</td>
+	    {% else %}
+		<td>
+			<span class="hint">{{x}}</span>
+		</td>
+	    {% endif %}
+	    {% endfor %}
+	</tr>
+	{% endfor %}
+	</table>
+{% else %}
+	<div class="note">
+	Tu búsqueda no arrojó resultados, intenta de nuevo.
+	{{url}}
+	</div>
+{% endif %}
+</div>

@@ -98,7 +98,7 @@ $('#captura_masiva_button').click(function () {
       <th style="width:10px" filter='false' class="tabla_opciones"></th>
     </tr>
   </thead>
-<body>
+<tbody>
   {% for a in avaluos %}
   <tr class="{% if a.Solicitud|dayssince|add:"0" > a.Depto.Tolerancia|add:"0" and a.Estatus != 'DETENIDO' %}danger{% endif%}">
   <td><input class="form-checkbox" type="checkbox" value="{{ a.avaluo_id }}" name="avaluo_capturado"></td>
@@ -122,7 +122,7 @@ $('#captura_masiva_button').click(function () {
   </td>
 </tr>
 {% endfor %}
-</body>
+</tbody>
 </table>
 </div>
 

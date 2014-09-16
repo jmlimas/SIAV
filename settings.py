@@ -1,6 +1,7 @@
 # Django settings for SIAV project.
 
 import os
+import django 
 
 # Set the DJANGO_SETTINGS_MODULE environment variable.
 os.environ['DJANGO_SETTINGS_MODULE'] = "SIAV.settings"
@@ -171,6 +172,7 @@ INSTALLED_APPS = (
     #'debug_toolbar',
     'grappelli',
     'sorl.thumbnail',
+    'tastypie',
     # Uncomment the next line to enable the admin:
     'django.contrib.admin',
     'bootstrap3',
@@ -188,4 +190,6 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "django.core.context_processors.request",
     'django.contrib.messages.context_processors.messages',
 )
+
+
 

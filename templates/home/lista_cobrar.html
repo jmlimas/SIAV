@@ -18,7 +18,8 @@
 <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/jquery.livequery.js"></script> 
 <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/highcharts.js"></script>
 <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/boostrap-tab.js"></script>
-
+ <link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet"/>
+<script src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
 
 <script type="text/javascript">
 $(document).ready(function () {
@@ -35,6 +36,14 @@ $(document).ready(function () {
       window.location = '/SIAV/liquidar/';
     }, 1000);
   });
+
+
+$('.factura').editable({
+    type: 'text',
+    url: '/factura_inline/',
+    title: 'Renombrar Factura',
+    params: "{csrfmiddlewaretoken:'{{csrf_token}}'}"
+});
 
 
 
@@ -184,7 +193,7 @@ $(function () {
   <form action="/SIAV/liquidar/" method="post">
    {% for a in agrupados %}
    <tr>
-    <td style="width:10px;"> {{a.Factura}} </td>{% csrf_token %}
+    <td style="width:10px;"><a href="#" class="factura" data-pk="{{a.Factura}}" data-value="{{a.Factura}}">{{a.Factura}}</a></td>{% csrf_token %}
     <td> {{a.Cliente__Cliente}} </td>
     <td> {{a.Cantidad}} </td>
     <td> {{a.Total|currency }} </td>			  
