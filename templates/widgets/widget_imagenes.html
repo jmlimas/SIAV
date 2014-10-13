@@ -1,0 +1,78 @@
+{% load file_exists %}
+
+<link rel="stylesheet" href="{{ STATIC_URL }}CSS/flexslider/demo_flexslider.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="{{ STATIC_URL }}CSS/flexslider/flexslider.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="{{ STATIC_URL }}CSS/fileuploader.css" type="text/css" media="screen" />
+<div id="file-uploader" style="float:left;">
+      <noscript>
+        <p>Please enable JavaScript to use file uploader.</p>
+        <!-- or put a simple form for upload here --> </noscript>
+    </div>
+    <br>
+    <br>
+    {% if imagenes %}
+    <div  id="main" role="main">
+      <section class="slider">
+        <div style="max-width:500px;max-height:310px" id="slider" class="flexslider">
+          <ul class="slides">
+            {% for item in imagenes %}
+            {% if item.imagen.url|file_exists %}
+            <li>
+              <img style="width:490px;height:300px" src="/{{ item.imagen.url }}"></li>
+            {% endif %}
+            {% endfor %}
+          </ul>
+        </div>
+        <div style="width:500px" id="carousel" class="flexslider" >
+          <ul class="slides">
+            {% for item in imagenes %}
+            {% if item.imagen.url|file_exists %}
+            <li>
+              <img style="width:100px;height:100px" src="/{{ item.imagen.url }}">
+
+              <div class="caption" style="padding-top:7px">
+                <p>
+                  <a data-toggle="modal" data-target="#myModal_{{item.imagen_id}}" href="#myModal_{{item.imagen_id}}" title="{{item.FolioK}}" class="btn btn-xs btn-danger" style="margin-left:15px" role="button">
+                    <span class="glyphicon glyphicon-remove"></span>
+                  </a>
+                </p>
+              </div>
+            </li>
+            {% endif %}
+            {% endfor %}
+          </ul>
+        </div>
+      </section>
+    </div>
+    {% endif %}
+
+    {% for item in imagenes %}
+    {% if item.imagen.url|file_exists %}
+    <div class="modal fade" id="myModal_{{item.imagen_id}}">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          </div>
+          <div class="modal-body">
+            <p align="center">¿Estás seguro de que deseas eliminar esta imagen?</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+            <button type="button" class="btn btn-danger" onclick="location.href='/SIAV/elimina_imagen_captura/{{item.avaluo_id}}/{{item.imagen_id}}';">Eliminar</button>
+          </div>
+        </div>
+        <!-- /.modal-content --> </div>
+      <!-- /.modal-dialog --> </div>
+    <!-- /.modal -->
+    {% endif %}
+    {% endfor %}
+
+
+
+
+
+
+
+
+

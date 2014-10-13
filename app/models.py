@@ -92,7 +92,7 @@ class Depto(models.Model):
             return self.Depto
 
 
-class Avaluo(models.Model):
+class Avaluo(models.Model):   
     avaluo_id = models.AutoField(primary_key=True)
     Referencia = models.CharField(null=True, max_length=255, unique=True)
     FolioK = models.CharField(null=True, max_length=255, unique=True)
@@ -154,6 +154,17 @@ class ImagenAvaluo(models.Model):
             size = ( 1024, 768)
             imagen = imagen.resize(size, Image.ANTIALIAS)
         imagen.save(self.imagen.path)   
+
+    @staticmethod
+    def last_photo(avaluo_id):
+        last_photo = ImagenAvaluo.objects.filter(avaluo_id=avaluo_id)
+        if last_photo:
+            last_photo_obj = last_photo.latest('imagen_id')
+            return last_photo_obj.imagen.url
+        else:
+            return ''
+
+
 
 class ArchivoAvaluo(models.Model):
     archivo_id = models.AutoField(primary_key=True)

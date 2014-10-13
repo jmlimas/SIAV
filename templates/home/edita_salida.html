@@ -78,8 +78,10 @@
             Porfavor corrige los errores debajo.
         </p>
     {% endif %}
-    <div class="col-md-12">
-    <div class="col-md-offset-2">
+    <div class="row-fluid">
+    <div class="span12">
+    <div class="span6"></div>
+    <div class="span6">
 <!--     	<div class='span4'>
     		<select class="select" id="select_valor">
 				<option value="SUPERFICIE">SUPERFICIE - T/C</option>
@@ -93,20 +95,31 @@
 		<tbody>
 		<tr>
 			<td>Folio K : <b>{{ folio_k}}</b></td>
+		</tr>
+		<tr>
 			<td>Referencia : <b>{{ avaluo.Referencia}}</b></td>
 		</tr>
 		<tr>
 			<td>Cliente : <b>{{ avaluo.Cliente }}</b></td>
+		</tr>
+		<tr>
 			<td>Departamento : <b>{{ avaluo.Depto}}</b></td>
+		</tr>
+		<tr>
 			<td>Fecha Solicitud : <b>{{ avaluo.Solicitud }}</b></td>
 		</tr>
 		<tr>
 			<td>Colonia : <b>{{ avaluo.Colonia }}</b></td>
+		</tr>
+		<tr>
 			<td>Municipio : <b>{{ avaluo.Municipio }}</b></td>
+		</tr>
+		<tr>
 			<td>Estado : <b>{{ avaluo.Estado}}</b></td>
 		</tr>
 	</tbody>
 	</table>
+</div>
 </div>
 </div>
    		{% crispy form %}	
