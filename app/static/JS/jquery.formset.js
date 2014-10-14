@@ -200,22 +200,22 @@
         deleteText: 'remove',            // Text for the delete link
         addCssClass: 'add-row',          // CSS class applied to the add link
         deleteCssClass: 'delete-row',    // CSS class applied to the delete link
-        formCssClass: 'dynamic-form',    // CSS class applied to each form in a formset
+        formCssClass: 'dynamic-contact-form',    // CSS class applied to each form in a formset
         extraClasses: [],                // Additional CSS classes, which will be applied to each form in turn
         keepFieldValues: 'input',             // jQuery selector for fields whose values should be kept when the form is cloned
         added: function(){
                 $('input[type=text]').addClass('form-control');
                 $('select').addClass('form-control');
+                console.log ( '#someButton was clicked' );
 
                 $('#cant_servicios').html(
-                      ($('#id_contact_info_table tr').length).toString()+" Servicios");
+                      ($('#printableArea div.formset-div-child').length).toString()+" Servicios");
 
         },      // Function called each time a new form is added
         removed: function(){
                 $('#cant_servicios').html(
-                      ($('#id_contact_info_table tr').length).toString()+" Servicios");
+                      ($('#printableArea div.formset-div-child').length).toString()+" Servicios");
 
         },                    // Function called each time a form is deleted
     };
 })(jQuery)
-

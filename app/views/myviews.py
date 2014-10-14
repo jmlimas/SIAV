@@ -26,7 +26,7 @@ from decimal import Decimal
 from django.forms.models import model_to_dict
 from django.shortcuts import render
 from django.forms.util import ErrorList
-
+from django.db.models import F
 
 current_directory = os.path.dirname(os.path.abspath(__file__))
 
@@ -78,26 +78,24 @@ def logout_view(request):
 #   Vista de facturacion.
 @staff_member_required
 def facturar(request):
+    b = FacturaForm()
     avaluos = (Avaluo.objects
                .filter(Estatus='CONCLUIDO')
                .filter(Q(Salida__isnull=False))
                .filter(Q(Factura='') | Q(Factura__isnull=True))
                .filter(Q(Pagado=False) | Q(Pagado__isnull=True)))
-    avaluos = avaluos.order_by('-Salida')
-    FacturaFormset = modelformset_factory(Avaluo, form=FacturaForm, extra=0)
+    avaluos = avaluos.order_by('Referencia')
 
     if request.method == 'POST':
-        factura_formset = FacturaFormset(request.POST, prefix="formas")
-        for form in factura_formset:
-            if form.is_valid():
-                form.save()
-        return HttpResponseRedirect('.')
+        b = FacturaForm(request.POST)
+        if b.is_valid():
+            avaluo_factura = request.POST.getlist('avaluo_facturado')
+            avaluo_facturas = (Avaluo.objects
+                .filter(avaluo_id__in=avaluo_factura)
+                .update(Factura=b.cleaned_data['Factura']))
+            return redirect('/SIAV/facturar/')
 
     else:
-        factura_formset = FacturaFormset(queryset=avaluos, prefix="formas")
-        example_formset = FacturaFormset(queryset=avaluos, prefix="formas")
-        olist = zip(avaluos, factura_formset)
-
         suma_de_monto = avaluos.values('Cliente__Cliente').order_by('Cliente').annotate(total=Sum('Importe'))
         total_general = 0.00
         for x in suma_de_monto:
@@ -107,7 +105,7 @@ def facturar(request):
             else:
                 total_general += float(str(x['total']))
 
-        return render_to_response('home/lista_factura.html', {'olist': olist,'example_formset': example_formset, 'suma_de_monto': suma_de_monto, 'total_general': total_general}, context_instance=RequestContext(request))
+        return render_to_response('home/lista_factura.html', locals(), context_instance=RequestContext(request))
 
 
 #   Vista que se encarga de liquidar las facturas ya pagadas
@@ -143,14 +141,25 @@ def liquidar(request):
 #   Vista para generar estadisticos en Highcharts
 #   Se planea segmentar para generar diferentes clases de estadistico.
 @staff_member_required
-def estadistico(request, anio=2013):
+def estadistico(request, anio=2013, mes=01):
+
     anios = Avaluo.objects.all().dates('Salida', 'year')
+    meses = MESES
     avaluos = Avaluo.objects.extra(select={'month': 'extract( month from Salida )'}).values('month').filter(Salida__year=anio).order_by('month').annotate(dcount=Count('Solicitud'), Total=Sum('Importe'))
-    #avaluos = Avaluo.objects.extra(select={'month': 'extract( month from Salida )'}).values('month').filter(Salida__year=anio).order_by('month').annotate(dcount=Count('Solicitud'), Total=Sum('Importe'))
-    cliente = Avaluo.objects.filter(Salida__year=anio).values('Cliente__Cliente').annotate(Total=Sum('Importe'), Cantidad=Count('Cliente'))
+    #cliente = Avaluo.objects.filter(Salida__year=anio).filter(Salida__month=mes).values('Cliente__Cliente').annotate(Total=Sum('Importe'), Cantidad=Count('Cliente'))
     tiempo_respuesta = Avaluo.objects.filter(Salida__year=anio).values('Depto__Depto','Solicitud','Salida').annotate(Total=Sum('Importe'), Cantidad=Count('Cliente'))
     monto_todos_anios = Avaluo.objects.extra(select={'year': 'extract( year from Salida )'}).values('year').annotate(Total=Sum('Importe')).order_by('year')
 
+    from django.db import connection, transaction
+    cursor = connection.cursor()
+    cursor.execute('SELECT t1.avaluo_id, IFNULL(t3.Cliente, "TOTAL") AS name, COUNT(*), SUM(IF(DATEDIFF(CURDATE(),DATE_ADD(t1.Solicitud,INTERVAL t2.tolerancia DAY)) <= 0,1, 0)) as "= 0", SUM(IF(DATEDIFF(CURDATE(),DATE_ADD(t1.Solicitud,INTERVAL t2.tolerancia DAY)) BETWEEN 1 AND 3,1, 0) )as "< 3", SUM(IF(DATEDIFF(CURDATE(),DATE_ADD(t1.Solicitud,INTERVAL t2.tolerancia DAY)) > 3,1, 0)) as "> 3" FROM siavdb.app_avaluo t1 INNER JOIN siavdb.app_depto t2 on t1.Depto_id = t2.Depto_id INNER JOIN siavdb.app_cliente t3 on t2.Cliente_id_id = t3.Cliente_id WHERE t1.Estatus in ("PROCESO") GROUP BY t3.Cliente WITH ROLLUP;')
+    en_tiempo = cursor.fetchall()
+
+    cursor.execute('SELECT Cliente,Ene_Ct,Feb_Ct,Mzo_Ct,Abr_Ct,May_Ct,Jun_Ct,Jul_Ct,Ago_Ct,Sept_Ct,Oct_Ct,Nov_Ct,Dic_Ct from ISALIDA_CLIENTES_X_MES_EXT WHERE año_salida = %s ORDER BY Cliente',[anio])
+    cliente = cursor.fetchall()
+
+    cursor.execute('SELECT Cliente,Ene,Feb,Mzo,Abr,May,Jun,Jul,Ago,Sept,Oct,Nov,Dic from ISALIDA_CLIENTES_X_MES_EXT WHERE año_salida = %s ORDER BY Cliente',[anio])
+    cliente = cursor.fetchall()
 
     total_general = 0.00
     total_avaluos = 0
@@ -166,28 +175,40 @@ def estadistico(request, anio=2013):
             total_general += float(str(x['Total']))
             total_avaluos += x['dcount']
     totales = [total_avaluos, total_general]
-    return render_to_response('home/estadistico.html', {'avaluos': avaluos, 'totales': totales, 'anio': anio, 'anios': anios, 'monto_todos_anios': monto_todos_anios, 'cliente': cliente, 'tiempo_respuesta': tiempo_respuesta}, context_instance=RequestContext(request))
+    return render_to_response('home/estadistico.html', locals(), context_instance=RequestContext(request))
 
 @login_required
-def estadistico_js(request, anio=2013):
+def estadistico_anio_js(request, anio=2013):
     anios_list = request.GET.get('anio', '').split(',')
     anios_list = filter(None, anios_list) # fastest
     anios_list = map(int, anios_list)
     #anios = Avaluo.objects.dates('Salida', 'year').filter(Salida__gt=datetime.date(2011, 1, 1))
     avaluos = [Avaluo.objects.extra(select={'month': 'extract( month from Salida )','anio': 'extract( year from Salida )'}).values('month','anio').filter(Salida__year=a).order_by('month').annotate(dcount=Count('Solicitud'), Total=Sum('Importe')) for a in anios_list]
     
-    return render_to_response('home/consultas/estadistico/estadistico.js', locals())
+    return render_to_response('home/consultas/estadistico/estadistico_anio.js', locals())
+
+@login_required
+def estadistico_mes_js(request, anio=2013):
+    mes_list = request.GET.get('anio', '').split(',')
+    mes_list = filter(None, mes_list) # fastest
+    mes_list = map(int, mes_list)
+    #anios = Avaluo.objects.dates('Salida', 'year').filter(Salida__gt=datetime.date(2011, 1, 1))
+    avaluos = [Avaluo.objects.extra(select={'month': 'extract( month from Salida )','anio': 'extract( year from Salida )'}).values('month','anio').filter(Salida__month=m).filter(Salida__year=anio).order_by('month').annotate(dcount=Count('Solicitud'), Total=Sum('Importe')) for m in mes_list]
+    
+    return render_to_response('home/consultas/estadistico/estadistico_anio.js', locals())
+
 
 @login_required
 def captura(request):
     #lista_avaluos = Avaluo.objects.all()
+    captura_masiva = CapturaMasiva() 
     avaluos = (Avaluo.objects
                .filter(Q(Estatus__contains='PROCESO') | Q(Estatus__contains='DETENIDO'))
                .filter(Q(Salida__isnull=True))
                .filter(Q(Visita__isnull=False))
                .exclude(Q(Mterreno__isnull=False) & Q(Mconstruccion__isnull=False) & Q(Solicitud__isnull=False)))
     avaluos = avaluos.order_by('-Solicitud')
-    return render_to_response('home/captura.html', {'avaluos': avaluos}, context_instance=RequestContext(request))
+    return render_to_response('home/captura.html', {'avaluos': avaluos,'captura_masiva': captura_masiva}, context_instance=RequestContext(request))
 
 
 @login_required
@@ -200,6 +221,7 @@ def visita(request):
 
 @login_required
 def salida(request):
+    salida_masiva = SalidaMasiva() 
     avaluos = (Avaluo.objects
                .filter(Q(Estatus='PROCESO')| Q(Estatus__contains='DETENIDO'))
                .filter(Q(Visita__isnull=False))
@@ -218,7 +240,7 @@ def salida(request):
 
 
     avaluos = avaluos.order_by('-Solicitud')
-    return render_to_response('home/salida.html', {'avaluos': avaluos}, context_instance=RequestContext(request))
+    return render_to_response('home/salida.html', {'avaluos': avaluos,'salida_masiva':salida_masiva}, context_instance=RequestContext(request))
 
 def salida_efectiva(request, id):
     avaluo = Avaluo.objects.get(avaluo_id=id)
@@ -270,13 +292,13 @@ def alta_avaluo_paquete(request):
     if formset_sencilla.is_valid() and formset.is_valid():
         for form in formset:
             if form.is_valid():
-
-                if form.cleaned_data['Referencia'] != '':
-                    if form.cleaned_data['Referencia'] in values:
+                if form.cleaned_data.get("Referencia"):
+                    if form.cleaned_data.get("Referencia") in values:
                         form._errors["Referencia"] = ErrorList([u"Referencia Repetida."])
                     else:
-                        values.append(form.cleaned_data["Referencia"])
-
+                        values.append(form.cleaned_data.get("Referencia"))
+                        if (len(values) > 1):
+                            return HttpResponse(values)
                 avaluo = Avaluo()
 
                 avaluo.Tipo = formset_sencilla.cleaned_data['Tipo']
@@ -292,10 +314,10 @@ def alta_avaluo_paquete(request):
                 avaluo.Solicitud = formset_sencilla.cleaned_data['Solicitud']
                 avaluo.Valor = formset_sencilla.cleaned_data['Valor']
 
-                avaluo.Referencia = form.cleaned_data['Referencia']
-                avaluo.Calle = form.cleaned_data['Calle']
-                avaluo.NumExt = form.cleaned_data['NumExt']
-                avaluo.NumInt = form.cleaned_data['NumInt']
+                avaluo.Referencia = form.cleaned_data.get("Referencia")
+                avaluo.Calle = form.cleaned_data["Calle"]
+                avaluo.NumExt = form.cleaned_data["NumExt"]
+                avaluo.NumInt = form.cleaned_data["NumInt"]
 
                 #FolioK
                 avaluo.save()
@@ -352,7 +374,7 @@ def actualiza_avaluo(request, id):
         form = CapturaAvaluo(instance=avaluo)
     decimal = decimal_conversion(avaluo)
     cercanos = find_closest(avaluo)
-    imagenes = ImagenAvaluo.objects.filter(avaluo = avaluo.avaluo_id)[:3]
+    imagenes = ImagenAvaluo.objects.filter(avaluo = avaluo.avaluo_id)[:5]
     archivos = ArchivoAvaluo.objects.filter(avaluo = avaluo.avaluo_id)
     return render_to_response('home/edita_avaluo.html', {'form': form, 'avaluo': avaluo, 'decimal': decimal, 'cercanos': cercanos,'imagenes': imagenes,'archivos': archivos, 'folio_k': folio_k}, context_instance=RequestContext(request))
 
@@ -468,6 +490,7 @@ def guarda_master(request, id):
             Eventos.objects.create(user=request.user, evento='CONSULTA_MASTER',avaluo=obj)
 
             return redirect('/SIAV/consulta_master/')
+    imagenes = ImagenAvaluo.objects.filter(avaluo = avaluo.avaluo_id)[:5]
     return render_to_response('home/consultas/respuesta_consulta_master.html', {'forma': forma, 'avaluo': avaluo, 'imagenes': imagenes}, context_instance=RequestContext(request))
 
 
@@ -481,6 +504,7 @@ def consulta_master(request):
         factura = request.GET.get('factura', '')
         edo = request.GET.get('edo', '')
         mun = request.GET.get('mun', '')
+        val = request.GET.get('val', '')
         cli = request.GET.get('cli', '')
         dep = request.GET.get('dep', '')
         imp = request.GET.get('imp', '')
@@ -503,6 +527,14 @@ def consulta_master(request):
             results = results.filter((Q(Estado=edo)))    
         if mun:
             results = results.filter((Q(Municipio=mun)))
+        if val:
+            final_val = val[1:len(val)]
+            if val[:1] == '<':
+                results = results.filter((Q(Valor__lte=final_val)))
+            elif val[:1] == '>':
+                results = results.filter((Q(Valor__gte=final_val)))
+            else:
+                results = results.filter((Q(Valor=val[0:len(val)])))
         if cli:
             results = results.filter((Q(Cliente=cli)))    
         if dep:
@@ -531,6 +563,55 @@ def consulta_master(request):
     else:
         forma = FormaConsultaMaster()
         return render_to_response('home/consultas/consulta_master.html', {'forma': forma}, context_instance=RequestContext(request))
+
+
+
+def consulta_comparable(request):
+    if request.is_ajax():
+        zona = request.GET.get('zona', '')
+        col = request.GET.get('col', '')
+        col = col.replace(' ','%20')
+        col = col.encode('utf-8')
+
+        from BeautifulSoup import BeautifulSoup
+        import urllib2
+        from django.utils.encoding import smart_str, smart_unicode
+        results = []
+        list_child = []
+        Bandera = True;
+        desplaza = 0;
+        while (Bandera == True):
+            print "Pag."+str(desplaza)
+            url="http://www.century21libra.com/catalogo/index.php?Desplazamiento="+str(desplaza)+"&BZona="+zona+"&BColonia="+col+"&BInmueble=&BPrecio=&Idioma=1&Area=&BClave=&"
+            page=urllib2.urlopen(url)
+            soup = BeautifulSoup(page.read())
+            inmuebles=soup.findAll("div",style="width:170px;float:left;margin-left:5px; margin-top:5px;margin-bottom:10px")
+
+
+            for i in inmuebles:
+                results.append(list_child)
+                list_child = []
+                counter = 0
+                for i_child in i.findAll("div"):
+                    list_child.append(i_child.text.encode('utf-8'))
+                    counter +=1
+                    for i_child in i_child.findAll('a', href=True):
+                        list_child.append("http://www.century21libra.com"+i_child['href'].encode('utf-8'))
+                try:
+                      list_child.remove("Ver mas")
+                except:
+                    pass
+            if (len(inmuebles) >= 12):
+                desplaza += 12;
+                Bandera = True;
+            elif(len(inmuebles) <= 12):
+                Bandera = False;
+            else:
+                pass;
+        return render_to_response('home/consultas/results_comparable.html', {'results': results, 'url':url}, context_instance=RequestContext(request))
+    else:
+        forma = FormaConsultaMaster()
+        return render_to_response('home/consultas/consulta_comparable.html', context_instance=RequestContext(request))
 
 
 @login_required
@@ -698,3 +779,69 @@ def visita_masiva(request):
     avaluos = Avaluo.objects.filter(Estatus__contains='PROCESO', Visita__isnull=True, Salida__isnull=True) | Avaluo.objects.filter(Estatus__contains='DETENIDO', Visita__isnull=True, Salida__isnull=True)
     avaluos = avaluos.order_by('-Solicitud')
     return render_to_response('home/visita.html', {'avaluos': avaluos,'visita_masiva':visita_masiva,'visita_masiva':visita_masiva}, context_instance=RequestContext(request))
+
+
+
+def captura_masiva(request):
+    captura_masiva = CapturaMasiva(request.POST)
+    if captura_masiva.is_valid():
+        avaluo_capturado = request.POST.getlist('avaluo_capturado')
+        avaluo_capturados = (Avaluo.objects
+            .filter(avaluo_id__in=avaluo_capturado)
+            .update(Mterreno=captura_masiva.cleaned_data['Mterreno'],
+                    Mconstruccion=captura_masiva.cleaned_data['Mconstruccion'],))
+        for a1 in avaluo_capturado:
+
+            a = Avaluo.objects.get(avaluo_id=a1)
+            r = redis.StrictRedis(host='localhost', port=6379, db=0)
+            accion = (' capturó el avalúo con FolioK: ').decode("UTF-8", "ignore")
+
+            r.publish('chat', request.user.username + accion + '<b>' + a.FolioK + '</b>')
+
+            #Crear evento
+            Eventos.objects.create(user=request.user, evento='CAPTURA',avaluo=a)
+        return redirect('/SIAV/captura/')
+
+    avaluos = (Avaluo.objects
+               .filter(Q(Estatus__contains='PROCESO') | Q(Estatus__contains='DETENIDO'))
+               .filter(Q(Salida__isnull=True))
+               .filter(Q(Visita__isnull=False))
+               .exclude(Q(Mterreno__isnull=False) & Q(Mconstruccion__isnull=False) & Q(Solicitud__isnull=False)))
+    avaluos = avaluos.order_by('-Solicitud')
+    return render_to_response('home/captura.html', {'avaluos': avaluos,'captura_masiva':captura_masiva}, context_instance=RequestContext(request))
+
+
+def salida_masiva(request):
+    salida_masiva = SalidaMasiva(request.POST)
+    if salida_masiva.is_valid():
+        avaluo_salida = request.POST.getlist('avaluo_salida')
+        avaluo_salidas = (Avaluo.objects
+            .filter(avaluo_id__in=avaluo_salida)
+            .update(Valor=salida_masiva.cleaned_data['Valor'],
+                    Importe=salida_masiva.cleaned_data['Importe'],
+                    Gastos=salida_masiva.cleaned_data['Gastos'],
+                    Salida=salida_masiva.cleaned_data['Salida'],
+                    Estatus='CONCLUIDO'))
+        for a1 in avaluo_salida:
+
+            a = Avaluo.objects.get(avaluo_id=a1)
+            r = redis.StrictRedis(host='localhost', port=6379, db=0)
+            accion = (' dió salida al avalúo con FolioK: ').decode("UTF-8", "ignore")
+
+            r.publish('chat', request.user.username + accion + '<b>' + a.FolioK + '</b>')
+
+            #Crear evento
+            Eventos.objects.create(user=request.user, evento='SALIDA',avaluo=a)
+        return redirect('/SIAV/salida/')
+
+    avaluos = (Avaluo.objects
+               .filter(Q(Estatus='PROCESO')| Q(Estatus__contains='DETENIDO'))
+               .filter(Q(Visita__isnull=False))
+               .filter(Q(Salida__isnull=True))
+               .exclude(Q(Mterreno__isnull=True))
+               .exclude(Q(Mconstruccion__isnull=True)))
+    avaluos = avaluos.order_by('-Solicitud')
+    return render_to_response('home/salida.html', {'avaluos': avaluos,'salida_masiva':salida_masiva}, context_instance=RequestContext(request))
+
+def swf(request):
+    return ""

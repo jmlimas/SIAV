@@ -28,12 +28,12 @@ $(document).ready(function () {
   <span id="cantidad_tabla"></span>
   Servicios
 </h2>
-<div class="table-responsive">
-  <table id='avaluos_table' class="table table-striped">
+<div id='printableArea' class="table-responsive">
+  <table id='avaluos_table' class="table table-striped table-hover">
     <thead>
       <tr class='even'>
         <th style="width:40px">Folio K</th>
-        <th style="width:40px" filter='false' >Ref.</th>
+        <th style="width:40px" filter='true' >Referencia</th>
         <th filter-type='ddl'>Cliente</th>
         <th filter-type='ddl'>Depto</th>
         <th>Calle</th>
@@ -43,12 +43,12 @@ $(document).ready(function () {
         <th filter-type='ddl'>Municipio</th>
         <th filter='false'>Prioridad</th>
         <th style="width:10px" filter-type='ddl'>Estatus</th>
-        <th filter='false'>Dias</th>
+        <th style="width:10px" filter='false'>Dias</th>
       </tr>
     </thead>
 <body>
     {% for a in avaluos %}
-    <tr class="{% cycle 'odd' 'even' %}">
+    <tr class="{% if a.Solicitud|dayssince|add:"0" > a.Depto.Tolerancia|add:"0" and a.Estatus != 'DETENIDO' %}danger{% endif%}">
       <td>{{a.FolioK}}</td>
       <td style="width:100px;">{{a.Referencia}}</td>
       <td style="width:10px;">{{a.Cliente}}</td>
@@ -59,11 +59,11 @@ $(document).ready(function () {
       <td style="width:200px;">{{a.Colonia}}</td>
       <td style="width:200px;">{{a.Municipio}}</td>
       <td style="width:3px;">{{a.Prioridad}}</td>
-      <td style="width:60px;">{{a.Estatus}}</td>
+      <td ><span class="label label-{%if a.Estatus = 'PROCESO'%}success{%elif a.Estatus = 'DETENIDO'%}default{%endif%}">{{a.Estatus}}</span></td>
       <td style="width:35px;">{{ a.Solicitud|dayssince }}</td>
     </tr>
     {% endfor %}
 </body>
-</table>
+  </table>
 </div>
 {% endblock %}

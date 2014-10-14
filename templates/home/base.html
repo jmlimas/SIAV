@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   <title>SIAV 
     {% if avaluo.FolioK %}
     {{avaluo.FolioK}}
@@ -24,11 +24,10 @@
   @import "{{ STATIC_URL }}CSS/bootstrap.css";
   @import "{{ STATIC_URL }}CSS/bootstrap-responsive.css";
   @import "{{ STATIC_URL }}CSS/smoothness/jquery-ui-1.8.24.custom.css";
-  @import "{{ STATIC_URL }}CSS/jquery.ui.chatbox.css";
-  @import "{{ STATIC_URL }}CSS/fileuploader.css";
+/*  @import "{{ STATIC_URL }}CSS/jquery.ui.chatbox.css";*/
   @import "{{ STATIC_URL }}CSS/Style.css";
-  @import "{{ STATIC_URL }}CSS/table_style.css";
-  /*
+/*  @import "{{ STATIC_URL }}CSS/table_style.css";
+*/  /*
   @import "{{ STATIC_URL }}CSS/jdpicker.css";
   */
   </style>
@@ -48,7 +47,7 @@
         <span class="icon-bar"></span>
       </button>
       <a class="navbar-brand" href="/SIAV/">
-        SIAV
+        <img padding-bottom="65px" width="70px" src="{{ STATIC_URL }}/CSS/images/SIAV_logo.png">
         <span class="badge badge-info">{{x|cantidades_proceso}}</span>
       </a>
     </div>
@@ -105,17 +104,24 @@
           <a href="/SIAV/consulta_sencilla/" >Consulta</a>
         </li>
         {% endif %}
+
     {% if user.is_staff %}
-        <li>
+        <li class="{% block lista_factura %}{% endblock %}">
           <a href="/SIAV/facturar/">Facturar</a>
         </li>
-        <li>
+        <li class="{% block liquidar %}{% endblock %}">
           <a href="/SIAV/liquidar/">Liquidar</a>
         </li>
-        <li>
-          <a href="/SIAV/estadistico/{%now "Y"%}">Estadístico</a>
-        </li>
-      </li>
+        <li class="dropdown">
+                        <a href="/SIAV/estadistico/{%now "Y"%}/{%now "m"%}" class="dropdown-toggle" data-toggle="dropdown">Estadístico <span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                          <li><a href="/SIAV/estadistico/{%now "Y"%}/{%now "m"%}/#asignacion">Asignacion</a></li>
+                          <li><a href="/SIAV/estadistico/{%now "Y"%}/{%now "m"%}/#cliente">Cliente</a></li>
+                          <li><a href="/SIAV/estadistico/{%now "Y"%}/{%now "m"%}/#historial">Historial</a></li>
+                          <li><a href="/SIAV/estadistico/{%now "Y"%}/{%now "m"%}/#tolerancia">Tolerancia</a></li>
+                        </ul>
+                      </li>
+              </li>
       {% endif %}
     </ul>
     <ul class="nav navbar-nav pull-right">
@@ -132,21 +138,26 @@
         <img src="{{ STATIC_URL }}spinner.gif"/>
       </span>
       -->
-      <ul class="dropdown-menu" id="notif_dd"></ul>
+      <ul class="dropdown-menu"  >
+        <section class="panel" id="notif_panel">
+        <header class="panel-heading"> <strong>Notificaciones</strong> </header>
+        <div id="notification-list" class="list-group list-group-alt" >
+          <div id="notif_dd">
+          </div>
+        </div>
+      </section>
+      </ul>
     </li>
   </ul>
 </div>
 
 </nav>
-<div class="container">
-<div class="row">
+<div class="container-full special">
   <div class="col-md-15">
-    <div class="jumbotron">
-      <div id="printableArea">
+    <div class="jumbotron container-full special">
         {% block content %}
           {% endblock %}
-      </div>
-      <!-- Se cierra printable area --> </div>
+    </div>
 
     <br>
     <br>
@@ -157,13 +168,13 @@
 
   </div>
 </div>
-</div>
 </body>
 <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/jquery-1.8.2.min.js"></script>
 <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/jquery.jdpicker.js"></script>
-<script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/jquery-ui-1.8.24.custom.min.js"></script> 
-<script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/jquery.ui.chatbox.js"></script>
-<script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/jquery.cookie.js"></script>
+<script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/jquery-ui-1.8.24.custom.min.js"></script>
+<!-- <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/jquery.ui.chatbox.js"></script>
+ -->
+ <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/jquery.cookie.js"></script>
 <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/bootstrap.js"></script>
 <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/autoNumeric.js"></script>
 <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/socket.io.js"></script>
@@ -171,23 +182,23 @@
 <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/topRight.js"></script>
 <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/noty/themes/default.js"></script>
 <script type="text/javascript">
-$(document).ready(function(){
-  var box = null;
-  box = $("#chat_div").chatbox({id:'{{user.username}}', 
-    user:{key : "value"},
-    hidden: true,
-    title : "chat",
+// $(document).ready(function(){
+//   var box = null;
+//   box = $("#chat_div").chatbox({id:'{{user.username}}', 
+//     user:{key : "value"},
+//     hidden: true,
+//     title : "chat",
 
 
-    messageSent : function(id, user, msg) {
-      $("#log").append(id + " said: " + msg + "<br/>");
-      $("#chat_div").chatbox("option", "boxManager").addMsg(id, msg);
-    }});
+//     messageSent : function(id, user, msg) {
+//       $("#log").append(id + " said: " + msg + "<br/>");
+//       $("#chat_div").chatbox("option", "boxManager").addMsg(id, msg);
+//     }});
 
 
-  $('.ui-chatbox-content').toggle();
+//   $('.ui-chatbox-content').toggle();
 
-});
+// });
 
 
 </script>
@@ -245,6 +256,15 @@ $(document).ready(function(){
        }
      });
 
+$(document).ready(function() {
+  $(window).keydown(function(event){
+    if(event.keyCode == 13) {
+      event.preventDefault();
+      return false;
+    }
+  });
+});
+
 
     });
 
@@ -295,6 +315,55 @@ $(document).ready(function(){
     $("#id_Valor").autoNumeric('destroy');
 
   });
+  
+    $('input[type=submit]').click(function () {
+    $("input[type=text]").each(function () {
+      this.value = this.value.toUpperCase();
+
+      $("input[type=text]").each(function () {
+        var self = $(this);
+        try{
+          var v = self.autoNumeric('get');
+          self.autoNumeric('destroy');
+          self.val(v);
+          console.log(self.val(v));
+        }catch(err){
+          console.log("Not an autonumeric field: " + self.attr("name"));
+        }
+      });
+
+
+    });
+
+
+    $("#id_Valor").autoNumeric('destroy');
+
+  });
+
+  $('input[type=submit]').click(function () {
+    $("input[type=text]").each(function () {
+      this.value = this.value.toUpperCase();
+
+      $("input[type=text]").each(function () {
+        var self = $(this);
+        try{
+          var v = self.autoNumeric('get');
+          self.autoNumeric('destroy');
+          self.val(v);
+          console.log(self.val(v));
+        }catch(err){
+          console.log("Not an autonumeric field: " + self.attr("name"));
+        }
+      });
+
+
+    });
+
+
+    $("#id_Valor").autoNumeric('destroy');
+
+  });
+
 
   $('#id_Valor').autoNumeric('init', {aSign: '$'}); 
   $('#id_Gastos').autoNumeric('init', {aSign: '$'}); 
@@ -326,6 +395,8 @@ $(document).ready(function () {
     $("#chat_div").animate({ scrollTop: $(document).height()*4 }, 300);
   });
 
+{% block script_bottom %}{% endblock %}
+
 });
 
 $(document).ajaxStart(function () {
@@ -333,6 +404,8 @@ $(document).ajaxStart(function () {
 }).ajaxStop(function () {
   $('#spinner').hide();
 });
+
+
 
 </script>
 </html>

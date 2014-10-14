@@ -1,6 +1,7 @@
 ﻿{% load currency %}
 {% load adder %}
 
+<div id="table-responsive">
 {% if results|length %}
 	<table class="table table-striped">
 	<tr class='even'>
@@ -19,10 +20,10 @@
 		<th>Cliente</th>
 		<th>Calle</th>
 		<th>Num.Ext</th>
-		<th>Num.Int</th>
+		<th>Valor</th>
 		<th>Colonia</th>
 		<th>Municipio</th>
-		<th>Monto</th>
+		<th>Importe</th>
 		<th>Estatus</th>
 		<th>Opciones</th>
 	</tr>
@@ -45,7 +46,7 @@
 		<span class="hint"> {{ avaluo.NumExt }}</span>
 		</td>
 		<td class="right">
-		<span class="hint"> {{ avaluo.NumInt }}</span>
+		<span class="hint"> {{ avaluo.Valor|currency }}</span>
 		</td>
 		<td class="right">
 		<span class="hint"> {{ avaluo.Colonia }}</span>
@@ -60,7 +61,7 @@
 		<span class="hint"> {{ avaluo.Estatus }}</span>
 		</td>
 		<td class="tabla_opciones"> 
-		<span class="hint"><a href="/SIAV/guarda_master/{{avaluo.avaluo_id}}" target="_blank">Editar</a></span>
+		<span class="hint"><a href="/SIAV/guarda_master/{{avaluo.avaluo_id}}" >Editar</a></span>
 		</td>
 	</tr>
 	{% endfor %}
@@ -70,3 +71,4 @@
 	Tu búsqueda no arrojó resultados, intenta de nuevo.
 	</div>
 {% endif %}
+</div>

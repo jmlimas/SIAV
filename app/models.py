@@ -1,6 +1,7 @@
 from django.db import models
 from decimal import Decimal
 import os
+from PIL import Image
 
 # Create your models here.
 class Estado(models.Model):
@@ -82,7 +83,7 @@ class Depto(models.Model):
     Digitos = models.CharField(null=True, max_length=15)
     Tolerancia = models.CharField(null=False, max_length=255)
     base = models.DecimalField(null=True, max_digits=15, decimal_places=2)
-    factor = models.DecimalField(null=True, max_digits=5, decimal_places=2)
+    factor = models.DecimalField(null=True, max_digits=6, decimal_places=3)
 
     def __unicode__(self):
         if self.Depto is None:
@@ -91,7 +92,7 @@ class Depto(models.Model):
             return self.Depto
 
 
-class Avaluo(models.Model):
+class Avaluo(models.Model):   
     avaluo_id = models.AutoField(primary_key=True)
     Referencia = models.CharField(null=True, max_length=255, unique=True)
     FolioK = models.CharField(null=True, max_length=255, unique=True)
@@ -130,7 +131,6 @@ class Avaluo(models.Model):
     Pagado = models.NullBooleanField(null=True)
     Observaciones = models.CharField(null=True, max_length=255)
 
-
 def get_image_path(folder, filename):
     return os.path.join('media/',str(folder), filename)
 
@@ -142,6 +142,29 @@ class ImagenAvaluo(models.Model):
 
     def __unicode__(self):
         return unicode(self.FolioK)
+    def save(self):
+        if not self.imagen:
+            return            
+
+        super(ImagenAvaluo, self).save()
+
+        imagen = Image.open(self.imagen)
+        if (imagen.size[0] > 1024):
+            (width, height) = imagen.size     
+            size = ( 1024, 768)
+            imagen = imagen.resize(size, Image.ANTIALIAS)
+        imagen.save(self.imagen.path)   
+
+    @staticmethod
+    def last_photo(avaluo_id):
+        last_photo = ImagenAvaluo.objects.filter(avaluo_id=avaluo_id)
+        if last_photo:
+            last_photo_obj = last_photo.latest('imagen_id')
+            return last_photo_obj.imagen.url
+        else:
+            return ''
+
+
 
 class ArchivoAvaluo(models.Model):
     archivo_id = models.AutoField(primary_key=True)
@@ -151,6 +174,17 @@ class ArchivoAvaluo(models.Model):
 
     def __unicode__(self):
         return unicode(self.FolioK)
+    def save(self):
+        if not self.imagen:
+            return            
 
+        super(ArchivoAvaluo, self).save()
+
+        imagen = Image.open(self.imagen)
+        if (imagen.size[0] > 1024):
+            (width, height) = imagen.size     
+            size = ( 1024, 768)
+            imagen = imagen.resize(size, Image.ANTIALIAS)
+        imagen.save(self.imagen.path) 
 
 

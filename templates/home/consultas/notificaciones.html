@@ -1,10 +1,17 @@
-            <section class="panel">
-                <header class="panel-heading"> <strong>Notificaciones</strong>
-                </header>
-                <div id="notification-list" class="list-group list-group-alt">
-                    {% for c in comments_enviar %}
-                    <div id="notification" class="noty-manager-list-item noty-manager-list-item-warning">
+{% load endless %}
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+    <!-- <script src="{{ STATIC_URL }}endless_pagination/static/js/endless-pagination.js"></script>  -->
+    <script src="{{ STATIC_URL }}js/endless-pagination.js"></script>
+    <script>
+        $.endlessPaginate({
+            paginateOnScroll: true
+        });
+    </script>
+{% paginate comments_enviar %}
+{% for c in comments_enviar %}
+  <div id="notification" class="noty-manager-list-item noty-manager-list-item-warning">
                         <div class="activity-item">
+
                             {% if c.leido == 0 %} <i class="fa fa-circle text-danger"></i>
                             {% elif c.leido == 1 %} <i class="fa fa-circle-o text-danger"></i>
                             {% endif %}
@@ -17,13 +24,8 @@
                             </div>
                         </div>
                     </div>
-                    {% endfor %}
-                </div>
-                <footer class="panel-footer">
-                    <!--                 <a href="#" class="pull-right">            
-                    <i class="fa fa-cog"></i>
-                </a>
-                <a href="#notes" data-toggle="class:show animated fadeInRight">See all the notifications</a>
-                -->
-            </footer>
-            </section>
+{%  endfor %}
+{%  show_more %}
+
+
+

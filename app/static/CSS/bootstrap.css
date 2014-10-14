@@ -4191,7 +4191,7 @@ border-top-left-radius: 0;
 .pagination > .active > span:hover,
 .pagination > .active > a:focus,
 .pagination > .active > span:focus {
-  z-index: 2;
+  z-index: 0;
   color: #fff;
   cursor: default;
   background-color: #428bca;
@@ -4401,20 +4401,23 @@ a.list-group-item.active > .badge,
   font-weight: 200;
 }
 .container .jumbotron {
-  border-radius: 6px;
+  border-radius: 0px;
 }
 .jumbotron .container {
   max-width: 100%;
 }
 @media screen and (min-width: 768px) {
   .jumbotron {
-    padding-top: 48px;
+    padding-top: 30px;
     padding-bottom: 48px;
+
   }
-  .container .jumbotron {
-    padding-right: 60px;
-    padding-left: 60px;
-  }
+
+
+html,body {height:100%;}
+.special,.special .jumbotron {height:100%;}
+
+
   .jumbotron h1,
   .jumbotron .h1 {
     font-size: 33px;

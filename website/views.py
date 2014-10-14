@@ -11,6 +11,9 @@ from django.core.mail import send_mail
 def index(request):
     return render_to_response('ericka/index.html', {}, context_instance=RequestContext(request))
 
+def index2(request):
+    return render_to_response('ericka/index2.html', {}, context_instance=RequestContext(request))
+
 def servicios(request):
     return render_to_response('ericka/services.html', {}, context_instance=RequestContext(request))
 

@@ -6,11 +6,22 @@ from django.conf import settings
 from django.conf import settings
 from django.conf.urls import include, patterns, url
 from django.core.urlresolvers import reverse
-
+from django.utils.functional import curry
+from django.views.defaults import *
+from django.views.generic import TemplateView
+from django.conf import settings
+from django.conf.urls.static import static
+from app.api import *
+from tastypie.api import Api
 
 
 admin.autodiscover()
 
+v1_api = Api(api_name='v1')
+v1_api.register(AvaluoResource())
+v1_api.register(DeptoResource())
+v1_api.register(ImagenAvaluoResource())
+v1_api.register(ProcesoResource())
 
     # Examples:
     # url(r'^$', 'SIAV.views.home', name='home'),
@@ -26,12 +37,11 @@ admin.autodiscover()
 urlpatterns = patterns(
 
 
-    '', url(r'^SIAV/ajax_upload/(\w*\d+)/(\w*\d+)/$', 'app.uploads.ajax_upload', name="ajax_upload"),
+    '', url(r'^SIAV/ajax_upload/(\w*\d+)/(\@*\w*\d+)/$', 'app.uploads.ajax_upload', name="ajax_upload"),
 
     url(r'^grappelli/', include('grappelli.urls')),
-
+    url(r'^api/', include(v1_api.urls)),
     url(r'^SIAV/admin/', include(admin.site.urls)),
-
 
 
 
@@ -47,6 +57,11 @@ urlpatterns = patterns(
     url(r'^SIAV/consulta_master/', 'app.views.consulta_master', name='consulta_master'),
     url(r'^SIAV/consulta_master/(?P<query>)/?$', 'app.views.consulta_master', name='consulta_master'),
 
+    #Consulta de comparables
+    url(r'^SIAV/consulta_comparable/', 'app.views.consulta_comparable', name='consulta_comparable'),
+    url(r'^SIAV/consulta_comparable/(?P<query>)/?$', 'app.views.consulta_comparable', name='consulta_comparable'),
+
+
     url(r'^SIAV/consulta_sencilla/', 'app.views.consulta_sencilla', name='consulta_sencilla'),
     url(r'^SIAV/respuesta_consulta_sencilla/?(\d+)/?$', 'app.views.respuesta_consulta_sencilla', name='respuesta_consulta_sencilla'),
 
@@ -56,8 +71,15 @@ urlpatterns = patterns(
 
     url(r'^SIAV/visita/', 'app.views.visita', name='visita'),
     url(r'^SIAV/edita_visita/(\d+)/$', 'app.views.edita_visita', name='edita_visita'),
+
+    #Url para eventos masivos
     url(r'^SIAV/visita_masiva/$', 'app.views.visita_masiva', name='visita_masiva'),
+    url(r'^SIAV/captura_masiva/$', 'app.views.captura_masiva', name='captura_masiva'),
+    url(r'^SIAV/salida_masiva/$', 'app.views.salida_masiva', name='salida_masiva'),
+
     url(r'^SIAV/show_visita_pdf/(\d+)/$', 'app.views.show_visita_pdf', name='show_visita_pdf'),
+    url(r'^SIAV/show_orden_visita/$', 'app.views.show_orden_visita', name='show_orden_visita'),
+    url(r'^SIAV/show_orden_visita/(?P<avaluo_visitado>)/?$', 'app.views.show_orden_visita', name='show_orden_visita'),
 
     url(r'^SIAV/captura/', 'app.views.captura', name='captura'),
 
@@ -78,8 +100,8 @@ urlpatterns = patterns(
 
     url(r'^SIAV/liquidar/', 'app.views.liquidar', name='liquidar'),
 
-    url(r'^SIAV/estadistico_js/', 'app.views.estadistico_js', name='estadistico_js'),
-    url(r'^SIAV/estadistico/(\d+)/$', 'app.views.estadistico', name='estadistico'),
+    url(r'^SIAV/estadistico_anio_js/', 'app.views.estadistico_anio_js', name='estadistico_anio_js'),
+    url(r'^SIAV/estadistico/(\d+)/(\d+)/$', 'app.views.estadistico', name='estadistico'),
     #url(r'^SIAV/estadistico/', 'app.views.estadistico', name = 'estadistico'),
 
     url(r'^SIAV/submitted/', 'app.views.submitted', name='submitted'),
@@ -98,13 +120,12 @@ urlpatterns = patterns(
 
     #Urls del sitio web
     url(r'^$', 'website.views.index', name='index'),
-    url(r'^faq/', 'website.views.faq', name='faq'),
-    url(r'^servicios/', 'website.views.servicios', name='servicios'),
-    url(r'^contacto/', 'website.views.contacto', name='contacto'),
-    url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': 'media/'}),
+    url(r'^index2/', 'website.views.index2', name='index2'),
 
     #Urls del sitio movil
     url(r'^SIAV/mobile/', 'app.views.mobile', name='mobile'),
+
+    url(r'^swf/', 'app.views.swf', name='swf'),
 )
 
     #Urls para sockets
@@ -115,8 +136,12 @@ urlpatterns += patterns('',
     url(r'^get_conversaciones/', 'websock.views.get_conversaciones', name='get_conversaciones'),
     #url(r'^marca_leidos/', 'websock.views.marca_leidos', name='marca_leidos'),
     url(r'^node_api$', 'websock.views.node_api', name='node_api'),
+
+    url(r'^monto_inline/', 'app.views.inline.monto_inline', name='monto_inline'),
+    url(r'^factura_inline/', 'app.views.inline.factura_inline', name='factura_inline'),
 )
 
 
 # Add the static files pattern to the url.
-urlpatterns += staticfiles_urlpatterns()
+urlpatterns += staticfiles_urlpatterns() 
+# handler404 = 'app.views.errors.not_found_error'

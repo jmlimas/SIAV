@@ -22,6 +22,14 @@ def genera_foliok(avaluo_id,colonia):
         folio_k = ""
         return folio_k
 
+
+
+def show_orden_visita(request):
+    lista_visitado = request.GET.getlist('avaluo_visitado')
+    avaluos_visitados = Avaluo.objects.filter(FolioK__in=lista_visitado)
+    avaluo = avaluos_visitados[0]
+    return render_to_response('reports/orden_visita.html',{'avaluo':avaluo,'avaluos_visitados':avaluos_visitados}, context_instance=RequestContext(request))
+
 def show_visita_pdf(request, id):
     avaluo= Avaluo.objects.get(pk=id)
 

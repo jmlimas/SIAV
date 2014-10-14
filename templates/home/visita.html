@@ -3,14 +3,11 @@
 {% load dayssince %}
 
 {% load bootstrap3 %}
-
 {% bootstrap_css %}
 {% bootstrap_javascript %}
 
 {% block visita %}active{% endblock %}
-
 {% block script %}
-
 <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/picnet.table.filter.min.js"></script>
 <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/show_hide.js"></script>
 <script type="text/javascript">
@@ -22,7 +19,6 @@ $(document).ready(function () {
   valor = ($('#avaluos_table tbody tr:visible').length);
 
   $('#cantidad_tabla').html(valor);
-  $('#id_Visita').datepicker({ autoSize: true , dateFormat: 'dd/mm/yy'});
 
   $('#avaluos_table thead').on("change", function () {
     setTimeout(function () {
@@ -41,39 +37,101 @@ $(document).ready(function(){
         hideText: 'Close' // the button text to show when a div is open
 
       });
+$('#id_Visita').datepicker({ autoSize: true , dateFormat: 'dd/mm/yy'});
+$('#visita_masiva_button, #button_orden_visita').click(function () {
+
+    // Some code
+    var id_button = this.id;
+    if($(".form-checkbox").is(':checked')) {
+
+      var selected = [];
+      var selected2 = [];
+      $('input:checked').each(function() {
+          selected.push($(this).parent().next().next().next().next().next().next().next().html());
+          selected2.push($(this).parent().next().html());
+          console.log( selected2[i] );
+      });
+      var bandera = true;
+      var url = "";
+      for ( var i = 0; i < selected.length; i++ ) {
+          // Logs "try 0", "try 1", ..., "try 4".
+          if(selected[0] != selected[i]){
+              bandera = false;
+              
+              //console.log( bandera );
+          }
+          url += "avaluo_visitado="+selected2[i]+"&";
+      }
+
+      if(bandera == false){
+        alert("Todos los servicios deben pertenecer a la misma colonia.");
+      }else{
+          if(id_button == "visita_masiva_button"){
+              $('#visita_masiva').modal('show');
+              console.log( selected.toString());
+              }
+          else{
+              console.log("URL:"+url);
+              window.location.href = "/SIAV/show_orden_visita/?"+url;
+          }
+      }
+      
+      var selected = [];
+
+       // $('#visita_masiva').modal('show');
+    }else{
+        alert("Selecciona al menos una casilla.");
+    }
+
+});
+ 
  
 });
 
 </script>
-<style>
-.modal-content {
-  width: 900px;
-  margin-left: -150px;
-}
-</style>
 
 {% endblock %}      
 
 {% block content %}
+{% if forma.errors %}
+<p style="color: red;">Porfavor completa los campos faltantes.</p>
+{% endif %}
+   <input id="button_orden_visita" type="submit" value="Orden Visita" class="btn btn-info"/>
+  <a id="visita_masiva_button"  title="Visita" style="float:right" class="btn btn-primary" role="button">
+    <span class="glyphicon glyphicon-ok"></span>
+    VISITAR
+  </a>
 <h1>Visita</h1>
-    {% if forma.errors %}
-    <p style="color: red;">Porfavor completa los campos faltantes.</p>
-    {% endif %}
-<div class="caption">
-  <p><a data-toggle="modal" data-target="#visita_masiva" href="#visita_masiva" title="Visita" style="float:right" class="btn btn-success" role="button"><span class="glyphicon glyphicon-ok"> </span> VISITAR</a></p>
-</div>
-<h2 style="text-align:left"><span id="cantidad_tabla"></span>  Servicios</h2>
-<div class="table-responsive">
-<table id='avaluos_table' class="table table-striped">
- <thead>
-  <tr class='even'><th></th><th style="width:40px">Folio K</th><th style="width:40px" filter='false' >Ref.</th><th filter-type='ddl'>Cliente</th><th>Calle</th><th filter='false'>Ext.</th><th filter='false'>Int.</th><th style="width:100px" filter-type='ddl'>Colonia</th><th filter-type='ddl'>Municipio</th><th filter-type='ddl'>Prioridad</th><th style="width:10px" filter-type='ddl'>Status</th><th filter='false'>Dias</th><th filter='false' class="tabla_opciones">Opciones</th></tr>
-</thead>
+<h2 style="text-align:left">
+  <span id="cantidad_tabla"></span>
+  Servicios
+</h2>
+
+<form id="modal-form" class="" method="post" action="/SIAV/visita_masiva/">
+<div id='printableArea' class="table-responsive">
+<table id='avaluos_table' class="table table-striped table-hover">
+  <thead>
+    <tr class="{% if a.Solicitud|dayssince|add:"0" > a.Depto.Tolerancia|add:"0" and a.Estatus != 'DETENIDO' %}danger{% endif%}">
+        <th></th>
+        <th style="width:40px">Folio K</th>
+        <th style="width:40px" filter='true' >Referencia</th>
+        <th filter-type='ddl'>Cliente</th>
+        <th>Calle</th>
+        <th filter='false'>Ext.</th>
+        <th filter='false'>Int.</th>
+        <th style="width:100px" filter-type='ddl'>Colonia</th>
+        <th filter-type='ddl'>Municipio</th>
+        <th style="width:10px" filter-type='ddl'>Prio.</th>
+        <th style="width:10px" filter-type='ddl'>Status</th>
+        <th filter='false'>Dias</th>
+        <th style="width:10px" filter='false' class="tabla_opciones"></th>
+      </tr>
+    </thead>
 <tbody>
   {% for a in avaluos %}
-  <tr class="{% cycle 'odd' 'even' %}">
-    <form id="modal-form" class="form-horizontal" method="post" action="/SIAV/visita_masiva/">
-    <td> <input type="checkbox" value="{{ a.avaluo_id }}" name="avaluo_visitado">  </td>
-    <td > {{a.FolioK}} </td>
+  <tr class="{% if a.Solicitud|dayssince|add:"0" > a.Depto.Tolerancia|add:"0" and a.Estatus != 'DETENIDO' %}danger{% endif%}">
+    <td style="width:40px" filter='false'><input class="form-checkbox" type="checkbox" value="{{ a.avaluo_id }}" name="avaluo_visitado"></td>
+    <td >{{a.FolioK}}</td>
     <td style="width:100px;"> {{a.Referencia}} </td>
     <td style="width:10px;"> {{a.Cliente}} </td>
     <td style="width:200px"> {{a.Calle}} </td>
@@ -82,39 +140,43 @@ $(document).ready(function(){
     <td style="width:200px;"> {{a.Colonia}} </td>
     <td style="width:200px;"> {{a.Municipio}} </td>
     <td style="width:3px;"> {{a.Prioridad}} </td>
-    <td style="width:60px;"> {{a.Estatus}} </td>
-    <td style="width:35px;"> {{ a.Solicitud|dayssince }}</td>			  
-    <td style="width:60px;" class="tabla_opciones"> <a href="/SIAV/edita_visita/{{a.avaluo_id}}">Visita</a></td>
+    <td ><span class="label label-{%if a.Estatus = 'PROCESO'%}success{%elif a.Estatus = 'DETENIDO'%}default{%endif%}">{{a.Estatus}}</span></td>
+    <td style="width:35px;"> {{ a.Solicitud|dayssince }}</td>       
+      <td><a href="/SIAV/edita_visita/{{a.avaluo_id}}"><button type="button" class="btn btn-primary btn-sm">
+  <span class="glyphicon glyphicon-edit"></span> </button></a></td>
   </tr>
   {% endfor %}
 </tbody>
 </table>
 </div>
 
+<div class="modal fade" id="visita_masiva">
 
-  <div class="modal fade" id="visita_masiva">
+<div class="modal-dialog">
+<div class="modal-content">
+  <div class="modal-body">
 
-    <div class="modal-dialog">t
-      <div class="modal-content">
-        <div class="modal-body">
-
-          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-          <h2 style="text-align:center">Visita Múltiple</h2>
-                  <div class="modal-footer">
-                  <span style="display: block">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h2 style="text-align:center">Visita Múltiple</h2>
+    <div class="modal-footer">
+      <span style="display: block">
         {% if not visita_masiva.is_valid %}
-            <div class='hide'>invalid_form</div>
+        <div class='hide'>invalid_form</div>
         {% endif %}
           {% csrf_token %}
           {% bootstrap_form visita_masiva layout='horizontal'  %}
-        </span>
-        </div>
-          <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-          <button type="submit" class="btn btn-success" style="float:right">Enviar</button>
-        </div>
-      </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-  </div><!-- /.modal -->
-</form>
+      </span>
+    </div>
+    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+    <button type="submit" class="btn btn-success" id="enviar-masiva" style="float:right">Enviar</button>
+  </form>
+</div>
+</div>
+<!-- /.modal-content -->
+</div>
+<!-- /.modal-dialog -->
+
+</div>
+<!-- /.modal -->
 
 {% endblock %}

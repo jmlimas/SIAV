@@ -30,44 +30,14 @@ div.ui-datepicker{
 
 
 <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/jquery-datepicker-es.js"></script>
-<script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/fileuploader.js"></script>
 <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/ajax_estados_municipios.js"></script> <!-- Incluye  sugerencia de colonias.-->
-
-
-<script>        
-function createUploader(){            
-  var uploader = new qq.FileUploader( {
-    action: "{% url "app.uploads.ajax_upload" avaluo.avaluo_id avaluo.FolioK %}",
-    element: $('#file-uploader')[0],
-    multiple: true,
-    onComplete: function( id, fileName, responseJSON ) {
-      if( responseJSON.success )
-        alert( "success!" ) ;
-      else
-        alert( "upload failed!" ) ;
-    },
-    onAllComplete: function( uploads ) {
-                    // uploads is an array of maps
-                    // the maps look like this: { file: FileObject, response: JSONServerResponse }
-                    alert( "All complete!" ) ;
-                  },
-                  params: {
-                    'csrf_token': '{{ csrf_token }}',
-                    'csrf_name': 'csrfmiddlewaretoken',
-                    'csrf_xname': 'X-CSRFToken',
-                  },
-                } ) ;
-}         
-
-
-</script>  
+{% include "widgets/widget_mapas.js" %}
+{% include "widgets/widget_imagenes.js" %}
+ 
 
 <script type="text/javascript"> 
 $(function() {
 
-            // in your app create uploader as soon as the DOM is ready
-            // don't wait for the window to load  
-            window.onload = createUploader;    
 
 
             $('#id_Solicitud').datepicker({ autoSize: true });
@@ -103,77 +73,79 @@ $(function() {
 
 </script>
 
-<script type="text/javascript"
-src="https://maps.google.com/maps/api/js?sensor=true">
-</script>   
 
-<script type="text/javascript">
-
-   var declon = {{decimal.declon}};
-   var declat = {{decimal.declat}};
-</script>
-
-<script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/mapas.js"></script>
 
 {% endblock %}     
 
 {% block content %}
 
-
-<div class="row">
-  {% for item in imagenes %}
-    {% if item.imagen.url|file_exists %}
-      <div class="col-xs-3 col-md-2">
-      {% thumbnail item.imagen "100x100" crop="center" as small %}
-      <a class="thumbnail" href="/{{item.imagen}}" title="{{item.avaluo_id}}"><img src="/{{ small.url }}" style="padding:5px;"></a>
-      {% endthumbnail %}
-      </div>
-    {% endif %}
-  {% endfor %}
-</div>
-
-
-
 <h1 style="text-align:center">Visita</h1>
-<div id="controls">
-	<input class="btn btn-primary button white" type="button" id="slick-toggle" value="Mapas" />
-  <div id="slickbox" >
-   <div class="col-md-6" id="map_canvas" style="width: 700px; height: 500px;"  ></div>
- </div>
- <div id="file-uploader" style="float:right;">		
-   <noscript>			
-    <p>Please enable JavaScript to use file uploader.</p>
-    <!-- or put a simple form for upload here -->
-  </noscript>         
-</div>
-<a href="/SIAV/show_visita_pdf/{{avaluo.avaluo_id}}/" >
-  <input class="btn btn-info button white" type="button" id="slick-toggle" value="Reporte de Visita" ></input>
-</a>
+
+<div class="row-fluid">
+  <div class="span5">
+  {% include "widgets/widget_imagenes.html" %}
+  </div>
+  <a style="float:right" href="/SIAV/show_visita_pdf/{{avaluo.avaluo_id}}/" >
+    <input class="btn btn-info button white" type="button" id="slick-toggle" value="Reporte de Visita" />
+  </a>
+  <div class="span6">
+  <table class="table" id="datos_texto">
+    <tr>
+      <td>
+        Folio K : <b>{{ folio_k }}</b>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Tipo de Servicio: <b>{{ avaluo.Servicio }}</b>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Cliente :
+        <b>{{ avaluo.Cliente }}</b>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Departamento :
+        <b>{{ avaluo.Depto}}</b>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Fecha Solicitud :
+        <b>{{ avaluo.Solicitud }}</b>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Colonia :
+        <b>{{ avaluo.Colonia }}</b>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Municipio :
+        <b>{{ avaluo.Municipio }}</b>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Estado :
+        <b>{{ avaluo.Estado }}</b>
+      </td>
+    </tr>
+  </table>
+
+  </div>
+
+
 </div>
 
-    <div class="col-md-12">
-    <div class="col-md-offset-2">
-	<table class="table" id="datos_texto">
-  		<tr>
-  			<td>Avaluo Id : <b>{{ avaluo.avaluo_id }}</b></td>
-  			<td>Folio K : <b>{{ folio_k }}</b></td>
-  			<td>Tipo de Servicio: <b>{{ avaluo.Servicio }}</b></td>
 
-  		</tr>
-  		<tr>
-  			<td>Cliente : <b>{{ avaluo.Cliente }}</b></td>
-  			<td>Departamento : <b>{{ avaluo.Depto}}</b></td>
-  			<td>Fecha Solicitud : <b>{{ avaluo.Solicitud }}</b></td>
-  		</tr>
-      <tr>
-        <td>Colonia : <b>{{ avaluo.Colonia }}</b></td>
-        <td>Municipio : <b>{{ avaluo.Municipio }}</b></td>
-        <td>Estado : <b>{{ avaluo.Estado }}</b></td>
-      </tr>  
-	</table>
-  </div>
-  </div>
-	
+
+
 	{% crispy form %}	
 
 	<br>

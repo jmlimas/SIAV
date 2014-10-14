@@ -2,6 +2,8 @@
 
 {% load listutil %}
 
+{% load groupcheck %}
+
 {% load crispy_forms_tags %}
 
 {% block salida %}active{% endblock %}
@@ -31,17 +33,37 @@
 		  }
 		});
 
+/*
 		if('{{avaluo.Tipo}}' == 'TERRENO'){
 			$("#valor_sugerido").html('<b>Importe Sugerido:  $</b>'+({{avaluo.Depto.base|default_if_none:0}} + 
 				 ({{avaluo.Depto.factor|default_if_none:0}} * {{avaluo.Mconstruccion|default_if_none:0}})));
 		}else{
 			$("#valor_sugerido").html('<b>Importe Sugerido:  $</b>'+({{avaluo.Depto.base|default_if_none:0}} + 
 				 ({{avaluo.Depto.factor|default_if_none:0}} * {{avaluo.Mconstruccion|default_if_none:0}})));
-
 		}
 
+		if('{{avaluo.Depto.Metodo}}' == 'F'){
+			$("#id_Importe").val((0+{{avaluo.Depto.base|default_if_none:0}})*{{avaluo.Depto.factor|default_if_none:0}})
+		}else if('{{avaluo.Depto.Metodo}}' == 'S'){
+				if('{{avaluo.Tipo}}' == 'TERRENO'){
+					$("#id_Importe").val(({{avaluo.Mterreno}}+{{avaluo.Depto.base|default_if_none:0}})*{{avaluo.Depto.factor|default_if_none:0}})
+				}else{
+					$("#id_Importe").val(({{avaluo.Mconstruccion}}+{{avaluo.Depto.base|default_if_none:0}})*{{avaluo.Depto.factor|default_if_none:0}})				
+				}
+		}else if('{{avaluo.Depto.Metodo}}' == 'V'){
+			$("#id_Importe").val(({{avaluo.Valor}}+{{avaluo.Depto.base|default_if_none:0}})*{{avaluo.Depto.factor|default_if_none:0}})
+		}
 
-		  
+	*/	  
+
+
+	if('{{avaluo.Depto_id}}' == 54){
+		//$( "#div_id_Importe" ).hide();
+		$("#id_Importe").val(696);
+		$("#id_Importe").attr('readonly', true);
+	}
+
+
     });
     </script>
 	
@@ -56,8 +78,10 @@
             Porfavor corrige los errores debajo.
         </p>
     {% endif %}
-    <div class="col-md-12">
-    <div class="col-md-offset-2">
+    <div class="row-fluid">
+    <div class="span12">
+    <div class="span6"></div>
+    <div class="span6">
 <!--     	<div class='span4'>
     		<select class="select" id="select_valor">
 				<option value="SUPERFICIE">SUPERFICIE - T/C</option>
@@ -70,22 +94,32 @@
 		<table id="datos_texto" class="table">
 		<tbody>
 		<tr>
-			<td>Avaluo Id : <b>{{ avaluo.avaluo_id }}</b></td>
 			<td>Folio K : <b>{{ folio_k}}</b></td>
+		</tr>
+		<tr>
 			<td>Referencia : <b>{{ avaluo.Referencia}}</b></td>
 		</tr>
 		<tr>
 			<td>Cliente : <b>{{ avaluo.Cliente }}</b></td>
+		</tr>
+		<tr>
 			<td>Departamento : <b>{{ avaluo.Depto}}</b></td>
+		</tr>
+		<tr>
 			<td>Fecha Solicitud : <b>{{ avaluo.Solicitud }}</b></td>
 		</tr>
 		<tr>
 			<td>Colonia : <b>{{ avaluo.Colonia }}</b></td>
+		</tr>
+		<tr>
 			<td>Municipio : <b>{{ avaluo.Municipio }}</b></td>
+		</tr>
+		<tr>
 			<td>Estado : <b>{{ avaluo.Estado}}</b></td>
 		</tr>
 	</tbody>
 	</table>
+</div>
 </div>
 </div>
    		{% crispy form %}	
