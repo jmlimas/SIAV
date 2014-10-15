@@ -38,12 +38,13 @@ urlpatterns = patterns(
 
 
     '', url(r'^SIAV/ajax_upload/(\w*\d+)/(\@*\w*\d+)/$', 'app.uploads.ajax_upload', name="ajax_upload"),
-
+    url(r'^$', 'website.views.index', name='home'),
     url(r'^grappelli/', include('grappelli.urls')),
     url(r'^api/', include(v1_api.urls)),
     url(r'^SIAV/admin/', include(admin.site.urls)),
 
-
+    #Urls para cuentas
+    url(r"^account/", include("account.urls")),
 
     #Urls del SIAV
 
@@ -119,7 +120,7 @@ urlpatterns = patterns(
     url(r'^SIAV/elimina_imagen_captura/(\d+)/(\d+)/$', 'app.views.elimina_imagen_captura', name='elimina_imagen_captura'),
 
     #Urls del sitio web
-    url(r'^$', 'website.views.index', name='index'),
+    #url(r'^$', 'website.views.index', name='index'),
     url(r'^index2/', 'website.views.index2', name='index2'),
 
     #Urls del sitio movil
@@ -140,6 +141,8 @@ urlpatterns += patterns('',
     url(r'^monto_inline/', 'app.views.inline.monto_inline', name='monto_inline'),
     url(r'^factura_inline/', 'app.views.inline.factura_inline', name='factura_inline'),
 )
+
+    
 
 
 # Add the static files pattern to the url.
