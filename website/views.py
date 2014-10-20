@@ -43,7 +43,7 @@ def index2(request):
 
 
 	cursor = connections['sqlite'].cursor()
-	for row in cursor.execute('SELECT t1.title,t1.slug,t1.html,t2.name,t2.image,DATE(t1.created_at) FROM posts t1 LEFT JOIN users t2 on t2.id = t1.published_by WHERE status = "published" ORDER BY published_at'):
+	for row in cursor.execute('SELECT t1.title,t1.slug,t1.html,t2.name,t2.image,DATE(t1.created_at) FROM posts t1 LEFT JOIN users t2 on t2.id = t1.published_by WHERE t1.status = "published" ORDER BY published_at'):
 		info = (row[2][:200] + '...') if len(row[2]) > 75 else row[2]
 		post = Post(row[0],row[1],re.sub('<[^<]+?>', '', info),row[3],row[4],row[5])
 		lista_post.append(post)
