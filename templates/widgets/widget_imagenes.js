@@ -33,7 +33,6 @@
 function createUploader(){            
   var uploader = new qq.FileUploader( {
     action: "{% url "app.uploads.ajax_upload" avaluo.avaluo_id avaluo.FolioK %}",
-    listElement: $('#image-list'),
     element: $('#file-uploader')[0],
     multiple: true,
     onComplete: function( id, fileName, responseJSON ) {
