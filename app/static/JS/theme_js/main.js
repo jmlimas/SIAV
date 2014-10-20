@@ -359,6 +359,7 @@ jQuery(document).ready(function($) {
 			Correo: $('#id_Correo').val(),
 			Telefono: $('#id_Telefono').val(),
 			Mensaje: $('#id_Mensaje').val(),
+			Captcha: $('#id_Captcha').val(),
 		},
 			function(data){
 				document.getElementById('message').innerHTML = data;

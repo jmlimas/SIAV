@@ -62,6 +62,10 @@ def contacto(request):
 	    forma = FormaContacto(request.POST)
 	    # Todas las reglas de validacion aprobadas
 	    if forma.is_valid():
+
+	    	if forma.cleaned_data['Captcha'] != '6':
+	    		return HttpResponse('Parece que hubo un error en el captcha, intenta de nuevo.')
+
 	    	#send_mail('Contacto Alluxi',forma.cleaned_data['Mensaje'],['gusreyes01@gmail.com',], fail_silently=False)
 	        #send_mail('Contacto Alluxi', forma.cleaned_data['Mensaje'], 'hola@gmail.com', ['gusreyes01@gmail.com'], fail_silently=False)
 
@@ -72,7 +76,7 @@ def contacto(request):
 	              "to": ["gusreyes01@gmail.com"],
 	              "subject": forma.cleaned_data['Nombre']+" <"+forma.cleaned_data['Correo']+">, ("+forma.cleaned_data['Telefono']+")",
 	              "text": forma.cleaned_data['Mensaje']})
-	        return HttpResponse('¡Gracias por tu mensaje!, Pronto nos comunicaremos contigo.')  # Redirect after POST
+	        return HttpResponse('¡Gracias por tu mensaje! Pronto nos comunicaremos contigo.')  # Redirect after POST
 	    else:
 			return HttpResponse('Parece que hubo un error. Prueba llenando todos los campos.')
 	else:

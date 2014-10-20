@@ -38,7 +38,12 @@ urlpatterns = patterns(
 
 
     '', url(r'^SIAV/ajax_upload/(\w*\d+)/(\@*\w*\d+)/$', 'app.uploads.ajax_upload', name="ajax_upload"),
-    url(r'^$', 'website.views.index', name='home'),
+
+    #Url pag principal
+    url(r'^$', 'website.views.index2', name='home'),
+    url(r'^contacto/', 'website.views.contacto', name='contacto'),
+
+    #urls admin
     url(r'^grappelli/', include('grappelli.urls')),
     url(r'^api/', include(v1_api.urls)),
     url(r'^SIAV/admin/', include(admin.site.urls)),
@@ -118,10 +123,6 @@ urlpatterns = patterns(
 
     #Url para eliminar imagen
     url(r'^SIAV/elimina_imagen_captura/(\d+)/(\d+)/$', 'app.views.elimina_imagen_captura', name='elimina_imagen_captura'),
-
-    #Urls del sitio web
-    url(r'^index2/', 'website.views.index2', name='index2'),
-    url(r'^contacto/', 'website.views.contacto', name='contacto'),
 
     #Urls del sitio movil
     url(r'^SIAV/mobile/', 'app.views.mobile', name='mobile'),
