@@ -32,9 +32,11 @@ MANAGERS = ADMINS
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
-EMAIL_HOST_USER = 'gusreyes01@gmail.com'
-EMAIL_HOST_PASSWORD = 'ESCUELA20'
 
+
+import os
+module_dir = os.path.dirname(__file__)  # get current directory
+file_path = ('/var/www/ghost/content/data/ghost.db')
 
 DATABASES = {
     'default': {
@@ -47,7 +49,7 @@ DATABASES = {
         'OPTIONS': {"init_command": "SET foreign_key_checks = 0;"}
     },
     'sqlite': {
-        'NAME': 'ghost.db',
+        'NAME': file_path,
         'ENGINE': 'django.db.backends.sqlite3',
         'USER': '',
         'PASSWORD': ''

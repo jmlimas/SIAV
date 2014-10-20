@@ -10,6 +10,7 @@ from django.db import connections
 import requests
 import sqlite3
 import re
+from django.conf import settings
 # Create your views here.
 
 def index(request):
@@ -28,7 +29,7 @@ def index2(request):
 		
 	   def displayPost(self):
 	      print "Name : ", self.titulo,  ", Salary: ", self.fecha
-	conn = sqlite3.connect('ghost.db')
+	conn = sqlite3.connect('/var/www/ghost/content/data/ghost.db')
 	lista_post = []
 
 
