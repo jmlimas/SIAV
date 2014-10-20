@@ -634,18 +634,6 @@ background-position-x:50% !important;
 background-size:cover;
 }
 
-#slides .image2{
-background:url('/static/CSS/images/chicago_night.jpg');
-background-position-x:50% !important;
-background-size:cover;
-}
-
-#slides .image3{
-background:url('static/CSS/images/chicago_night.jpg');
-background-position-x:50% !important;
-background-size:cover;
-}
-
 .caption-wrapper {
 display:table;
 height:100%;
