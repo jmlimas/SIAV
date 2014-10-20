@@ -120,12 +120,11 @@ urlpatterns = patterns(
     url(r'^SIAV/elimina_imagen_captura/(\d+)/(\d+)/$', 'app.views.elimina_imagen_captura', name='elimina_imagen_captura'),
 
     #Urls del sitio web
-    #url(r'^$', 'website.views.index', name='index'),
     url(r'^index2/', 'website.views.index2', name='index2'),
+    url(r'^contacto/', 'website.views.contacto', name='contacto'),
 
     #Urls del sitio movil
     url(r'^SIAV/mobile/', 'app.views.mobile', name='mobile'),
-
     url(r'^swf/', 'app.views.swf', name='swf'),
 )
 

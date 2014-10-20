@@ -351,14 +351,14 @@ jQuery(document).ready(function($) {
 		$('#message').hide();
 
  		$('#submit')
-			.after('<img src="images/ajax-loader.gif" class="loader" />')
+			.after('<img src="/static/CSS/loading.gif" class="loader" />')
 			.attr('disabled','disabled');
 
 		$.post(action, {
-			name: $('#name').val(),
-			email: $('#email').val(),
-			subject: $('#subject').val(),
-			comments: $('#comments').val(),
+			Nombre: $('#id_Nombre').val(),
+			Correo: $('#id_Correo').val(),
+			Telefono: $('#id_Telefono').val(),
+			Mensaje: $('#id_Mensaje').val(),
 		},
 			function(data){
 				document.getElementById('message').innerHTML = data;

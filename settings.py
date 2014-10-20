@@ -18,7 +18,7 @@ DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 THUMBNAIL_DEBUG = True 
 THUMBNAIL_PREFIX ='media/cache/'
-
+CSRF_FAILURE_VIEW = True
 DEFAULT_CHARSET = 'utf-8' 
 FILE_CHARSET = 'utf-8' 
 
@@ -45,7 +45,13 @@ DATABASES = {
         'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
         'PORT': '3306',                      # Set to empty string for default.
         'OPTIONS': {"init_command": "SET foreign_key_checks = 0;"}
-    }
+    },
+    'sqlite': {
+        'NAME': 'ghost.db',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'USER': '',
+        'PASSWORD': ''
+    }    
 }
 
 
@@ -189,6 +195,7 @@ INSTALLED_APPS = (
 
 TEMPLATE_CONTEXT_PROCESSORS = (
     'account.context_processors.account',
+    'django.core.context_processors.csrf',
     'django.contrib.auth.context_processors.auth',
     'django.core.context_processors.debug',
     'django.core.context_processors.i18n',
