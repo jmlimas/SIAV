@@ -15,13 +15,14 @@ CRISPY_TEMPLATE_PACK = 'bootstrap3'
 #DEBUG_TOOLBAR_PATCH_SETTINGS = False
 
 DEBUG = True
-TEMPLATE_DEBUG = DEBUG
+TEMPLATE_DEBUG = False
+DEBUG404 = True 
 THUMBNAIL_DEBUG = True 
 THUMBNAIL_PREFIX ='media/cache/'
 CSRF_FAILURE_VIEW = True
 DEFAULT_CHARSET = 'utf-8' 
-FILE_CHARSET = 'utf-8' 
-
+FILE_CHARSET = 'utf-8'
+ALLOWED_HOSTS = ['*']
 
 ADMINS = (
     # ('Your Name', 'your_email@example.com'),
@@ -32,6 +33,8 @@ MANAGERS = ADMINS
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
+
+SITE_ROOT = os.path.dirname(os.path.realpath(__file__))
 
 
 import os
@@ -116,6 +119,7 @@ STATICFILES_DIRS = (
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
+    os.path.join(SITE_ROOT, 'static/'),
 )
 
 # List of finder classes that know how to find static files in

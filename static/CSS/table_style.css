@@ -1,0 +1,137 @@
+/*
+
+@media only screen and (max-width: 1024px) {
+   table td:nth-child(2), 
+   table th:nth-child(2) {display: none;}
+}
+
+@media only screen and (max-width: 768px) {
+   table td:nth-child(11),
+   table th:nth-child(11),
+   table td:nth-child(10),
+   table th:nth-child(10),
+   table td:nth-child(9),
+   table th:nth-child(9),
+   table td:nth-child(2), 
+   table th:nth-child(2) {display: none;}
+}
+ 
+@media only screen and (max-width: 480px) {
+   table td:nth-child(3),
+   table th:nth-child(3),
+   table td:nth-child(4),
+   table th:nth-child(4),
+   table td:nth-child(5),
+   table th:nth-child(5),
+   table td:nth-child(6),
+   table th:nth-child(6),
+   table td:nth-child(7),
+   table th:nth-child(7),
+   table td:nth-child(8),
+   table th:nth-child(8),
+   table td:nth-child(9),
+   table th:nth-child(9),
+   table td:nth-child(11),
+   table th:nth-child(11){display: none;}
+}
+
+*/
+
+h1 {
+  color:#00334e;
+  
+}
+
+h3 {
+  font-size:1em;
+  }
+.wrapper {
+  width:640px;
+  margin:0 auto;
+  }
+.header {
+  width:640px;
+  margin-bottom:20px;
+  padding-bottom:10px;
+  border-bottom:1px solid #ddd;
+  }
+.content {
+  font-size:10pt;
+  clear:both;
+  }
+.header,
+.picnet_logo, 
+.instructions,
+.column1,
+.column2 {
+  display:inline;
+  position:relative;
+  float:left;
+  }
+.instructions {
+  width:460px;
+  margin-left:40px;
+  }
+.instructions p {
+  font-size:0.8em
+  }
+table,
+td,
+th ,.control-group{
+
+  }
+table {
+  border-collapse:collapse;
+  }
+table tr {
+  background-color:#eee;
+  }
+
+table td, table th{
+
+.column1 {
+  width:480px
+  }
+.column2{
+  width:100px;
+  margin-left:60px;
+  }
+table#demotable2 {
+  width:100px;
+}
+th {
+  background-color:#333;
+  color:#fff;
+  font-size:0.85em
+  }
+a {
+  color:#0079c1;
+  text-decoration:none;
+  }  
+a:hover {
+  text-decoration:underline;
+  }
+.filtering {
+  background-color:light-gray
+;
+  }
+#jqtf_filters {
+  list-style:none;  
+  }
+#jqtf_filters li {
+  display:inline-block; 
+  position:relative; 
+  float:left;
+  margin-bottom:20px
+  }
+#quickfind {
+  width:480px;
+  border:1px solid #ccc;
+  }
+.clear {
+  clear:both
+  }
+
+#cleanfilters {
+  margin-left:20px;
+  }
