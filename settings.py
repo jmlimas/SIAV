@@ -3,50 +3,6 @@ import os
 import collections
 from os.path import exists
 
-#Apps que todos pueden accesar
-# SHARED_APPS = (
-#      # mandatory
-#     'website', # you must list the app where your tenant model resides in
-#     'django.contrib.auth',
-#     'django.contrib.admin',
-#     'django.contrib.contenttypes',
-#     'django.contrib.sessions',
-#     'django.contrib.sites',
-#     'django.contrib.messages',
-#     'django.contrib.staticfiles',
-#     'django.contrib.humanize',
-#     'account'    
-#     # everything below here is optional
-
-# )
-
-# #Apps especificas para cada cliente
-# TENANT_APPS = (
-#     # The following Django contrib apps must be in TENANT_APPS
-#     # your tenant-specific apps
-#     'django.contrib.auth',
-#     'grappelli',
-#     'django.contrib.admin',
-#     'django.contrib.contenttypes',
-#     'django.contrib.sessions',
-#     'django.contrib.sites',
-#     'django.contrib.messages',
-#     'django.contrib.staticfiles',
-#     'django.contrib.humanize',
-#     'account',
-#     'websock',
-#     'example_project',
-#     'crispy_forms',
-#     'bootstrap3',
-#     'endless_pagination',
-#     'app',
-# )
-
-# INSTALLED_APPS = ('tenant_schemas',)+TENANT_APPS + SHARED_APPS
-# INSTALLED_APPS = list(collections.OrderedDict.fromkeys(INSTALLED_APPS))
-# TENANT_MODEL = "website.Client" 
-# PG_EXTRA_SEARCH_PATHS = ['extensions']
-
 # Set the DJANGO_SETTINGS_MODULE environment variable.
 os.environ['DJANGO_SETTINGS_MODULE'] = "settings"
 
