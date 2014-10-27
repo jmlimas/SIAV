@@ -4,50 +4,48 @@ import collections
 from os.path import exists
 
 #Apps que todos pueden accesar
-SHARED_APPS = (
-     # mandatory
-    'website', # you must list the app where your tenant model resides in
-    'django.contrib.auth',
-    'django.contrib.admin',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.sites',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'django.contrib.humanize',
-    'account'    
-    # everything below here is optional
+# SHARED_APPS = (
+#      # mandatory
+#     'website', # you must list the app where your tenant model resides in
+#     'django.contrib.auth',
+#     'django.contrib.admin',
+#     'django.contrib.contenttypes',
+#     'django.contrib.sessions',
+#     'django.contrib.sites',
+#     'django.contrib.messages',
+#     'django.contrib.staticfiles',
+#     'django.contrib.humanize',
+#     'account'    
+#     # everything below here is optional
 
-)
+# )
 
-#Apps especificas para cada cliente
-TENANT_APPS = (
-    # The following Django contrib apps must be in TENANT_APPS
-    # your tenant-specific apps
-    'django.contrib.auth',
-    'grappelli',
-    'django.contrib.admin',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.sites',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'django.contrib.humanize',
-    'account',
-    'websock',
-    'example_project',
-    'crispy_forms',
-    'bootstrap3',
-    'endless_pagination',
-    'app',
-)
+# #Apps especificas para cada cliente
+# TENANT_APPS = (
+#     # The following Django contrib apps must be in TENANT_APPS
+#     # your tenant-specific apps
+#     'django.contrib.auth',
+#     'grappelli',
+#     'django.contrib.admin',
+#     'django.contrib.contenttypes',
+#     'django.contrib.sessions',
+#     'django.contrib.sites',
+#     'django.contrib.messages',
+#     'django.contrib.staticfiles',
+#     'django.contrib.humanize',
+#     'account',
+#     'websock',
+#     'example_project',
+#     'crispy_forms',
+#     'bootstrap3',
+#     'endless_pagination',
+#     'app',
+# )
 
-INSTALLED_APPS = ('tenant_schemas',)+TENANT_APPS + SHARED_APPS
-INSTALLED_APPS = list(collections.OrderedDict.fromkeys(INSTALLED_APPS))
-# app.Model
-TENANT_MODEL = "website.Client" 
-
-PG_EXTRA_SEARCH_PATHS = ['extensions']
+# INSTALLED_APPS = ('tenant_schemas',)+TENANT_APPS + SHARED_APPS
+# INSTALLED_APPS = list(collections.OrderedDict.fromkeys(INSTALLED_APPS))
+# TENANT_MODEL = "website.Client" 
+# PG_EXTRA_SEARCH_PATHS = ['extensions']
 
 # Set the DJANGO_SETTINGS_MODULE environment variable.
 os.environ['DJANGO_SETTINGS_MODULE'] = "settings"
@@ -61,7 +59,7 @@ CRISPY_TEMPLATE_PACK = 'bootstrap3'
 #INTERNAL_IPS = ('127.0.0.1',)
 #DEBUG_TOOLBAR_PATCH_SETTINGS = False
 
-DEBUG = False
+DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 DEBUG404 = True 
 THUMBNAIL_DEBUG = True 
@@ -96,9 +94,10 @@ if not os.path.exists(file_path):
 DATABASES = {
     'default': {
          #'ENGINE': 'django.db.backends.postgresql_psycopg2',  # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'ENGINE': 'tenant_schemas.postgresql_backend',
+        'ENGINE': 'django.db.backends.mysql',
+        #'ENGINE': 'tenant_schemas.postgresql_backend',
         'NAME': 'siavdb',                      # Or path to database file if using sqlite3.
-        'USER': 'postgres',                      # Not used with sqlite3.
+        'USER': 'root',                      # Not used with sqlite3.
         'PASSWORD': 'siavdb',                  # Not used with sqlite3.
         'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
         'PORT': '',},
@@ -197,7 +196,7 @@ TEMPLATE_LOADERS = (
 
 
 MIDDLEWARE_CLASSES = (
-    'tenant_schemas.middleware.TenantMiddleware',
+    # 'tenant_schemas.middleware.TenantMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -224,32 +223,32 @@ TEMPLATE_DIRS = (
     "templates",
 )
 
-# INSTALLED_APPS = (
-#     'django.contrib.auth',
-#     'django.contrib.contenttypes',
-#     'django.contrib.sessions',
-#     'django.contrib.sites',
-#     'django.contrib.messages',
-#     'django.contrib.staticfiles',
-#     'django.contrib.humanize',
-#     'app',
-#     'websock',
-#     'example_project',
-#     'crispy_forms',
-#     #'django_socketio',
-#     #'debug_toolbar',
-#     'grappelli',
-#     #'account',
-#     'sorl.thumbnail',
-#     # Uncomment the next line to enable the admin:
-#     'django.contrib.admin',
-#     'bootstrap3',
-#     #'pinax_theme_bootstrap',
-#     #'bootstrapform',
-#     # Uncomment the next line to enable admin documentation:
-#     # 'django.contrib.admindocs',
-#     'endless_pagination',
-# )
+INSTALLED_APPS = (
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.sites',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+    'django.contrib.humanize',
+    'app',
+    'websock',
+    'example_project',
+    'crispy_forms',
+    #'django_socketio',
+    #'debug_toolbar',
+    'grappelli',
+    #'account',
+    'sorl.thumbnail',
+    # Uncomment the next line to enable the admin:
+    'django.contrib.admin',
+    'bootstrap3',
+    #'pinax_theme_bootstrap',
+    #'bootstrapform',
+    # Uncomment the next line to enable admin documentation:
+    # 'django.contrib.admindocs',
+    'endless_pagination',
+)
 
 
 TEMPLATE_CONTEXT_PROCESSORS = (
