@@ -2,6 +2,10 @@ from django.db import models
 from decimal import Decimal
 import os
 from PIL import Image
+from organizations.models import Organization
+
+
+
 
 # Create your models here.
 class Estado(models.Model):
@@ -186,5 +190,3 @@ class ArchivoAvaluo(models.Model):
             size = ( 1024, 768)
             imagen = imagen.resize(size, Image.ANTIALIAS)
         imagen.save(self.imagen.path) 
-
-

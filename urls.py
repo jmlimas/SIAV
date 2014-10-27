@@ -141,10 +141,7 @@ urlpatterns += patterns('',
     url(r'^monto_inline/', 'app.views.inline.monto_inline', name='monto_inline'),
     url(r'^factura_inline/', 'app.views.inline.factura_inline', name='factura_inline'),
 )
-
-    
-
-
+ 
 # Add the static files pattern to the url.
 urlpatterns += staticfiles_urlpatterns() 
 # handler404 = 'app.views.errors.not_found_error'

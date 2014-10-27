@@ -29,7 +29,11 @@ def index2(request):
 		
 	   def displayPost(self):
 	      print "Name : ", self.titulo,  ", Salary: ", self.fecha
-	conn = sqlite3.connect('/var/www/ghost/content/data/ghost.db')
+	      
+	try:
+		conn = sqlite3.connect('/var/www/ghost/content/data/ghost.db')
+	except:
+		conn = sqlite3.connect('ghost.db')
 	lista_post = []
 
 

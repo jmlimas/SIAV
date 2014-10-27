@@ -2,6 +2,18 @@ from django.contrib import admin
 from app.models import *
 
 
+class TestAdmin(admin.ModelAdmin):
+
+    def my_example(self):
+		try:        
+			Avaluo.objects.filter(FolioK='AP03218521') #self.instance.deal
+		except:
+			Avaluo.objects.filter(FolioK='AP03218521') 
+      
+    list_display = (my_example,)
+
+
+    
 
 
 
@@ -24,11 +36,11 @@ class adminDepto(admin.ModelAdmin):
 
 
 
-admin.site.register(Avaluo, adminAvaluo)
 admin.site.register(Cliente, adminCliente)
 admin.site.register(Depto, adminDepto)
 admin.site.register(Valuador)
 admin.site.register(Municipio)
 admin.site.register(Estado, adminEstado)
+admin.site.register(Avaluo, adminAvaluo)
 
 

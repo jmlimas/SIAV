@@ -18,7 +18,7 @@
             {% for item in imagenes %}
             {% if item.imagen.url|file_exists %}
             <li>
-              <img style="width:490px;height:300px" src="/{{ item.imagen.url }}"></li>
+              <img style="width:490px;height:300px" src="{{ MEDIA_ROOT }}/{{ item.imagen.url }}"></li>
             {% endif %}
             {% endfor %}
           </ul>
@@ -28,7 +28,7 @@
             {% for item in imagenes %}
             {% if item.imagen.url|file_exists %}
             <li>
-              <img style="width:100px;height:100px" src="/{{ item.imagen.url }}">
+              <img style="width:100px;height:100px" src="{{ MEDIA_ROOT }}/{{ item.imagen.url }}">
 
               <div class="caption" style="padding-top:7px">
                 <p>

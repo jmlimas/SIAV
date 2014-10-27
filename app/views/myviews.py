@@ -297,8 +297,6 @@ def alta_avaluo_paquete(request):
                         form._errors["Referencia"] = ErrorList([u"Referencia Repetida."])
                     else:
                         values.append(form.cleaned_data.get("Referencia"))
-                        if (len(values) > 1):
-                            return HttpResponse(values)
                 avaluo = Avaluo()
 
                 avaluo.Tipo = formset_sencilla.cleaned_data['Tipo']

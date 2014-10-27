@@ -629,7 +629,7 @@ display:none;
 * HOMEPAGE SLIDER
 * -------------------------------------------------- */
 #slides .image1{
-background:url('/static/CSS/images/chicago_night.jpg');
+background:url(../theme_images/chicago_night.jpg);
 background-position-x:50% !important;
 background-size:cover;
 }

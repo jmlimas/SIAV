@@ -63,4 +63,3 @@ def ajax_upload( request,avaluo_id,folio_k ):
     import json
     ret_json = { 'success': 'test','ext':ext }
     return HttpResponse( json.dumps( ret_json ) )
-
