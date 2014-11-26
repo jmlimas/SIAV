@@ -30,6 +30,13 @@ ADMINS = (
     # ('Your Name', 'your_email@example.com'),
 )
 
+CORS_ORIGIN_ALLOW_ALL = True
+
+CORS_ORIGIN_WHITELIST = (
+        'alluxi.mx',
+        'localhost'
+    )
+
 MANAGERS = ADMINS
 
 EMAIL_USE_TLS = True
@@ -153,6 +160,7 @@ TEMPLATE_LOADERS = (
 
 MIDDLEWARE_CLASSES = (
     # 'tenant_schemas.middleware.TenantMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -198,6 +206,7 @@ INSTALLED_APPS = (
     'sorl.thumbnail',
     # Uncomment the next line to enable the admin:
     'django.contrib.admin',
+    'corsheaders',
     'bootstrap3',
     #'pinax_theme_bootstrap',
     #'bootstrapform',
