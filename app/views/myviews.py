@@ -152,8 +152,8 @@ def estadistico(request, anio=2013, mes=01):
 
     from django.db import connection, transaction
     cursor = connection.cursor()
-    cursor.execute('SELECT t1.avaluo_id, IFNULL(t3.Cliente, "TOTAL") AS name, COUNT(*), SUM(IF(DATEDIFF(CURDATE(),DATE_ADD(t1.Solicitud,INTERVAL t2.tolerancia DAY)) <= 0,1, 0)) as "= 0", SUM(IF(DATEDIFF(CURDATE(),DATE_ADD(t1.Solicitud,INTERVAL t2.tolerancia DAY)) BETWEEN 1 AND 3,1, 0) )as "< 3", SUM(IF(DATEDIFF(CURDATE(),DATE_ADD(t1.Solicitud,INTERVAL t2.tolerancia DAY)) > 3,1, 0)) as "> 3" FROM siavdb.app_avaluo t1 INNER JOIN siavdb.app_depto t2 on t1.Depto_id = t2.Depto_id INNER JOIN siavdb.app_cliente t3 on t2.Cliente_id_id = t3.Cliente_id WHERE t1.Estatus in ("PROCESO") GROUP BY t3.Cliente WITH ROLLUP;')
-    en_tiempo = cursor.fetchall()
+    #cursor.execute('SELECT t1.avaluo_id, IFNULL(t3.Cliente, "TOTAL") AS name, COUNT(*), SUM(IF(DATEDIFF(CURDATE(),DATE_ADD(t1.Solicitud,INTERVAL t2.tolerancia DAY)) <= 0,1, 0)) as "= 0", SUM(IF(DATEDIFF(CURDATE(),DATE_ADD(t1.Solicitud,INTERVAL t2.tolerancia DAY)) BETWEEN 1 AND 3,1, 0) )as "< 3", SUM(IF(DATEDIFF(CURDATE(),DATE_ADD(t1.Solicitud,INTERVAL t2.tolerancia DAY)) > 3,1, 0)) as "> 3" FROM siavdb.app_avaluo t1 INNER JOIN siavdb.app_depto t2 on t1.Depto_id = t2.Depto_id INNER JOIN siavdb.app_cliente t3 on t2.Cliente_id_id = t3.Cliente_id WHERE t1.Estatus in ("PROCESO") GROUP BY t3.Cliente WITH ROLLUP;')
+    #en_tiempo = cursor.fetchall()
 
     cursor.execute('SELECT Cliente,Ene_Ct,Feb_Ct,Mzo_Ct,Abr_Ct,May_Ct,Jun_Ct,Jul_Ct,Ago_Ct,Sept_Ct,Oct_Ct,Nov_Ct,Dic_Ct from ISALIDA_CLIENTES_X_MES_EXT WHERE año_salida = %s ORDER BY Cliente',[anio])
     cliente = cursor.fetchall()
@@ -297,8 +297,6 @@ def alta_avaluo_paquete(request):
                         form._errors["Referencia"] = ErrorList([u"Referencia Repetida."])
                     else:
                         values.append(form.cleaned_data.get("Referencia"))
-                        if (len(values) > 1):
-                            return HttpResponse(values)
                 avaluo = Avaluo()
 
                 avaluo.Tipo = formset_sencilla.cleaned_data['Tipo']
