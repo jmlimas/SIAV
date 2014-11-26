@@ -488,6 +488,7 @@ def guarda_master(request, id):
             Eventos.objects.create(user=request.user, evento='CONSULTA_MASTER',avaluo=obj)
 
             return redirect('/SIAV/consulta_master/')
+    imagenes = ImagenAvaluo.objects.filter(avaluo = avaluo.avaluo_id)[:5]
     return render_to_response('home/consultas/respuesta_consulta_master.html', {'forma': forma, 'avaluo': avaluo, 'imagenes': imagenes}, context_instance=RequestContext(request))
 
 
@@ -575,7 +576,9 @@ def consulta_comparable(request):
         from django.utils.encoding import smart_str, smart_unicode
         results = []
         list_child = []
-        for desplaza in range(1,2):
+        Bandera = True;
+        desplaza = 0;
+        while (Bandera == True):
             print "Pag."+str(desplaza)
             url="http://www.century21libra.com/catalogo/index.php?Desplazamiento="+str(desplaza)+"&BZona="+zona+"&BColonia="+col+"&BInmueble=&BPrecio=&Idioma=1&Area=&BClave=&"
             page=urllib2.urlopen(url)
@@ -596,6 +599,13 @@ def consulta_comparable(request):
                       list_child.remove("Ver mas")
                 except:
                     pass
+            if (len(inmuebles) >= 12):
+                desplaza += 12;
+                Bandera = True;
+            elif(len(inmuebles) <= 12):
+                Bandera = False;
+            else:
+                pass;
         return render_to_response('home/consultas/results_comparable.html', {'results': results, 'url':url}, context_instance=RequestContext(request))
     else:
         forma = FormaConsultaMaster()
