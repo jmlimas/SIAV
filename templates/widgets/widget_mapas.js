@@ -40,7 +40,8 @@ function initialize() {
 
  var latlng = new google.maps.LatLng({{decimal.declon}},({{decimal.declat}}*-1));
  var myOptions = {
-  zoom: 15,
+  zoom: 13,
+  scrollwheel: false,
   center: latlng,
   mapTypeId: google.maps.MapTypeId.ROADMAP
 };

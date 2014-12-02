@@ -1,0 +1,84 @@
+{% load currency %}
+
+
+		<h1>{{objeto_cliente.Cliente}} {{anio}}</h1>
+		<div id="depto_container{{cliente}}"></div>
+		<table class="table table-hover" >
+			{% for a in deptos_importe %}
+			<tr>
+				<td>{{a.Depto__Depto}}</td>
+				<td>{{a.Cantidad}}</td>
+				<td>{{a.Total|currency}}</td>
+			</tr>
+			{% endfor%}
+		</table>
+	
+<script>
+$(function () {
+    $('#depto_container{{cliente}}').highcharts({
+        chart: {
+            type: 'bar'
+        },
+        title: {
+            text: 'Importe por Cliente'
+        },
+        subtitle: {
+            text: ''
+        },
+        xAxis: {
+            categories: [{% for a in deptos_importe %}'{{a.Depto__Depto}}',{% endfor%}],
+            title: {
+                text: null
+            },
+            formatter: function() {
+                return '<b>'+ this.x +'</b><br/>'+
+                    this.series.name +': $'+ this.y.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+            }      
+        },
+        yAxis: {
+            min: 0,
+            title: {
+                text: 'Importe (MXN)',
+                align: 'high'
+            },
+            stackLabels:{
+	            formatter: function() {
+	                return '<b>$'+ this.total.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')+'</b><br/>'
+	            }
+            },         
+        },
+        tooltip: {
+            valueSuffix: ' pesos',
+            formatter: function() {
+                return '<b>'+ this.x +'</b><br/>'+
+                    this.series.name +': $'+ this.y.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+            }
+        },
+        plotOptions: {
+            bar: {
+                dataLabels: {
+                    enabled: true
+                }             
+            }
+        },
+        legend: {
+            layout: 'vertical',
+            align: 'right',
+            verticalAlign: 'top',
+            x: -40,
+            y: 100,
+            floating: true,
+            borderWidth: 1,
+            backgroundColor: ((Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'),
+            shadow: true
+        },
+        credits: {
+            enabled: false
+        },
+        series: [{
+            name: 'Importe',
+            data: [{% for a in deptos_importe %}{{a.Total}},{% endfor%}]
+        }]
+    });
+});
+</script>

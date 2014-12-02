@@ -197,12 +197,12 @@ $( ".mes" ).change(function() {
             series: [
             {% for a in cliente %}
                 {
-                    name: '{{a.0}}',
+                    name: '{{a.1}}',
                     data: [
-                            {% for i in a|slice:"1:" %}
-                                {% if i > 0 %}
-                                {{i}},
-                                {% endif %}
+                            {% for i in a|slice:"2:" %}
+                                
+                                {{i|default_if_none:"0"}},
+                                
                             {% endfor %}
                         ],
                 },
@@ -211,7 +211,20 @@ $( ".mes" ).change(function() {
 
 });
 
+
+
 </script>
+
+<script>
+    {% for a in cliente %}
+$("#myModal{{a.0}}").on('hidden.bs.modal', function () {
+    $(this).data('bs.modal', null);
+     $(this).removeData('bs.modal');
+});
+
+    {%endfor%}
+</script>
+
 
 {% endblock %}      
 {% block content %}
@@ -285,16 +298,16 @@ $( ".mes" ).change(function() {
         </table>
     </div>
 </div>
-<div class="tab-pane" id="cliente">
+<div class="container tab-pane" id="cliente">
     <h1>Clientes  {{anio}}</h1>
     <br>
-    <div align="right" class="container">
+    <div align="" class="">
 
         <br>
         <br>
 
                     <div class="row">
-            <div class="col-md-offset-2 col-md-8">
+            <div class=" col-md-8">
                 <div id="pie_container"></div>
             </div>
 			<div class="row">
@@ -317,9 +330,8 @@ $( ".mes" ).change(function() {
                     </thead>
                     {% for a in cliente %}
                     <tr>
-                        <td>{{a.0}}</td>
-                        <td>{{a.1|currency}}</td>
-                        <td>{{ a.2|currency }}</td>
+                        <td><a data-toggle="modal" href="/SIAV/estadistico_cliente_depto/{{anio}}/{{a.0}}/" data-target="#myModal{{a.0}}">{{a.1}}</a></td>
+                        <td>{{a.2|currency}}</td>
                         <td>{{ a.3|currency }}</td>
                         <td>{{ a.4|currency }}</td>
                         <td>{{ a.5|currency }}</td>
@@ -330,7 +342,21 @@ $( ".mes" ).change(function() {
                         <td>{{ a.10|currency }}</td>
                         <td>{{ a.11|currency }}</td>
                         <td>{{ a.12|currency }}</td>
+                        <td>{{ a.13|currency }}</td>
                     </tr>
+                    <!-- Modal -->
+                    <div class="row">
+                    <div class="modal fade" id="myModal{{a.0}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
+                        <div class="modal-dialog ">
+                            <div class="modal-content">
+ 
+                            </div>
+                            <!-- /.modal-content -->
+                        </div>
+                        <!-- /.modal-dialog -->
+                    </div>
+                    <!-- /.modal -->
+                    </div>
                     {% endfor %}
                 </table>
             </div>
@@ -404,5 +430,10 @@ $( ".mes" ).change(function() {
 </li>
 {% endfor %}
 </ul>
+
+
+
+
+
 
 {% endblock %}

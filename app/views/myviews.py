@@ -155,10 +155,10 @@ def estadistico(request, anio=2013, mes=01):
     #cursor.execute('SELECT t1.avaluo_id, IFNULL(t3.Cliente, "TOTAL") AS name, COUNT(*), SUM(IF(DATEDIFF(CURDATE(),DATE_ADD(t1.Solicitud,INTERVAL t2.tolerancia DAY)) <= 0,1, 0)) as "= 0", SUM(IF(DATEDIFF(CURDATE(),DATE_ADD(t1.Solicitud,INTERVAL t2.tolerancia DAY)) BETWEEN 1 AND 3,1, 0) )as "< 3", SUM(IF(DATEDIFF(CURDATE(),DATE_ADD(t1.Solicitud,INTERVAL t2.tolerancia DAY)) > 3,1, 0)) as "> 3" FROM siavdb.app_avaluo t1 INNER JOIN siavdb.app_depto t2 on t1.Depto_id = t2.Depto_id INNER JOIN siavdb.app_cliente t3 on t2.Cliente_id_id = t3.Cliente_id WHERE t1.Estatus in ("PROCESO") GROUP BY t3.Cliente WITH ROLLUP;')
     #en_tiempo = cursor.fetchall()
 
-    cursor.execute('SELECT Cliente,Ene_Ct,Feb_Ct,Mzo_Ct,Abr_Ct,May_Ct,Jun_Ct,Jul_Ct,Ago_Ct,Sept_Ct,Oct_Ct,Nov_Ct,Dic_Ct from ISALIDA_CLIENTES_X_MES_EXT WHERE año_salida = %s ORDER BY Cliente',[anio])
+    cursor.execute('SELECT Cliente_id,Cliente,Ene_Ct,Feb_Ct,Mzo_Ct,Abr_Ct,May_Ct,Jun_Ct,Jul_Ct,Ago_Ct,Sept_Ct,Oct_Ct,Nov_Ct,Dic_Ct from ISALIDA_CLIENTES_X_MES_EXT WHERE año_salida = %s ORDER BY Cliente',[anio])
     cliente = cursor.fetchall()
 
-    cursor.execute('SELECT Cliente,Ene,Feb,Mzo,Abr,May,Jun,Jul,Ago,Sept,Oct,Nov,Dic from ISALIDA_CLIENTES_X_MES_EXT WHERE año_salida = %s ORDER BY Cliente',[anio])
+    cursor.execute('SELECT Cliente_id,Cliente,Ene,Feb,Mzo,Abr,May,Jun,Jul,Ago,Sept,Oct,Nov,Dic from ISALIDA_CLIENTES_X_MES_EXT WHERE año_salida = %s ORDER BY Cliente',[anio])
     cliente = cursor.fetchall()
 
     total_general = 0.00
@@ -196,6 +196,17 @@ def estadistico_mes_js(request, anio=2013):
     avaluos = [Avaluo.objects.extra(select={'month': 'extract( month from Salida )','anio': 'extract( year from Salida )'}).values('month','anio').filter(Salida__month=m).filter(Salida__year=anio).order_by('month').annotate(dcount=Count('Solicitud'), Total=Sum('Importe')) for m in mes_list]
     
     return render_to_response('home/consultas/estadistico/estadistico_anio.js', locals())
+
+
+@login_required
+def estadistico_cliente_depto(request, anio=2013,cliente=1):
+    #cliente = request.GET.get('anio', '')
+    #cliente = request.GET.get('cliente', '')
+    #anios = Avaluo.objects.dates('Salida', 'year').filter(Salida__gt=datetime.date(2011, 1, 1))
+    deptos_importe = Avaluo.objects.filter(Salida__year=anio).filter(Cliente_id=cliente).values('Depto__Depto').annotate(Total=Sum('Importe'), Cantidad=Count('Cliente'))
+    objeto_cliente = Cliente.objects.get(cliente_id=cliente)
+    return render_to_response('home/consultas/estadistico/estadistico_cliente_depto.html', locals())
+
 
 
 @login_required

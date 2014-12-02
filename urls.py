@@ -102,6 +102,7 @@ urlpatterns = patterns(
 
     url(r'^SIAV/estadistico_anio_js/', 'app.views.estadistico_anio_js', name='estadistico_anio_js'),
     url(r'^SIAV/estadistico/(\d+)/(\d+)/$', 'app.views.estadistico', name='estadistico'),
+    url(r'^SIAV/estadistico_cliente_depto/(\d+)/(\d+)/$', 'app.views.estadistico_cliente_depto', name='estadistico_cliente_depto'),
     #url(r'^SIAV/estadistico/', 'app.views.estadistico', name = 'estadistico'),
 
     url(r'^SIAV/submitted/', 'app.views.submitted', name='submitted'),
