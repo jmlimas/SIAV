@@ -30,13 +30,24 @@ div.ui-datepicker{
 
 
 <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/jquery-datepicker-es.js"></script>
-<script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/ajax_estados_municipios.js"></script> <!-- Incluye  sugerencia de colonias.-->
+<script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/ajax_estados_municipios.js"></script>
+<script src="{{ STATIC_URL }}JS/jquery.tooltipster.min.js"></script>
+ <!-- Incluye  sugerencia de colonias.-->
 {% include "widgets/widget_mapas.js" %}
 {% include "widgets/widget_imagenes.js" %}
  
 
 <script type="text/javascript"> 
 $(function() {
+
+
+  $('#id_Contacto').tooltipster({
+  content: 'Escribe el correo del contacto a notificar.',
+  contentAsHTML: true,
+  interactive: true,
+  position: 'right',
+});
+
 
 
 

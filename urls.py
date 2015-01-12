@@ -52,6 +52,9 @@ urlpatterns = patterns(
     url(r'^SIAV/logout/', 'app.views.logout_view', name='logout_view'),
     url(r'^SIAV/home/', 'app.views.home', name='home'),
 
+
+    url(r'^SIAV/cambia_estatus/(?P<match>.+)/$', 'app.views.cambia_estatus', name='cambia_estatus'),
+
     #url(r'^$', 'app.views.lista_avaluo', name = 'lista_avaluo'),
     url(r'^SIAV/guarda_master/?(\d+)/?$', 'app.views.guarda_master', name='guarda_master'),
     url(r'^SIAV/consulta_master/', 'app.views.consulta_master', name='consulta_master'),

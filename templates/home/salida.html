@@ -11,8 +11,11 @@
 {% block script %}
 
 <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/picnet.table.filter.min.js"></script>
+<script src="{{ STATIC_URL }}JS/jquery.tooltipster.min.js"></script>
+
 <script type="text/javascript">
 $(document).ready(function () {
+  {% include "snippets/pauseorplay.js" %}
   $('#avaluos_table').tableFilter();
   $('#id_Salida').datepicker({ autoSize: true , dateFormat: 'dd/mm/yy'});
   valor = 0;
@@ -28,7 +31,7 @@ $(document).ready(function () {
     }, 1000);
   });
 
-$('#salida_masiva_button').click(function () {
+$('#masiva_button').click(function () {
 
     // Some code
 
@@ -95,7 +98,7 @@ $('#salida_masiva_button').click(function () {
 {% endblock %}      
 
 {% block content %}
-  <a id="salida_masiva_button"  title="Visita" style="float:right" class="btn btn-primary" role="button">
+  <a id="masiva_button"  title="Visita" style="float:right" class="btn btn-primary mass_button" role="button">
     <span class="glyphicon glyphicon-ok"></span>
     SALIDA
   </a>

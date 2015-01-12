@@ -47,7 +47,7 @@ def grafica_por_liquidar(dollars):
 # Datos para grafica para estadisticas por cliente.
 def grafica_por_cliente(dollars):
     total_general = 0.0
-    por_liquidar = Avaluo.objects.filter(Salida__year=2013).values('Cliente__Cliente').annotate(Total=Sum('Importe'), Cantidad=Count('Cliente'))
+    por_liquidar = Avaluo.objects.values('Cliente__Cliente').annotate(Total=Sum('Importe'), Cantidad=Count('Cliente'))
     por_liquidar = por_liquidar.order_by('-Salida')
     suma_de_monto = por_liquidar.values('Cliente__Cliente').order_by('Cliente').annotate(total=Sum('Importe'))
 
@@ -65,7 +65,7 @@ def grafica_por_cliente(dollars):
 # Datos para grafica para estadisticas por departamento.
 def grafica_por_depto(cliente):
     total_general = 0.0
-    por_liquidar = Avaluo.objects.filter(Cliente__Cliente=cliente).filter(Salida__year=2013).values('Depto__Depto').annotate(Total=Sum('Importe'), Cantidad=Count('Cliente'))
+    por_liquidar = Avaluo.objects.filter(Cliente__Cliente=cliente).values('Depto__Depto').annotate(Total=Sum('Importe'), Cantidad=Count('Cliente'))
     por_liquidar = por_liquidar.order_by('-Salida')
     suma_de_monto = por_liquidar.values('Depto__Depto').order_by('Cliente').annotate(total=Sum('Importe'))
 
@@ -78,7 +78,7 @@ def grafica_por_depto(cliente):
 
 
     return suma_de_monto
-
+register.filter('cuentas_por_cobrar', grafica_por_cliente)
 register.filter('grafica_por_facturar', grafica_por_facturar)
 register.filter('grafica_por_liquidar', grafica_por_liquidar)
 register.filter('grafica_por_cliente', grafica_por_cliente)

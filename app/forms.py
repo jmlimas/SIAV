@@ -258,6 +258,7 @@ class VisitaAvaluo(ModelForm):
     LongitudG = forms.DecimalField(required=True, label="Lat.G.")
     LongitudM = forms.DecimalField(required=True, label="Lat.M.")
     LongitudS = forms.DecimalField(required=True, label="Lat.S.")
+    Contacto = forms.CharField( label="Contacto", required=False)
     Observaciones = forms.CharField(widget=forms.Textarea, required=False)
 
     class Meta:
@@ -292,6 +293,7 @@ class VisitaAvaluo(ModelForm):
                         Div(Field('LongitudG',  css_class='col-md-16 input-medium form-control'),  css_class='col-md-4'),
                         Div(Field('LongitudM',  css_class='col-md-16 input-medium form-control'),  css_class='col-md-4'),
                         Div(Field('LongitudS',  css_class='col-md-16 input-medium form-control'),  css_class='col-md-4')),
+                    'Contacto',
                     css_class='col-md-4'), css_class='row-fluid'),
             'Observaciones',
             ButtonHolder(

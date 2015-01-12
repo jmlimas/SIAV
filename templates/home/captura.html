@@ -11,8 +11,19 @@
 {% block script %}
 
 <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/picnet.table.filter.min.js"></script>
+<script src="{{ STATIC_URL }}JS/jquery.tooltipster.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function () {
+
+
+
+
+   {% include "snippets/pauseorplay.js" %}
+
+   
+
+
+// $('.serv-button').toolbar({content: '#user-options', position: 'bottom',hideOnClick: true});
   $('#avaluos_table').tableFilter();
   valor = 0;
 
@@ -27,7 +38,9 @@ $(document).ready(function () {
     }, 1000);
   });
 
-$('#captura_masiva_button').click(function () {
+
+
+$('#masiva_button').click(function () {
 
     // Some code
 
@@ -72,10 +85,16 @@ $('#captura_masiva_button').click(function () {
 
 {% endblock %}      
 {% block content %}
-  <a id="captura_masiva_button"  title="captura" style="float:right" class="btn btn-primary" role="button">
+ 
+  <button type="button" class="btn btn-default tooltip"><span class="glyphicon glyphicon-cog"></span></button>
+
+  <a id="masiva_button"  title="captura" style="float:right" class="btn btn-primary mass_button" role="button">
     <span class="glyphicon glyphicon-ok"></span>
     CAPTURAR
   </a>
+
+<!-- <div id='user-options'><a href='/cambia_estatus/1/1'><i class='icon-play'></i></a><a href='/cambia_estatus/1/2'><i class='icon-pause'></i></a><a href='/cambia_estatus/1/3'><i class='icon-remove'></i></a></div> -->
+
 <h1>Captura</h1>
 <h2 style="text-align:left"><span id="cantidad_tabla"></span>  Servicios</h2>
 <div id='printableArea' class="table-responsive">
@@ -95,7 +114,7 @@ $('#captura_masiva_button').click(function () {
       <th filter-type='ddl'>Prioridad</th>
       <th style="width:10px" filter-type='ddl'>Status</th>
       <th filter='false'>Dias</th>
-      <th style="width:10px" filter='false' class="tabla_opciones"></th>
+      <th style="width:150px" filter='false' class="tabla_opciones"></th>
     </tr>
   </thead>
 <tbody>
@@ -114,18 +133,16 @@ $('#captura_masiva_button').click(function () {
   <td ><span class="label label-{%if a.Estatus = 'PROCESO'%}success{%elif a.Estatus = 'DETENIDO'%}default{%endif%}">{{a.Estatus}}</span></td>
   <td style="width:35px;"> {{ a.Solicitud|dayssince }}</td>     
   <td>
-    <a href="/SIAV/actualiza_avaluo/{{a.avaluo_id}}">
-      <button type="button" class="btn btn-primary btn-sm">
-        <span class="glyphicon glyphicon-edit"></span>
-      </button>
-    </a>
+  <a href="/SIAV/actualiza_avaluo/{{a.avaluo_id}}"> 
+  <button type="button" class="btn btn-primary edit_button" id={{a.avaluo_id}}><span class="glyphicon glyphicon-edit"></span></button>
+</a>
   </td>
-</tr>
+
+</tr>  
 {% endfor %}
 </tbody>
 </table>
 </div>
-
 
 <div class="modal fade" id="captura_masiva">
 

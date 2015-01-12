@@ -27,6 +27,7 @@ from django.forms.models import model_to_dict
 from django.shortcuts import render
 from django.forms.util import ErrorList
 from django.db.models import F
+import requests
 
 current_directory = os.path.dirname(os.path.abspath(__file__))
 
@@ -125,6 +126,13 @@ def liquidar(request):
             .update(Pagado=True))
         return HttpResponseRedirect('.')
     else:
+
+        cxc = (Avaluo.objects
+                   .filter(Estatus='CONCLUIDO')
+                   .filter(Q(Salida__isnull=False))
+                   .filter(Q(Pagado=False) | Q(Pagado__isnull=True))
+                   .aggregate(suma=Sum('Importe')))
+
         agrupados = avaluos.values('Factura', 'Cliente__Cliente').annotate(Total=Sum('Importe'), Cantidad=Count('Factura'))
 
         cantidad = avaluos.count()
@@ -135,7 +143,7 @@ def liquidar(request):
                 x['Total'] = 0.00
             else:
                 total_general += float(str(x['Total']))
-        return render_to_response('home/lista_cobrar.html', {'total_general': total_general, 'cantidad': cantidad, 'agrupados': agrupados}, context_instance=RequestContext(request))
+        return render_to_response('home/lista_cobrar.html', {'total_general': total_general, 'cantidad': cantidad, 'agrupados': agrupados,'cxc': cxc}, context_instance=RequestContext(request))
 
 
 #   Vista para generar estadisticos en Highcharts
@@ -409,6 +417,16 @@ def edita_visita(request, id):
             obj = form.save(commit=False)
             obj.FolioK = folio_k
             form.save()
+            a = Avaluo.objects.get(FolioK=folio_k)
+            rendered = render_to_string('email/template_visita.html', {'a': a})
+            #return HttpResponse(rendered)
+            r1 = requests.post(
+            "https://api.mailgun.net/v2/alluxi.mx/messages",
+            auth=("api", "key-9snzu8gopo2vt5zdlay-e6ggboizrf27"),
+            data={"from": "Valuadores del Norte <gustavo@alluxi.mx>",
+                  "to": [form.cleaned_data['Contacto']],
+                  "subject": ("Visita Servicio : "+a.Referencia),
+                  "html": rendered})
 
             # Enviar notificación a usuarios
             r = redis.StrictRedis(host='localhost', port=6379, db=0)
@@ -851,6 +869,28 @@ def salida_masiva(request):
                .exclude(Q(Mconstruccion__isnull=True)))
     avaluos = avaluos.order_by('-Solicitud')
     return render_to_response('home/salida.html', {'avaluos': avaluos,'salida_masiva':salida_masiva}, context_instance=RequestContext(request))
+
+def cambia_estatus(request, match):
+    pieces = match.split('/')
+    param = pieces[0]
+    caller = pieces[1]
+    pieces = pieces[2:]
+    # even indexed pieces are the names, odd are values
+    av = Avaluo.objects.filter(avaluo_id__in=pieces)
+    if param == '1':
+        av.update(Estatus="PROCESO")
+    if param == '2':
+        av.update(Estatus="DETENIDO")
+    if param == '3':
+        av.update(Estatus="CANCELADO")
+
+    if caller == '1':
+        return HttpResponseRedirect('/SIAV/visita/')
+    if caller == '2':
+        return HttpResponseRedirect('/SIAV/captura/')
+    if caller == '3':
+        return HttpResponseRedirect('/SIAV/salida/')
+    return HttpResponseRedirect('Hubo un error :( intenta de nuevo.') 
 
 def swf(request):
     return ""

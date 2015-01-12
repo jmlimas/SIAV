@@ -9,9 +9,12 @@
 {% block visita %}active{% endblock %}
 {% block script %}
 <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/picnet.table.filter.min.js"></script>
+<script src="{{ STATIC_URL }}JS/jquery.tooltipster.min.js"></script>
 <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/show_hide.js"></script>
 <script type="text/javascript">
 $(document).ready(function () {
+
+  {% include "snippets/pauseorplay.js" %}
   $('#avaluos_table').tableFilter();
   valor = 0;
 
@@ -38,7 +41,7 @@ $(document).ready(function(){
 
       });
 $('#id_Visita').datepicker({ autoSize: true , dateFormat: 'dd/mm/yy'});
-$('#visita_masiva_button, #button_orden_visita').click(function () {
+$('#masiva_button, #button_orden_visita').click(function () {
 
     // Some code
     var id_button = this.id;
@@ -66,7 +69,7 @@ $('#visita_masiva_button, #button_orden_visita').click(function () {
       if(bandera == false){
         alert("Todos los servicios deben pertenecer a la misma colonia.");
       }else{
-          if(id_button == "visita_masiva_button"){
+          if(id_button == "masiva_button"){
               $('#visita_masiva').modal('show');
               console.log( selected.toString());
               }
@@ -97,7 +100,7 @@ $('#visita_masiva_button, #button_orden_visita').click(function () {
 <p style="color: red;">Porfavor completa los campos faltantes.</p>
 {% endif %}
    <input id="button_orden_visita" type="submit" value="Orden Visita" class="btn btn-info"/>
-  <a id="visita_masiva_button"  title="Visita" style="float:right" class="btn btn-primary" role="button">
+  <a id="masiva_button"  title="Visita" style="float:right" class="btn btn-primary mass_button" role="button">
     <span class="glyphicon glyphicon-ok"></span>
     VISITAR
   </a>
