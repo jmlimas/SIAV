@@ -137,7 +137,7 @@ def get_image_path(folder, filename):
 class ImagenAvaluo(models.Model):
     imagen_id = models.AutoField(primary_key=True)
     FolioK = models.CharField(null=True, max_length=255)
-    avaluo = models.ForeignKey(Avaluo)
+    avaluo = models.ForeignKey(Avaluo, related_name='avaluos')
     imagen = models.ImageField("Imagen Avaluo", upload_to=get_image_path, blank=True, null=True)
 
     def __unicode__(self):

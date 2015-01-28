@@ -3,182 +3,179 @@
 {% load cantidades_proceso %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-  <title>SIAV 
-    {% if avaluo.FolioK %}
-    {{avaluo.FolioK}}
-    {%endif%}
-    {% if request.user|conteo_eventos_usuario > 0 %}
-    ({{request.user|conteo_eventos_usuario}})
-    {% endif %}
-    </title> 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="">
-  <meta name="author" content="">
-  <link rel="shortcut icon" href="{{ STATIC_URL }}img/favicon.ico" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>SIAV {% if avaluo.FolioK %} {{avaluo.FolioK}} {%endif%} {% if request.user|conteo_eventos_usuario > 0 %} ({{request.user|conteo_eventos_usuario}}) {% endif %}
+    </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="{{ STATIC_URL }}img/favicon.ico" />
 
-  <!-- Common CSS Styles -->
+    <!-- Common CSS Styles -->
 
-  <style type="text/css" title="currentStyle">
-  @import "{{ STATIC_URL }}CSS/bootstrap.css";
-  @import "{{ STATIC_URL }}CSS/bootstrap-responsive.css";
-  @import "{{ STATIC_URL }}CSS/smoothness/jquery-ui-1.8.24.custom.css";
-  @import "{{ STATIC_URL }}CSS/tooltipster.css";
-/*  @import "{{ STATIC_URL }}CSS/jquery.ui.chatbox.css";*/
-  @import "{{ STATIC_URL }}CSS/Style.css";
-/*  @import "{{ STATIC_URL }}CSS/table_style.css";
-*/  /*
+    <style type="text/css" title="currentStyle">
+    @import "{{ STATIC_URL }}CSS/bootstrap.css";
+    @import "{{ STATIC_URL }}CSS/bootstrap-responsive.css";
+    @import "{{ STATIC_URL }}CSS/smoothness/jquery-ui-1.8.24.custom.css";
+    @import "{{ STATIC_URL }}CSS/tooltipster.css";
+    /*  @import "{{ STATIC_URL }}CSS/jquery.ui.chatbox.css";*/
+    
+    @import "{{ STATIC_URL }}CSS/Style.css";
+    /*  @import "{{ STATIC_URL }}CSS/table_style.css";
+*/
+    /*
   @import "{{ STATIC_URL }}CSS/jdpicker.css";
   */
-
-  @import "{{ STATIC_URL }}CSS/jquery.toolbar.css";
-  @import "{{ STATIC_URL }}CSS/bootstrap.icons.css";
-  </style>
-  <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
-  {% block style %}{% endblock %}
-  <!-- Common JS Libraries  -->
+    
+    @import "{{ STATIC_URL }}CSS/jquery.toolbar.css";
+    @import "{{ STATIC_URL }}CSS/bootstrap.icons.css";
+    </style>
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet"> {% block style %}{% endblock %}
+    <!-- Common JS Libraries  -->
 </head>
-<body >
 
-  <div id="chat_div"></div>
-  <!-- navigation -->
-  <nav class="navbar navbar-inverse navbar-fixed-top">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand" href="/SIAV/">
-        <img padding-bottom="65px" width="70px" src="{{ STATIC_URL }}/CSS/images/SIAV_logo.png">
-        <span class="badge badge-info">{{x|cantidades_proceso}}</span>
-      </a>
-    </div>
-    <ul class="nav navbar-nav navbar-right">
-      <li>
-        <a onclick="printDiv('printableArea')" href="#"> <i class="glyphicon glyphicon-print"></i>
-        </a>
-      </li>
-      {% if user.is_staff %}
-      <li>
-        <a href="/SIAV/admin"> <i class="glyphicon glyphicon-wrench"></i>
-        </a>
-      </li>
-      {% endif %}
-      <p class="navbar-text">
-        Bienvenido,
-        <a href="#">{{user.username }}</a>
-      </p>
-      <li>
-        <a href="/SIAV/logout">
-          <i class="glyphicon glyphicon-eject"></i>
-        </a>
-      </li>
-    </ul>
-    <div class="nav-collapse">
-      <ul class="nav navbar-nav">
-        <li class="{% block alta %}{% endblock %}" >
-          <a href="/SIAV/alta_avaluo/">Alta</a>
-        </li>
-        <li class="{% block visita %}{% endblock %}">
-          <a href="/SIAV/visita/" >
+<body>
+
+    <div id="chat_div"></div>
+    <!-- navigation -->
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/SIAV/">
+                <img padding-bottom="65px" width="70px" src="{{ STATIC_URL }}/CSS/images/SIAV_logo.png">
+                <span class="badge badge-info">{{x|cantidades_proceso}}</span>
+            </a>
+        </div>
+        <ul class="nav navbar-nav navbar-right">
+            <li>
+                <a onclick="printDiv('printableArea')" href="#"> <i class="glyphicon glyphicon-print"></i>
+                </a>
+            </li>
+            {% if user.is_staff %}
+            <li>
+                <a href="/SIAV/admin"> <i class="glyphicon glyphicon-wrench"></i>
+                </a>
+            </li>
+            {% endif %}
+            <p class="navbar-text">
+                Bienvenido,
+                <a href="#">{{user.username }}</a>
+            </p>
+            <li>
+                <a href="/SIAV/logout">
+                    <i class="glyphicon glyphicon-eject"></i>
+                </a>
+            </li>
+        </ul>
+        <div class="nav-collapse">
+            <ul class="nav navbar-nav">
+                <li class="{% block alta %}{% endblock %}">
+                    <a href="/SIAV/alta_avaluo/">Alta</a>
+                </li>
+                <li class="{% block visita %}{% endblock %}">
+                    <a href="/SIAV/visita/">
             Visita
             <span class="badge badge-warning">{{x|cantidades_visita}}</span>
           </a>
-        </li>
-        <li class="{% block captura %}{% endblock %}">
-          <a href="/SIAV/captura/" >
+                </li>
+                <li class="{% block captura %}{% endblock %}">
+                    <a href="/SIAV/captura/">
             Captura
             <span class="badge badge-warning">{{x|cantidades_captura}}</span>
           </a>
-        </li>
-        <li class="{% block salida %}{% endblock %}">
-          <a href="/SIAV/salida/">
+                </li>
+                <li class="{% block salida %}{% endblock %}">
+                    <a href="/SIAV/salida/">
             Salida
             <span class="badge badge-warning">{{x|cantidades_salida}}</span>
           </a>
-        </li>
-        {% if user.is_staff %}
-        <li class="{% block consulta_master %}{% endblock %}">
-          <a href="/SIAV/consulta_master/" >Consulta</a>
-        </li>
-        {% else %}
-        <li class="{% block consulta_sencilla %}{% endblock %}">
-          <a href="/SIAV/consulta_sencilla/" >Consulta</a>
-        </li>
-        {% endif %}
-
-    {% if user.is_staff %}
-        <li class="{% block lista_factura %}{% endblock %}">
-          <a href="/SIAV/facturar/">Facturar</a>
-        </li>
-        <li class="{% block liquidar %}{% endblock %}">
-          <a href="/SIAV/liquidar/">Liquidar</a>
-        </li>
-        <li class="dropdown">
-                        <a href="/SIAV/estadistico/{%now "Y"%}/{%now "m"%}" class="dropdown-toggle" data-toggle="dropdown">Estadístico <span class="caret"></span></a>
-                        <ul class="dropdown-menu" role="menu">
-                          <li><a href="/SIAV/estadistico/{%now "Y"%}/{%now "m"%}/#asignacion">Asignacion</a></li>
-                          <li><a href="/SIAV/estadistico/{%now "Y"%}/{%now "m"%}/#cliente">Cliente</a></li>
-                          <li><a href="/SIAV/estadistico/{%now "Y"%}/{%now "m"%}/#historial">Historial</a></li>
-                          <li><a href="/SIAV/estadistico/{%now "Y"%}/{%now "m"%}/#tolerancia">Tolerancia</a></li>
-                        </ul>
-                      </li>
-              </li>
-      {% endif %}
-    </ul>
-    <ul class="nav navbar-nav pull-right">
-      <li class="dropdown" style="float:right">
-        <a href="#" class="dropdown-toggle notif_link" data-toggle="dropdown">
-          <i class="glyphicon glyphicon-globe"></i>
-          {% if request.user|conteo_eventos_usuario > 0 %}
-          <div id="noti_ind">
-            <span class="noty-manager-bubble" style="margin-left: 11px; top: 10px; opacity: 1;">{{request.user|conteo_eventos_usuario}}</span>
-          </div>
-          {% endif %}
-        </a>
-        <!-- <span id="spinner">
+                </li>
+                {% if user.is_staff %}
+                <li class="{% block consulta_master %}{% endblock %}">
+                    <a href="/SIAV/consulta_master/">Consulta</a>
+                </li>
+                {% else %}
+                <li class="{% block consulta_sencilla %}{% endblock %}">
+                    <a href="/SIAV/consulta_sencilla/">Consulta</a>
+                </li>
+                {% endif %} {% if user.is_staff %}
+                <li class="{% block lista_factura %}{% endblock %}">
+                    <a href="/SIAV/facturar/">Facturar</a>
+                </li>
+                <li class="{% block liquidar %}{% endblock %}">
+                    <a href="/SIAV/liquidar/">Liquidar</a>
+                </li>
+                <li class="dropdown">
+                    <a href="/SIAV/estadistico/{%now " Y "%}/{%now "m "%}" class="dropdown-toggle" data-toggle="dropdown">Estadístico <span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="/SIAV/estadistico/{%now "Y"%}/{%now "m"%}/#asignacion">Asignacion</a>
+                        </li>
+                        <li><a href="/SIAV/estadistico/{%now "Y"%}/{%now "m"%}/#cliente">Cliente</a>
+                        </li>
+                        <li><a href="/SIAV/estadistico/{%now "Y"%}/{%now "m"%}/#historial">Historial</a>
+                        </li>
+                        <li><a href="/SIAV/estadistico/{%now "Y"%}/{%now "m"%}/#tolerancia">Tolerancia</a>
+                        </li>
+                    </ul>
+                </li>
+                </li>
+                {% endif %}
+            </ul>
+            <ul class="nav navbar-nav pull-right">
+                <li class="dropdown" style="float:right">
+                    <a href="#" class="dropdown-toggle notif_link" data-toggle="dropdown">
+                        <i class="glyphicon glyphicon-globe"></i> {% if request.user|conteo_eventos_usuario > 0 %}
+                        <div id="noti_ind">
+                            <span class="noty-manager-bubble" style="margin-left: 11px; top: 10px; opacity: 1;">{{request.user|conteo_eventos_usuario}}</span>
+                        </div>
+                        {% endif %}
+                    </a>
+                    <!-- <span id="spinner">
         <img src="{{ STATIC_URL }}spinner.gif"/>
       </span>
       -->
-      <ul class="dropdown-menu"  >
-        <section class="panel" id="notif_panel">
-        <header class="panel-heading"> <strong>Notificaciones</strong> </header>
-        <div id="notification-list" class="list-group list-group-alt" >
-          <div id="notif_dd">
-          </div>
+                    <ul class="dropdown-menu">
+                        <section class="panel" id="notif_panel">
+                            <header class="panel-heading"> <strong>Notificaciones</strong> </header>
+                            <div id="notification-list" class="list-group list-group-alt">
+                                <div id="notif_dd">
+                                </div>
+                            </div>
+                        </section>
+                    </ul>
+                </li>
+            </ul>
         </div>
-      </section>
-      </ul>
-    </li>
-  </ul>
-</div>
 
-</nav>
-<div class="container-full special">
-  <div class="col-md-15">
-    <div class="jumbotron container-full special">
-        {% block content %}
-          {% endblock %}
+    </nav>
+    <div class="container-full special">
+        <div class="col-md-15">
+            <div class="jumbotron container-full special">
+                {% block content %} {% endblock %}
+            </div>
+
+            <br>
+            <br>
+
+            <footer>
+                <p style="color:white;text-align:center;">&copy; Copyright 2013 Valuadores del Norte S.C.</p>
+            </footer>
+
+        </div>
     </div>
-
-    <br>
-    <br>
-
-    <footer>
-      <p style="color:white;text-align:center;">&copy; Copyright 2013 Valuadores del Norte S.C.</p>
-    </footer>
-
-  </div>
-</div>
 </body>
 <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/jquery-1.8.2.min.js"></script>
 <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/jquery.jdpicker.js"></script>
 <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/jquery-ui-1.8.24.custom.min.js"></script>
 <!-- <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/jquery.ui.chatbox.js"></script>
  -->
- <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/jquery.cookie.js"></script>
+<script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/jquery.cookie.js"></script>
 <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/bootstrap.js"></script>
 <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/autoNumeric.js"></script>
 <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/socket.io.js"></script>
@@ -203,175 +200,178 @@
 //   $('.ui-chatbox-content').toggle();
 
 // });
-
-
 </script>
 
 <script type="text/javascript">
+$(document).ready(function() {
 
-$(document).ready(function(){
+    var objDiv = document.getElementById("comments");
+    // objDiv.scrollTop = objDiv.scrollHeight+10;
 
-  var objDiv = document.getElementById("comments");
-      // objDiv.scrollTop = objDiv.scrollHeight+10;
+    var socket = io.connect('{{ request.META.HTTP_HOST }}', {
+        port: 4000
+    });
 
-      var socket = io.connect('{{ request.META.HTTP_HOST }}', {port: 4000});
-      
-      socket.on('connect', function(){
+    socket.on('connect', function() {
         console.log("connect");
-      });
-      
-      var socket = io.connect();
-      console.log('Chequeo 1', socket.socket.connected);
-      socket.on('connect', function() {
-        console.log('Conectado', socket.socket.connected);
-      });
-      
-      var entry_el = $('#textBox');
+    });
 
-      socket.on('message', function(message) {
-        generate('topRight',message);
-        
+    var socket = io.connect();
+    console.log('Chequeo 1', socket.socket.connected);
+    socket.on('connect', function() {
+        console.log('Conectado', socket.socket.connected);
+    });
+
+    var entry_el = $('#textBox');
+
+    socket.on('message', function(message) {
+        generate('topRight', message);
+
         var regex = /(<([^>]+)>)/ig;
         var data = message.replace(regex, "");
-        var user = data.substring(0,data.indexOf(":"));
-        var data2 = data.substring(data.indexOf(":")+1,data.length);
-        $("#chat_div").chatbox("option", "boxManager").addMsg(user,data2);
+        var user = data.substring(0, data.indexOf(":"));
+        var data2 = data.substring(data.indexOf(":") + 1, data.length);
+        $("#chat_div").chatbox("option", "boxManager").addMsg(user, data2);
         // $('#comments').append('<li>' + data + '</li>');
 
         $('#noti_ind').html('&nbsp;').load('/notificaciones_ind')
-        
-        
-        entry_el.focus();
-      });
-      
 
-      $("#textBox").keydown(function(event) {
+
+        entry_el.focus();
+    });
+
+
+    $("#textBox").keydown(function(event) {
         console.log("keydown");
         var msg = entry_el.attr('value');
         if (event.keyCode && event.keyCode == $.ui.keyCode.ENTER) {
-          msg = $.trim($(this).val());
-          if (msg.length > 0) {
-           socket.emit('send_message', msg, function(data){
-            console.log(data);
-          });
-         }
-         $(this).val('');
-         return false;
-       }
-     });
-
-$(document).ready(function() {
-  $(window).keydown(function(event){
-    if(event.keyCode == 13) {
-      event.preventDefault();
-      return false;
-    }
-  });
-});
-
-
+            msg = $.trim($(this).val());
+            if (msg.length > 0) {
+                socket.emit('send_message', msg, function(data) {
+                    console.log(data);
+                });
+            }
+            $(this).val('');
+            return false;
+        }
     });
+
+    $(document).ready(function() {
+        $(window).keydown(function(event) {
+            if (event.keyCode == 13) {
+                event.preventDefault();
+                return false;
+            }
+        });
+    });
+
+
+});
 
 
 
 function generate(layout, message) {
-  var n = noty({
-    text        :  message,
-    type        : 'alert',
-    dismissQueue: true,
-    layout      : 'topRight',
-    theme       : 'defaultTheme',
-    timeout: '9000'
-  });
-  console.log('html: ' + n.options.id);
+    var n = noty({
+        text: message,
+        type: 'alert',
+        dismissQueue: true,
+        layout: 'topRight',
+        theme: 'defaultTheme',
+        timeout: '9000'
+    });
+    console.log('html: ' + n.options.id);
 }
-
 </script>
 {% block script %}{% endblock %}
 <script type="text/javascript">
+$(document).ready(function() {
+    $(':input[type="text"]').live('focus', function() {
+        $(this).attr('autocomplete', 'off');
+    });
 
-$(document).ready(function(){
-  $(':input[type="text"]').live('focus',function(){
-   $(this).attr('autocomplete', 'off');
- });
+
+    $('#submit-id-submit').click(function() {
+        $("input[type=text]").each(function() {
+            this.value = this.value.toUpperCase();
+
+            $("input[type=text]").each(function() {
+                var self = $(this);
+                try {
+                    var v = self.autoNumeric('get');
+                    self.autoNumeric('destroy');
+                    self.val(v);
+                    console.log(self.val(v));
+                } catch (err) {
+                    console.log("Not an autonumeric field: " + self.attr("name"));
+                }
+            });
 
 
-  $('#submit-id-submit').click(function () {
-    $("input[type=text]").each(function () {
-      this.value = this.value.toUpperCase();
+        });
 
-      $("input[type=text]").each(function () {
-        var self = $(this);
-        try{
-          var v = self.autoNumeric('get');
-          self.autoNumeric('destroy');
-          self.val(v);
-          console.log(self.val(v));
-        }catch(err){
-          console.log("Not an autonumeric field: " + self.attr("name"));
-        }
-      });
 
+        $("#id_Valor").autoNumeric('destroy');
+
+    });
+
+    $('input[type=submit]').click(function() {
+        $("input[type=text]").each(function() {
+            this.value = this.value.toUpperCase();
+
+            $("input[type=text]").each(function() {
+                var self = $(this);
+                try {
+                    var v = self.autoNumeric('get');
+                    self.autoNumeric('destroy');
+                    self.val(v);
+                    console.log(self.val(v));
+                } catch (err) {
+                    console.log("Not an autonumeric field: " + self.attr("name"));
+                }
+            });
+
+
+        });
+
+
+        $("#id_Valor").autoNumeric('destroy');
+
+    });
+
+    $('input[type=submit]').click(function() {
+        $("input[type=text]").each(function() {
+            this.value = this.value.toUpperCase();
+
+            $("input[type=text]").each(function() {
+                var self = $(this);
+                try {
+                    var v = self.autoNumeric('get');
+                    self.autoNumeric('destroy');
+                    self.val(v);
+                    console.log(self.val(v));
+                } catch (err) {
+                    console.log("Not an autonumeric field: " + self.attr("name"));
+                }
+            });
+
+
+        });
+
+
+        $("#id_Valor").autoNumeric('destroy');
 
     });
 
 
-    $("#id_Valor").autoNumeric('destroy');
-
-  });
-  
-    $('input[type=submit]').click(function () {
-    $("input[type=text]").each(function () {
-      this.value = this.value.toUpperCase();
-
-      $("input[type=text]").each(function () {
-        var self = $(this);
-        try{
-          var v = self.autoNumeric('get');
-          self.autoNumeric('destroy');
-          self.val(v);
-          console.log(self.val(v));
-        }catch(err){
-          console.log("Not an autonumeric field: " + self.attr("name"));
-        }
-      });
-
-
+    $('#id_Valor').autoNumeric('init', {
+        aSign: '$'
     });
-
-
-    $("#id_Valor").autoNumeric('destroy');
-
-  });
-
-  $('input[type=submit]').click(function () {
-    $("input[type=text]").each(function () {
-      this.value = this.value.toUpperCase();
-
-      $("input[type=text]").each(function () {
-        var self = $(this);
-        try{
-          var v = self.autoNumeric('get');
-          self.autoNumeric('destroy');
-          self.val(v);
-          console.log(self.val(v));
-        }catch(err){
-          console.log("Not an autonumeric field: " + self.attr("name"));
-        }
-      });
-
-
+    $('#id_Gastos').autoNumeric('init', {
+        aSign: '$'
     });
-
-
-    $("#id_Valor").autoNumeric('destroy');
-
-  });
-
-
-  $('#id_Valor').autoNumeric('init', {aSign: '$'}); 
-  $('#id_Gastos').autoNumeric('init', {aSign: '$'}); 
-  $('#id_Importe').autoNumeric('init', {aSign: '$'}); 
+    $('#id_Importe').autoNumeric('init', {
+        aSign: '$'
+    });
 
 
 
@@ -379,37 +379,39 @@ $(document).ready(function(){
 });
 
 function printDiv(divName) {
- var printContents = document.getElementById(divName).innerHTML;
- var originalContents = document.body.innerHTML;
- document.body.innerHTML = printContents;
- window.print();
- document.body.innerHTML = originalContents;
+    var printContents = document.getElementById(divName).innerHTML;
+    var originalContents = document.body.innerHTML;
+    document.body.innerHTML = printContents;
+    window.print();
+    document.body.innerHTML = originalContents;
 }
 </script>
 
 <script type="text/javascript">
-$(document).ready(function () {
-  $('#spinner').hide();
-  $('a.notif_link').click(function () {
-    $('#notif_dd').html('&nbsp;').load('/get_notificaciones');
-  });
+$(document).ready(function() {
+    $('#spinner').hide();
+    $('a.notif_link').click(function() {
+        $('#notif_dd').html('&nbsp;').load('/get_notificaciones');
+    });
 
-  $('.ui-widget-header').click(function () {
-    $('#chat_div').html('&nbsp;').load('/get_conversaciones');
-    $("#chat_div").animate({ scrollTop: $(document).height()*4 }, 300);
-  });
+    $('.ui-widget-header').click(function() {
+        $('#chat_div').html('&nbsp;').load('/get_conversaciones');
+        $("#chat_div").animate({
+            scrollTop: $(document).height() * 4
+        }, 300);
+    });
 
-{% block script_bottom %}{% endblock %}
+    { % block script_bottom %
+    } { % endblock %
+    }
 
 });
 
-$(document).ajaxStart(function () {
-  $('#spinner').show();
-}).ajaxStop(function () {
-  $('#spinner').hide();
+$(document).ajaxStart(function() {
+    $('#spinner').show();
+}).ajaxStop(function() {
+    $('#spinner').hide();
 });
-
-
-
 </script>
+
 </html>

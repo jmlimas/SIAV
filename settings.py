@@ -24,6 +24,7 @@ THUMBNAIL_PREFIX ='media/cache/'
 DEFAULT_CHARSET = 'utf-8' 
 FILE_CHARSET = 'utf-8' 
 
+include_resource_uri = False
 
 ADMINS = (
     # ('Your Name', 'your_email@example.com'),

@@ -173,7 +173,6 @@ def estadistico(request, anio=2013, mes=01):
     total_avaluos = 0
     totales = []
 
-
     for x in avaluos:
         if not x['Total']:
             total_general += 0.00

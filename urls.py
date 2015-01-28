@@ -21,8 +21,7 @@ v1_api = Api(api_name='v1')
 v1_api.register(AvaluoResource())
 v1_api.register(DeptoResource())
 v1_api.register(ImagenAvaluoResource())
-v1_api.register(ProcesoResource())
-
+v1_api.register(EstadisticoAsignaResource())
     # Examples:
     # url(r'^$', 'SIAV.views.home', name='home'),
     #url(r'^SIAV/', include('SIAV.foo.urls')),
