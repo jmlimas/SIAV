@@ -7,7 +7,6 @@
 {% load elapsed %} 
 {% load humanize %} 
 {% block script %}
-
 <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/highcharts.js"></script>
 <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/boostrap-tab.js"></script>
 
@@ -23,19 +22,11 @@ $(function() {
     //location.reload();
 });
 
-var pre_url = "/SIAV/estadistico_anio_js/?anio=" + {
-    {
-        anio
-    }
-};
+var pre_url = "/SIAV/estadistico_anio_js/?anio=" + {{anio}};
 $.getScript(pre_url, function() {});
 
 $('input[name="anio_check"]').each(function() {
-    if ({
-            {
-                anio
-            }
-        } == this.value) {
+    if ({{ anio }} == this.value) {
         $(this).prop('checked', true);
     }
 });
@@ -87,17 +78,8 @@ $(document).ready(function() {
             text: 'Historial'
         },
         xAxis: {
-            categories: [{ %
-                for anio in monto_todos_anios %
-            } { %
-                if anio.year %
-            } {
-                {
-                    anio.year
-                }
-            }, { % endif %
-            } { % endfor %
-            }]
+            categories: [{% for anio in monto_todos_anios %} {%if anio.year %} 
+            {{anio.year}}, {% endif %} {% endfor %}]
         },
         yAxis: {
             title: {
@@ -106,17 +88,8 @@ $(document).ready(function() {
         },
         series: [{
                 name: 'Año',
-                data: [{ %
-                    for anio in monto_todos_anios %
-                } { %
-                    if anio.year %
-                } {
-                    {
-                        anio.Total
-                    }
-                }, { % endif %
-                } { % endfor %
-                }]
+                data: [{% for anio in monto_todos_anios %} {% if anio.year %} 
+                {{anio.Total}}, {% endif %} {% endfor %}]
             },
 
             /*{
@@ -133,9 +106,9 @@ $(document).ready(function() {
     $('#pie_container').highcharts({
         chart: {
             type: 'column',
-            // Explicitly tell the width and height of a chart
-            width: 900,
-            height: 500,
+            // // Explicitly tell the width and height of a chart
+            // width: 900,
+            // height: 500,
         },
         colors: [
             '#7f7f7f',
@@ -201,44 +174,30 @@ $(document).ready(function() {
                 }
             }
         },
-        series: [{ %
-            for a in cliente %
-        } {
+        series: [{% for a in cliente %} {
             name: '{{a.1}}',
-            data: [{ %
-                    for i in a | slice: "2:" %
-                }
-
-                {
-                    {
-                        i | default_if_none: "0"
-                    }
-                },
-
-                { % endfor %
-                }
-            ],
-        }, { % endfor %
-        }],
+                    data: [
+                            {% for i in a|slice:"2:" %}
+                                
+                                {{i|default_if_none:"0"}},
+                                
+                            {% endfor %}
+                        ],
+        }, {% endfor %}],
     });
 
 });
 </script>
 
 <script>
-{ %
-    for a in cliente %
-}
+{% for a in cliente %}
 $("#myModal{{a.0}}").on('hidden.bs.modal', function() {
     $(this).data('bs.modal', null);
     $(this).removeData('bs.modal');
 });
 
-{ % endfor %
-}
+{% endfor %}
 </script>
-
-
 {% endblock %} {% block content %}
 <ul id="tabs" class="nav nav-tabs" data-tabs="tabs">
     <li class="active">
@@ -259,197 +218,188 @@ $("#myModal{{a.0}}").on('hidden.bs.modal', function() {
     <div class="tab-pane active" id="asigna">
         <!--             <h1>Asignación ({{anio}})</h1>
     -->
+    <br>
+
+    <div class="row">
+        {% for a in anios %}
+        <div class="controls span2">
+            <label class="checkbox">
+                <input type="checkbox" class="anio" name="anio_check" value="{{a.year}}" id="check_{{a.year}}">{{a.year}}</label>
+        </div>
+        {%endfor%}
+        <br>
+        <br></div>
+
+    <div class="container">
+        <div class="row">
+            <div class="span6">
+                <div id="line_container"></div>
+            </div>
+            <div class="span6">
+                <div id="bar_container"></div>
+            </div>
+        </div>
+        <br>
+        <table class="table table-hover" style=";margin-top:50px">
+
+            <thead>
+                <th>Mes</th>
+                <th>Cantidad Avaluos</th>
+                <th>Importe</th>
+            </thead>
+            {% for a in avaluos %}
+            <tr>
+                <td>{{ a.month|month_name }}</td>
+                <td>{{ a.dcount }}</td>
+                <td>{{ a.Total|currency }}</td>
+            </tr>
+            {% endfor %}
+            <tr>
+                <td> <b>Total</b>
+                </td>
+                <td> <b>{{totales.0}}</b>
+                </td>
+                <td>
+                    <b>{{totales.1|currency}}</b>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+<div class="tab-pane" id="cliente">
+    <h1>Clientes  {{anio}}</h1>
+    <br>
+    <div class="container">
+
+        <br>
         <br>
 
         <div class="row">
-
-            {% for a in anios %}
-            <div class="controls span2">
-                <label class="checkbox">
-                    <input type="checkbox" class="anio" name="anio_check" value="{{a.year}}" id="check_{{a.year}}">{{a.year}}</label>
+            <div class="span12">
+                <div id="pie_container"></div>
             </div>
-            {%endfor%}
-
-            <br>
-            <br>
         </div>
-
         <div class="container">
             <div class="row">
-                <div class="col-md-6">
-                    <div id="line_container"></div>
-                </div>
-                <div class="col-md-6">
-                    <div id="bar_container"></div>
-                </div>
-            </div>
-            <br>
-            <table class="table table-hover" style="width:83%;margin-top:50px">
-
-                <thead>
-                    <th>Mes</th>
-                    <th>Cantidad Avaluos</th>
-                    <th>Importe</th>
-                </thead>
-                {% for a in avaluos %}
-                <tr>
-                    <td>{{ a.month|month_name }}</td>
-                    <td>{{ a.dcount }}</td>
-                    <td>{{ a.Total|currency }}</td>
-                </tr>
-                {% endfor %}
-                <tr>
-                    <td> <b>Total</b>
-                    </td>
-                    <td>
-                        <b>{{totales.0}}</b>
-                    </td>
-                    <td>
-                        <b>{{totales.1|currency}}</b>
-                    </td>
-                </tr>
-            </table>
-        </div>
-    </div>
-    <div class="container tab-pane" id="cliente">
-        <h1>Clientes  {{anio}}</h1>
-        <br>
-        <div align="" class="">
-
-            <br>
-            <br>
-
-            <div class="row">
-                <div class=" col-md-8">
-                    <div id="pie_container"></div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <table class="table table-hover" style="width:50%;margin-left:10px;">
-                            <thead>
-                                <th>Cliente</th>
-                                <th>Ene</th>
-                                <th>Feb</th>
-                                <th>Mzo</th>
-                                <th>Abr</th>
-                                <th>May</th>
-                                <th>Jun</th>
-                                <th>Jul</th>
-                                <th>Ago</th>
-                                <th>Sept</th>
-                                <th>Oct</th>
-                                <th>Nov</th>
-                                <th>Dic</th>
-                            </thead>
-                            {% for a in cliente %}
-                            <tr>
-                                <td><a data-toggle="modal" href="/SIAV/estadistico_cliente_depto/{{anio}}/{{a.0}}/" data-target="#myModal{{a.0}}">{{a.1}}</a>
-                                </td>
-                                <td>{{a.2|currency}}</td>
-                                <td>{{ a.3|currency }}</td>
-                                <td>{{ a.4|currency }}</td>
-                                <td>{{ a.5|currency }}</td>
-                                <td>{{ a.6|currency }}</td>
-                                <td>{{ a.7|currency }}</td>
-                                <td>{{ a.8|currency }}</td>
-                                <td>{{ a.9|currency }}</td>
-                                <td>{{ a.10|currency }}</td>
-                                <td>{{ a.11|currency }}</td>
-                                <td>{{ a.12|currency }}</td>
-                                <td>{{ a.13|currency }}</td>
-                            </tr>
-                            <!-- Modal -->
-                            <div class="row">
-                                <div class="modal fade" id="myModal{{a.0}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog ">
-                                        <div class="modal-content">
-
-                                        </div>
-                                        <!-- /.modal-content -->
-                                    </div>
-                                    <!-- /.modal-dialog -->
-                                </div>
-                                <!-- /.modal -->
-                            </div>
-                            {% endfor %}
-                        </table>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </div>
-    <div class="tab-pane" id="historial">
-        <h1>Historial ({{anio}})</h1>
-        <br>
-        <div class="container">
-            <div class="row">
-                <div class="col-md-8">
-                    <div id="todos_container"></div>
-                </div>
-                <div class="col-md-3">
-                    <table class="table table-hover" style="width:50%;margin-left:10px;">
+                <div class="span12 table-responsive">
+                    <table class="table table-hover" style="margin-left:10px;">
                         <thead>
-                            <th>Año</th>
-                            <th>Importe</th>
+                            <th>Cliente</th>
+                            <th>Ene</th>
+                            <th>Feb</th>
+                            <th>Mzo</th>
+                            <th>Abr</th>
+                            <th>May</th>
+                            <th>Jun</th>
+                            <th>Jul</th>
+                            <th>Ago</th>
+                            <th>Sept</th>
+                            <th>Oct</th>
+                            <th>Nov</th>
+                            <th>Dic</th>
                         </thead>
-                        {% for a in monto_todos_anios %}
+                        {% for a in cliente %}
                         <tr>
-                            <td>{{ a.year }}</td>
-                            <td>{{ a.Total|currency }}</td>
+                            <td>
+                                <a data-toggle="modal" href="/SIAV/estadistico_cliente_depto/{{anio}}/{{a.0}}/" data-target="#myModal{{a.0}}">{{a.1}}</a>
+                            </td>
+                            <td>{{a.2|currency}}</td>
+                            <td>{{ a.3|currency }}</td>
+                            <td>{{ a.4|currency }}</td>
+                            <td>{{ a.5|currency }}</td>
+                            <td>{{ a.6|currency }}</td>
+                            <td>{{ a.7|currency }}</td>
+                            <td>{{ a.8|currency }}</td>
+                            <td>{{ a.9|currency }}</td>
+                            <td>{{ a.10|currency }}</td>
+                            <td>{{ a.11|currency }}</td>
+                            <td>{{ a.12|currency }}</td>
+                            <td>{{ a.13|currency }}</td>
                         </tr>
+                        <!-- Modal -->
+                        <div >
+                            <div class="modal fade" id="myModal{{a.0}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                <div class="modal-dialog ">
+                                    <div class="modal-content"></div>
+                                    <!-- /.modal-content --> </div>
+                                <!-- /.modal-dialog --> </div>
+                            <!-- /.modal --> </div>
                         {% endfor %}
                     </table>
                 </div>
             </div>
         </div>
+
+        </div>
     </div>
 
-    <div class="tab-pane" id="tolerancia">
-        <h1>Tolerancia</h1>
-        <br>
-        <div class="container">
-            <div class="row">
-                <table class="table table-hover" style="width:83%;margin-top:50px">
+<div class="tab-pane" id="historial">
+    <h1>Historial ({{anio}})</h1>
+    <br>
+    <div class="container">
+        <div align="" class="row">
+        <div class="row">
+            <div class="col-md-8">
+                <div id="todos_container"></div>
+            </div>
+            <div class="col-md-3 table-responsive">
+                <table class="table table-hover" style="margin-left:10px;">
                     <thead>
-                        <th>Cliente</th>
-
-                        <th>En tiempo</th>
-                        <th>
-                            < 3 dias</th>
-                                <th> > 3 dias</th>
-                                <th>Total</th>
+                        <th>Año</th>
+                        <th>Importe</th>
                     </thead>
-                    {% for a in en_tiempo %}
+                    {% for a in monto_todos_anios %}
                     <tr>
-                        <td>{{a.1}}</td>
-                        <td>{{a.3}}</td>
-                        <td>{{a.4}}</td>
-                        <td>{{a.5}}</td>
-                        <td><b>{{a.2}}</b>
-                        </td>
+                        <td>{{ a.year }}</td>
+                        <td>{{ a.Total|currency }}</td>
                     </tr>
                     {% endfor %}
                 </table>
             </div>
-
         </div>
     </div>
 </div>
-<br>
-<br>
-<ul class="breadcrumb">
-    {% for a in anios %}
-    <li>
-        <a href="/SIAV/estadistico/{{a.year}}/{%now " m "%}">{{a.year}}</a>
-        <span class="divider">/</span>
-    </li>
-    {% endfor %}
-</ul>
+</div>
+<div class="tab-pane" id="tolerancia">
+    <h1>Tolerancia</h1>
+    <br>
+    <div class="container">
+        <div class="row">
+            <table class="table table-hover" style="margin-top:50px">
+                <thead>
+                    <th>Cliente</th>
 
+                    <th>En tiempo</th>
+                        <th> 3 dias</th>
+                            <th> > 3 dias</th>
+                            <th>Total</th>
+                        </thead>
+                        {% for a in en_tiempo %}
+                        <tr>
+                            <td>{{a.1}}</td>
+                            <td>{{a.3}}</td>
+                            <td>{{a.4}}</td>
+                            <td>{{a.5}}</td>
+                            <td>
+                                <b>{{a.2}}</b>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                </div>
 
+            </div>
+        </div>
 
-
-
-
-{% endblock %}
+    </div>
+    <br>
+    <br>
+    <ul class="breadcrumb">
+        {% for a in anios %}
+        <li>
+            <a href="/SIAV/estadistico/{{a.year}}/{%now "m"%}">{{a.year}}</a>
+            <span class="divider">/</span>
+        </li>
+        {% endfor %}
+    </ul>
+    {% endblock %}

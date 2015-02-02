@@ -20,6 +20,8 @@
     @import "{{ STATIC_URL }}CSS/bootstrap-responsive.css";
     @import "{{ STATIC_URL }}CSS/smoothness/jquery-ui-1.8.24.custom.css";
     @import "{{ STATIC_URL }}CSS/tooltipster.css";
+    @import "{{ STATIC_URL }}CSS/sweet-alert.css";
+
     /*  @import "{{ STATIC_URL }}CSS/jquery.ui.chatbox.css";*/
     
     @import "{{ STATIC_URL }}CSS/Style.css";
@@ -182,6 +184,9 @@
 <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/jquery.noty.js"></script>
 <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/topRight.js"></script>
 <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/noty/themes/default.js"></script>
+<script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/sweet-alert.min.js"></script>
+
+
 <script type="text/javascript">
 // $(document).ready(function(){
 //   var box = null;
@@ -205,9 +210,10 @@
 <script type="text/javascript">
 $(document).ready(function() {
 
-    var objDiv = document.getElementById("comments");
+    // var objDiv = document.getElementById("comments");
     // objDiv.scrollTop = objDiv.scrollHeight+10;
 
+    // Conexión a Socket.io
     var socket = io.connect('{{ request.META.HTTP_HOST }}', {
         port: 4000
     });
@@ -216,54 +222,55 @@ $(document).ready(function() {
         console.log("connect");
     });
 
+
     var socket = io.connect();
     console.log('Chequeo 1', socket.socket.connected);
     socket.on('connect', function() {
         console.log('Conectado', socket.socket.connected);
     });
 
-    var entry_el = $('#textBox');
+    //var entry_el = $('#textBox');
 
     socket.on('message', function(message) {
         generate('topRight', message);
 
-        var regex = /(<([^>]+)>)/ig;
-        var data = message.replace(regex, "");
-        var user = data.substring(0, data.indexOf(":"));
-        var data2 = data.substring(data.indexOf(":") + 1, data.length);
-        $("#chat_div").chatbox("option", "boxManager").addMsg(user, data2);
+        //var regex = /(<([^>]+)>)/ig;
+        //var data = message.replace(regex, "");
+        //var user = data.substring(0, data.indexOf(":"));
+        //var data2 = data.substring(data.indexOf(":") + 1, data.length);
+        //$("#chat_div").chatbox("option", "boxManager").addMsg(user, data2);
         // $('#comments').append('<li>' + data + '</li>');
 
         $('#noti_ind').html('&nbsp;').load('/notificaciones_ind')
 
 
-        entry_el.focus();
+        //entry_el.focus();
     });
 
 
-    $("#textBox").keydown(function(event) {
-        console.log("keydown");
-        var msg = entry_el.attr('value');
-        if (event.keyCode && event.keyCode == $.ui.keyCode.ENTER) {
-            msg = $.trim($(this).val());
-            if (msg.length > 0) {
-                socket.emit('send_message', msg, function(data) {
-                    console.log(data);
-                });
-            }
-            $(this).val('');
-            return false;
-        }
-    });
+    // $("#textBox").keydown(function(event) {
+    //     console.log("keydown");
+    //     var msg = entry_el.attr('value');
+    //     if (event.keyCode && event.keyCode == $.ui.keyCode.ENTER) {
+    //         msg = $.trim($(this).val());
+    //         if (msg.length > 0) {
+    //             socket.emit('send_message', msg, function(data) {
+    //                 console.log(data);
+    //             });
+    //         }
+    //         $(this).val('');
+    //         return false;
+    //     }
+    // });
 
-    $(document).ready(function() {
-        $(window).keydown(function(event) {
-            if (event.keyCode == 13) {
-                event.preventDefault();
-                return false;
-            }
-        });
-    });
+    // $(document).ready(function() {
+    //     $(window).keydown(function(event) {
+    //         if (event.keyCode == 13) {
+    //             event.preventDefault();
+    //             return false;
+    //         }
+    //     });
+    // });
 
 
 });
@@ -302,7 +309,7 @@ $(document).ready(function() {
                     self.val(v);
                     console.log(self.val(v));
                 } catch (err) {
-                    console.log("Not an autonumeric field: " + self.attr("name"));
+                    //console.log("Not an autonumeric field: " + self.attr("name"));
                 }
             });
 
@@ -401,9 +408,7 @@ $(document).ready(function() {
         }, 300);
     });
 
-    { % block script_bottom %
-    } { % endblock %
-    }
+    {% block script_bottom %} {% endblock %}
 
 });
 

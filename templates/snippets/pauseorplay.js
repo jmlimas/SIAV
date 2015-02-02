@@ -50,6 +50,6 @@ $(".cm_stop_or_play").click(function() {
     // or you can send checkbox values
     // window.location.href = 'my_page.php?' + url; 
   } else {
-    alert("Selecciona al menos una casilla.");
+    sweetAlert("Selecciona al menos una casilla.");
   }
 });

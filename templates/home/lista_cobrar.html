@@ -31,11 +31,22 @@ $(document).ready(function () {
 
   $('#cantidad_tabla').html(valor);
 
-  $('#avaluos_table thead').on("change", function () {
-    setTimeout(function () {
-      window.location = '/SIAV/liquidar/';
-    }, 1000);
-  });
+
+$("#liquidar_form").submit(function(e){
+    if($(".form-checkbox").is(':checked')) {
+        // Do your thing
+    }else{
+        sweetAlert("Selecciona al menos una casilla.","","warning");
+        e.preventDefault();
+    }
+});
+
+
+  // $('#avaluos_table thead').on("change", function () {
+  //   setTimeout(function () {
+  //     window.location = '/SIAV/liquidar/';
+  //   }, 1000);
+  // });
 
 
 $('.factura').editable({
@@ -177,7 +188,7 @@ $(function () {
 <h2 style="text-align:left"><span id="cantidad_tabla" class="table"></span>   Facturas</h2>
 
 <div class="container">
-<div class="col-md-6">
+<div class="col-md-6 table-responsive">
 <table id='avaluos_table' class="table table-stripped">
  <thead>
   <tr>
@@ -190,19 +201,19 @@ $(function () {
  <tr><th style="width:100px" filter='false'>Factura</th><th filter='false'>Cliente</th><th  filter='false'>Servicios</th><th filter='false'>Monto</th><th filter='false' class="tabla_opciones">Pagado</th></tr>
 </thead>
 <tbody>
-  <form action="/SIAV/liquidar/" method="post">
+  <form id="liquidar_form" action="/SIAV/liquidar/" method="post">
    {% for a in agrupados %}
    <tr>
     <td style="width:10px;"><a href="#" class="factura" data-pk="{{a.Factura}}" data-value="{{a.Factura}}">{{a.Factura}}</a></td>{% csrf_token %}
     <td> {{a.Cliente__Cliente}} </td>
     <td> {{a.Cantidad}} </td>
     <td> {{a.Total|currency }} </td>			  
-    <td> <input type="checkbox" value="{{a.Factura}}" name="facturas_pagadas">	</td>  </tr>
+    <td> <input type="checkbox" class="form-checkbox" value="{{a.Factura}}" name="facturas_pagadas">	</td>  </tr>
     {% endfor %}
 
 </tbody>
 </table>
-    <input class='btn btn-primary' type="submit" name="submit" value="Liquidar" />
+    <input class='btn btn-primary' type="submit" name="submit" value="Liquidar" id="liquidar_btn" />
   </form>
 
 

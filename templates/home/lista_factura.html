@@ -86,7 +86,7 @@ $('#factura_masiva_button').click(function () {
       }
 
       if(bandera == false){
-        alert("Todos los servicios deben pertenecer al mismo cliente.");
+        sweetAlert("Todos los servicios deben pertenecer al mismo cliente.","","error");
       }else{
         $('#factura_masiva').modal('show');
         console.log( selected.toString());
@@ -96,7 +96,7 @@ $('#factura_masiva_button').click(function () {
 
        // $('#visita_masiva').modal('show');
     }else{
-        alert("Selecciona al menos una casilla.");
+        sweetAlert("Selecciona al menos una casilla.","","warning");
     }
 
 });

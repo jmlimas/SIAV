@@ -67,7 +67,7 @@ $('#masiva_button, #button_orden_visita').click(function () {
       }
 
       if(bandera == false){
-        alert("Todos los servicios deben pertenecer a la misma colonia.");
+        sweetAlert("Todos los servicios deben pertenecer a la misma colonia.","","error");
       }else{
           if(id_button == "masiva_button"){
               $('#visita_masiva').modal('show');
@@ -83,7 +83,7 @@ $('#masiva_button, #button_orden_visita').click(function () {
 
        // $('#visita_masiva').modal('show');
     }else{
-        alert("Selecciona al menos una casilla.");
+        sweetAlert("Selecciona al menos una casilla.","","warning");
     }
 
 });
