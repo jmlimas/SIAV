@@ -22,6 +22,7 @@ v1_api.register(AvaluoResource())
 v1_api.register(DeptoResource())
 v1_api.register(ImagenAvaluoResource())
 v1_api.register(EstadisticoAsignaResource())
+v1_api.register(EventoResource())
     # Examples:
     # url(r'^$', 'SIAV.views.home', name='home'),
     #url(r'^SIAV/', include('SIAV.foo.urls')),
@@ -106,6 +107,8 @@ urlpatterns = patterns(
     url(r'^SIAV/estadistico/(\d+)/(\d+)/$', 'app.views.estadistico', name='estadistico'),
     url(r'^SIAV/estadistico_cliente_depto/(\d+)/(\d+)/$', 'app.views.estadistico_cliente_depto', name='estadistico_cliente_depto'),
     #url(r'^SIAV/estadistico/', 'app.views.estadistico', name = 'estadistico'),
+    url(r'^SIAV/realtime/', 'app.views.realtime', name = 'realtime'),
+
 
     url(r'^SIAV/submitted/', 'app.views.submitted', name='submitted'),
 

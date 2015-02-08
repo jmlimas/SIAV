@@ -28,6 +28,8 @@ from django.shortcuts import render
 from django.forms.util import ErrorList
 from django.db.models import F
 import requests
+from celery.task.schedules import crontab
+from celery.task import periodic_task
 
 current_directory = os.path.dirname(os.path.abspath(__file__))
 
@@ -214,6 +216,11 @@ def estadistico_cliente_depto(request, anio=2013,cliente=1):
     objeto_cliente = Cliente.objects.get(cliente_id=cliente)
     return render_to_response('home/consultas/estadistico/estadistico_cliente_depto.html', locals())
 
+
+@login_required
+@periodic_task(run_every=crontab(minute="*/30"))
+def realtime(request):
+    return render_to_response('home/consultas/estadistico/realtime.html', locals())
 
 
 @login_required

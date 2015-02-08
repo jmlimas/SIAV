@@ -386,7 +386,8 @@ $(document).ready(function() {
 });
 
 function printDiv(divName) {
-    var printContents = document.getElementById(divName).innerHTML;
+    var divName = document.getElementById(divName);
+    var printContents = divName.innerHTML;
     var originalContents = document.body.innerHTML;
     document.body.innerHTML = printContents;
     window.print();

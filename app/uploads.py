@@ -6,6 +6,7 @@ from django.core.files.storage import default_storage
 from django.core.files.uploadedfile import SimpleUploadedFile
 from app.models import *
 from io import FileIO, BufferedWriter
+from websock.models import Eventos
 import imghdr
 import os
 import os.path
@@ -58,7 +59,11 @@ def ajax_upload( request,avaluo_id,folio_k ):
       archivo_avaluo.avaluo_id = avaluo_id
       archivo_avaluo.FolioK = folio_k
       archivo_avaluo.file.save(filename.replace(' ','_'), file_contents)
- 
+    
+    a = Avaluo.objects.get(FolioK=folio_k)
+    #Crear evento
+    Eventos.objects.create(user=request.user, evento='SUBIR_FOTO',avaluo=a)
+
     # let Ajax Upload know whether we saved it or not
     import json
     ret_json = { 'success': 'test','ext':ext }

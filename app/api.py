@@ -1,10 +1,22 @@
 # myapp/api.py
 from tastypie.resources import ModelResource
 from app.models import Avaluo, ImagenAvaluo, Depto
+from django.contrib.auth.models import User
+from websock.models import Eventos
 from tastypie.serializers import Serializer
 from tastypie.resources import ALL
 from tastypie import fields
 from django.db.models import Sum, Count, Q
+
+
+class UserResource(ModelResource):
+    
+    class Meta:
+        resource_name = 'user'
+        queryset = User.objects.all()
+        serializer = Serializer(formats=['json', 'jsonp', 'xml', 'yaml', 'html', 'plist'])
+
+
 
 
 
@@ -46,3 +58,12 @@ class EstadisticoAsignaResource(ModelResource):
         transaction = Avaluo.objects.extra(select={'month': 'extract( month from Salida)'}).values('month').filter(Salida__year=2013).order_by('month').annotate(dcount=Count('Solicitud'), Total=Sum('Importe')).distinct()
         filtering = { "anio": ALL }
         return transaction
+
+class EventoResource(ModelResource):
+    user = fields.ToOneField(UserResource, 'user', full=True, readonly=True, null=True)
+    avaluo = fields.ToOneField(AvaluoResource, 'avaluo', full=True, readonly=True, null=True)
+
+    class Meta:
+        resource_name = 'evento'
+        queryset = Eventos.objects.all().order_by('-date')    
+        serializer = Serializer(formats=['json', 'jsonp', 'xml', 'yaml', 'html', 'plist'])

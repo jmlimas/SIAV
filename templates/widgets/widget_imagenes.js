@@ -1,10 +1,14 @@
    <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/flexslider/jquery.flexlider-min.js"></script>
    <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/fileuploader.js"></script>
 
+
+
    <script type="text/javascript">
     // $(function(){
     //   SyntaxHighlighter.all();
     // });
+
+
     $(window).load(function(){
       $('#carousel').flexslider({
         animation: "slide",
@@ -36,11 +40,18 @@ function createUploader(){
     listElement: $('#image-list')[0],
     element: $('#file-uploader')[0],
     multiple: true,
+    onProgress: function( id, fileName, responseJSON ) {
+    // $('.qq-upload-button').button('loading');
+    // business logic...
+    // $btn.button('reset');
+    },
     onComplete: function( id, fileName, responseJSON ) {
+    // $('.qq-upload-button').button('reset');
+
       if( responseJSON.success )
-        alert( "Carga exitosa." ) ;
+        sweetAlert( "Carga exitosa.","","success" ) ;
       else
-        alert( "Carga fallida!" ) ;
+        sweetAlert( "Carga fallida!","","error" ) ;
     },
     onAllComplete: function( uploads ) {
                     // uploads is an array of maps

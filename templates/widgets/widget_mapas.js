@@ -9,6 +9,8 @@
 
  <script type="text/javascript">
 
+{% if avaluo.LatitudG %}
+
        var latsign = 1;
             if( {{avaluo.LatitudG}} < 0){
                 latsign = -1;
@@ -29,6 +31,8 @@
                  (Math.abs(Math.round(({{avaluo.LongitudS}})* 1000000.00))/3600)
             ) * lonsign/1000000;
 
+            {% endif %}
+
  </script>
 
 <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/mapas.js"></script>
@@ -36,6 +40,7 @@
 
 <script type="text/javascript">
 
+{% if decimal.declon %}
 function initialize() {
 
  var latlng = new google.maps.LatLng({{decimal.declon}},({{decimal.declat}}*-1));
@@ -107,4 +112,6 @@ google.maps.event.addListener(marker_{{x.1}}, "click", function (e) {
 
 {% endfor %}
 }
+{% endif %}
 </script>
+

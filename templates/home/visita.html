@@ -115,37 +115,37 @@ $('#masiva_button, #button_orden_visita').click(function () {
 <table id='avaluos_table' class="table table-striped table-hover">
   <thead>
     <tr class="{% if a.Solicitud|dayssince|add:"0" > a.Depto.Tolerancia|add:"0" and a.Estatus != 'DETENIDO' %}danger{% endif%}">
-        <th></th>
-        <th style="width:40px">Folio K</th>
-        <th style="width:40px" filter='true' >Referencia</th>
+        <th class="tabla_opciones"></th>
+        <th style="">Folio K</th>
+        <th style="" filter='true' >Referencia</th>
         <th filter-type='ddl'>Cliente</th>
         <th>Calle</th>
         <th filter='false'>Ext.</th>
         <th filter='false'>Int.</th>
-        <th style="width:100px" filter-type='ddl'>Colonia</th>
+        <th style="" filter-type='ddl'>Colonia</th>
         <th filter-type='ddl'>Municipio</th>
-        <th style="width:10px" filter-type='ddl'>Prio.</th>
-        <th style="width:10px" filter-type='ddl'>Status</th>
+        <th style="" filter-type='ddl'>Prio.</th>
+        <th style="" filter-type='ddl'>Estatus</th>
         <th filter='false'>Dias</th>
-        <th style="width:10px" filter='false' class="tabla_opciones"></th>
+        <th style="" filter='false' class="tabla_opciones"></th>
       </tr>
     </thead>
 <tbody>
   {% for a in avaluos %}
   <tr class="{% if a.Solicitud|dayssince|add:"0" > a.Depto.Tolerancia|add:"0" and a.Estatus != 'DETENIDO' %}danger{% endif%}">
-    <td style="width:40px" filter='false'><input class="form-checkbox" type="checkbox" value="{{ a.avaluo_id }}" name="avaluo_visitado"></td>
+    <td class="tabla_opciones" style="width:40px" filter='false'><input class="form-checkbox" type="checkbox" value="{{ a.avaluo_id }}" name="avaluo_visitado"></td>
     <td >{{a.FolioK}}</td>
-    <td style="width:100px;"> {{a.Referencia}} </td>
-    <td style="width:10px;"> {{a.Cliente}} </td>
-    <td style="width:200px"> {{a.Calle}} </td>
-    <td style="width:3px;"> {{a.NumExt}} </td>
-    <td style="width:10px;"> {{a.NumInt}} </td>
-    <td style="width:200px;"> {{a.Colonia}} </td>
-    <td style="width:200px;"> {{a.Municipio}} </td>
-    <td style="width:3px;"> {{a.Prioridad}} </td>
+    <td style=""> {{a.Referencia}} </td>
+    <td style=""> {{a.Cliente}} </td>
+    <td style=""> {{a.Calle}} </td>
+    <td style=""> {{a.NumExt}} </td>
+    <td style=""> {{a.NumInt}} </td>
+    <td style=""> {{a.Colonia}} </td>
+    <td style=""> {{a.Municipio}} </td>
+    <td style=""> {{a.Prioridad}} </td>
     <td ><span class="label label-{%if a.Estatus = 'PROCESO'%}success{%elif a.Estatus = 'DETENIDO'%}default{%endif%}">{{a.Estatus}}</span></td>
     <td style="width:35px;"> {{ a.Solicitud|dayssince }}</td>       
-      <td><a href="/SIAV/edita_visita/{{a.avaluo_id}}"><button type="button" class="btn btn-primary btn-sm">
+      <td class="tabla_opciones"><a href="/SIAV/edita_visita/{{a.avaluo_id}}"><button type="button" class="btn btn-primary btn-sm">
   <span class="glyphicon glyphicon-edit"></span> </button></a></td>
   </tr>
   {% endfor %}
