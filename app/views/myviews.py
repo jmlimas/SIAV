@@ -425,13 +425,14 @@ def edita_visita(request, id):
             a = Avaluo.objects.get(FolioK=folio_k)
             rendered = render_to_string('email/template_visita.html', {'a': a})
             #return HttpResponse(rendered)
-            r1 = requests.post(
-            "https://api.mailgun.net/v2/alluxi.mx/messages",
-            auth=("api", "key-9snzu8gopo2vt5zdlay-e6ggboizrf27"),
-            data={"from": "Valuadores del Norte <gustavo@alluxi.mx>",
-                  "to": [form.cleaned_data['Contacto']],
-                  "subject": ("Visita Servicio : "+a.Referencia),
-                  "html": rendered})
+            if (form.cleaned_data['Contacto']):
+                r1 = requests.post(
+                "https://api.mailgun.net/v2/alluxi.mx/messages",
+                auth=("api", "key-9snzu8gopo2vt5zdlay-e6ggboizrf27"),
+                data={"from": "Valuadores del Norte <gustavo@alluxi.mx>",
+                      "to": [form.cleaned_data['Contacto']],
+                      "subject": ("Visita Servicio : "+a.Referencia),
+                      "html": rendered})
 
             # Enviar notificación a usuarios
             r = redis.StrictRedis(host='localhost', port=6379, db=0)
