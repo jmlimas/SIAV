@@ -2,9 +2,27 @@
 
 import os
 import django 
+import djcelery
+
+
+from datetime import timedelta
+
+CELERYBEAT_SCHEDULE = {
+    'add-every-5-seconds': {
+        'task': 'app.tasks.add',
+        'schedule': timedelta(seconds=5),
+        'args': (16, 16)
+    },
+}
+
+CELERY_TIMEZONE = 'UTC'
+
+#Django Celery
+djcelery.setup_loader()
+BROKER_URL = 'django://'
 
 # Set the DJANGO_SETTINGS_MODULE environment variable.
-os.environ['DJANGO_SETTINGS_MODULE'] = "SIAV.settings"
+os.environ['DJANGO_SETTINGS_MODULE'] = "settings"
 
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
 
@@ -164,10 +182,11 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.humanize',
     'app',
+    'kombu.transport.django',
+    'djcelery',
     'websock',
     'endless_pagination',
     'example_project',
-    'south',
     'crispy_forms',
     #'django_socketio',
     #'debug_toolbar',

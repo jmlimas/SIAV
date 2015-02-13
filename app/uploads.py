@@ -62,7 +62,7 @@ def ajax_upload( request,avaluo_id,folio_k ):
     
     a = Avaluo.objects.get(FolioK=folio_k)
     #Crear evento
-    Eventos.objects.create(user=request.user, evento='SUBIR_FOTO',avaluo=a)
+    #Eventos.objects.create(user=request.user, evento='SUBIR_FOTO',avaluo=a)
 
     # let Ajax Upload know whether we saved it or not
     import json

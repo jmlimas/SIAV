@@ -4360,6 +4360,20 @@ border-top-left-radius: 0;
 .badge-danger{
   background-color: #d91548;
 }
+.badge-custom1{
+  display: inline-block;
+  min-width: 10px;
+  padding: 3px 7px;
+  font-size: 12px;
+  font-weight: bold;
+  line-height: 1;
+  color: #fff;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+  border-radius: 10px;
+  background-color: rgba(4, 71, 216, 0.66);
+}
 .badge:empty {
   display: none;
 }
@@ -4485,6 +4499,13 @@ a.thumbnail.active {
   background-color: #dff0d8;
   border-color: #d6e9c6;
 }
+
+.alert-custom1 {
+  color: #3c763d;
+  background-color: rgba(88, 92, 98, 0.4);
+  border-color: #d6e9c6;
+}
+
 .alert-success hr {
   border-top-color: #c9e2b3;
 }

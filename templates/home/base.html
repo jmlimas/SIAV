@@ -152,6 +152,26 @@
                         </section>
                     </ul>
                 </li>
+          <li class="dropdown" style="float:right" id="toler_down">
+                    <a href="#" class="dropdown-toggle toler_link" data-toggle="dropdown">
+                        <i class="glyphicon glyphicon-eye-open"></i> 
+                    </a>
+                    <!-- <span id="spinner">
+        <img src="{{ STATIC_URL }}spinner.gif"/>
+      </span>
+      -->
+                    <ul class="dropdown-menu">
+                        <section class="panel" id="toler_panel">
+                            <header class="panel-heading"> <strong>Indicadores</strong> </header>
+                            <div id="notification-list" class="list-group list-group-alt">
+                                <div id="toler_dd">
+                                </div>
+                            </div>
+                        </section>
+                    </ul>
+                </li>
+
+
             </ul>
         </div>
 
@@ -232,6 +252,7 @@ $(document).ready(function() {
     //var entry_el = $('#textBox');
 
     socket.on('message', function(message) {
+        console.log("Recibido");
         generate('topRight', message);
 
         //var regex = /(<([^>]+)>)/ig;
@@ -401,6 +422,11 @@ $(document).ready(function() {
     $('a.notif_link').click(function() {
         $('#notif_dd').html('&nbsp;').load('/get_notificaciones');
     });
+
+    $('a.toler_link').click(function() {
+        $('#toler_dd').html('&nbsp;').load('/get_tolerancia');
+    });
+
 
     $('.ui-widget-header').click(function() {
         $('#chat_div').html('&nbsp;').load('/get_conversaciones');

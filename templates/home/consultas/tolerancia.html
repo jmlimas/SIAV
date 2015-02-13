@@ -1,0 +1,86 @@
+
+
+<script>
+$(document).ready(function() {
+
+
+$('#taba, #tabb').on('click', function(){
+    // set a special class on the '.dropdown' element
+    $(this).closest('.dropdown').addClass('dontClose');
+})
+
+$('#toler_down').on('hide.bs.dropdown', function(e) {
+    if ( $(this).hasClass('dontClose') ){
+        e.preventDefault();
+    }
+    $(this).removeClass('dontClose');
+});
+});
+</script>
+
+<div class="container">
+<ul class="nav nav-tabs" id="tol_tabs">
+  <li class="active"><a id="taba" href="#tab_a" data-toggle="tab">Tolerancia</a></li>
+  <li><a id="tabb" href="#tab_b" data-toggle="tab">Proceso</a></li>
+</ul>
+<div class="tab-content">
+        <div class="tab-pane active" id="tab_a">
+            <h4>Tolerancia</h4>
+        <div id="notification" class="noty-manager-list-item noty-manager-list-item-warning">
+            <div class="activity-item">
+                <table>
+<!--                     <th>Cliente</th>
+                    <th>A</th>
+                    <th>R</th>
+                    <th>V</th> -->
+                    {% for c in en_tiempo %}
+                    <tr style="height: 25px;">
+                        <td><b>{{c.1}}</b></td>
+                      <td>
+                            <span class="badge alert-default">{{c.2}}</span>
+                        </td>
+                        <td>
+                            <span class="badge alert-success">{{c.3}}</span>
+                        </td>
+                        <td>
+                            <span class="badge alert-warning">{{c.4}}</span>
+                        </td>
+                        <td>
+                            <span class="badge alert-danger">{{c.5}}</span>
+                        </td>
+                    </tr>
+                    {%endfor%}
+                </table>
+            </div>
+        </div>
+        </div>
+        <div class="tab-pane" id="tab_b">
+            <h4>Proceso</h4>
+        <div id="notification" class="noty-manager-list-item noty-manager-list-item-warning">
+            <div class="activity-item">
+                <table>
+                    <th></th>
+                    <th style="padding-left: 10px;">V</th>
+                    <th style="padding-left: 10px;">C</th>
+                    <th style="padding-left: 10px;">S</th>
+                    {% for c in en_proceso %}
+                    <tr style="height: 25px;">
+                        <td><b>{{c.1}}</b></td>
+                      <td>
+                            <span class="badge-custom1">{{c.2}}</span>
+                        </td>
+                        <td>
+                            <span class="badge-custom1">{{c.3}}</span>
+                        </td>
+                        <td>
+                            <span class="badge-custom1">{{c.4}}</span>
+                        </td>
+
+                    </tr>
+                    {%endfor%}
+                </table>
+            </div>
+        </div>
+        </div>
+</div><!-- tab content -->
+</div><!-- end of container -->

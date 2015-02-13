@@ -48,7 +48,7 @@ $('#masiva_button').click(function () {
 
       var selected = [];
       $('input:checked').each(function() {
-          selected.push($(this).parent().next().next().next().next().next().next().next().html());
+          selected.push($(this).parent().next().next().next().next().next().next().next().next().html());
       });
       var bandera = true;
       for ( var i = 0; i < selected.length; i++ ) {
@@ -61,7 +61,7 @@ $('#masiva_button').click(function () {
       }
 
       if(bandera == false){
-        sweetAlert("Todos los servicios deben pertenecer a la misma colonia.","","error");
+        sweetAlert("Todos los servicios deben pertenecer a la misma colonia.","","warning");
       }else{
         $('#captura_masiva').modal('show');
         console.log( selected.toString());
@@ -106,6 +106,7 @@ $('#masiva_button').click(function () {
       <th style="">Folio K</th>
       <th style="" filter='true' >Referencia</th>
       <th filter-type='ddl'>Cliente</th>
+      <th filter-type='ddl'>Depto</th>
       <th>Calle</th>
       <th filter='false'>Ext.</th>
       <th filter='false'>Int.</th>
@@ -124,6 +125,7 @@ $('#masiva_button').click(function () {
   <td > {{a.FolioK}} </td>
   <td style=""> {{a.Referencia}} </td>
   <td style=""> {{a.Cliente}} </td>
+  <td style=""> {{a.Depto}} </td>
   <td style=""> {{a.Calle}} </td>
   <td style=""> {{a.NumExt}} </td>
   <td style=""> {{a.NumInt}} </td>

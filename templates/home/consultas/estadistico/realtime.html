@@ -4,10 +4,63 @@
 <head>
 	<script type="text/javascript" language="javascript" src="http://localhost/static/JS/jquery-1.8.2.min.js"></script>
 	<script type="text/javascript" language="javascript" src="http://code.highcharts.com/highcharts.js"></script>
+    <script type="text/javascript" language="javascript" src="http://localhost/static/JS/socket.io.js"></script>
+    <script type="text/javascript" language="javascript" src="http://localhost/static/JS/jquery.noty.js"></script>
+<script type="text/javascript" language="javascript" src="http://localhost/static/JS/topRight.js"></script>
+<script type="text/javascript" language="javascript" src="http://localhost/static/JS/noty/themes/default.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+
+    // var objDiv = document.getElementById("comments");
+    // objDiv.scrollTop = objDiv.scrollHeight+10;
+
+    // Conexión a Socket.io
+    var socket = io.connect('{{ request.META.HTTP_HOST }}', {
+        port: 4000
+    });
+
+    socket.on('connect', function() {
+        console.log("connect");
+    });
+
+
+
+
+    //var entry_el = $('#textBox');
+
+    // socket.on('message', function(message) {
+    //     generate('topRight', message);
+    // });
+
+});
+
+
+
+function generate(layout, message) {
+    var n = noty({
+        text: message,
+        type: 'alert',
+        dismissQueue: true,
+        layout: 'topRight',
+        theme: 'defaultTheme',
+        timeout: '9000'
+    });
+    console.log('html: ' + n.options.id);
+}
+</script>
+
+
 	<script type="text/javascript">
 
 $(function () {
     $(document).ready(function () {
+            var socket = io.connect();
+    console.log('Chequeo 1', socket.socket.connected);
+    socket.on('connect', function() {
+        console.log('Conectado', socket.socket.connected);
+    });
+
+
         Highcharts.setOptions({
             global: {
                 useUTC: false
@@ -24,11 +77,16 @@ $(function () {
 
                         // set up the updating of the chart each second
                         var series = this.series[0];
-                        setInterval(function () {
+                        socket.on('message', function(message) {
                             var x = (new Date()).getTime(), // current time
-                                y = Math.random();
-                            series.addPoint([x, y], true, true);
-                        }, 1000);
+                                y = Number(message);
+                            if (!(isNaN(message))){
+                                series.addPoint([x, y], true, true);
+                            }
+                            console.log(series);                            
+                        });
+
+
                     }
                 }
             },
@@ -73,7 +131,7 @@ $(function () {
                     for (i = -19; i <= 0; i += 1) {
                         data.push({
                             x: time + i * 1000,
-                            y: Math.random()
+                            y: 0
                         });
                     }
                     return data;
@@ -84,6 +142,11 @@ $(function () {
 });
 
 	</script>
+
+
+
+
+
 </head>
 <body>
 	<div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>

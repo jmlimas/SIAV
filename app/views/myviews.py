@@ -119,7 +119,7 @@ def liquidar(request):
                .filter(Estatus='CONCLUIDO')
                .filter(Q(Factura__isnull=False))
                .filter(Q(Pagado=0) | Q(Pagado__isnull=True))
-               .exclude(Q(Factura__exact='')))
+               .exclude(Q(Factura__exact=''))).order_by('Factura')
     if request.method == 'POST':
         facturas_pagadas = request.POST.getlist('facturas_pagadas')
         (Avaluo.objects
@@ -217,8 +217,7 @@ def estadistico_cliente_depto(request, anio=2013,cliente=1):
     return render_to_response('home/consultas/estadistico/estadistico_cliente_depto.html', locals())
 
 
-@login_required
-@periodic_task(run_every=crontab(minute="*/30"))
+@periodic_task(run_every=10)
 def realtime(request):
     return render_to_response('home/consultas/estadistico/realtime.html', locals())
 

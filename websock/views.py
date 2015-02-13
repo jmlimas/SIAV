@@ -38,8 +38,22 @@ def get_notificaciones(request,template='home/consultas/notificaciones.html'):
     comments.update(leido=True)
     return response
 
+def get_tolerancia(request,template='home/consultas/tolerancia.html'):
+    from django.db import connection, transaction
+    cursor = connection.cursor()
+    cursor.execute('SELECT t1.avaluo_id, IFNULL(t3.Cliente, "TOTAL") AS name, COUNT(*), SUM(IF(DATEDIFF(CURDATE(),DATE_ADD(t1.Solicitud,INTERVAL t2.tolerancia DAY)) <= 0,1, 0)) as "= 0", SUM(IF(DATEDIFF(CURDATE(),DATE_ADD(t1.Solicitud,INTERVAL t2.tolerancia DAY)) BETWEEN 1 AND 3,1, 0) )as "< 3", SUM(IF(DATEDIFF(CURDATE(),DATE_ADD(t1.Solicitud,INTERVAL t2.tolerancia DAY)) > 3,1, 0)) as "> 3" FROM siavdb.app_avaluo t1 INNER JOIN siavdb.app_depto t2 on t1.Depto_id = t2.Depto_id INNER JOIN siavdb.app_cliente t3 on t2.Cliente_id_id = t3.Cliente_id WHERE t1.Estatus in ("PROCESO") GROUP BY t3.Cliente WITH ROLLUP;')
+    en_tiempo = cursor.fetchall()
+    cursor.execute('SELECT *, (SELECT COUNT(*) FROM APP_AVALUO X1 WHERE T1.CLIENTE_ID = X1.CLIENTE_ID AND ESTATUS IN ("PROCESO","DETENIDO") AND SALIDA IS NULL AND VISITA IS NULL AND MTERRENO IS NULL AND MCONSTRUCCION IS NULL AND SOLICITUD IS NOT NULL) AS "Visita" ,(SELECT COUNT(*) FROM APP_AVALUO X1 WHERE T1.CLIENTE_ID = X1.CLIENTE_ID AND ESTATUS IN ("PROCESO","DETENIDO") AND SALIDA IS NULL AND VISITA IS NOT NULL AND MTERRENO IS NULL AND MCONSTRUCCION IS NULL AND SOLICITUD IS NOT NULL) AS "Captura" ,(SELECT COUNT(*) FROM APP_AVALUO X1 WHERE T1.CLIENTE_ID = X1.CLIENTE_ID AND ESTATUS IN ("PROCESO","DETENIDO") AND SALIDA IS NULL AND VISITA IS NOT NULL AND MTERRENO IS NOT NULL AND MCONSTRUCCION IS NOT NULL AND SOLICITUD IS NOT NULL) AS "Salida" FROM APP_CLIENTE T1 ORDER BY 2')
+    en_proceso = cursor.fetchall()
+
+    response = render(request,template, locals())
+    return response
+
+
 def notificaciones_ind(request):
     return render(request, 'home/consultas/notificaciones_ind.html', locals())
+
+
 
 def get_conversaciones(request):
     comments = Comments.objects.all()[:200]

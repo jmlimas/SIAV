@@ -50,7 +50,7 @@ $('#masiva_button, #button_orden_visita').click(function () {
       var selected = [];
       var selected2 = [];
       $('input:checked').each(function() {
-          selected.push($(this).parent().next().next().next().next().next().next().next().html());
+          selected.push($(this).parent().next().next().next().next().next().next().next().next().html());
           selected2.push($(this).parent().next().html());
           console.log( selected2[i] );
       });
@@ -119,6 +119,7 @@ $('#masiva_button, #button_orden_visita').click(function () {
         <th style="">Folio K</th>
         <th style="" filter='true' >Referencia</th>
         <th filter-type='ddl'>Cliente</th>
+        <th filter-type='ddl'>Depto</th>
         <th>Calle</th>
         <th filter='false'>Ext.</th>
         <th filter='false'>Int.</th>
@@ -137,6 +138,7 @@ $('#masiva_button, #button_orden_visita').click(function () {
     <td >{{a.FolioK}}</td>
     <td style=""> {{a.Referencia}} </td>
     <td style=""> {{a.Cliente}} </td>
+    <td style=""> {{a.Depto}} </td>
     <td style=""> {{a.Calle}} </td>
     <td style=""> {{a.NumExt}} </td>
     <td style=""> {{a.NumInt}} </td>
