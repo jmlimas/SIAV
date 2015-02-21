@@ -15,22 +15,11 @@
 $(document).ready(function () {
 
   {% include "snippets/pauseorplay.js" %}
-  $('#avaluos_table').tableFilter();
-  valor = 0;
 
-  var rowCount = { p: $('#avaluos_table tbody tr:visible').length };
-  valor = ($('#avaluos_table tbody tr:visible').length);
 
-  $('#cantidad_tabla').html(valor);
-
-  $('#avaluos_table thead').on("change", function () {
-    setTimeout(function () {
-      window.location = '/SIAV/visita/';
-    }, 1000);
-  });
-});
 
 $(document).ready(function(){
+  {% include "snippets/avaluos_table.js" %}
 
  $('.show_hide').showHide({
         speed: 1000,  // speed you want the toggle to happen
@@ -88,7 +77,7 @@ $('#masiva_button, #button_orden_visita').click(function () {
 
 });
  
- 
+ });
 });
 
 </script>
@@ -104,11 +93,14 @@ $('#masiva_button, #button_orden_visita').click(function () {
     <span class="glyphicon glyphicon-ok"></span>
     VISITAR
   </a>
+  <br>
+  <input style="display:none;" type="submit" value="Set Quick Find filter and refresh table" onclick="$('#quickfind').val('12'); $('#avaluos_table').tableFilterApplyFilterValues();">
+  Excluir Paquete Infonavit: <input type='checkbox' id='onlyno' style="margin-top:15px"/>
+
 <h1>Visita</h1>
-<h2 style="text-align:left">
-  <span id="cantidad_tabla"></span>
-  Servicios
-</h2>
+
+<h2 style="text-align:left"><span id='rowcount'></span> Servicios</h2>
+
 
 <form id="modal-form" class="" method="post" action="/SIAV/visita_masiva/">
 <div id='printableArea' class="table-responsive">
@@ -136,17 +128,17 @@ $('#masiva_button, #button_orden_visita').click(function () {
   <tr class="{% if a.Solicitud|dayssince|add:"0" > a.Depto.Tolerancia|add:"0" and a.Estatus != 'DETENIDO' %}danger{% endif%}">
     <td class="tabla_opciones" style="width:40px" filter='false'><input class="form-checkbox" type="checkbox" value="{{ a.avaluo_id }}" name="avaluo_visitado"></td>
     <td >{{a.FolioK}}</td>
-    <td style=""> {{a.Referencia}} </td>
-    <td style=""> {{a.Cliente}} </td>
-    <td style=""> {{a.Depto}} </td>
-    <td style=""> {{a.Calle}} </td>
-    <td style=""> {{a.NumExt}} </td>
-    <td style=""> {{a.NumInt}} </td>
-    <td style=""> {{a.Colonia}} </td>
-    <td style=""> {{a.Municipio}} </td>
-    <td style=""> {{a.Prioridad}} </td>
+    <td style="">{{a.Referencia}}</td>
+    <td style="">{{a.Cliente}}</td>
+    <td style="">{{a.Depto}}</td>
+    <td style="">{{a.Calle}}</td>
+    <td style="">{{a.NumExt}}</td>
+    <td style="">{{a.NumInt}}</td>
+    <td style="">{{a.Colonia}}</td>
+    <td style="">{{a.Municipio}}</td>
+    <td style="">{{a.Prioridad}}</td>
     <td ><span class="label label-{%if a.Estatus = 'PROCESO'%}success{%elif a.Estatus = 'DETENIDO'%}default{%endif%}">{{a.Estatus}}</span></td>
-    <td style="width:35px;"> {{ a.Solicitud|dayssince }}</td>       
+    <td style="width:35px;">{{ a.Solicitud|dayssince }}</td>       
       <td class="tabla_opciones"><a href="/SIAV/edita_visita/{{a.avaluo_id}}"><button type="button" class="btn btn-primary btn-sm">
   <span class="glyphicon glyphicon-edit"></span> </button></a></td>
   </tr>

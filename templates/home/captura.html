@@ -20,23 +20,7 @@ $(document).ready(function () {
 
    {% include "snippets/pauseorplay.js" %}
 
-   
-
-
-// $('.serv-button').toolbar({content: '#user-options', position: 'bottom',hideOnClick: true});
-  $('#avaluos_table').tableFilter();
-  valor = 0;
-
-  var rowCount = { p: $('#avaluos_table tbody tr:visible').length };
-  valor = ($('#avaluos_table tbody tr:visible').length);
-
-  $('#cantidad_tabla').html(valor);
-
-  $('#avaluos_table thead').on("change", function () {
-    setTimeout(function () {
-      window.location = '/SIAV/captura/';
-    }, 1000);
-  });
+  {% include "snippets/avaluos_table.js" %}
 
 
 
@@ -93,10 +77,11 @@ $('#masiva_button').click(function () {
     CAPTURAR
   </a>
 
-<!-- <div id='user-options'><a href='/cambia_estatus/1/1'><i class='icon-play'></i></a><a href='/cambia_estatus/1/2'><i class='icon-pause'></i></a><a href='/cambia_estatus/1/3'><i class='icon-remove'></i></a></div> -->
+  <input style="display:none" type="submit" value="Set Quick Find filter and refresh table" onclick="$('#quickfind').val('12'); $('#avaluos_table').tableFilterApplyFilterValues();">
+  Excluir Paquete Infonavit: <input type='checkbox' id='onlyno' />
 
 <h1>Captura</h1>
-<h2 style="text-align:left"><span id="cantidad_tabla"></span>  Servicios</h2>
+<h2 style="text-align:left"><span id='rowcount'></span> Servicios</h2>
 <div id='printableArea' class="table-responsive">
 <form id="modal-form" class="" method="post" action="/SIAV/captura_masiva/">
 <table id='avaluos_table' class="table table-striped table-hover">
@@ -122,18 +107,18 @@ $('#masiva_button').click(function () {
   {% for a in avaluos %}
   <tr class="{% if a.Solicitud|dayssince|add:"0" > a.Depto.Tolerancia|add:"0" and a.Estatus != 'DETENIDO' %}danger{% endif%}">
   <td class="tabla_opciones"><input class="form-checkbox" type="checkbox" value="{{ a.avaluo_id }}" name="avaluo_capturado"></td>
-  <td > {{a.FolioK}} </td>
-  <td style=""> {{a.Referencia}} </td>
-  <td style=""> {{a.Cliente}} </td>
-  <td style=""> {{a.Depto}} </td>
-  <td style=""> {{a.Calle}} </td>
-  <td style=""> {{a.NumExt}} </td>
-  <td style=""> {{a.NumInt}} </td>
-  <td style=""> {{a.Colonia}} </td>
-  <td style=""> {{a.Municipio}} </td>
-  <td style=""> {{a.Prioridad}} </td>
+  <td >{{a.FolioK}}</td>
+  <td style="">{{a.Referencia}}</td>
+  <td style="">{{a.Cliente}}</td>
+  <td style="">{{a.Depto}}</td>
+  <td style="">{{a.Calle}}</td>
+  <td style="">{{a.NumExt}}</td>
+  <td style="">{{a.NumInt}}</td>
+  <td style="">{{a.Colonia}}</td>
+  <td style="">{{a.Municipio}}</td>
+  <td style="">{{a.Prioridad}}</td>
   <td ><span class="label label-{%if a.Estatus = 'PROCESO'%}success{%elif a.Estatus = 'DETENIDO'%}default{%endif%}">{{a.Estatus}}</span></td>
-  <td style=""> {{ a.Solicitud|dayssince }}</td>     
+  <td style="">{{ a.Solicitud|dayssince }}</td>     
   <td class="tabla_opciones">
   <a href="/SIAV/actualiza_avaluo/{{a.avaluo_id}}"> 
   <button type="button" class="btn btn-primary edit_button" id={{a.avaluo_id}}><span class="glyphicon glyphicon-edit"></span></button>

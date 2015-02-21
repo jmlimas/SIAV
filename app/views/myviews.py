@@ -898,5 +898,10 @@ def cambia_estatus(request, match):
         return HttpResponseRedirect('/SIAV/salida/')
     return HttpResponseRedirect('Hubo un error :( intenta de nuevo.') 
 
+
+def calendario(request):
+    avaluos = (Avaluo.objects.all())
+    return render_to_response('home/calendario.html', {'avaluos': avaluos}, context_instance=RequestContext(request))
+
 def swf(request):
     return ""

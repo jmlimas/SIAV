@@ -1,0 +1,48 @@
+{% extends "home/base.html" %}
+
+{% load dayssince %}
+
+{% block script %}
+
+<script type="text/javascript" language="javascript" src='{{ STATIC_URL }}JS/moment.min.js'></script>
+
+<script type="text/javascript" language="javascript" src='{{ STATIC_URL }}JS/fullcalendar.min.js'></script>
+<script type="text/javascript" language="javascript" src='{{ STATIC_URL }}JS/gcal.js'></script>
+
+<script>
+$(document).ready(function() {
+    $('#calendar').fullCalendar({
+        googleCalendarApiKey: 'AIzaSyAk5zR9LcqsE5UuW9bTYdyqZGzocW-NhPg',
+        aspectRatio: 3,
+        events: {
+            googleCalendarId: '8887t7tu2lnp4onj4g1lr74vj4@group.calendar.google.com',
+            className: 'gcal-event' // an option!
+        },
+        editable: true,
+        droppable: true,
+        drop: function(date) {
+            alert("Dropped on " + date.format());
+        },
+})
+
+$('.draggable').data('event', { title: 'my event' });
+
+$('.draggable').draggable({
+    revert: false,      // immediately snap back to original position
+    revertDuration: 0  //
+});
+
+});
+
+</script>
+
+</script>
+{% endblock %}      
+{% block content %}
+<link rel='stylesheet' href='{{ STATIC_URL }}CSS/fullcalendar.min.css' />
+<div class="draggable" data-duration="03:00" data-event='1'>MI EVENTO</div>
+
+
+<div id='calendar'></div>
+
+{% endblock %}

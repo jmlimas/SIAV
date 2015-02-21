@@ -109,6 +109,7 @@ urlpatterns = patterns(
     #url(r'^SIAV/estadistico/', 'app.views.estadistico', name = 'estadistico'),
     url(r'^SIAV/realtime/', 'app.views.realtime', name = 'realtime'),
 
+    url(r'^SIAV/calendario/$', 'app.views.calendario', name='calendario'),
 
     url(r'^SIAV/submitted/', 'app.views.submitted', name='submitted'),
 

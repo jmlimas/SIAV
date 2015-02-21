@@ -6,32 +6,23 @@
 <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/picnet.table.filter.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function () {
-  $('#avaluos_table').tableFilter();
-  valor = 0;
+  {% include "snippets/avaluos_table.js" %}
 
-  var rowCount = { p: $('#avaluos_table tbody tr:visible').length };
-  valor = ($('#avaluos_table tbody tr:visible').length);
-
-  $('#cantidad_tabla').html(valor);
-
-  $('#avaluos_table thead').on("change", function () {
-    setTimeout(function () {
-      window.location = '/SIAV/';
-    }, 1000);
-  });
 });
+
 </script>
 {% endblock %}      
 {% block content %}
+  <input style="display:none" type="submit" value="Set Quick Find filter and refresh table" onclick="$('#quickfind').val('12'); $('#avaluos_table').tableFilterApplyFilterValues();">
+  <br>
+  Excluir Paquete Infonavit: <input type='checkbox' id='onlyno' style=""/>
 <h1>Servicios en Proceso</h1>
-<h2 style="text-align:left">
-  <span id="cantidad_tabla"></span>
-  Servicios
-</h2>
+<h2 style="text-align:left"><span id='rowcount'></span> Servicios</h2>
 <div id='printableArea' class="table-responsive">
   <table id='avaluos_table' class="table table-striped table-hover">
     <thead>
       <tr class='even'>
+        <th style="" filter='false' class="tabla_opciones"></th>
         <th style="width:40px">Folio K</th>
         <th style="width:40px" filter='true' >Referencia</th>
         <th filter-type='ddl'>Cliente</th>
@@ -49,6 +40,7 @@ $(document).ready(function () {
 <body>
     {% for a in avaluos %}
     <tr class="{% if a.Solicitud|dayssince|add:"0" > a.Depto.Tolerancia|add:"0" and a.Estatus != 'DETENIDO' %}danger{% endif%}">
+  <td class="tabla_opciones"><input class="form-checkbox" type="checkbox" value="{{ a.avaluo_id }}" name="avaluo_capturado"></td>
       <td>{{a.FolioK}}</td>
       <td style="width:100px;">{{a.Referencia}}</td>
       <td style="width:10px;">{{a.Cliente}}</td>

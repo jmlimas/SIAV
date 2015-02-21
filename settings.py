@@ -23,7 +23,6 @@ BROKER_URL = 'django://'
 
 # Set the DJANGO_SETTINGS_MODULE environment variable.
 os.environ['DJANGO_SETTINGS_MODULE'] = "settings"
-
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
 
 #def show_toolbar(request):
