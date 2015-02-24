@@ -11,21 +11,90 @@
 
 <script>
 $(document).ready(function() {
+
+
+    /* initialize the external events
+    -----------------------------------------------------------------*/
+
+    $('.draggable').each(function() {
+
+        // create an Event Object (http://arshaw.com/fullcalendar/docs/event_data/Event_Object/)
+        // it doesn't need to have a start or end
+        var eventObject = {
+            title: $.trim($(this).text()) // use the element's text as the event title
+        };
+        
+        // store the Event Object in the DOM element so we can get to it later
+        $(this).data('eventObject', eventObject);
+        
+        // make the event draggable using jQuery UI
+        $(this).draggable({
+            zIndex: 999,
+            revert: true,      // will cause the event to go back to its
+            revertDuration: 0  //  original position after the drag
+        });
+        
+    });
+
     $('#calendar').fullCalendar({
+        header: {
+            left: 'prev,next today',
+            center: 'title',
+            right: 'month,agendaWeek,agendaDay'
+        },
+        events: {
+        url: '/SIAV/calendario/carga_eventos/',
+        type: 'POST',
+        data: {
+            custom_attribute: 'acbd'
+        },
+        error: function() {
+            alert('There was an error while fetching events!');
+        }
+        },
+
         googleCalendarApiKey: 'AIzaSyAk5zR9LcqsE5UuW9bTYdyqZGzocW-NhPg',
-        aspectRatio: 3,
+        aspectRatio: 2,
+        /*
         events: {
             googleCalendarId: '8887t7tu2lnp4onj4g1lr74vj4@group.calendar.google.com',
             className: 'gcal-event' // an option!
-        },
+        },*/
         editable: true,
         droppable: true,
-        drop: function(date) {
-            alert("Dropped on " + date.format());
-        },
-})
+           eventClick: function(calEvent, jsEvent, view) {
 
-$('.draggable').data('event', { title: 'my event' });
+                swal(calEvent.title,"","info");
+
+                // change the border color just for fun
+                $(this).css('border-color', 'red');
+
+            },
+         drop: function(date, allDay) { // this function is called when something is dropped
+            
+                // retrieve the dropped element's stored Event Object
+                var originalEventObject = $(this).data('eventObject');
+                
+                // we need to copy it, so that multiple events don't have a reference to the same object
+                var copiedEventObject = $.extend({}, originalEventObject);
+                
+                // assign it the date that was reported
+                copiedEventObject.start = date;
+                copiedEventObject.allDay = allDay;
+                
+                // render the event on the calendar
+                // the last `true` argument determines if the event "sticks" (http://arshaw.com/fullcalendar/docs/event_rendering/renderEvent/)
+                $('#calendar').fullCalendar('renderEvent', copiedEventObject, true);
+                
+                // is the "remove after drop" checkbox checked?
+                // if ($('#drop-remove').is(':checked')) {
+                    // if so, remove the element from the "Draggable Events" list
+                    $(this).remove();
+                // }
+                
+            },
+});
+
 
 $('.draggable').draggable({
     revert: false,      // immediately snap back to original position
@@ -40,9 +109,62 @@ $('.draggable').draggable({
 {% endblock %}      
 {% block content %}
 <link rel='stylesheet' href='{{ STATIC_URL }}CSS/fullcalendar.min.css' />
-<div class="draggable" data-duration="03:00" data-event='1'>MI EVENTO</div>
+<style>        
+    #draggable {
+        float: left;
+        width: 150px;
+        padding: 0 10px;
+        border: 1px solid #ccc;
+        background: #eee;
+        text-align: left;
+        }
+        
+    #draggable h4 {
+        font-size: 16px;
+        margin-top: 0;
+        padding-top: 1em;
+        }
+        
+    .draggable { /* try to mimick the look of a real event */
+        margin: 10px 0;
+        padding: 2px 4px;
+        background: #3a87ad;
+        color: #fff;
+        font-size: .85em;
+        cursor: pointer;
+        }
+        
+    #draggable p {
+        margin: 1.5em 0;
+        font-size: 11px;
+        color: #666;
+        }
+        
+    #draggable p input {
+        margin: 0;
+        vertical-align: middle;
+        }
 
 
-<div id='calendar'></div>
+
+</style>
+
+
+<div class="container-fluid">
+  <div class="row-fluid">
+    <div class="span2">
+   {% for a in avaluos%}
+      <div class="draggable" >{{a.FolioK}}</div>
+      {% endfor%}
+      <!--Sidebar content-->
+    </div>
+    <div class="span10">
+      <!--Body content-->
+      <div id='calendar'></div>
+      <div style='clear:both'></div>
+    </div>
+  </div>
+</div>
+
 
 {% endblock %}

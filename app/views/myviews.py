@@ -426,6 +426,9 @@ def edita_visita(request, id):
             rendered = render_to_string('email/template_visita.html', {'a': a})
             #return HttpResponse(rendered)
             if (form.cleaned_data['Contacto']):
+                if not (a.Referencia):
+                    a.Referencia = ""
+
                 r1 = requests.post(
                 "https://api.mailgun.net/v2/alluxi.mx/messages",
                 auth=("api", "key-9snzu8gopo2vt5zdlay-e6ggboizrf27"),
@@ -899,9 +902,6 @@ def cambia_estatus(request, match):
     return HttpResponseRedirect('Hubo un error :( intenta de nuevo.') 
 
 
-def calendario(request):
-    avaluos = (Avaluo.objects.all())
-    return render_to_response('home/calendario.html', {'avaluos': avaluos}, context_instance=RequestContext(request))
 
 def swf(request):
     return ""

@@ -181,6 +181,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.humanize',
     'app',
+    'calendario',
     'kombu.transport.django',
     'djcelery',
     'websock',

@@ -13,7 +13,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from app.api import *
 from tastypie.api import Api
-
+from calendario.urls import *
 
 admin.autodiscover()
 
@@ -109,8 +109,6 @@ urlpatterns = patterns(
     #url(r'^SIAV/estadistico/', 'app.views.estadistico', name = 'estadistico'),
     url(r'^SIAV/realtime/', 'app.views.realtime', name = 'realtime'),
 
-    url(r'^SIAV/calendario/$', 'app.views.calendario', name='calendario'),
-
     url(r'^SIAV/submitted/', 'app.views.submitted', name='submitted'),
 
     url(r'^SIAV/test/', 'app.views.test', name='submitted'),
@@ -150,6 +148,10 @@ urlpatterns += patterns('',
 
     url(r'^monto_inline/', 'app.views.inline.monto_inline', name='monto_inline'),
     url(r'^factura_inline/', 'app.views.inline.factura_inline', name='factura_inline'),
+    url(r"^SIAV/calendario/", include("calendario.urls")),
+
+    #Urls de calendario
+    #url(include(r'^calendario/',calendario.urls)),
 )
 
 
