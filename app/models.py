@@ -2,6 +2,22 @@ from django.db import models
 from decimal import Decimal
 import os
 from PIL import Image
+from django.contrib.auth.models import User
+
+def get_image_path(folder, filename):
+    return os.path.join('media/',str(folder), filename)
+
+class UserProfile(models.Model):
+    # This line is required. Links UserProfile to a User model instance.
+    user = models.OneToOneField(User)
+
+    # The additional attributes we wish to include.
+    website = models.URLField(blank=True)
+    picture = models.ImageField(upload_to=get_image_path, blank=True)
+    color = models.CharField(blank=True, max_length=50)
+    # Override the __unicode__() method to return out something meaningful!
+    def __unicode__(self):
+        return self.user.username
 
 # Create your models here.
 class Estado(models.Model):
@@ -130,9 +146,6 @@ class Avaluo(models.Model):
     Factura = models.CharField(null=True, max_length=30)
     Pagado = models.NullBooleanField(null=True)
     Observaciones = models.CharField(null=True, max_length=255)
-
-def get_image_path(folder, filename):
-    return os.path.join('media/',str(folder), filename)
 
 class ImagenAvaluo(models.Model):
     imagen_id = models.AutoField(primary_key=True)

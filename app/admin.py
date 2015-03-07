@@ -22,6 +22,10 @@ class adminDepto(admin.ModelAdmin):
 	list_display = ('Depto','cliente_id','is_active','Razon','RFC','Calle','Colonia',)
 	search_fields = ('Nombre',)
 
+class adminUserProfile(admin.ModelAdmin):
+	list_display = ('user','website','picture','color')
+	search_fields = ('user',)
+
 
 
 admin.site.register(Avaluo, adminAvaluo)
@@ -30,5 +34,6 @@ admin.site.register(Depto, adminDepto)
 admin.site.register(Valuador)
 admin.site.register(Municipio)
 admin.site.register(Estado, adminEstado)
+admin.site.register(UserProfile, adminUserProfile)
 
 

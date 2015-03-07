@@ -98,6 +98,11 @@
             <span class="badge badge-warning">{{x|cantidades_salida}}</span>
           </a>
                 </li>
+                <li class="{% block calendario %}{% endblock %}">
+                    <a href="/SIAV/calendario/">
+            <i class="glyphicon glyphicon-calendar"></i> 
+          </a>
+                </li>
                 {% if user.is_staff %}
                 <li class="{% block consulta_master %}{% endblock %}">
                     <a href="/SIAV/consulta_master/">Consulta</a>
