@@ -15,12 +15,16 @@ class adminEstado(admin.ModelAdmin):
 	search_fields = ('Nombre',)
 
 class adminCliente(admin.ModelAdmin):
-	list_display = ('Cliente',)
+	list_display = ('Cliente','is_active')
 	search_fields = ('Cliente',)
 
 class adminDepto(admin.ModelAdmin):
 	list_display = ('Depto','cliente_id','is_active','Razon','RFC','Calle','Colonia',)
 	search_fields = ('Nombre',)
+
+class adminTipo(admin.ModelAdmin):
+	list_display = ('Tipo',)
+	search_fields = ('Tipo',)
 
 class adminUserProfile(admin.ModelAdmin):
 	list_display = ('user','website','picture','color')
@@ -34,6 +38,7 @@ admin.site.register(Depto, adminDepto)
 admin.site.register(Valuador)
 admin.site.register(Municipio)
 admin.site.register(Estado, adminEstado)
+admin.site.register(Tipo, adminTipo)
 admin.site.register(UserProfile, adminUserProfile)
 
 

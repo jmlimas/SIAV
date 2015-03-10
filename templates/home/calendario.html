@@ -318,6 +318,7 @@ $('#id_Visitadores').on('change', function() {
                     event.id = ret_id;
 
                     // Render the event on the calendar
+                    $('#calendar').fullCalendar('removeEvents', evento_id);
                     $('#calendar').fullCalendar( 'refetchEvents' );
                     $('#eventContent').dialog("close");
                 }

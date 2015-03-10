@@ -65,6 +65,7 @@ class Valuador(models.Model):
 class Cliente(models.Model):
     cliente_id = models.AutoField(primary_key=True)
     Cliente = models.CharField(null=False, max_length=255)
+    is_active = models.BooleanField(null=False, default=1)
 
     def __unicode__(self):
         if self.Cliente is None:
@@ -76,6 +77,7 @@ class Cliente(models.Model):
 class Tipo(models.Model):
     tipo_id = models.AutoField(primary_key=True)
     Tipo = models.CharField(null=False, max_length=255)
+    is_active = models.BooleanField(null=False, default=1)
 
     def __unicode__(self):
         if self.Tipo is None:

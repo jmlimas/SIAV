@@ -55,7 +55,7 @@ class EstadisticoAsignaResource(ModelResource):
         excludes = ['Servicio','Salida','Valor','Solicitud','avaluo_id','Visita','Referencia','Calle','Colonia','NumExt','NumInt','Prioridad','Pagado','LatitudG','LatitudM','LatitudS','LongitudG','LongitudM','LongitudS','Declat','Declon','Estatus','Mterreno','Mconstruccion']
 
     def dehydrate(self, bundle):
-        transaction = Avaluo.objects.extra(select={'month': 'extract( month from Salida)'}).values('month').filter(Salida__year=2013).order_by('month').annotate(dcount=Count('Solicitud'), Total=Sum('Importe')).distinct()
+        transaction = Avaluo.objects.extra(select={'month': 'extract( month from Salida)'}).values('month').filter(Salida__year=2015).order_by('month').annotate(dcount=Count('Solicitud'), Total=Sum('Importe')).distinct()
         filtering = { "anio": ALL }
         return transaction
 
