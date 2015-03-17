@@ -59,6 +59,9 @@ def ajax_upload( request,avaluo_id,folio_k ):
         archivo_avaluo.avaluo_id = avaluo_id
         archivo_avaluo.FolioK = folio_k
         archivo_avaluo.file.save(filename.replace(' ','_'), file_contents)
+        import json
+        ret_json = { 'success': 'test','ext':ext }
+        return HttpResponse ( json.dumps( ret_json ) )
       a = Avaluo.objects.get(FolioK=folio_k)
     else:
       is_raw = False

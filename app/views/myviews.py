@@ -3,6 +3,7 @@ import os
 import redis
 import datetime
 from websock.models import Eventos, Comments
+from websock.views import lanza_notif
 from django.utils import timezone
 from datetime import date
 from django.conf.urls import patterns, url, include
@@ -30,6 +31,8 @@ from django.db.models import F
 import requests
 from celery.task.schedules import crontab
 from celery.task import periodic_task
+import json as simplejson
+from django.core.serializers.json import DjangoJSONEncoder
 
 current_directory = os.path.dirname(os.path.abspath(__file__))
 
@@ -53,6 +56,8 @@ def genera_foliok(avaluo_id, colonia):
         folio_k = ""
         return folio_k
 
+
+
 #   Eliminar Imagenes
 def elimina_imagen_captura(request,folio,imagen_id):
     imagen = ImagenAvaluo.objects.get(imagen_id=imagen_id)
@@ -64,10 +69,13 @@ def elimina_imagen_captura(request,folio,imagen_id):
 #   Vista de la pagina inicial (Muestra avaluos en proceso)
 @login_required
 def home(request):
+    users = User.objects.values_list('first_name','id')
+    users_json = simplejson.dumps(list(users), cls=DjangoJSONEncoder)
+
     avaluos = Avaluo.objects.filter(Estatus__contains='PROCESO', Salida__isnull=True) | Avaluo.objects.filter(Estatus__contains='DETENIDO', Salida__isnull=True)
     avaluos = avaluos.order_by('-Solicitud')
     comments = Eventos.objects.select_related().all().reverse()[:3]
-    return render_to_response('home/home.html', {'avaluos': avaluos,'comments':comments}, context_instance=RequestContext(request))
+    return render_to_response('home/home.html', locals(), context_instance=RequestContext(request))
 
 
 #   Vista para cerrar sesion
@@ -276,6 +284,8 @@ def salida_efectiva(request, id):
 
 @login_required
 def alta_avaluo(request):
+    users = User.objects.values_list('first_name','id')
+    users_json = simplejson.dumps(list(users), cls=DjangoJSONEncoder)
     formset_sencilla = FormaSencillaPaquete(prefix='formset_sencilla')  # An unbound form
     formset = PaqueteFormset(prefix='formset')  # An unbound form
     # Si la forma es enviada...
@@ -300,10 +310,13 @@ def alta_avaluo(request):
             #Crear evento
             Eventos.objects.create(user=request.user, evento='ALTA',avaluo=reciente)
 
+
+
+
             return redirect('/SIAV/alta_avaluo/')  # Redirect after POST
     else:
         forma = AltaAvaluo()  # An unbound form
-    return render_to_response('home/alta_avaluo.html', {'forma': forma,'formset_sencilla': formset_sencilla,'formset': formset, }, context_instance=RequestContext(request))
+    return render_to_response('home/alta_avaluo.html', locals() , context_instance=RequestContext(request))
 
 
 def alta_avaluo_paquete(request):
@@ -383,13 +396,7 @@ def actualiza_avaluo(request, id):
             form.save()
 
             # Enviar notificación a usuarios
-            r = redis.StrictRedis(host='localhost', port=6379, db=0)
-            accion = (' capturó el avalúo con FolioK: ').decode("UTF-8", "ignore")
-
-            r.publish('chat', request.user.username + accion + '<b>' + obj.FolioK + '</b>')
-
-            #Crear evento
-            Eventos.objects.create(user=request.user, evento='CAPTURA',avaluo=obj)
+            lanza_notif('CAPTURA', avaluo, request.user)
 
             return redirect('/SIAV/captura/')
     else:
@@ -403,7 +410,8 @@ def actualiza_avaluo(request, id):
 
 @login_required
 def edita_visita(request, id):
-
+    users = User.objects.values_list('first_name','id')
+    users_json = simplejson.dumps(list(users), cls=DjangoJSONEncoder)
     if id is None:
         form = VisitaAvaluo()
     else:
@@ -437,14 +445,8 @@ def edita_visita(request, id):
                       "subject": ("Visita Servicio : "+a.Referencia),
                       "html": rendered})
 
-            # Enviar notificación a usuarios
-            r = redis.StrictRedis(host='localhost', port=6379, db=0)
-            accion = (' visitó el avalúo con FolioK: ').decode("UTF-8", "ignore")
-
-            r.publish('chat', request.user.username + accion + '<b>' + obj.FolioK + '</b>')
-
-            #Crear evento
-            Eventos.objects.create(user=request.user, evento='VISITA',avaluo=obj)
+            # Lanza Notif
+            lanza_notif('VISITA', a, request.user)
 
             return redirect('/SIAV/visita/')
     else:
@@ -452,7 +454,7 @@ def edita_visita(request, id):
     decimal = decimal_conversion(avaluo)
     cercanos = find_closest(avaluo)
     imagenes = ImagenAvaluo.objects.filter(avaluo = avaluo.avaluo_id)[:3]
-    return render_to_response('home/edita_visita.html', {'form': form, 'avaluo': avaluo, 'decimal': decimal, 'cercanos': cercanos,'imagenes': imagenes, 'folio_k': folio_k}, context_instance=RequestContext(request))
+    return render_to_response('home/edita_visita.html', locals(), context_instance=RequestContext(request))
 
 
 @login_required
@@ -476,13 +478,7 @@ def edita_salida(request, id):
             form.save()
 
             # Enviar notificación a usuarios
-            r = redis.StrictRedis(host='localhost', port=6379, db=0)
-            accion = (' dió salida al avalúo con FolioK: ').decode("UTF-8", "ignore")
-
-            #Crear evento
-            Eventos.objects.create(user=request.user, evento='SALIDA',avaluo=obj)
-
-            r.publish('chat', request.user.username + accion + '<b>' + obj.FolioK + '</b>')
+            lanza_notif('SALIDA', avaluo, request.user)
 
             return redirect('/SIAV/salida/')
     else:
@@ -517,13 +513,7 @@ def guarda_master(request, id):
             forma.save()
 
             # Enviar notificación a usuarios
-            r = redis.StrictRedis(host='localhost', port=6379, db=0)
-            accion = (' editó el avalúo con FolioK: ').decode("UTF-8", "ignore")
-
-            r.publish('chat', request.user.username + accion + '<b>' + obj.FolioK + '</b>')
-
-            #Crear evento
-            Eventos.objects.create(user=request.user, evento='CONSULTA_MASTER',avaluo=obj)
+            lanza_notif('CONSULTA_MASTER', obj, request.user)
 
             return redirect('/SIAV/consulta_master/')
     imagenes = ImagenAvaluo.objects.filter(avaluo = avaluo.avaluo_id)[:5]

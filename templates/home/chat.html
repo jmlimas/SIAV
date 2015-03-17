@@ -1,25 +1,28 @@
 {% extends "home/base.html" %}
+{% load jsonify %}
 <!DOCTYPE html>
 <html>
 <head>
   <title>Realtime Django</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <style type="text/css" title="currentStyle">
-    @import "{{ STATIC_URL }}CSS/smoothness/jquery-ui-1.8.24.custom.css";
-  </style>
+      <meta http-equiv="X-UA-Compatible" content="chrome=1">
+
+
   {% block script %}
- 
+
+
 
   {% endblock %} 
 </head>
 <body>
   {% block content %}
   <div id="comment_div" >
-    <ul id="comments" style="overflow:scroll; height:400px;">
+<!--     <ul id="comments" style="overflow:scroll; height:400px;">
         {% for comment in comments %}
             <li>[{{comment.date|date:"h:m"}}]{{comment.user}}: {{comment.text}}</li>
         {% endfor %}
-    </ul>
+    </ul> -->
+    {{request.session.session_key}}
   </div>
     <input type="text" id="comment" name="comment" />
   {% endblock %}

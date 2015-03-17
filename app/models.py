@@ -190,16 +190,10 @@ class ArchivoAvaluo(models.Model):
     def __unicode__(self):
         return unicode(self.FolioK)
     def save(self):
-        if not self.imagen:
+        if not self.file:
             return            
 
         super(ArchivoAvaluo, self).save()
 
-        imagen = Image.open(self.imagen)
-        if (imagen.size[0] > 1024):
-            (width, height) = imagen.size     
-            size = ( 1024, 768)
-            imagen = imagen.resize(size, Image.ANTIALIAS)
-        imagen.save(self.imagen.path) 
 
 
