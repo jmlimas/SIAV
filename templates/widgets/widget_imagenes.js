@@ -1,5 +1,5 @@
    <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/flexslider/jquery.flexlider-min.js"></script>
-   <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/fileuploader.js"></script>
+   <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/jquery.fine-uploader.js"></script>
 
 
 
@@ -33,49 +33,59 @@
     });
   </script>
 
-   <script>        
-function createUploader(){            
-  var uploader = new qq.FileUploader( {
-    action: "{% url "app.uploads.ajax_upload" avaluo.avaluo_id avaluo.FolioK %}",
-    listElement: $('#image-list')[0],
-    element: $('#file-uploader')[0],
-    multiple: true,
-    onProgress: function( id, fileName, responseJSON ) {
-    // $('.qq-upload-button').button('loading');
-    // business logic...
-    // $btn.button('reset');
-    },
-    onComplete: function( id, fileName, responseJSON ) {
-    // $('.qq-upload-button').button('reset');
 
-      if( responseJSON.success )
-        sweetAlert( "Carga exitosa.","","success" ) ;
-      else
-        sweetAlert( "Carga fallida!","","error" ) ;
-    },
-    onAllComplete: function( uploads ) {
-                    // uploads is an array of maps
-                    // the maps look like this: { file: FileObject, response: JSONServerResponse }
-                    //alert( "All complete!" ) ;
-                  },
-                  params: {
-                    'csrf_token': '{{ csrf_token }}',
-                    'csrf_name': 'csrfmiddlewaretoken',
-                    'csrf_xname': 'X-CSRFToken',
-                  },
-                } ) ;
-}         
+  <script>
+    // Wait until the DOM is 'ready'
+    $(document).ready(function () {
+        $("#fine-uploader").fineUploader({
+            debug: true,
+            request: {
+                endpoint: "{% url "app.uploads.ajax_upload" avaluo.avaluo_id avaluo.FolioK %}",
+            },
+            retry: {
+               enableAuto: false
+            }
+        }).on('complete', function (event, fileId, fileName, responseJSON, xhr) {
+        if (responseJSON.success === true) {
+            sweetAlert( "Carga exitosa.",fileName,"success" ) ;
+        } else {
+            sweetAlert( "Carga fallida!",fileName,"error" ) ;
+        }});
+      });
+    </script>
+ <script type="text/template" id="qq-template">
+        <div class="qq-uploader-selector qq-uploader">
+            <div class="qq-upload-drop-area-selector qq-upload-drop-area" qq-hide-dropzone>
+                <span>Arrastra archivos aqui...</span>
+            </div>
+
+            <div class="qq-upload-button-selector btn btn-danger" style="width: auto;"><i class="glyphicon glyphicon-upload"></i> Subir Archivo</div>
+
+            <span class="qq-drop-processing-selector qq-drop-processing">
+                <span>Procesando archivos...</span>
+                <span class="qq-drop-processing-spinner-selector qq-drop-processing-spinner"></span>
+            </span>
+            <ul class="qq-upload-list-selector qq-upload-list">
+                <li>
+                    <div class="qq-progress-bar-container-selector progress">
+                      <div class="qq-progress-bar-selector bar"></div>
+                    </div>
+                    <span class="qq-upload-spinner-selector qq-upload-spinner"></span>
+                    <span class="qq-edit-filename-icon-selector qq-edit-filename-icon"></span>
+                    <span class="qq-upload-file-selector qq-upload-file"></span>
+                    <input class="qq-edit-filename-selector qq-edit-filename" tabindex="0" type="text">
+                    <span class="qq-upload-size-selector qq-upload-size"></span>
+                    <a class="qq-upload-cancel-selector qq-upload-cancel" href="#">Cancelar</a>
+                    <a class="qq-upload-retry-selector qq-upload-retry" href="#">Reintentar</a>
+                    <a class="qq-upload-delete-selector qq-upload-delete" href="#">Eliminar</a>
+                    <span class="qq-upload-status-text-selector qq-upload-status-text"></span>
+                </li>
+            </ul>
+        </div>
+    </script>
 
 
-</script>
 
-   <script type="text/javascript"> 
-$(function() {
 
-              // in your app create uploader as soon as the DOM is ready
-            // don't wait for the window to load  
-            window.onload = createUploader; 
 
-          });
 
-</script>

@@ -39,7 +39,9 @@ def ajax_upload( request,avaluo_id,folio_k ):
             imagen_avaluo.avaluo_id = avaluo_id
             imagen_avaluo.FolioK = folio_k
             imagen_avaluo.imagen.save(upload.name, file_contents)
-            return HttpResponse('Guardado Exitosamente');
+            import json
+            ret_json = { 'success': 'success',}
+            return HttpResponse( json.dumps( ret_json ) )
           else:
               filename = request.GET['qqfile']
               file_contents = SimpleUploadedFile(filename, request.body)
