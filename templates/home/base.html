@@ -51,7 +51,7 @@
             </button>
             <a class="navbar-brand" href="/SIAV/">
                 <img padding-bottom="65px" width="70px" src="{{ STATIC_URL }}/CSS/images/SIAV_logo.png">
-                <span class="badge badge-info">{{x|cantidades_proceso}}</span>
+                <span class="badge badge-info">{{en_proceso}}</span>
             </a>
         </div>
         <ul class="nav navbar-nav navbar-right">
@@ -83,19 +83,19 @@
                 <li class="{% block visita %}{% endblock %}">
                     <a href="/SIAV/visita/">
             Visita
-            <span class="badge badge-warning">{{x|cantidades_visita}}</span>
+            <span class="badge badge-warning">{{por_visitar}}</span>
           </a>
                 </li>
                 <li class="{% block captura %}{% endblock %}">
                     <a href="/SIAV/captura/">
             Captura
-            <span class="badge badge-warning">{{x|cantidades_captura}}</span>
+            <span class="badge badge-warning">{{por_capturar}}</span>
           </a>
                 </li>
                 <li class="{% block salida %}{% endblock %}">
                     <a href="/SIAV/salida/">
             Salida
-            <span class="badge badge-warning">{{x|cantidades_salida}}</span>
+            <span class="badge badge-warning">{{por_salida}}</span>
           </a>
                 </li>
                 <li class="{% block calendario %}{% endblock %}">
@@ -240,6 +240,10 @@ $(document).ready(function() {
     // objDiv.scrollTop = objDiv.scrollHeight+10;
 
     // Conexión a Socket.io
+
+    var data = {{ users_json|safe }};  
+    var current_user_id = {{user.id}};
+
     var socket = io.connect('{{ request.META.HTTP_HOST }}', {
         port: 4000
     });

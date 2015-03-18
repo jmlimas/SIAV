@@ -64,8 +64,7 @@ def elimina_imagen_captura(request,folio,imagen_id):
 #   Vista de la pagina inicial (Muestra avaluos en proceso)
 @login_required
 def home(request):
-    avaluos = Avaluo.objects.filter(Estatus__contains='PROCESO', Salida__isnull=True) | Avaluo.objects.filter(Estatus__contains='DETENIDO', Salida__isnull=True)
-    avaluos = avaluos.order_by('-Solicitud')
+    avaluos = Avaluo.objects.filter(Estatus__in=['PROCESO','DETENIDO'], Salida__isnull=True).order_by('-Solicitud')
     comments = Eventos.objects.select_related().all().reverse()[:3]
     return render_to_response('home/home.html', {'avaluos': avaluos,'comments':comments}, context_instance=RequestContext(request))
 
@@ -227,19 +226,17 @@ def captura(request):
     #lista_avaluos = Avaluo.objects.all()
     captura_masiva = CapturaMasiva() 
     avaluos = (Avaluo.objects
-               .filter(Q(Estatus__contains='PROCESO') | Q(Estatus__contains='DETENIDO'))
+               .filter(Q(Estatus__in=['PROCESO','DETENIDO']))
                .filter(Q(Salida__isnull=True))
                .filter(Q(Visita__isnull=False))
-               .exclude(Q(Mterreno__isnull=False) & Q(Mconstruccion__isnull=False) & Q(Solicitud__isnull=False)))
-    avaluos = avaluos.order_by('-Solicitud')
+               .exclude(Q(Mterreno__isnull=False) & Q(Mconstruccion__isnull=False) & Q(Solicitud__isnull=False))).order_by('-Solicitud')
     return render_to_response('home/captura.html', {'avaluos': avaluos,'captura_masiva': captura_masiva}, context_instance=RequestContext(request))
 
 
 @login_required
 def visita(request):
     visita_masiva = VisitaMasiva() 
-    avaluos = Avaluo.objects.filter(Estatus__contains='PROCESO', Visita__isnull=True, Salida__isnull=True) | Avaluo.objects.filter(Estatus__contains='DETENIDO', Visita__isnull=True, Salida__isnull=True)
-    avaluos = avaluos.order_by('-Solicitud')
+    avaluos = Avaluo.objects.filter(Estatus__in=['PROCESO','DETENIDO'], Visita__isnull=True, Salida__isnull=True).order_by('-Solicitud')
     return render_to_response('home/visita.html', {'avaluos': avaluos,'visita_masiva':visita_masiva}, context_instance=RequestContext(request))
 
 
@@ -247,23 +244,11 @@ def visita(request):
 def salida(request):
     salida_masiva = SalidaMasiva() 
     avaluos = (Avaluo.objects
-               .filter(Q(Estatus='PROCESO')| Q(Estatus__contains='DETENIDO'))
+               .filter(Q(Estatus__in=['PROCESO','DETENIDO']))
                .filter(Q(Visita__isnull=False))
-               .filter(Q(Salida__isnull=True)))
-
-    avaluos = (avaluos
-               # .exclude(Valor=0.00)
-               # .exclude(Q(Valor__isnull=True))
-               # .exclude(Q(Referencia__isnull=True))
-                .exclude(Q(Mterreno__isnull=True))
-               # .exclude(Q(Importe__isnull=True))
-                .exclude(Q(Mconstruccion__isnull=True))
-                #.exclude(Q(Valor__exact=''))
-                )
-
-
-
-    avaluos = avaluos.order_by('-Solicitud')
+               .filter(Q(Salida__isnull=True))
+               .exclude(Q(Mterreno__isnull=True))
+               .exclude(Q(Mconstruccion__isnull=True))).order_by('-Solicitud')
     return render_to_response('home/salida.html', {'avaluos': avaluos,'salida_masiva':salida_masiva}, context_instance=RequestContext(request))
 
 def salida_efectiva(request, id):
