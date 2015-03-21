@@ -1,0 +1,73 @@
+{% extends "neon/index.html" %}
+{% block content %}
+	<div class="main-content">
+				
+		
+		
+		<div class="calendar-env">
+			
+			<!-- Calendar Body -->
+			<div class="calendar-body">
+				
+				<div id="calendar"></div>
+				
+				
+			</div>
+			
+			<!-- Sidebar -->
+			<div class="calendar-sidebar">
+				
+				<!-- new task form -->
+				<div class="calendar-sidebar-row">
+						
+					<form role="form" id="add_event_form">
+					
+						<div class="input-group minimal">
+							<input type="text" class="form-control" placeholder="Add event..." />
+							
+							<div class="input-group-addon">
+								<i class="entypo-pencil"></i>
+							</div>
+						</div>
+						
+					</form>
+					
+				</div>
+			
+			
+				<!-- Events List -->
+				<ul class="events-list" id="draggable_events">
+					<li>
+						<p>Servicios por visitar</p>
+					</li>
+					<li>
+			        {% for a in avaluos%}
+		            <a href="#" class="color-blue" data-event-class="color-blue" class="draggable" data-duration="00:30">{{a.FolioK}} - {{a.Colonia}}</a>
+		            {% endfor%}					
+					</li>
+
+				</ul>
+				
+			</div>
+			
+		</div>
+		
+
+	</div>
+{% endblock %}
+
+
+
+
+
+{% block scripts %}
+	<!-- Imported scripts on this page -->
+	<script type="text/javascript" language="javascript" src='{{ STATIC_URL }}JS/moment.min.js'></script>
+	<script src="{{ STATIC_URL }}/assets/js/fullcalendar/fullcalendar.min.js"></script>
+	<script src="{{ STATIC_URL }}/assets/js/neon-calendar.js"></script>
+	<script src='{{ STATIC_URL }}/assets/js/fullcalendar/lang-es.js'></script>
+
+{% endblock %}
+
+</body>
+</html>

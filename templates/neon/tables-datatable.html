@@ -1,0 +1,118 @@
+{% extends "neon/index.html" %}
+{% load dayssince %}
+
+
+{% block content %}
+
+
+
+<div class="main-content">
+  <a id="masiva_button"  title="captura" style="float:right" class="btn btn-primary mass_button" role="button">
+    <span class="glyphicon glyphicon-ok"></span>
+    Capturar
+  </a>
+	<h1>
+		{% if caller = '0' %}
+			Servicios en Proceso	 
+		{% elif caller = '1' %}
+			Visita
+		{% elif caller = '2' %}
+		 	Captura
+		{% elif caller = '3' %}
+		 	Salida
+		{% endif %}
+</h1>
+<h2 style="text-align:left"><span class="label label-danger" id='rowcount'></span> Servicios</h2>
+<div style="float:right">
+  <input style="display:none;text-align:right" type="submit" value="Set Quick Find filter and refresh table" onclick="$('#quickfind').val('12'); $('#avaluos_table').tableFilterApplyFilterValues();">
+  Excluir Paquete Infonavit: <input type='checkbox' id='onlyno' />
+</div>
+<br />
+<table id='avaluos_table' class="table table-striped table-hover">
+	<thead>
+		<tr class='even'>
+			<th style="" filter='false' class="tabla_opciones"></th>
+			<th style="">Folio K</th>
+			<th style="" filter='true' >Referencia</th>
+			<th filter-type='ddl'>Cliente</th>
+			<th filter-type='ddl'>Depto</th>
+			<th>Calle</th>
+			<th filter='false'>Ext.</th>
+			<th filter='false'>Int.</th>
+			<th style="" filter-type='ddl'>Colonia</th>
+			<th filter-type='ddl'>Municipio</th>
+			<th filter-type='ddl'>Prioridad</th>
+			<th style="" filter-type='ddl'>Estatus</th>
+			<th filter='false'>Dias</th>
+			{% if caller != '0'%}
+			<th style="" filter='false' class="tabla_opciones"></th>
+			{% endif %}
+		</tr>
+	</thead>
+	<tbody>
+		{% for a in avaluos %}
+
+		<tr class="">
+			<td class="tabla_opciones">
+				<input class="form-checkbox" type="checkbox" value="{{ a.avaluo_id }}" name="avaluo_capturado"></td>
+			<td >{{a.FolioK}}</td>
+			<td style="">{{a.Referencia}}</td>
+			<td style="">{{a.Cliente}}</td>
+			<td style="">{{a.Depto}}</td>
+			<td style="">{{a.Calle}}</td>
+			<td style="">{{a.NumExt}}</td>
+			<td style="">{{a.NumInt}}</td>
+			<td style="">{{a.Colonia}}</td>
+			<td style="">{{a.Municipio}}</td>
+			<td style="">{{a.Prioridad}}</td>
+			<td >
+				<span class="label label-{%if a.Estatus = 'PROCESO'%}success{%elif a.Estatus = 'DETENIDO'%}default{%endif%}">{{a.Estatus}}</span>
+			</td>
+			<td style="">{{ a.Solicitud|dayssince }}</td>
+			{% if caller != '0'%}
+			<td class="tabla_opciones">
+				<a href="		
+						{% if caller = '1' %}
+							/SIAV/edita_visita/{{a.avaluo_id}}
+						{% elif caller = '2' %}
+						 	/SIAV/actualiza_avaluo/{{a.avaluo_id}}
+						{% elif caller = '3' %}
+						 	/SIAV/edita_salida/{{a.avaluo_id}}
+						{% else %}
+						{% endif %}">
+					<button type="button" class="btn btn-primary edit_button" id={{a.avaluo_id}}>
+						<span class="glyphicon glyphicon-edit"></span>
+					</button>
+				</a>
+			</td>
+			{% endif %}
+
+		</tr>
+		{% endfor %}
+	</tbody>
+</table>
+
+		<br />
+
+		</div>
+		{% endblock %}
+
+		{% block scripts %}
+		<!-- Imported styles on this page -->
+		<link rel="stylesheet" href="{{ STATIC_URL }}/assets/js/datatables/responsive/css/datatables.responsive.css">
+		<link rel="stylesheet" href="{{ STATIC_URL }}/assets/js/select2/select2-bootstrap.css">
+		<link rel="stylesheet" href="{{ STATIC_URL }}/assets/js/select2/select2.css">
+
+		<!-- Imported scripts on this page -->
+		<script src="{{ STATIC_URL }}/assets/js/joinable.js"></script>
+		<script src="{{ STATIC_URL }}/assets/js/select2/select2.min.js"></script>
+		<script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/picnet.table.filter.min.js"></script>
+
+		<script type="text/javascript">
+	jQuery(document).ready(function () {
+	  {% include "snippets/avaluos_table.js" %}
+	});
+	</script>
+		{% endblock %}
+</body>
+	</html>

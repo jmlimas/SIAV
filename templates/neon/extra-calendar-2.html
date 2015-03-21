@@ -1,0 +1,100 @@
+{% extends "neon/index.html" %}
+
+
+
+	
+{% block content %}
+
+		<div class="calendar-env">
+			<!-- Calendar Body -->
+			<div class="calendar-body">
+		
+				<div id="calendar"></div>
+		
+		
+			</div>
+		
+			<!-- Sidebar -->
+			<div class="calendar-sidebar">
+		
+				<!-- new task form -->
+				<div class="calendar-sidebar-row">
+		
+					<form role="form" id="add_event_form">
+		
+						<div class="input-group minimal">
+							<input type="text" class="form-control" placeholder="Add event..." />
+		
+							<div class="input-group-addon">
+								<i class="entypo-pencil"></i>
+							</div>
+						</div>
+		
+					</form>
+		
+				</div>
+		
+		
+				<!-- Events List -->
+				<ul class="events-list" id="draggable_events">
+					<li>
+						<p>Servicios por visitar</p>
+					</li>
+		            {% for a in avaluos%}
+		            <li>
+		            	<a href="#" class="color-blue draggable" data-event-class="color-blue" data-duration="00:30">{{a.FolioK}} - {{a.Colonia}}</a>
+		        	</li>
+		            {% endfor%}
+
+
+
+				</ul>
+		
+			</div>
+		
+		</div>
+
+	<!-- Modal 1 (Basic)-->
+	<div class="modal fade" id="modal-1">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<h4 class="modal-title" id="eventTitle">Basic Modal</h4>
+				</div>
+				
+				<div class="modal-body">
+					Inicio: <p id="startTime"></p>
+					Fin: <p id="endTime"></p>
+				    Visitador: <select id="id_Visitadores"></select>
+				    <p style="display:none;" id="eventId"></p>
+
+				</div>
+				
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-info">Save changes</button>
+				</div>
+			</div>
+		</div>
+	</div>
+		
+
+{% endblock %}
+
+		
+{% block scripts %}
+	<!-- Imported styles on this page -->
+	<link rel="stylesheet" href="{{ STATIC_URL }}/assets/js/fullcalendar-2/fullcalendar.min.css">
+
+	<!-- Imported scripts on this page -->
+	<script src="{{ STATIC_URL }}/assets/js/daterangepicker/moment.min.js"></script>
+	<script src="{{ STATIC_URL }}/assets/js/fullcalendar-2/fullcalendar.min.js"></script>
+	<script src="{{ STATIC_URL }}/assets/js/neon-calendar-2.js"></script>
+
+{% endblock %}
+
+
+</body>
+</html>

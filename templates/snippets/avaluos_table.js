@@ -1,6 +1,6 @@
- var grid2 = $('#avaluos_table');
+ var grid2 = jQuery('#avaluos_table');
            var options2 = {      
-            additionalFilterTriggers: [$('#onlyno'),],
+            additionalFilterTriggers: [jQuery('#onlyno'),],
           matchingRow: function(state, tr, textTokens) {
             if (!state || !state.id) {
               return true;
@@ -26,7 +26,7 @@
      
             function setRowCountOnGrid2() {
               var rowcount = grid2.find('tbody tr:not(:hidden)').length;
-              $('#rowcount').text('' + rowcount + '');
+              jQuery('#rowcount').text('' + rowcount + '');
             }
 
 
@@ -36,8 +36,8 @@
 
   valor = 0;
 
-  var rowCount = { p: $('#avaluos_table tbody tr:visible').length };
-  valor = ($('#avaluos_table tbody tr:visible').length);
+  var rowCount = { p: jQuery('#avaluos_table tbody tr:visible').length };
+  valor = (jQuery('#avaluos_table tbody tr:visible').length);
 
-  $('#cantidad_tabla').html(valor);
+  jQuery('#cantidad_tabla').html(valor);
 

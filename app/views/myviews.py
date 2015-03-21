@@ -64,9 +64,10 @@ def elimina_imagen_captura(request,folio,imagen_id):
 #   Vista de la pagina inicial (Muestra avaluos en proceso)
 @login_required
 def home(request):
+    caller = "0"
     avaluos = Avaluo.objects.filter(Estatus__in=['PROCESO','DETENIDO'], Salida__isnull=True).order_by('-Solicitud')
     comments = Eventos.objects.select_related().all().reverse()[:3]
-    return render_to_response('home/home.html', {'avaluos': avaluos,'comments':comments}, context_instance=RequestContext(request))
+    return render_to_response('neon/tables-datatable.html', locals(), context_instance=RequestContext(request))
 
 
 #   Vista para cerrar sesion
@@ -221,8 +222,17 @@ def realtime(request):
     return render_to_response('home/consultas/estadistico/realtime.html', locals())
 
 
+
+@login_required
+def visita(request):
+    caller = "1"
+    visita_masiva = VisitaMasiva() 
+    avaluos = Avaluo.objects.filter(Estatus__in=['PROCESO','DETENIDO'], Visita__isnull=True, Salida__isnull=True).order_by('-Solicitud')
+    return render_to_response('neon/tables-datatable.html', locals(), context_instance=RequestContext(request))
+
 @login_required
 def captura(request):
+    caller = "2"
     #lista_avaluos = Avaluo.objects.all()
     captura_masiva = CapturaMasiva() 
     avaluos = (Avaluo.objects
@@ -230,18 +240,11 @@ def captura(request):
                .filter(Q(Salida__isnull=True))
                .filter(Q(Visita__isnull=False))
                .exclude(Q(Mterreno__isnull=False) & Q(Mconstruccion__isnull=False) & Q(Solicitud__isnull=False))).order_by('-Solicitud')
-    return render_to_response('home/captura.html', {'avaluos': avaluos,'captura_masiva': captura_masiva}, context_instance=RequestContext(request))
-
-
-@login_required
-def visita(request):
-    visita_masiva = VisitaMasiva() 
-    avaluos = Avaluo.objects.filter(Estatus__in=['PROCESO','DETENIDO'], Visita__isnull=True, Salida__isnull=True).order_by('-Solicitud')
-    return render_to_response('home/visita.html', {'avaluos': avaluos,'visita_masiva':visita_masiva}, context_instance=RequestContext(request))
-
+    return render_to_response('neon/tables-datatable.html', locals(), context_instance=RequestContext(request))
 
 @login_required
 def salida(request):
+    caller = "3"
     salida_masiva = SalidaMasiva() 
     avaluos = (Avaluo.objects
                .filter(Q(Estatus__in=['PROCESO','DETENIDO']))
@@ -249,7 +252,7 @@ def salida(request):
                .filter(Q(Salida__isnull=True))
                .exclude(Q(Mterreno__isnull=True))
                .exclude(Q(Mconstruccion__isnull=True))).order_by('-Solicitud')
-    return render_to_response('home/salida.html', {'avaluos': avaluos,'salida_masiva':salida_masiva}, context_instance=RequestContext(request))
+    return render_to_response('neon/tables-datatable.html', locals(), context_instance=RequestContext(request))
 
 def salida_efectiva(request, id):
     avaluo = Avaluo.objects.get(avaluo_id=id)

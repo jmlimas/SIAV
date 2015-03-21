@@ -32,7 +32,7 @@ def get_visitadores(request):
 def calendario(request):
     avaluos = Avaluo.objects.filter(Estatus__contains='PROCESO', Visita__isnull=True, Salida__isnull=True) | Avaluo.objects.filter(Estatus__contains='DETENIDO', Visita__isnull=True, Salida__isnull=True)
     avaluos = avaluos.order_by('-Solicitud').exclude(avaluo_id__in = Evento.objects.all().values_list('avaluo_id', flat=True))
-    return render_to_response('home/calendario.html', {'avaluos': avaluos}, context_instance=RequestContext(request))
+    return render_to_response('neon/extra-calendar-2.html', {'avaluos': avaluos}, context_instance=RequestContext(request))
 
 
 

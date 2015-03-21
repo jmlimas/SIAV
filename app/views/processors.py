@@ -7,9 +7,8 @@ from app.models import Avaluo
 from websock.models import EventoUsuario
 
 def get_all_users(request):
-    users = User.objects.values_list('first_name','id')
-    users_json = simplejson.dumps(list(users), cls=DjangoJSONEncoder)
-    return {'users_json':users_json}
+    users = User.objects.all()
+    return {'users':users}
 
 #   Metodo para contar los avaluos en cada seccion.
 def cantidades_en_proceso(request):
@@ -42,7 +41,7 @@ def cantidades_en_proceso(request):
     en_proceso = avaluos.count()
 
     #Eventos usuario
-    conteo_eventos_usuario = EventoUsuario.objects.values('recibe_id').filter(recibe_id=request.user,leido=False).count()
+    conteo_eventos_usuario = EventoUsuario.objects.values('recibe_id').filter(recibe_id=request.user.id,leido=False).count()
 
     avaluos = []
     return locals()
