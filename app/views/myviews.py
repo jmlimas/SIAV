@@ -2,6 +2,7 @@
 import os
 import redis
 import datetime
+import operator
 from websock.models import Eventos, Comments
 from django.utils import timezone
 from datetime import date
@@ -474,7 +475,6 @@ def edita_salida(request, id):
         form = SalidaAvaluo(instance=avaluo)
     return render_to_response('home/edita_salida.html', {'form': form, 'avaluo': avaluo, 'folio_k': folio_k}, context_instance=RequestContext(request))
 
-
 @staff_member_required
 def guarda_master(request, id):
     if id is None:
@@ -514,8 +514,7 @@ def guarda_master(request, id):
     imagenes = ImagenAvaluo.objects.filter(avaluo = avaluo.avaluo_id)[:5]
     return render_to_response('home/consultas/respuesta_consulta_master.html', {'forma': forma, 'avaluo': avaluo, 'imagenes': imagenes}, context_instance=RequestContext(request))
 
-
-@staff_member_required
+@login_required
 def consulta_master(request):
     if request.is_ajax():
         foliok = request.GET.get('foliok', '')
@@ -524,6 +523,7 @@ def consulta_master(request):
         col = request.GET.get('col', '')
         factura = request.GET.get('factura', '')
         edo = request.GET.get('edo', '')
+        est = request.GET.get('est', '').split(',')
         mun = request.GET.get('mun', '')
         val = request.GET.get('val', '')
         cli = request.GET.get('cli', '')
@@ -546,6 +546,9 @@ def consulta_master(request):
             results = results.filter((Q(Factura__contains=factura)))
         if edo:
             results = results.filter((Q(Estado=edo)))    
+        if est:
+            querST = reduce(operator.or_, (Q(Estatus__contains=x) for x in est))
+            results = results.filter(querST)
         if mun:
             results = results.filter((Q(Municipio=mun)))
         if val:

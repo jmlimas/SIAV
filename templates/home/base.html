@@ -103,15 +103,10 @@
             <i class="glyphicon glyphicon-calendar"></i> 
           </a>
                 </li>
-                {% if user.is_staff %}
                 <li class="{% block consulta_master %}{% endblock %}">
                     <a href="/SIAV/consulta_master/">Consulta</a>
                 </li>
-                {% else %}
-                <li class="{% block consulta_sencilla %}{% endblock %}">
-                    <a href="/SIAV/consulta_sencilla/">Consulta</a>
-                </li>
-                {% endif %} {% if user.is_staff %}
+                {% if user.is_staff %}
                 <li class="{% block lista_factura %}{% endblock %}">
                     <a href="/SIAV/facturar/">Facturar</a>
                 </li>

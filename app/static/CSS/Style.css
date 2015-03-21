@@ -8,6 +8,12 @@
     font-style:italic;
     font-size:large;
     }
+
+    td{
+    font-size:xx-small;
+    padding: 0px 0px 0px 0px;
+    }
+
     .filters {
     display:none;
     }

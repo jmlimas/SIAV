@@ -79,12 +79,18 @@
             cli = $('#id_Cliente').val();
             dep = $('#id_Depto').val();
             imp = $('#id_Importe').val();
+            var allVals = [];
+                     $('#id_estatus :checked').each(function() {
+                       allVals.push($(this).val());
+                     });
             val = encodeURIComponent($('#id_Valor').val());
             tipo = $('#id_Tipo').val();
             mes = $('#id_Mes').val();
             anio = $('#id_Anio').val();
+            
             //$('#results').html('&nbsp;').load('/SIAV/consulta_master/?q1=' + q1);
-            $('#results').html('&nbsp;').load('/SIAV/consulta_master/?foliok='+foliok+"&ref="+ref+"&calle="+calle+"&col="+col+"&edo="+edo+"&mun="+mun+"&factura="+factura+"&cli="+cli+"&dep="+dep+"&imp="+imp+"&val="+val+"&tipo="+tipo+"&mes="+mes+"&anio="+anio);
+            $('#results').html('&nbsp;').load('/SIAV/consulta_master/?foliok='+foliok+"&ref="+ref+"&calle="+calle+"&col="+col+"&edo="+edo+"&mun="+mun+"&factura="+factura+"&cli="+cli+"&dep="+dep+"&imp="+imp+"&val="+val+"&tipo="+tipo+"&mes="+mes+"&anio="+anio+"&est="+allVals);
+            alert("hi");
         });
     });
         
@@ -106,7 +112,7 @@
 {% block content %}
 
 
-  <h1>Consulta de Administrador</h1>
+  <h1>Consulta</h1>
     <br>
       {% if forma.errors %}
         <p style="color: red;">

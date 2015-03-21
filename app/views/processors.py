@@ -42,7 +42,7 @@ def cantidades_en_proceso(request):
     en_proceso = avaluos.count()
 
     #Eventos usuario
-    conteo_eventos_usuario = EventoUsuario.objects.values('recibe_id').filter(recibe_id=request.user,leido=False).count()
+    conteo_eventos_usuario = EventoUsuario.objects.values('recibe_id').filter(recibe_id=request.user.id,leido=False).count()
 
     avaluos = []
     return locals()

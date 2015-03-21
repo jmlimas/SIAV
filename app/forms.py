@@ -1,4 +1,5 @@
 # -*- encoding: utf-8 -*-
+import datetime
 from app.models import *
 from django import forms
 from django.forms import ModelForm
@@ -442,7 +443,7 @@ class FormaConsultaMaster(ModelForm):
     Estado = forms.ModelChoiceField(required=False,   queryset=Estado.objects.filter(is_active='True'))
     #Servicio = forms.CharField(required=False, label="Tipo.Servicio")
     Tipo = forms.ModelChoiceField(required=False, label="Tipo Inmueble",  queryset=Tipo.objects.all())
-    Estatus = forms.ChoiceField(choices=ESTATUS, required=False)
+    Estatus = forms.MultipleChoiceField(choices=ESTATUS, required=False, widget=forms.CheckboxSelectMultiple,)
     Valuador = forms.ModelChoiceField(required=False,  queryset=Valuador.objects.all())
     Prioridad = forms.ChoiceField(choices=PRIORIDAD, required=False)
     Referencia = forms.CharField(required=False)
@@ -461,7 +462,7 @@ class FormaConsultaMaster(ModelForm):
     Importe = forms.DecimalField(required=False, widget=forms.TextInput())
     Observaciones = forms.CharField(widget=forms.Textarea, required=False)
     Mes = forms.ChoiceField( choices=MESES, required=False)
-    Anio = forms.ChoiceField( choices=ANIOS, required=False)
+    Anio = forms.ChoiceField(choices=[], required=False)
     Factura = forms.CharField(required=False)
 
     class Meta:
@@ -486,6 +487,7 @@ class FormaConsultaMaster(ModelForm):
                     'Fecha:',
                     'Mes',
                     'Anio',
+                    Field('Estatus',id='id_estatus'),
                     css_class='col-md-3'),
                 Div(
                     'Edita Avaluo - Captura',
@@ -505,13 +507,16 @@ class FormaConsultaMaster(ModelForm):
                     'Valor',
                     'Factura',
                     'Importe',
+                     
                     css_class='col-md-3'), css_class='row-fluid'),
             ButtonHolder(
                 #Submit('Buscar',  'Buscar',  css_class='button white'),
             ))
         super(FormaConsultaMaster,  self).__init__(*args,  **kwargs)
         self.fields['Municipio'] = forms.ModelChoiceField(required=False,  queryset=Municipio.objects.filter(estado_id__is_active='True'))
-
+        year = datetime.datetime.now().year
+        anios = Avaluo.objects.all().dates('Salida', 'year')[0].year
+        self.fields['Anio'].choices = [(i, i) for i in range(anios, year+1)]
 
 class RespuestaConsultaMaster(ModelForm):
     FolioK = forms.CharField( required=False)
@@ -617,7 +622,7 @@ class RespuestaConsultaMaster(ModelForm):
         self.fields['Municipio'] = forms.ModelChoiceField(queryset=Municipio.objects.filter(estado_id__is_active='True',estado_id=estado))
         self.fields['Depto'] = forms.ModelChoiceField(required=False, queryset=Depto.objects.filter(is_active='True'))
 
-
+'''
 class FormaConsultaSencilla(ModelForm):
     FolioK = forms.CharField(required=False)
     Calle = forms.CharField(required=False)
@@ -647,7 +652,7 @@ class FormaConsultaSencilla(ModelForm):
     Importe = forms.DecimalField(required=False, widget=forms.TextInput())
     Observaciones = forms.CharField(widget=forms.Textarea, required=False)
     Mes = forms.ChoiceField( choices=MESES, required=False)
-    Anio = forms.ChoiceField( choices=ANIOS, required=False)
+    Anio = forms.ChoiceField(choices=[], required=False)
 
     class Meta:
         model = Avaluo
@@ -694,7 +699,10 @@ class FormaConsultaSencilla(ModelForm):
             ))
         super(FormaConsultaSencilla,  self).__init__(*args,  **kwargs)
         self.fields['Municipio'] = forms.ModelChoiceField(required=False,  queryset=Municipio.objects.filter(estado_id__is_active='True'))
-
+        year = datetime.datetime.now().year
+        anios = Avaluo.objects.all().dates('Salida', 'year')[0].year
+        self.fields['Anio'].choices = [(i, i) for i in range(anios, year+1)]
+'''
 
 class AltaValuador(ModelForm):
     Nombre = forms.CharField()

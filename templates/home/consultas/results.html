@@ -61,7 +61,11 @@
 		<span class="hint"> {{ avaluo.Estatus }}</span>
 		</td>
 		<td class="tabla_opciones"> 
+		{% if user.is_staff%}
 		<span class="hint"><a href="/SIAV/guarda_master/{{avaluo.avaluo_id}}" >Editar</a></span>
+		{% else%}
+		<span class="hint"><a href="/SIAV/respuesta_consulta_sencilla/{{avaluo.avaluo_id}}" >Ver</a></span>
+		{% endif%}
 		</td>
 	</tr>
 	{% endfor %}
