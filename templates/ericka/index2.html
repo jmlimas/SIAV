@@ -126,8 +126,8 @@
                             <article>
                                 <div class="services-box">
                                     <img src="{{ STATIC_URL }}/CSS/theme_images/network1.png" alt="">
-                                    <h3>Marketing Social</h3>
-                                    <p>Te ayudamos a incrementar y mejorar la presencia de tu negocio en línea mediante campañas a través de las redes sociales. </p>
+                                    <h3>Administración de Procesos de Negocio</h3>
+                                    <p>A través de las herramientas tecnológicas más avanzadas te ayudamos en el desarrollo de tus procesos de negocio. <!-- Realizamos análisis, desarrollo, implmentación y despliegue de nuevos procesos para crear nuevos procesos u optimizar tus procesos existentes. --></p>
                                     <!-- <p><a href="#" class="btn">View More</a></p> -->
                                 </div>
                             </article>
@@ -314,66 +314,8 @@
             </section> 
             <!-- end quote section -->
 
-            <!-- blog section -->
-            <section id="blog" class="space">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-sm-8 col-sm-offset-2 client-intro text-center">
-                            <h1 class="section-head">Nuestro <strong>Blog</strong></h1>
-<!--                             <hr class="style" style="width:10%;">
- -->                            <p>Conoce más sobre nuestra empresa visitando nuestro blog.</p>
-                         </div>
-                    </div>
-                    <div class="row">
-                    <!-- blog slider -->
-                    <div id="blog-slider" class="owl-carousel animated" data-animation="fadeInDown">
-                            <!-- blog item -->
-                            {% for b in lista_post%}
-                            <article class="blog-item">
-                                <!-- Post Img -->
-                                <div class="post-media">
-   <!--                                  <a href="http://blog.alluxi.mx/{{b.slug}}">
-                                        <img src="{{ b.avatar }}" alt="" class="img-responsive">
-                                    </a> -->
-                                </div>
-                                <!-- end Post Img -->
-                                <!-- Post Content -->
-                                <div class="item-content">
-                                    <!-- Post Title -->
-                                    <div class="post-title">
-                                        <h2 class="title">
-                                            <a href="http://blog.alluxi.mx/{{b.slug}}">{{b.titulo}}</a>
-                                        </h2>
-                                    </div>
-                                    <!-- end Post Title -->
-                                    <!-- Post Meta -->                            <hr class="" style="width:10%;">
+            <!-- blog section 
 
-                                    <div class="post-meta">
-                                        <ul>
-<!--                                             <li class="date"></li>
- -->                                            <li>
-                                                <span>Por <a href="http://blog.alluxi.mx/author/gustavo-reyes/">{{b.autor}}</a></span>
-                                            </li>
- <!--                                            <li>
-                                                <span>in <a href="#">{{Tutorials}}</a></span>
-                                            </li> -->
-                                        </ul>
-                                    </div>
-                                    <!-- end Post Meta -->
-                                    <!-- Post Entry -->
-                                    <div class="post-entry">
-                                        <p>{{b.contenido}}</p>
-                                    </div>
-                                    <!-- end Post Entry -->
-                                    <a href="http://blog.alluxi.mx/{{b.slug}}" class="btn">Leer más</a>
-                                </div>
-                                <!-- end Post Content -->
-                            </article>
-                            {% endfor%}
-                           <!-- end blog items -->
-                      </div>
-                      <!-- end blog slider -->
-                    </div>
                     <!-- end row -->                    
                 </div>
                 <!-- end container -->
