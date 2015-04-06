@@ -103,15 +103,10 @@
             <i class="glyphicon glyphicon-calendar"></i> 
           </a>
                 </li>
-                {% if user.is_staff %}
                 <li class="{% block consulta_master %}{% endblock %}">
                     <a href="/SIAV/consulta_master/">Consulta</a>
                 </li>
-                {% else %}
-                <li class="{% block consulta_sencilla %}{% endblock %}">
-                    <a href="/SIAV/consulta_sencilla/">Consulta</a>
-                </li>
-                {% endif %} {% if user.is_staff %}
+                {% if user.is_staff %}
                 <li class="{% block lista_factura %}{% endblock %}">
                     <a href="/SIAV/facturar/">Facturar</a>
                 </li>
@@ -214,25 +209,7 @@
 <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/sweet-alert.min.js"></script>
 
 
-<script type="text/javascript">
-// $(document).ready(function(){
-//   var box = null;
-//   box = $("#chat_div").chatbox({id:'{{user.username}}', 
-//     user:{key : "value"},
-//     hidden: true,
-//     title : "chat",
 
-
-//     messageSent : function(id, user, msg) {
-//       $("#log").append(id + " said: " + msg + "<br/>");
-//       $("#chat_div").chatbox("option", "boxManager").addMsg(id, msg);
-//     }});
-
-
-//   $('.ui-chatbox-content').toggle();
-
-// });
-</script>
 
 <script type="text/javascript">
 $(document).ready(function() {
@@ -280,29 +257,6 @@ $(document).ready(function() {
     });
 
 
-    // $("#textBox").keydown(function(event) {
-    //     console.log("keydown");
-    //     var msg = entry_el.attr('value');
-    //     if (event.keyCode && event.keyCode == $.ui.keyCode.ENTER) {
-    //         msg = $.trim($(this).val());
-    //         if (msg.length > 0) {
-    //             socket.emit('send_message', msg, function(data) {
-    //                 console.log(data);
-    //             });
-    //         }
-    //         $(this).val('');
-    //         return false;
-    //     }
-    // });
-
-    // $(document).ready(function() {
-    //     $(window).keydown(function(event) {
-    //         if (event.keyCode == 13) {
-    //             event.preventDefault();
-    //             return false;
-    //         }
-    //     });
-    // });
 
 
 });

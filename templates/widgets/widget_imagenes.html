@@ -4,17 +4,15 @@
 <link rel="stylesheet" href="{{ STATIC_URL }}CSS/flexslider/flexslider.css" type="text/css" media="screen" />
 <link rel="stylesheet" href="{{ STATIC_URL }}CSS/fileuploader.css" type="text/css" media="screen" />
 <link rel="stylesheet" href="{{ STATIC_URL }}CSS/fine-uploader.css" type="text/css" media="screen" />
-<div id="fine-uploader" style="float:left;">
+ <div id="fine-uploader" style="float:left;">
       <noscript>
         <p>Please enable JavaScript to use file uploader.</p>
         <!-- or put a simple form for upload here --> </noscript>
     </div>
-    <br>
-    <br>
     {% if imagenes %}
     <div  id="main" role="main">
-      <section class="slider">
-        <div style="max-width:500px;max-height:310px" id="slider" class="flexslider">
+      <section class="sliderFlex">
+<!--         <div style="max-width:500px;max-height:310px" id="slider" class="flexslider">
           <ul class="slides">
             {% for item in imagenes %}
             {% if item.imagen.url|file_exists %}
@@ -23,7 +21,7 @@
             {% endif %}
             {% endfor %}
           </ul>
-        </div>
+        </div> -->
         <div style="width:500px" id="carousel" class="flexslider" >
           <ul class="slides">
             {% for item in imagenes %}

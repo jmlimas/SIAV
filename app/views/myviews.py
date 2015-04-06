@@ -108,7 +108,7 @@ def facturar(request):
             else:
                 total_general += float(str(x['total']))
 
-        return render_to_response('home/lista_factura.html', locals(), context_instance=RequestContext(request))
+        return render_to_response('neon/tables-datatable-factura.html', locals(), context_instance=RequestContext(request))
 
 
 #   Vista que se encarga de liquidar las facturas ya pagadas
@@ -254,13 +254,14 @@ def salida(request):
                .exclude(Q(Mconstruccion__isnull=True))).order_by('-Solicitud')
     return render_to_response('neon/tables-datatable.html', locals(), context_instance=RequestContext(request))
 
+'''
 def salida_efectiva(request, id):
     avaluo = Avaluo.objects.get(avaluo_id=id)
     avaluo.Salida = datetime.date.isoformat(date.today())
     avaluo.Estatus = 'CONCLUIDO'
     avaluo.save()
     return salida(request)
-
+'''
 
 @login_required
 def alta_avaluo(request):
@@ -291,7 +292,7 @@ def alta_avaluo(request):
             return redirect('/SIAV/alta_avaluo/')  # Redirect after POST
     else:
         forma = AltaAvaluo()  # An unbound form
-    return render_to_response('home/alta_avaluo.html', {'forma': forma,'formset_sencilla': formset_sencilla,'formset': formset, }, context_instance=RequestContext(request))
+    return render_to_response('neon/forma_alta.html', {'forma': forma,'formset_sencilla': formset_sencilla,'formset': formset, }, context_instance=RequestContext(request))
 
 
 def alta_avaluo_paquete(request):
@@ -349,49 +350,13 @@ def alta_avaluo_paquete(request):
         return redirect('/SIAV/alta_avaluo/')
         
 
-    return render_to_response('home/alta_avaluo.html', {'forma': forma,'formset_sencilla': formset_sencilla,'formset': formset, }, context_instance=RequestContext(request))
+    return render_to_response('neon/forma_alta.html', {'forma': forma,'formset_sencilla': formset_sencilla,'formset': formset, }, context_instance=RequestContext(request))
 
-@login_required
-def actualiza_avaluo(request, id):
-    if id is None:
-        form = CapturaAvaluo()
-    else:
-        avaluo = Avaluo.objects.get(pk=id)
-        colonia = avaluo.Colonia
-        avaluo_id = avaluo.avaluo_id
-
-        folio_k = genera_foliok(avaluo_id, colonia)
-
-    if request.method == 'POST':
-        form = CapturaAvaluo(request.POST, instance=avaluo)
-        form.helper.form_action = reverse('actualiza_avaluo', args=[id])
-        if form.is_valid():
-            obj = form.save(commit=False)
-            obj.FolioK = folio_k
-            form.save()
-
-            # Enviar notificación a usuarios
-            r = redis.StrictRedis(host='localhost', port=6379, db=0)
-            accion = (' capturó el avalúo con FolioK: ').decode("UTF-8", "ignore")
-
-            r.publish('chat', request.user.username + accion + '<b>' + obj.FolioK + '</b>')
-
-            #Crear evento
-            Eventos.objects.create(user=request.user, evento='CAPTURA',avaluo=obj)
-
-            return redirect('/SIAV/captura/')
-    else:
-        form = CapturaAvaluo(instance=avaluo)
-    decimal = decimal_conversion(avaluo)
-    cercanos = find_closest(avaluo)
-    imagenes = ImagenAvaluo.objects.filter(avaluo = avaluo.avaluo_id)[:5]
-    archivos = ArchivoAvaluo.objects.filter(avaluo = avaluo.avaluo_id)
-    return render_to_response('home/edita_avaluo.html', {'form': form, 'avaluo': avaluo, 'decimal': decimal, 'cercanos': cercanos,'imagenes': imagenes,'archivos': archivos, 'folio_k': folio_k}, context_instance=RequestContext(request))
 
 
 @login_required
 def edita_visita(request, id):
-
+    caller = "1"
     if id is None:
         form = VisitaAvaluo()
     else:
@@ -440,11 +405,50 @@ def edita_visita(request, id):
     decimal = decimal_conversion(avaluo)
     cercanos = find_closest(avaluo)
     imagenes = ImagenAvaluo.objects.filter(avaluo = avaluo.avaluo_id)[:3]
-    return render_to_response('home/edita_visita.html', {'form': form, 'avaluo': avaluo, 'decimal': decimal, 'cercanos': cercanos,'imagenes': imagenes, 'folio_k': folio_k}, context_instance=RequestContext(request))
+    return render_to_response('neon/forma.html', locals(), context_instance=RequestContext(request))
+
+@login_required
+def actualiza_avaluo(request, id):
+    caller = "2"
+    if id is None:
+        form = CapturaAvaluo()
+    else:
+        avaluo = Avaluo.objects.get(pk=id)
+        colonia = avaluo.Colonia
+        avaluo_id = avaluo.avaluo_id
+
+        folio_k = genera_foliok(avaluo_id, colonia)
+
+    if request.method == 'POST':
+        form = CapturaAvaluo(request.POST, instance=avaluo)
+        form.helper.form_action = reverse('actualiza_avaluo', args=[id])
+        if form.is_valid():
+            obj = form.save(commit=False)
+            obj.FolioK = folio_k
+            form.save()
+
+            # Enviar notificación a usuarios
+            r = redis.StrictRedis(host='localhost', port=6379, db=0)
+            accion = (' capturó el avalúo con FolioK: ').decode("UTF-8", "ignore")
+
+            r.publish('chat', request.user.username + accion + '<b>' + obj.FolioK + '</b>')
+
+            #Crear evento
+            Eventos.objects.create(user=request.user, evento='CAPTURA',avaluo=obj)
+
+            return redirect('/SIAV/captura/')
+    else:
+        form = CapturaAvaluo(instance=avaluo)
+    decimal = decimal_conversion(avaluo)
+    cercanos = find_closest(avaluo)
+    imagenes = ImagenAvaluo.objects.filter(avaluo = avaluo.avaluo_id)[:5]
+    archivos = ArchivoAvaluo.objects.filter(avaluo = avaluo.avaluo_id)
+    return render_to_response('neon/forma.html', locals(), context_instance=RequestContext(request))
 
 
 @login_required
 def edita_salida(request, id):
+    caller = "3"
     if id is None:
         form = SalidaAvaluo()
     else:
@@ -475,20 +479,20 @@ def edita_salida(request, id):
             return redirect('/SIAV/salida/')
     else:
         form = SalidaAvaluo(instance=avaluo)
-    return render_to_response('home/edita_salida.html', {'form': form, 'avaluo': avaluo, 'folio_k': folio_k}, context_instance=RequestContext(request))
+    return render_to_response('neon/forma.html',locals(), context_instance=RequestContext(request))
 
 
 @staff_member_required
 def guarda_master(request, id):
     if id is None:
-        forma = RespuestaConsultaMaster()
+        form = RespuestaConsultaMaster()
         imagenes = ImagenAvaluo.objects.none()
         return render_to_response('home/consultas/respuesta_consulta_master.html', {'forma': forma, 'imagenes': imagenes}, context_instance=RequestContext(request))
     else:
         avaluo = Avaluo.objects.get(pk=id)
         imagenes = ImagenAvaluo.objects.filter(avaluo=id)[:3]
 
-        forma = RespuestaConsultaMaster(instance=avaluo)
+        form = RespuestaConsultaMaster(instance=avaluo)
 
     if request.method == 'POST':
         avaluo = Avaluo.objects.get(pk=id)
@@ -496,13 +500,13 @@ def guarda_master(request, id):
         colonia = avaluo.Colonia
         avaluo_id = avaluo.avaluo_id
 
-        forma = RespuestaConsultaMaster(request.POST, instance=avaluo)
-        forma.helper.form_action = reverse('guarda_master', args=[id])
+        form = RespuestaConsultaMaster(request.POST, instance=avaluo)
+        form.helper.form_action = reverse('guarda_master', args=[id])
         folio_k = genera_foliok(avaluo_id, colonia)
-        if forma.is_valid():
-            obj = forma.save(commit=False)
+        if form.is_valid():
+            obj = form.save(commit=False)
             obj.FolioK = folio_k
-            forma.save()
+            form.save()
 
             # Enviar notificación a usuarios
             r = redis.StrictRedis(host='localhost', port=6379, db=0)
@@ -515,7 +519,7 @@ def guarda_master(request, id):
 
             return redirect('/SIAV/consulta_master/')
     imagenes = ImagenAvaluo.objects.filter(avaluo = avaluo.avaluo_id)[:5]
-    return render_to_response('home/consultas/respuesta_consulta_master.html', {'forma': forma, 'avaluo': avaluo, 'imagenes': imagenes}, context_instance=RequestContext(request))
+    return render_to_response('neon/forma.html', locals(), context_instance=RequestContext(request))
 
 
 @staff_member_required
@@ -586,7 +590,7 @@ def consulta_master(request):
         return render_to_response('home/consultas/results.html', data, context_instance=RequestContext(request))
     else:
         forma = FormaConsultaMaster()
-        return render_to_response('home/consultas/consulta_master.html', {'forma': forma}, context_instance=RequestContext(request))
+        return render_to_response('neon/consulta.html', {'forma': forma}, context_instance=RequestContext(request))
 
 
 
@@ -637,7 +641,7 @@ def consulta_comparable(request):
         forma = FormaConsultaMaster()
         return render_to_response('home/consultas/consulta_comparable.html', context_instance=RequestContext(request))
 
-
+'''
 @login_required
 def consulta_sencilla(request):
     if request.method == 'POST':
@@ -696,7 +700,7 @@ def consulta_sencilla(request):
     else:
         forma = FormaConsultaSencilla()
     return render_to_response('home/consultas/consulta_sencilla.html', {'forma': forma}, context_instance=RequestContext(request))
-
+'''
 
 @login_required
 def respuesta_consulta_sencilla(request, id):
@@ -756,11 +760,10 @@ def mapas(request):
     imagenes = ImagenAvaluo.objects.all()
     return render_to_response('home/mapas.html', {'avaluo': avaluo, 'todos': todos, 'imagenes': imagenes,'decimal': decimal, 'cercanos': cercanos}, context_instance=RequestContext(request))
 
-
+'''
 @login_required
 def submitted(request):
     return render_to_response('home/submitted.html', context_instance=RequestContext(request))
-
 
 def pdf_view(avaluo_id):
     archivo = ArchivoAvaluo.objects.filter(avaluo = avaluo.avaluo_id)
@@ -769,13 +772,14 @@ def pdf_view(avaluo_id):
     return response
     pdf.closed
 
-
 def mobile(request):
     avaluos = Avaluo.objects.filter(Estatus__contains='PROCESO', Salida__isnull=True) | Avaluo.objects.filter(Estatus__contains='DETENIDO', Salida__isnull=True)
     avaluos = avaluos.order_by('-Solicitud')
     return render_to_response('mobile/page.html', {'avaluos':avaluos}, context_instance=RequestContext(request))
+'''
 
 def visita_masiva(request):
+    caller="1"
     visita_masiva = VisitaMasiva(request.POST)
     if visita_masiva.is_valid():
         avaluo_visitado = request.POST.getlist('avaluo_visitado')
@@ -802,12 +806,13 @@ def visita_masiva(request):
 
     avaluos = Avaluo.objects.filter(Estatus__contains='PROCESO', Visita__isnull=True, Salida__isnull=True) | Avaluo.objects.filter(Estatus__contains='DETENIDO', Visita__isnull=True, Salida__isnull=True)
     avaluos = avaluos.order_by('-Solicitud')
-    return render_to_response('home/visita.html', {'avaluos': avaluos,'visita_masiva':visita_masiva,'visita_masiva':visita_masiva}, context_instance=RequestContext(request))
+    return render_to_response('neon/tables-datatable.html', locals(), context_instance=RequestContext(request))
 
 
 
 def captura_masiva(request):
     captura_masiva = CapturaMasiva(request.POST)
+    caller='2'
     if captura_masiva.is_valid():
         avaluo_capturado = request.POST.getlist('avaluo_capturado')
         avaluo_capturados = (Avaluo.objects
@@ -832,10 +837,11 @@ def captura_masiva(request):
                .filter(Q(Visita__isnull=False))
                .exclude(Q(Mterreno__isnull=False) & Q(Mconstruccion__isnull=False) & Q(Solicitud__isnull=False)))
     avaluos = avaluos.order_by('-Solicitud')
-    return render_to_response('home/captura.html', {'avaluos': avaluos,'captura_masiva':captura_masiva}, context_instance=RequestContext(request))
+    return render_to_response('neon/tables-datatable.html', locals(), context_instance=RequestContext(request))
 
 
 def salida_masiva(request):
+    caller='3'
     salida_masiva = SalidaMasiva(request.POST)
     if salida_masiva.is_valid():
         avaluo_salida = request.POST.getlist('avaluo_salida')
@@ -865,7 +871,7 @@ def salida_masiva(request):
                .exclude(Q(Mterreno__isnull=True))
                .exclude(Q(Mconstruccion__isnull=True)))
     avaluos = avaluos.order_by('-Solicitud')
-    return render_to_response('home/salida.html', {'avaluos': avaluos,'salida_masiva':salida_masiva}, context_instance=RequestContext(request))
+    return render_to_response('neon/tables-datatable.html', locals(), context_instance=RequestContext(request))
 
 def cambia_estatus(request, match):
     pieces = match.split('/')

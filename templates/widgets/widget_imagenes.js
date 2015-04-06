@@ -4,13 +4,13 @@
 
 
    <script type="text/javascript">
-    // $(function(){
+    // jQuery(function(){
     //   SyntaxHighlighter.all();
     // });
 
 
-    $(window).load(function(){
-      $('#carousel').flexslider({
+    jQuery(window).load(function(){
+      jQuery('#carousel').flexslider({
         animation: "slide",
         controlNav: true,
         animationLoop: false,
@@ -20,14 +20,14 @@
         asNavFor: '#slider'
       });
 
-      $('#slider').flexslider({
+      jQuery('#slider').flexslider({
         animation: "slide",
         controlNav: false,
         animationLoop: false,
         slideshow: false,
         sync: "#carousel",
         start: function(slider){
-          $('body').removeClass('loading');
+          jQuery('body').removeClass('loading');
         }
       });
     });
@@ -36,8 +36,8 @@
 
   <script>
     // Wait until the DOM is 'ready'
-    $(document).ready(function () {
-        $("#fine-uploader").fineUploader({
+    jQuery(document).ready(function () {
+        jQuery("#fine-uploader").fineUploader({
             debug: true,
             request: {
                 endpoint: "{% url "app.uploads.ajax_upload" avaluo.avaluo_id avaluo.FolioK %}",

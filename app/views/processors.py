@@ -55,7 +55,7 @@ def cantidades_visita(param):
 
 
 def cantidades_salida(param):
- 	#Conteo avaluos de Salida
+  #Conteo avaluos de Salida
     avaluos = (Avaluo.objects
                .values('FolioK')
                .filter(Q(Estatus__in=['PROCESO','DETENIDO']))

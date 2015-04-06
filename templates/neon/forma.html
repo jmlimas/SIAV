@@ -1,0 +1,157 @@
+{% extends "neon/index.html" %}
+
+{% load listutil %}
+
+{% load thumbnail %}
+
+{% load crispy_forms_tags %}
+
+{% load currency %}
+
+
+{% block content %}
+
+  <div class="row">
+    <div class="col-md-12">
+
+      <h1>
+        {% if caller = '0' %}
+      Servicios en Proceso   
+    {% elif caller = '1' %}
+      Visita
+    {% elif caller = '2' %}
+      Captura
+    {% elif caller = '3' %}
+      Salida
+    {% endif %}
+      </h1>
+
+    </div>
+  </div>
+ <div class="row">
+    <div class="col-md-4">{% include "widgets/widget_imagenes.html" %}</div>
+
+</div>
+ 
+  <!-- Row Fluid Div !-->
+
+  <br>
+  {% for item in archivos %}
+  <a href="/{{item.file}}" target="_blank" >{{item.file}}</a>
+  <br>
+  {% endfor %}
+  <div class="row">
+    <div class="col-md-8">
+  <div class="panel panel-primary" data-collapsed="0">
+    <div class="panel-heading">
+      <div class="panel-title">Forma</div>
+          <div class="panel-options">
+            <a href="#" data-rel="close">
+              <i class="entypo-cancel"></i>
+            </a>
+          </div>
+      <div class="panel-options"></div>
+    </div>
+    <div class="panel-body">{% crispy form %}</div>
+  </div>
+</div>
+    <div class="col-md-4">
+      <div class="panel panel-primary" data-collapsed="0">
+        <div class="panel-heading">
+          <div class="panel-title">Información</div>
+          <div class="panel-options">
+            <a href="#" data-rel="close">
+              <i class="entypo-cancel"></i>
+            </a>
+          </div>
+        </div>
+      <table class="table" id="datos_texto">
+        <tr>
+          <td>
+            Folio 
+          </td>
+          <td>
+            <b>{{ folio_k }}</b>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            Tipo de Servicio
+          </td>
+          <td>
+             <b>{{ avaluo.Servicio }}</b>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            Cliente
+            
+          </td>
+          <td>
+            <b>{{ avaluo.Cliente }}</b>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            Departamento
+            
+          </td>
+          <td>
+            <b>{{ avaluo.Depto}}</b>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            Fecha Solicitud
+            
+          </td>
+          <td>
+            <b>{{ avaluo.Solicitud }}</b>
+          </td>
+        </tr>
+      </table>
+     </div>
+      <div class="panel panel-primary" data-collapsed="0">
+        <div class="panel-heading">
+          <div class="panel-title">Localización</div>
+          <div class="panel-options">
+            <a href="#" data-rel="close">
+              <i class="entypo-cancel"></i>
+            </a>
+          </div>
+        </div>
+        <div class="panel body no-padding">
+          <div id="map_canvas" style="width: 100%; height: 330px;"  style="float:right;"></div>
+        </div>
+      </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<!-- Imported styles on this page -->
+<link rel="stylesheet" href="{{ STATIC_URL }}CSS/smoothness/jquery-ui-1.8.24.custom.css">
+
+<script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/ajax_estados_municipios.js"></script>
+<script src="{{ STATIC_URL }}JS/jquery.tooltipster.min.js"></script>
+{% include "widgets/widget_mapas.js" %}
+{% include "widgets/widget_imagenes.js" %}
+<script type="text/javascript"> 
+jQuery(function() {
+  jQuery('#id_Contacto').tooltipster({
+  content: 'Escribe el correo del contacto a notificar.',
+  contentAsHTML: true,
+  interactive: true,
+  position: 'right',
+});
+
+          });
+
+
+
+
+</script>
+{% endblock %}
+</body>
+</html>

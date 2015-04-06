@@ -89,18 +89,19 @@ h2 {
 }
 
 
-input[type=text],input[type=password],input[type=number]{
+/*input[type=text],input[type=password],input[type=number]{
   width:200px;
-}
+}*/
 
 #id_LatitudG,#id_LatitudM,#id_LatitudS,#id_LongitudG,#id_LongitudM,#id_LongitudS{
   width:100px;
 }
 
 
-.select{
+/*.select{
   width:200px;
 }
+*/
 
 input#login {
   margin:0 auto;

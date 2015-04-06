@@ -8,7 +8,7 @@
 	<meta name="description" content="Neon Admin Panel" />
 	<meta name="author" content="" />
 
-	<title>Neon | Dashboard</title>
+	<title>SIAV</title>
 
 	<link rel="stylesheet" href="{{ STATIC_URL }}/assets/js/jquery-ui/css/no-theme/jquery-ui-1.10.3.custom.min.css">
 	<link rel="stylesheet" href="{{ STATIC_URL }}/assets/css/font-icons/entypo/css/entypo.css">
@@ -44,7 +44,7 @@
 
 				<!-- logo -->
 				<div class="logo">
-					<a href="index.html">
+					<a href="/SIAV/">
 						<img src="{{ STATIC_URL }}/CSS/images/SIAV_logo.png" width="120" alt="" />
 					</a>
 				</div>
@@ -71,26 +71,37 @@
 				<!-- add class "multiple-expanded" to allow multiple submenus to open -->
 				<!-- class "auto-inherit-active-class" will automatically add "active" class for parent elements who are marked already with class "active" -->
 
-
+				<li>
+					<a href="/SIAV/alta_avaluo">
+						<i class="glyphicon glyphicon-chevron-down"></i>
+						<span class="title">Alta</span>
+					</a>
+				</li>
 				<li>
 					<a href="/SIAV/visita">
-						<i class="entypo-monitor"></i>
+						<i class="glyphicon glyphicon-camera"></i>
 						<span class="title">Visita</span>
 						<span class="badge badge-secondary">{{por_visitar}}</span>
 					</a>
 				</li>
 				<li>
 					<a href="/SIAV/captura">
-						<i class="entypo-monitor"></i>
+						<i class="glyphicon glyphicon-home"></i>
 						<span class="title">Captura</span>
 						<span class="badge badge-secondary">{{por_capturar}}</span>
 					</a>
 				</li>
 				<li>
 					<a href="/SIAV/salida">
-						<i class="entypo-monitor"></i>
+						<i class="entypo-check"></i>
 						<span class="title">Salida</span>
 						<span class="badge badge-secondary">{{por_salida}}</span>
+					</a>
+				</li>
+				<li>
+					<a href="/SIAV/consulta_master">
+						<i class="entypo-search"></i>
+						<span class="title">Consulta</span>
 					</a>
 				</li>
 				<li>
@@ -99,6 +110,26 @@
 						<span class="title">Calendario</span>
 					</a>
 				</li>
+				{% if user.is_staff %}
+				<li>
+					<a href="/SIAV/facturar">
+						<i class="glyphicon glyphicon-list-alt"></i>
+						<span class="title">Facturar</span>
+					</a>
+				</li>
+				<li>
+					<a href="/SIAV/liquidar">
+						<i class="glyphicon glyphicon-usd"></i>
+						<span class="title">Liquidar</span>
+					</a>
+				</li>
+				<li>
+					<a href="/SIAV/estadistico/{%now "Y"%}/{%now "m"%}">
+						<i class="entypo-chart-bar"></i>
+						<span class="title">Estadístico</span>
+					</a>
+				</li>
+				{% endif %}
 		</ul>
 			
 		</div>
@@ -155,111 +186,11 @@
 					<li class="notifications dropdown">
 		
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
-							<i class="entypo-attention"></i>
+							<i id="notif_link" class="entypo-attention"></i>
 							<span class="badge badge-info">{{conteo_eventos_usuario}}</span>
 						</a>
-		
-						<ul class="dropdown-menu">
-							<li class="top">
-								<p class="small">
-									<a href="#" class="pull-right">Mark all Read</a>
-									Tienes <strong>{{conteo_eventos_usuario}}</strong> nuevas notificaciones.
-								</p>
-							</li>
-							
-							<li>
-								<ul class="dropdown-menu-list scroller">
-									<li class="unread notification-success">
-										<a href="#">
-											<i class="entypo-user-add pull-right"></i>
-											
-											<span class="line">
-												<strong>New user registered</strong>
-											</span>
-											
-											<span class="line small">
-												30 seconds ago
-											</span>
-										</a>
-									</li>
-									
-									<li class="unread notification-secondary">
-										<a href="#">
-											<i class="entypo-heart pull-right"></i>
-											
-											<span class="line">
-												<strong>Someone special liked this</strong>
-											</span>
-											
-											<span class="line small">
-												2 minutes ago
-											</span>
-										</a>
-									</li>
-									
-									<li class="notification-primary">
-										<a href="#">
-											<i class="entypo-user pull-right"></i>
-											
-											<span class="line">
-												<strong>Privacy settings have been changed</strong>
-											</span>
-											
-											<span class="line small">
-												3 hours ago
-											</span>
-										</a>
-									</li>
-									
-									<li class="notification-danger">
-										<a href="#">
-											<i class="entypo-cancel-circled pull-right"></i>
-											
-											<span class="line">
-												John cancelled the event
-											</span>
-											
-											<span class="line small">
-												9 hours ago
-											</span>
-										</a>
-									</li>
-									
-									<li class="notification-info">
-										<a href="#">
-											<i class="entypo-info pull-right"></i>
-											
-											<span class="line">
-												The server is status is stable
-											</span>
-											
-											<span class="line small">
-												yesterday at 10:30am
-											</span>
-										</a>
-									</li>
-									
-									<li class="notification-warning">
-										<a href="#">
-											<i class="entypo-rss pull-right"></i>
-											
-											<span class="line">
-												New comments waiting approval
-											</span>
-											
-											<span class="line small">
-												last week
-											</span>
-										</a>
-									</li>
-								</ul>
-							</li>
-							
-							<li class="external">
-								<a href="#">View all notifications</a>
-							</li>
-						</ul>
-		
+					<ul id="notif_dd" class="dropdown-menu">
+					</ul>
 					</li>
 		
 
@@ -309,7 +240,7 @@
 		<!-- Footer -->
 		<footer class="main">
 			
-			&copy; 2014 <strong>Neon</strong> Admin Theme by <a href="http://laborator.co" target="_blank">Laborator</a>
+			&copy; 2015 <strong>SIAV 3.0</strong> by <a href="http://alluxi.mx" target="_blank">Alluxi</a>
 		
 		</footer>
 	</div>
@@ -414,29 +345,145 @@
 </div>
 
 	<!-- Imported styles on this page -->
-	<link rel="stylesheet" href="{{ STATIC_URL }}/assets/js/jvectormap/jquery-jvectormap-1.2.2.css">
+	<!-- <link rel="stylesheet" href="{{ STATIC_URL }}/assets/js/jvectormap/jquery-jvectormap-1.2.2.css"> -->
 	<link rel="stylesheet" href="{{ STATIC_URL }}/assets/js/rickshaw/rickshaw.min.css">
 
 	<!-- Bottom scripts (common) -->
 	<script src="{{ STATIC_URL }}/assets/js/gsap/main-gsap.js"></script>
-	<script src="{{ STATIC_URL }}/assets/js/jquery-ui/js/jquery-ui-1.10.3.minimal.min.js"></script>
+	<script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/jquery-ui-1.8.24.custom.min.js"></script>
 	<script src="{{ STATIC_URL }}/assets/js/bootstrap.js"></script>
-	<script src="{{ STATIC_URL }}/assets/js/joinable.js"></script>
-	<script src="{{ STATIC_URL }}/assets/js/resizeable.js"></script>
+	<!--  <script src="{{ STATIC_URL }}/assets/js/joinable.js"></script> -->
+	<script src="{{ STATIC_URL }}/assets/js/resizeable.js"></script> 
 	<script src="{{ STATIC_URL }}/assets/js/neon-api.js"></script>
-	<script src="{{ STATIC_URL }}/assets/js/jvectormap/jquery-jvectormap-1.2.2.min.js"></script>
+	<!--  <script src="{{ STATIC_URL }}/assets/js/jvectormap/jquery-jvectormap-1.2.2.min.js"></script> -->
 
 
-	<!-- Imported scripts on this page -->
+	<!-- Imported scripts on this page 
 	<script src="{{ STATIC_URL }}/assets/js/jvectormap/jquery-jvectormap-europe-merc-en.js"></script>
 	<script src="{{ STATIC_URL }}/assets/js/jquery.sparkline.min.js"></script>
 	<script src="{{ STATIC_URL }}/assets/js/rickshaw/vendor/d3.v3.js"></script>
 	<script src="{{ STATIC_URL }}/assets/js/rickshaw/rickshaw.min.js"></script>
 	<script src="{{ STATIC_URL }}/assets/js/raphael-min.js"></script>
-	<script src="{{ STATIC_URL }}/assets/js/morris.min.js"></script>
+	<script src="{{ STATIC_URL }}/assets/js/morris.min.js"></script>-->
 	<script src="{{ STATIC_URL }}/assets/js/toastr.js"></script>
 	<script src="{{ STATIC_URL }}/assets/js/neon-chat.js"></script>
 	<script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/sweet-alert.min.js"></script>
+	<script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/autoNumeric.js"></script>
+	<script>
+
+    jQuery( document ).on( 'focus', ':input', function(){
+        jQuery( this ).attr( 'autocomplete', 'off' );
+    });
+
+
+	    jQuery('#notif_link').click(function() {
+        jQuery('#notif_dd').html('&nbsp;').load('/get_notificaciones');
+    });
+	    </script>
+<script type="text/javascript">
+jQuery(document).ready(function() {
+
+    jQuery('#id_Solicitud').datepicker({ autoSize: true });
+    jQuery('#id_Visita').datepicker({ autoSize: true });
+    // Deprecated since Jquery 1.7
+    // $(':input[type="text"]').live('focus', function() {
+    //     $(this).attr('autocomplete', 'off');
+    // });
+
+
+    jQuery('#submit-id-submit').click(function() {
+        jQuery("input[type=text]").each(function() {
+            this.value = this.value.toUpperCase();
+
+            jQuery("input[type=text]").each(function() {
+                var self = jQuery(this);
+                try {
+                    var v = self.autoNumeric('get');
+                    self.autoNumeric('destroy');
+                    self.val(v);
+                    console.log(self.val(v));
+                } catch (err) {
+                    //console.log("Not an autonumeric field: " + self.attr("name"));
+                }
+            });
+
+
+        });
+
+
+        jQuery("#id_Valor").autoNumeric('destroy');
+
+    });
+
+    jQuery('input[type=submit]').click(function() {
+        jQuery("input[type=text]").each(function() {
+            this.value = this.value.toUpperCase();
+
+            jQuery("input[type=text]").each(function() {
+                var self = jQuery(this);
+                try {
+                    var v = self.autoNumeric('get');
+                    self.autoNumeric('destroy');
+                    self.val(v);
+                    console.log(self.val(v));
+                } catch (err) {
+                    console.log("Not an autonumeric field: " + self.attr("name"));
+                }
+            });
+
+
+        });
+
+
+        jQuery("#id_Valor").autoNumeric('destroy');
+
+    });
+
+    jQuery('input[type=submit]').click(function() {
+        jQuery("input[type=text]").each(function() {
+            this.value = this.value.toUpperCase();
+
+            jQuery("input[type=text]").each(function() {
+                var self = jQuery(this);
+                try {
+                    var v = self.autoNumeric('get');
+                    self.autoNumeric('destroy');
+                    self.val(v);
+                    console.log(self.val(v));
+                } catch (err) {
+                    console.log("Not an autonumeric field: " + self.attr("name"));
+                }
+            });
+
+
+        });
+
+
+        jQuery("#id_Valor").autoNumeric('destroy');
+
+    });
+
+
+    jQuery('#id_Valor').autoNumeric('init', {
+        aSign: '$'
+    });
+    jQuery('#id_Gastos').autoNumeric('init', {
+        aSign: '$'
+    });
+    jQuery('#id_Importe').autoNumeric('init', {
+        aSign: '$'
+    });
+});
+
+function printDiv(divName) {
+    var divName = document.getElementById(divName);
+    var printContents = divName.innerHTML;
+    var originalContents = document.body.innerHTML;
+    document.body.innerHTML = printContents;
+    window.print();
+    document.body.innerHTML = originalContents;
+}
+</script>
 
 
 	{% block scripts %} {% endblock %}
@@ -445,8 +492,8 @@
 	<script src="{{ STATIC_URL }}/assets/js/neon-custom.js"></script>
 
 
-	<!-- Demo Settings -->
-	<script src="{{ STATIC_URL }}/assets/js/neon-demo.js"></script>
+	<!-- Demo Settings
+	<script src="{{ STATIC_URL }}/assets/js/neon-demo.js"></script>--> 
 
 </body>
 </html>

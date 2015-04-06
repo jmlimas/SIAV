@@ -1,0 +1,229 @@
+{% extends "neon/index.html" %}
+{% load listutil %}
+
+{% load crispy_forms_tags %}
+
+{% block consulta_master %}active{% endblock %}				
+
+			{% block content %}		
+
+		<h2>Consulta</h2>
+		<br />
+		
+		
+		<div class="row">
+			<div class="col-md-12">
+				
+				<div class="panel panel-primary" data-collapsed="0">
+				
+					<div class="panel-heading">
+						<div class="panel-title">
+							Búsqueda de Servicios
+						</div>
+						
+						<div class="panel-options">
+							<!-- <a href="#sample-modal" data-toggle="modal" data-target="#sample-modal-dialog-1" class="bg"><i class="entypo-cog"></i></a>
+							<a href="#" data-rel="collapse"><i class="entypo-down-open"></i></a>
+							<a href="#" data-rel="reload"><i class="entypo-arrows-ccw"></i></a>
+							<a href="#" data-rel="close"><i class="entypo-cancel"></i></a> -->
+						</div>
+					</div>
+					
+					<div class="panel-body">
+						
+	<!--					<form role="form" class="form-horizontal form-groups-bordered">
+							
+							<div class="form-group">
+								<label class="col-sm-3 control-label">Multi-Select List</label>
+								
+								<div class="col-sm-7">
+									<select multiple="multiple" name="my-select[]" class="form-control multi-select">
+										<option value="elem_1">elem 1</option>
+										<option value="elem_2">elem 2</option>
+										<option value="elem_3">elem 3</option>
+										<option value="elem_4">elem 4</option>
+										<option value="elem_5">elem 5</option>
+										<option value="elem_6">elem 6</option>
+										<option value="elem_7">elem 7</option>
+										<option value="elem_8" selected>Selected element</option>
+										<option value="elem_9" selected>Selected element 2</option>
+									</select>
+								</div>
+							</div>
+							
+						</form> -->
+
+      {% if forma.errors %}
+        <p style="color: red;">
+            Porfavor completa los campos faltantes.
+        </p>
+    {% endif %}
+
+    {% crispy forma %}  
+   <br>
+
+  <div>
+    <input id="submit-id-submit" type="submit" value="Buscar" class="btn btn-primary"/>
+    <br/>
+    <div class="margin table-responsive" align="center">
+        <span id="spinner"><img src="{{ STATIC_URL }}spinner_large.gif"/ width="50px"></span>
+        <div id='printableArea'><div id="results"></div></div>
+    </div>
+
+					
+					</div>
+				
+				</div>
+				
+			</div>
+		</div>
+</div>
+
+		{% endblock %}
+
+
+
+
+
+		
+
+	
+
+
+
+ {% block scripts %}
+
+	<!-- Imported styles on this page 
+	<link rel="stylesheet" href="{{ STATIC_URL }}/assets/js/select2/select2-bootstrap.css">
+	<link rel="stylesheet" href="{{ STATIC_URL }}/assets/js/select2/select2.css">
+	<link rel="stylesheet" href="{{ STATIC_URL }}/assets/js/selectboxit/jquery.selectBoxIt.css">
+	<link rel="stylesheet" href="{{ STATIC_URL }}/assets/js/daterangepicker/daterangepicker-bs3.css">
+	<link rel="stylesheet" href="{{ STATIC_URL }}/assets/js/icheck/skins/minimal/_all.css">
+	<link rel="stylesheet" href="{{ STATIC_URL }}/assets/js/icheck/skins/square/_all.css">
+	<link rel="stylesheet" href="{{ STATIC_URL }}/assets/js/icheck/skins/flat/_all.css">
+	<link rel="stylesheet" href="{{ STATIC_URL }}/assets/js/icheck/skins/futurico/futurico.css">
+	<link rel="stylesheet" href="{{ STATIC_URL }}/assets/js/icheck/skins/polaris/polaris.css"> -->
+	<link rel="stylesheet" href="{{ STATIC_URL }}CSS/smoothness/jquery-ui-1.8.24.custom.css">
+
+
+
+
+	<!-- Bottom scripts (common) -->
+	<script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/jquery-ui-1.8.24.custom.min.js"></script>
+	<!-- <script src="{{ STATIC_URL }}/assets/js/gsap/main-gsap.js"></script>
+	<script src="{{ STATIC_URL }}/assets/js/bootstrap.js"></script>
+	<script src="{{ STATIC_URL }}/assets/js/joinable.js"></script>
+	<script src="{{ STATIC_URL }}/assets/js/resizeable.js"></script>
+	<script src="{{ STATIC_URL }}/assets/js/neon-api.js"></script> -->
+
+
+	<!-- Imported scripts on this page 
+	<script src="{{ STATIC_URL }}/assets/js/select2/select2.min.js"></script>
+	<script src="{{ STATIC_URL }}/assets/js/bootstrap-tagsinput.min.js"></script>
+	<script src="{{ STATIC_URL }}/assets/js/typeahead.min.js"></script>
+	<script src="{{ STATIC_URL }}/assets/js/selectboxit/jquery.selectBoxIt.min.js"></script>
+	<script src="{{ STATIC_URL }}/assets/js/bootstrap-datepicker.js"></script>
+	<script src="{{ STATIC_URL }}/assets/js/bootstrap-timepicker.min.js"></script>
+	<script src="{{ STATIC_URL }}/assets/js/bootstrap-colorpicker.min.js"></script>
+	<script src="{{ STATIC_URL }}/assets/js/daterangepicker/moment.min.js"></script>
+	<script src="{{ STATIC_URL }}/assets/js/daterangepicker/daterangepicker.js"></script>
+	<script src="{{ STATIC_URL }}/assets/js/jquery.multi-select.js"></script>
+	<script src="{{ STATIC_URL }}/assets/js/icheck/icheck.min.js"></script>
+	<script src="{{ STATIC_URL }}/assets/js/neon-chat.js"></script>-->
+
+
+
+
+    
+    <!-- <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/jquery-datepicker-es.js"></script> -->
+    <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/ajax_estados_municipios.js"></script> <!-- Incluye  sugerencia de colonias.-->
+
+    
+    <script type="text/javascript"> 
+   
+	jQuery("#id_Colonia").autocomplete({
+	source: "/api/get_colonias/",
+	minLength: 2,
+	});
+
+    jQuery(document).ready( function() {
+    var now = new Date();
+    var month = (now.getMonth())+01;               
+    var day = now.getDate();
+    var year = now.getFullYear()
+    if(month < 10) 
+        month = "0" + month;
+    if(day < 10) 
+        day = "0" + day;
+    var today = day + '/' + month + '/' + now.getFullYear() ;
+
+    //jQuery('#id_Mes>option:eq(' + month + ')').prop('selected', true);
+    jQuery("#id_Anio").val(year);
+    });
+
+
+
+    jQuery(function() {
+
+
+
+
+      jQuery('#id_Solicitud').datepicker({ autoSize: true });
+      jQuery('#id_Inicial').datepicker({ autoSize: true });
+      jQuery('#id_Visita').datepicker({ autoSize: true });
+      jQuery('#id_Salida').datepicker({ autoSize: true });
+      jQuery('#id_Final').datepicker({ autoSize: true });
+
+
+    jQuery(":input").blur(function() {
+    
+    if(this.id != 'id_Observaciones') {
+      this.value = this.value.toUpperCase();
+      }
+    });
+      
+    });
+    
+    </script>
+
+<script type="text/javascript">
+    jQuery(document).ready(function () {
+        jQuery('#spinner').hide();
+        jQuery('#submit-id-submit').click(function () {
+            foliok = jQuery('#id_FolioK').val();
+            ref = jQuery('#id_Referencia').val();
+            calle = encodeURIComponent(jQuery('#id_Calle').val());
+            col = encodeURIComponent(jQuery('#id_Colonia').val());
+            factura = encodeURIComponent(jQuery('#id_Factura').val());
+            edo = jQuery('#id_Estado').val();
+            mun = jQuery('#id_Municipio').val();
+            cli = jQuery('#id_Cliente').val();
+            dep = jQuery('#id_Depto').val();
+            imp = jQuery('#id_Importe').val();
+            var allVals = [];
+                     jQuery('#id_estatus :checked').each(function() {
+                       allVals.push(jQuery(this).val());
+                     });
+            val = encodeURIComponent(jQuery('#id_Valor').val());
+            tipo = jQuery('#id_Tipo').val();
+            mes = jQuery('#id_Mes').val();
+            anio = jQuery('#id_Anio').val();
+            
+            //jQuery('#results').html('&nbsp;').load('/SIAV/consulta_master/?q1=' + q1);
+            jQuery('#results').html('&nbsp;').load('/SIAV/consulta_master/?foliok='+foliok+"&ref="+ref+"&calle="+calle+"&col="+col+"&edo="+edo+"&mun="+mun+"&factura="+factura+"&cli="+cli+"&dep="+dep+"&imp="+imp+"&val="+val+"&tipo="+tipo+"&mes="+mes+"&anio="+anio+"&est="+allVals);
+        });
+    });
+        
+    jQuery(document).ajaxStart(function () {
+        jQuery('#spinner').show();
+    }).ajaxStop(function () {
+        jQuery('#spinner').hide();
+    });
+
+</script>
+    
+ <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/mapas.js"></script>
+    
+      
+{%endblock%}
+

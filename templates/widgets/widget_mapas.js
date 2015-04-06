@@ -1,13 +1,10 @@
 {% load currency %}
 
 <script type="text/javascript" src="https://maps.google.com/maps/api/js?sensor=true"></script>
-
+<script type="text/javascript" src="{{ STATIC_URL }}JS/infobox/infobox.js"></script>
 <link rel="stylesheet" href="{{ STATIC_URL }}CSS/google_maps/infobox.css" type="text/css" media="screen" />
 
-<script type="text/javascript" src="{{ STATIC_URL }}JS/infobox/infobox.js"></script>
-
-
- <script type="text/javascript">
+<script type="text/javascript">
 
 {% if avaluo.LatitudG %}
 
@@ -30,15 +27,15 @@
                  (Math.abs(Math.round(({{avaluo.LongitudM}})* 1000000.00))/60) +
                  (Math.abs(Math.round(({{avaluo.LongitudS}})* 1000000.00))/3600)
             ) * lonsign/1000000;
-
             {% endif %}
 
  </script>
 
-<script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/mapas.js"></script>
+// <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/mapas.js"></script>
 
 
 <script type="text/javascript">
+
 
 {% if decimal.declon %}
 function initialize() {
@@ -107,11 +104,12 @@ google.maps.event.addListener(marker_{{x.1}}, "click", function (e) {
 
 
 
-
-
-
 {% endfor %}
 }
+
+initialize();
+
+
 {% endif %}
 </script>
 

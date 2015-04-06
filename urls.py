@@ -65,7 +65,7 @@ urlpatterns = patterns(
     url(r'^SIAV/consulta_comparable/(?P<query>)/?$', 'app.views.consulta_comparable', name='consulta_comparable'),
 
 
-    url(r'^SIAV/consulta_sencilla/', 'app.views.consulta_sencilla', name='consulta_sencilla'),
+    #url(r'^SIAV/consulta_sencilla/', 'app.views.consulta_sencilla', name='consulta_sencilla'),
     url(r'^SIAV/respuesta_consulta_sencilla/?(\d+)/?$', 'app.views.respuesta_consulta_sencilla', name='respuesta_consulta_sencilla'),
 
     url(r'^SIAV/alta_avaluo/', 'app.views.alta_avaluo', name='alta_avaluo'),
@@ -89,7 +89,7 @@ urlpatterns = patterns(
     #Salida
     url(r'^SIAV/salida/', 'app.views.salida', name='salida'),
     url(r'^SIAV/edita_salida/(\d+)/$', 'app.views.edita_salida', name='edita_salida'),
-    url(r'^SIAV/salida_efectiva/(\d+)/$', 'app.views.salida_efectiva', name='salida_efectiva'),
+    #url(r'^SIAV/salida_efectiva/(\d+)/$', 'app.views.salida_efectiva', name='salida_efectiva'),
 
     #Alta Usuario
     url(r'^SIAV/alta_usuario/', 'app.views.alta_usuario', name='alta_usuario'),
@@ -109,7 +109,7 @@ urlpatterns = patterns(
     #url(r'^SIAV/estadistico/', 'app.views.estadistico', name = 'estadistico'),
     url(r'^SIAV/realtime/', 'app.views.realtime', name = 'realtime'),
 
-    url(r'^SIAV/submitted/', 'app.views.submitted', name='submitted'),
+    #url(r'^SIAV/submitted/', 'app.views.submitted', name='submitted'),
 
     url(r'^SIAV/test/', 'app.views.test', name='submitted'),
 
@@ -132,7 +132,7 @@ urlpatterns = patterns(
     url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': 'media/'}),
 
     #Urls del sitio movil
-    url(r'^SIAV/mobile/', 'app.views.mobile', name='mobile'),
+    #url(r'^SIAV/mobile/', 'app.views.mobile', name='mobile'),
 
     url(r'^swf/', 'app.views.swf', name='swf'),
 )
