@@ -1,0 +1,30 @@
+<div class="container" style="width:300px">
+    <h4><b>Proceso</b></h4>
+    <div id="notification" class="noty-manager-list-item noty-manager-list-item-warning">
+        <div class="activity-item">
+            <table class="table">
+                <th></th>
+                <th><i class="entypo-camera"></i></th>
+                <th><i class="entypo-home"></i></th>
+                <th><i class="entypo-check"></i></th>
+                {% for c in en_proceso %}
+                <tr style="height: 25px;">
+                    <td> <b>{{c.1}}</b>
+                    </td>
+                    <td>
+                        <span class="badge badge-info">{{c.3}}</span>
+                    </td>
+                    <td>
+                        <span class="badge badge-info">{{c.4}}</span>
+                    </td>
+                    <td>
+                        <span class="badge badge-info">{{c.5}}</span>
+                    </td>
+
+                </tr>
+                {%endfor%}
+            </table>
+        </div>
+    </div>
+</div>
+<!-- tab content -->

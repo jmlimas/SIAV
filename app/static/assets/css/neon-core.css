@@ -8692,12 +8692,13 @@ body.page-fade {
   -moz-transform-origin: 50% 30%;
   transform-origin: 50% 30%;
 }
+/* ToDo conflict with Fullcalendar */
 body.page-fade > .page-container {
-  -webkit-transform: scale(0.9) translateY(100px);
+  /*-webkit-transform: scale(0.9) translateY(100px);
   -moz-transform: scale(0.9) translateY(100px);
   -o-transform: scale(0.9) translateY(100px);
   -ms-transform: scale(0.9) translateY(100px);
-  transform: scale(0.9) translateY(100px);
+  transform: scale(0.9) translateY(100px); */
   -moz-transition: 400ms all ease-in-out;
   -o-transition: 400ms all ease-in-out;
   -webkit-transition: 400ms all ease-in-out;

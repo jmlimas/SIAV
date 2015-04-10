@@ -517,7 +517,8 @@ class FormaConsultaMaster(ModelForm):
         self.fields['Municipio'] = forms.ModelChoiceField(required=False,  queryset=Municipio.objects.filter(estado_id__is_active='True'))
         year = datetime.datetime.now().year
         anios = Avaluo.objects.all().dates('Salida', 'year')[0].year
-        self.fields['Anio'].choices = [(i, i) for i in range(anios, year+1)]
+        self.fields['Anio'].choices = [('','')]
+        self.fields['Anio'].choices += [(i, i) for i in range(anios, year+1)]
 
 class RespuestaConsultaMaster(ModelForm):
     FolioK = forms.CharField( required=False)
@@ -594,7 +595,7 @@ class RespuestaConsultaMaster(ModelForm):
                         Div(Field('LongitudG',  css_class='col-md-20 input-small'),  css_class='col-md-4'),
                         Div(Field('LongitudM',  css_class='col-md-20 input-small'),  css_class='col-md-4'),
                         Div(Field('LongitudS',  css_class='col-md-20 input-small'),  css_class='col-md-4')),
-                    css_class='col-md-4'),
+                    css_class='col-md-6'),
                 Div(
                     'Salida',
                     'Mterreno',

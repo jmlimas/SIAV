@@ -1,6 +1,7 @@
 {% extends "neon/index.html" %}
 {% load listutil %}
-
+{% block alta %}active{% endblock %}
+{% block inicio %}active{% endblock %}
 {% load crispy_forms_tags %}
 
 {% block consulta_master %}active{% endblock %}
@@ -21,7 +22,6 @@
 
 <div class="row">
 	<div class="col-md-12">
-			<h1>Alta</h1>
 
 		<div class="panel panel-primary" data-collapsed="0">
 
@@ -46,8 +46,9 @@
 							{% csrf_token %}
         					{% crispy formset_sencilla %}
 							<br>
-							<br>
+              <br>
 							<h2 id="cant_servicios">1 Servicio</h2>
+
 							<br>
 							<input class="btn btn-success" type="submit" value="Enviar" />
 							<div id="printableArea">
@@ -148,6 +149,8 @@ jQuery(function() {
    // jQuery('input[type=text]').addClass('form-control');
    // jQuery('select').addClass('form-control');
    // jQuery('select').width('174px');
+
+
    
 
 });

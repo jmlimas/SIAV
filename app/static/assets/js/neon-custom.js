@@ -56,11 +56,25 @@ var public_vars = public_vars || {};
 		// Sidebar Collapse icon
 		public_vars.$sidebarMenu.find(".sidebar-collapse-icon").on('click', function(ev)
 		{
+
 			ev.preventDefault();
 
 			var with_animation = $(this).hasClass('with-animation');
 
 			toggle_sidebar_menu(with_animation);
+
+		    if(jQuery("#main-page-container").hasClass("sidebar-collapsed"))
+		    {
+		        // Save cookie with sidebar closed info
+		        jQuery.cookie('sidebar_left', 'closed', { expires: 365, path: '/' });
+
+		    }
+		    else
+		    {
+		        // Save cookie with sidebar opened info
+		        jQuery.cookie('sidebar_left', 'opened', { expires: 365, path: '/' });
+		    }
+
 		});
 
 
@@ -84,7 +98,12 @@ var public_vars = public_vars || {};
 			{
 				public_vars.$mainMenu.toggle();
 			}
+
+
+
 		});
+
+
 
 
 

@@ -91,9 +91,9 @@ $(function() {
  });
  
 
-   $('input[type=text]').addClass('form-control');
-   $('select').addClass('form-control');
-   $('select').width('174px');
+   // $('input[type=text]').addClass('form-control');
+   // $('select').addClass('form-control');
+   // $('select').width('174px');
    
 
 });
@@ -150,7 +150,11 @@ $(function() {
         {% csrf_token %}
         {% crispy formset_sencilla %}
       <br>
-      <h2 id="cant_servicios">1 Servicio</h2>
+      <div class="row">
+        <div class="col-md-6">
+      <h2 style="padding-top:10px" id="cant_servicios">1 Servicio</h2>
+    </div>
+      </div>
       <br>
       <input class="btn btn-success" type="submit" value="Enviar" />
       <div id="printableArea">

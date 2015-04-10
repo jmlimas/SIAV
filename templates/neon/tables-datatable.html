@@ -1,25 +1,43 @@
 {% extends "neon/index.html" %}
+{% load crispy_forms_tags %}
 {% load dayssince %}
 {% load bootstrap3 %}
 {% bootstrap_css %}
 {% bootstrap_javascript %}
-{% load crispy_forms_tags %}
+
+
+
+{% block visita %}{% if caller = '1' %}active{% else %}{{ block.super }}{%endif%}{%endblock%}
+{% block captura %}{% if caller = '2' %}active{% else %}{{ block.super }}{%endif%}{%endblock%}
+{% block salida %}{% if caller = '3' %}active{% else %}{{ block.super }}{%endif%}{%endblock%}
+
+{% block style %}
+<style type="text/css" title="currentStyle">
+@import "{{ STATIC_URL }}CSS/smoothness/jquery-ui-1.8.24.custom.css";
+</style>
+
+<!-- <style>
+div.ui-datepicker{
+  font-size:10px;
+}
+
+</style> -->
+{% endblock %}
+
 {% block content %}
 
-
-
-  <a id="masiva_button"  title="captura" style="float:right" class="btn btn-primary mass_button" role="button">
-    <span class="glyphicon glyphicon-ok"></span>
-    	{% if caller = '1' %}
+<a id="masiva_button"  title="captura" style="float:right" class="btn btn-primary mass_button" role="button">
+	<span class="glyphicon glyphicon-ok"></span>
+	{% if caller = '1' %}
 			Visitar
 		{% elif caller = '2' %}
 		 	Capturar
 		{% elif caller = '3' %}
 		 	Salida
 		{% endif %}
-  </a>
-	<h1>
-		{% if caller = '0' %}
+</a>
+<h1>
+	{% if caller = '0' %}
 			Servicios en Proceso	 
 		{% elif caller = '1' %}
 			Visita
@@ -29,15 +47,19 @@
 		 	Salida
 		{% endif %}
 </h1>
-<h2 style="text-align:left"><span class="label label-danger" id='rowcount'></span> Servicios</h2>
+<h2 style="text-align:left">
+	<span class="label label-danger" id='rowcount'></span>
+	Servicios
+</h2>
 <div style="float:right">
-  <input style="display:none;text-align:right" type="submit" value="Set Quick Find filter and refresh table" onclick="jQuery('#quickfind').val('12'); jQuery('#avaluos_table').tableFilterApplyFilterValues();">
-  Excluir Paquete Infonavit: <input type='checkbox' id='onlyno' />
+	<input style="display:none;text-align:right" type="submit" value="Set Quick Find filter and refresh table" onclick="jQuery('#quickfind').val('12'); jQuery('#avaluos_table').tableFilterApplyFilterValues();">
+	Excluir Paquete Infonavit:
+	<input type='checkbox' id='onlyno' />
 </div>
 <br />
 <form id="modal-form" class="" method="post" action="
     	{% if caller = '1' %}
-			/SIAV/salida_masiva/
+			/SIAV/visita_masiva/
 		{% elif caller = '2' %}
 		 	/SIAV/captura_masiva/
 		{% elif caller = '3' %}
@@ -45,50 +67,50 @@
 		{% endif %}
 
 ">
-<table id='avaluos_table' class="table table-striped table-hover">
-	<thead>
-		<tr class='even'>
-			<th style="" filter='false' class="tabla_opciones"></th>
-			<th style="">Folio K</th>
-			<th style="" filter='true' >Referencia</th>
-			<th filter-type='ddl'>Cliente</th>
-			<th filter-type='ddl'>Depto</th>
-			<th>Calle</th>
-			<th filter='false'>Ext.</th>
-			<th filter='false'>Int.</th>
-			<th style="" filter-type='ddl'>Colonia</th>
-			<th filter-type='ddl'>Municipio</th>
-			<th filter-type='ddl'>Prioridad</th>
-			<th style="" filter-type='ddl'>Estatus</th>
-			<th filter='false'>Dias</th>
-			{% if caller != '0'%}
-			<th style="" filter='false' class="tabla_opciones"></th>
-			{% endif %}
-		</tr>
-	</thead>
-	<tbody>
-		{% for a in avaluos %}
-
-		<tr class="">
-			<td class="tabla_opciones">
-				<input class="form-checkbox" type="checkbox" value="{{ a.avaluo_id }}" name="avaluo_capturado"></td>
-			<td >{{a.FolioK}}</td>
-			<td style="">{{a.Referencia}}</td>
-			<td style="">{{a.Cliente}}</td>
-			<td style="">{{a.Depto}}</td>
-			<td style="">{{a.Calle}}</td>
-			<td style="">{{a.NumExt}}</td>
-			<td style="">{{a.NumInt}}</td>
-			<td style="">{{a.Colonia}}</td>
-			<td style="">{{a.Municipio}}</td>
-			<td style="">{{a.Prioridad}}</td>
-			<td >
-				<span class="label label-{%if a.Estatus = 'PROCESO'%}success{%elif a.Estatus = 'DETENIDO'%}default{%endif%}">{{a.Estatus}}</span>
-			</td>
-			<td style="">{{ a.Solicitud|dayssince }}</td>
-			{% if caller != '0'%}
-			<td class="tabla_opciones">
-				<a href="		
+	<div id='printableArea' class="table-responsive">
+		<table id='avaluos_table' class="table table-striped table-hover">
+			<thead>
+				<tr class='even'>
+					<th style="" filter='false' class="tabla_opciones"></th>
+					<th style="">Folio K</th>
+					<th style="" filter='true' >Referencia</th>
+					<th filter-type='ddl'>Cliente</th>
+					<th filter-type='ddl'>Depto</th>
+					<th>Calle</th>
+					<th filter='false'>Ext.</th>
+					<th filter='false'>Int.</th>
+					<th style="" filter-type='ddl'>Colonia</th>
+					<th filter-type='ddl'>Municipio</th>
+					<th filter-type='ddl'>Prioridad</th>
+					<th style="" filter-type='ddl'>Estatus</th>
+					<th filter='false'>Dias</th>
+					{% if caller != '0'%}
+					<th style="" filter='false' class="tabla_opciones"></th>
+					{% endif %}
+				</tr>
+			</thead>
+			<tbody>
+				{% for a in avaluos %}
+				<tr class="">
+					<td class="tabla_opciones">
+						<input class="form-checkbox" type="checkbox" value="{{ a.avaluo_id }}" name="avaluo_checkbox"></td>
+					<td >{{a.FolioK}}</td>
+					<td style="">{{a.Referencia}}</td>
+					<td style="">{{a.Cliente}}</td>
+					<td style="">{{a.Depto}}</td>
+					<td style="">{{a.Calle}}</td>
+					<td style="">{{a.NumExt}}</td>
+					<td style="">{{a.NumInt}}</td>
+					<td style="">{{a.Colonia}}</td>
+					<td style="">{{a.Municipio}}</td>
+					<td style="">{{a.Prioridad}}</td>
+					<td >
+						<span class="label label-{%if a.Estatus = 'PROCESO'%}success{%elif a.Estatus = 'DETENIDO'%}default{%endif%}">{{a.Estatus}}</span>
+					</td>
+					<td style="">{{ a.Solicitud|dayssince }}</td>
+					{% if caller != '0'%}
+					<td class="tabla_opciones">
+						<a href="		
 						{% if caller = '1' %}
 							/SIAV/edita_visita/{{a.avaluo_id}}
 						{% elif caller = '2' %}
@@ -97,36 +119,38 @@
 						 	/SIAV/edita_salida/{{a.avaluo_id}}
 						{% else %}
 						{% endif %}">
-					<button type="button" class="btn btn-primary edit_button" id={{a.avaluo_id}}>
-						<span class="glyphicon glyphicon-edit"></span>
-					</button>
-				</a>
-			</td>
-			{% endif %}
+							<button type="button" class="btn btn-primary edit_button" id={{a.avaluo_id}}>
+								<span class="glyphicon glyphicon-edit"></span>
+							</button>
+						</a>
+					</td>
+					{% endif %}
+				</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
 
-		</tr>
-		{% endfor %}
-	</tbody>
-</table>
+	<div class="modal fade" id="forma_masiva">
 
-<div class="modal fade" id="forma_masiva">
-
-<div class="modal-dialog modal-lg">
-<div class="modal-content">
-  <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-    <h2 style="text-align:center">
-    	{% if caller = '1' %}
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<h2 style="text-align:center">
+						{% if caller = '1' %}
 			Visita 
 		{% elif caller = '2' %}
 		 	Captura 
 		{% elif caller = '3' %}
 		 	Salida 
 		{% endif %}
-     Masiva</h2>
-   </div> <!-- /.modal-header -->
-    <div class="modal-body" style"min-height:500px">
-          {% csrf_token %}
+     Masiva
+					</h2>
+				</div>
+				<!-- /.modal-header -->
+				<div class="modal-body" style"min-height:500px">
+					{% csrf_token %}
     	{% if caller = '1' %}
 			{% crispy visita_masiva %}
 		{% elif caller = '2' %}
@@ -134,33 +158,32 @@
 		{% elif caller = '3' %}
 		 	{% bootstrap_form salida_masiva layout='vertical'  %}
 		{% endif %}
+					<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+					<button type="submit" class="btn btn-success" id="enviar-masiva" style="float:right">Enviar</button>
+				</form>
+			</div>
+			<!-- /.modal-body -->
 
-          
-
-    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-    <button type="submit" class="btn btn-success" id="enviar-masiva" style="float:right">Enviar</button>
-  </form>
-    </div> <!-- /.modal-body -->
-
-</div> <!-- /.modal-content -->
-</div> <!-- /.modal-dialog -->
-</div> <!-- /.modal -->
-
-
-		{% endblock %}
+		</div>
+		<!-- /.modal-content -->
+	</div>
+	<!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+{% endblock %}
 
 		{% block scripts %}
-		<!-- Imported styles on this page -->
-		<link rel="stylesheet" href="{{ STATIC_URL }}/assets/js/datatables/responsive/css/datatables.responsive.css">
-		<link rel="stylesheet" href="{{ STATIC_URL }}/assets/js/select2/select2-bootstrap.css">
-		<link rel="stylesheet" href="{{ STATIC_URL }}/assets/js/select2/select2.css">
+<!-- Imported styles on this page -->
+<link rel="stylesheet" href="{{ STATIC_URL }}/assets/js/datatables/responsive/css/datatables.responsive.css">
+<link rel="stylesheet" href="{{ STATIC_URL }}/assets/js/select2/select2-bootstrap.css">
+<link rel="stylesheet" href="{{ STATIC_URL }}/assets/js/select2/select2.css">
 
-		<!-- Imported scripts on this page -->
-		<script src="{{ STATIC_URL }}/assets/js/joinable.js"></script>
-		<script src="{{ STATIC_URL }}/assets/js/select2/select2.min.js"></script>
-		<script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/picnet.table.filter.min.js"></script>
+<!-- Imported scripts on this page -->
+<script src="{{ STATIC_URL }}/assets/js/joinable.js"></script>
+<script src="{{ STATIC_URL }}/assets/js/select2/select2.min.js"></script>
+<script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/picnet.table.filter.min.js"></script>
 
-		<script type="text/javascript">
+<script type="text/javascript">
 	jQuery(document).ready(function () {
 	  {% include "snippets/avaluos_table.js" %}
 
@@ -201,7 +224,5 @@ jQuery('#masiva_button').click(function () {
 });
 
 	});
-	</script>
-		{% endblock %}
-</body>
-	</html>
+	</script>{% endblock %}</body>
+</html>

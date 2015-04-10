@@ -2,6 +2,16 @@
 
 jQuery(function () {
 	
+	jQuery("#id_Colonia").autocomplete({
+		source: "/api/get_colonias/",
+		minLength: 2,
+	});
+
+	jQuery("#id_formset_sencilla-Colonia").autocomplete({
+		source: "/api/get_colonias/",
+		minLength: 2,
+	});
+
 
 	jQuery("#id_Estado").change(function () {
 		jQuery.getJSON("/api/get_municipios/", { id: jQuery(this).val(), ajax: 'true' }, function (j) {

@@ -1,5 +1,5 @@
 {% extends "neon/index.html" %}
-
+{% block calendario %}active{% endblock %}
 
 
 	
@@ -23,10 +23,10 @@
 					<form role="form" id="add_event_form">
 		
 						<div class="input-group minimal">
-							<input type="text" class="form-control" placeholder="Add event..." />
+							<input id="quicksearch" type="text" class="form-control" placeholder="Buscar..." />
 		
 							<div class="input-group-addon">
-								<i class="entypo-pencil"></i>
+								<i class="entypo-search"></i>
 							</div>
 						</div>
 		
@@ -36,19 +36,23 @@
 		
 		
 				<!-- Events List -->
+				
 				<ul class="events-list" id="draggable_events">
 					<li>
 						<p>Servicios por visitar</p>
 					</li>
+					<div class="isotope ">
 		            {% for a in avaluos%}
-		            <li>
-		            	<a href="#" class="color-blue draggable" data-event-class="color-blue" data-duration="00:30">{{a.FolioK}} - {{a.Colonia}}</a>
+		            <li >
+		            	<a href="#" class="color-red draggable" data-event-class="color-red" data-duration="00:30">{{a.FolioK}} - {{a.Colonia}}</a>
 		        	</li>
 		            {% endfor%}
+		            </div>
 
 
 
 				</ul>
+				
 		
 			</div>
 		
@@ -61,7 +65,7 @@
 				
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-					<h4 class="modal-title" id="eventTitle">Basic Modal</h4>
+					<h4 class="modal-title" id="eventTitle"></h4>
 				</div>
 				
 				<div class="modal-body">
@@ -73,8 +77,8 @@
 				</div>
 				
 				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-					<button type="button" class="btn btn-info">Save changes</button>
+					<button type="button" id="eliminarEvento_btn" class="btn btn-danger" data-dismiss="modal">Eliminar Evento</button>
+					<button type="button" class="btn btn-info" data-dismiss="modal">Guardar</button>
 				</div>
 			</div>
 		</div>
@@ -85,12 +89,12 @@
 
 		
 {% block scripts %}
-	<!-- Imported styles on this page -->
+	<script type="text/javascript" language="javascript" src='{{ STATIC_URL }}JS/moment.min.js'></script>
+	<script type="text/javascript" language="javascript" src='{{ STATIC_URL }}JS/fullcalendar.min.js'></script>
+	<!-- <script type="text/javascript" language="javascript" src='{{ STATIC_URL }}JS/gcal.js'></script> -->
+	<script type="text/javascript" language="javascript" src='{{ STATIC_URL }}JS/lang-all.js'></script>
+	<script type="text/javascript" language="javascript" src='{{ STATIC_URL }}JS/isotope.pkgd.min.js'></script>
 	<link rel="stylesheet" href="{{ STATIC_URL }}/assets/js/fullcalendar-2/fullcalendar.min.css">
-
-	<!-- Imported scripts on this page -->
-	<script src="{{ STATIC_URL }}/assets/js/daterangepicker/moment.min.js"></script>
-	<script src="{{ STATIC_URL }}/assets/js/fullcalendar-2/fullcalendar.min.js"></script>
 	<script src="{{ STATIC_URL }}/assets/js/neon-calendar-2.js"></script>
 
 {% endblock %}

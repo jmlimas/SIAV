@@ -1,18 +1,82 @@
-{% extends "home/base.html" %}
-
+{% extends "neon/index.html" %}
 {% load crispy_forms_tags %}
-
 {% block liquidar %}active{% endblock %}
-
 {% load dayssince %}
 {% load adder %}
 {% load graficas %}
-
 {% load currency %}
+{% block content %}
 
+<div class="row">
+  <div class="col-md-12">
 
+<h1>Facturas por Liquidar</h1>
+<h2>
+    <span id="cantidad_tabla" class="table"></span>
+    Facturas
+</h2>
 
-{% block script %}
+    <div class="col-md-6 table-responsive">
+        <table id='avaluos_table' class="table table-stripped">
+            <thead>
+                <tr>
+                    <td><b>Total:</b></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td><b>{{total_general|currency}}</b></td>
+                </tr>
+                <tr>
+                    <th filter='false'>Factura</th>
+                    <th filter='false'>Cliente</th>
+                    <th filter='false'>Servicios</th>
+                    <th filter='false'>Monto</th>
+                    <th filter='false' class="tabla_opciones">Pagado</th>
+                </tr>
+            </thead>
+            <tbody>
+                <form id="liquidar_form" action="/SIAV/liquidar/" method="post">
+                    {% for a in agrupados %}
+                    <tr>
+                        <td style="width:10px;">
+                            <a href="#" class="factura" data-pk="{{a.Factura}}" data-value="{{a.Factura}}">{{a.Factura}}</a>
+                        </td>
+                        {% csrf_token %}
+                        <td>{{a.Cliente__Cliente}}</td>
+                        <td>{{a.Cantidad}}</td>
+                        <td>{{a.Total|currency }}</td>
+                        <td>
+                            <input type="checkbox" class="form-checkbox" value="{{a.Factura}}" name="facturas_pagadas"></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <input class='btn btn-primary' type="submit" name="submit" value="Liquidar" id="liquidar_btn" />
+        </form>
+
+    </div>
+
+    <div class="col-md-6">
+        <div id="donut_container"></div>
+    </div>
+    <br>
+    <div class="col-md-6">
+        <table>
+            <tr>
+                <td>
+                    Cuentas por cobrar:
+                    <b>{{cxc.suma|currency}}</b>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+</div>
+</div>
+
+		{% endblock %}
+
+{% block scripts %}
 <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/picnet-table.js"></script>
 <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/jquery.livequery.js"></script>
 <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/highcharts.js"></script>
@@ -21,18 +85,17 @@
 <script src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
 
 <script type="text/javascript">
-$(document).ready(function () {
-  $('#avaluos_table').tableFilter();
+jQuery(document).ready(function () {
   valor = 0;
 
-  var rowCount = { p: $('#avaluos_table tbody tr:visible').length };
-  valor = ($('#avaluos_table tbody tr:visible').length);
+  var rowCount = { p: jQuery('#avaluos_table tbody tr:visible').length };
+  valor = (jQuery('#avaluos_table tbody tr:visible').length);
 
-  $('#cantidad_tabla').html(valor);
+  jQuery('#cantidad_tabla').html(valor);
 
 
-$("#liquidar_form").submit(function(e){
-    if($(".form-checkbox").is(':checked')) {
+jQuery("#liquidar_form").submit(function(e){
+    if(jQuery(".form-checkbox").is(':checked')) {
         // Do your thing
     }else{
         sweetAlert("Selecciona al menos una casilla.","","warning");
@@ -41,14 +104,14 @@ $("#liquidar_form").submit(function(e){
 });
 
 
-  // $('#avaluos_table thead').on("change", function () {
+  // jQuery('#avaluos_table thead').on("change", function () {
   //   setTimeout(function () {
   //     window.location = '/SIAV/liquidar/';
   //   }, 1000);
   // });
 
 
-$('.factura').editable({
+jQuery('.factura').editable({
     type: 'text',
     url: '/factura_inline/',
     title: 'Renombrar Factura',
@@ -58,7 +121,7 @@ $('.factura').editable({
 
 
 
-$(function () {
+jQuery(function () {
     
         var colors = Highcharts.getOptions().colors,
             categories = ['No Facturado','Facturado'],
@@ -122,7 +185,7 @@ $(function () {
         }
     
         // Create the chart
-        $('#donut_container').highcharts({
+        jQuery('#donut_container').highcharts({
             chart: {
                 type: 'pie'
             },
@@ -179,71 +242,6 @@ $(function () {
 
 
 </script>
-{% endblock %}      
-{% block content %}
-<h1>Facturas por Liquidar</h1>
-<h2 style="text-align:left">
-    <span id="cantidad_tabla" class="table"></span>
-    Facturas
-</h2>
-
-<div class="container">
-    <div class="col-md-6 table-responsive">
-        <table id='avaluos_table' class="table table-stripped">
-            <thead>
-                <tr>
-                    <td> <b>Total:</b>
-                    </td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td> <b>{{total_general|currency}}</b>
-                    </td>
-                </tr>
-                <tr>
-                    <th style="width:100px" filter='false'>Factura</th>
-                    <th filter='false'>Cliente</th>
-                    <th  filter='false'>Servicios</th>
-                    <th filter='false'>Monto</th>
-                    <th filter='false' class="tabla_opciones">Pagado</th>
-                </tr>
-            </thead>
-            <tbody>
-                <form id="liquidar_form" action="/SIAV/liquidar/" method="post">
-                    {% for a in agrupados %}
-                    <tr>
-                        <td style="width:10px;">
-                            <a href="#" class="factura" data-pk="{{a.Factura}}" data-value="{{a.Factura}}">{{a.Factura}}</a>
-                        </td>
-                        {% csrf_token %}
-                        <td>{{a.Cliente__Cliente}}</td>
-                        <td>{{a.Cantidad}}</td>
-                        <td>{{a.Total|currency }}</td>
-                        <td>
-                            <input type="checkbox" class="form-checkbox" value="{{a.Factura}}" name="facturas_pagadas"></td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-            <input class='btn btn-primary' type="submit" name="submit" value="Liquidar" id="liquidar_btn" />
-        </form>
-
-    </div>
-
-    <div class="col-md-6">
-        <div id="donut_container"></div>
-    </div>
-    <br>
-    <div class="col-md-6">
-        <table>
-            <tr>
-                <td>
-                    Cuentas por cobrar:
-                    <b>{{cxc.suma|currency}}</b>
-                </td>
-            </tr>
-        </table>
-    </div>
-
-</div>
-{% endblock %}
+{% endblock %}  
+</body>
+	</html>

@@ -11,21 +11,24 @@
 <script>
 
 
-$( function() {
+jQuery( function() {
+
+$(document).ready(function() {
+
   // quick search regex
   var qsRegex;
   
   // init Isotope
-  var $container = $('.isotope').isotope({
+  var $container = jQuery('.isotope').isotope({
     itemSelector: '.draggable',
     layoutMode: 'fitRows',
     filter: function() {
-      return qsRegex ? $(this).text().match( qsRegex ) : true;
+      return qsRegex ? jQuery(this).text().match( qsRegex ) : true;
     }
   });
 
   // use value of search field to filter
-  var $quicksearch = $('#quicksearch').keyup( debounce( function() {
+  var $quicksearch = jQuery('#quicksearch').keyup( debounce( function() {
     console.log($quicksearch.val());
     qsRegex = new RegExp( $quicksearch.val(), 'gi' );
     $container.isotope();
@@ -48,7 +51,7 @@ function debounce( fn, threshold ) {
   }
 }
 
-$(document).ready(function() {
+    
 
         $.getJSON("/api/get_visitadores/", {ajax: 'true' }, function (j) {
             var options = '';

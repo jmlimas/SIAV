@@ -3,6 +3,7 @@ import os
 import redis
 import datetime
 from websock.models import Eventos, Comments
+from websock.views import lanza_notif
 from django.utils import timezone
 from datetime import date
 from django.conf.urls import patterns, url, include
@@ -145,7 +146,7 @@ def liquidar(request):
                 x['Total'] = 0.00
             else:
                 total_general += float(str(x['Total']))
-        return render_to_response('home/lista_cobrar.html', {'total_general': total_general, 'cantidad': cantidad, 'agrupados': agrupados,'cxc': cxc}, context_instance=RequestContext(request))
+        return render_to_response('neon/tables-datatable-liquidar.html', {'total_general': total_general, 'cantidad': cantidad, 'agrupados': agrupados,'cxc': cxc}, context_instance=RequestContext(request))
 
 
 #   Vista para generar estadisticos en Highcharts
@@ -184,7 +185,7 @@ def estadistico(request, anio=2013, mes=01):
             total_general += float(str(x['Total']))
             total_avaluos += x['dcount']
     totales = [total_avaluos, total_general]
-    return render_to_response('home/estadistico.html', locals(), context_instance=RequestContext(request))
+    return render_to_response('neon/dashboard-2.html', locals(), context_instance=RequestContext(request))
 
 @login_required
 def estadistico_anio_js(request, anio=2013):
@@ -281,13 +282,7 @@ def alta_avaluo(request):
             reciente.save()
 
             # Enviar notificación a usuarios
-            r = redis.StrictRedis(host='localhost', port=6379, db=0)
-            accion = (' dió de alta el avalúo con FolioK: ').decode("UTF-8", "ignore")
-
-            r.publish('chat', request.user.username + accion + '<b>' + reciente.FolioK + '</b>')
-
-            #Crear evento
-            Eventos.objects.create(user=request.user, evento='ALTA',avaluo=reciente)
+            lanza_notif('ALTA', reciente, request.user)
 
             return redirect('/SIAV/alta_avaluo/')  # Redirect after POST
     else:
@@ -391,14 +386,7 @@ def edita_visita(request, id):
                       "html": rendered})
 
             # Enviar notificación a usuarios
-            r = redis.StrictRedis(host='localhost', port=6379, db=0)
-            accion = (' visitó el avalúo con FolioK: ').decode("UTF-8", "ignore")
-
-            r.publish('chat', request.user.username + accion + '<b>' + obj.FolioK + '</b>')
-
-            #Crear evento
-            Eventos.objects.create(user=request.user, evento='VISITA',avaluo=obj)
-
+            lanza_notif('VISITA', a, request.user)
             return redirect('/SIAV/visita/')
     else:
         form = VisitaAvaluo(instance=avaluo)
@@ -428,14 +416,7 @@ def actualiza_avaluo(request, id):
             form.save()
 
             # Enviar notificación a usuarios
-            r = redis.StrictRedis(host='localhost', port=6379, db=0)
-            accion = (' capturó el avalúo con FolioK: ').decode("UTF-8", "ignore")
-
-            r.publish('chat', request.user.username + accion + '<b>' + obj.FolioK + '</b>')
-
-            #Crear evento
-            Eventos.objects.create(user=request.user, evento='CAPTURA',avaluo=obj)
-
+            lanza_notif('CAPTURA', avaluo, request.user)
             return redirect('/SIAV/captura/')
     else:
         form = CapturaAvaluo(instance=avaluo)
@@ -468,13 +449,7 @@ def edita_salida(request, id):
             form.save()
 
             # Enviar notificación a usuarios
-            r = redis.StrictRedis(host='localhost', port=6379, db=0)
-            accion = (' dió salida al avalúo con FolioK: ').decode("UTF-8", "ignore")
-
-            #Crear evento
-            Eventos.objects.create(user=request.user, evento='SALIDA',avaluo=obj)
-
-            r.publish('chat', request.user.username + accion + '<b>' + obj.FolioK + '</b>')
+            lanza_notif('SALIDA', avaluo, request.user)
 
             return redirect('/SIAV/salida/')
     else:
@@ -509,10 +484,7 @@ def guarda_master(request, id):
             form.save()
 
             # Enviar notificación a usuarios
-            r = redis.StrictRedis(host='localhost', port=6379, db=0)
-            accion = (' editó el avalúo con FolioK: ').decode("UTF-8", "ignore")
-
-            r.publish('chat', request.user.username + accion + '<b>' + obj.FolioK + '</b>')
+            lanza_notif('CONSULTA_MASTER', obj, request.user)
 
             #Crear evento
             Eventos.objects.create(user=request.user, evento='CONSULTA_MASTER',avaluo=obj)
@@ -641,67 +613,6 @@ def consulta_comparable(request):
         forma = FormaConsultaMaster()
         return render_to_response('home/consultas/consulta_comparable.html', context_instance=RequestContext(request))
 
-'''
-@login_required
-def consulta_sencilla(request):
-    if request.method == 'POST':
-        forma = FormaConsultaSencilla(request.POST)
-        if('Buscar' in request.POST):
-            if forma.is_valid():
-                foliok = forma.cleaned_data['FolioK']
-                ref = forma.cleaned_data['Referencia']
-                calle = forma.cleaned_data['Calle']
-                nume = forma.cleaned_data['NumExt']
-                numi = forma.cleaned_data['NumInt']
-                col = forma.cleaned_data['Colonia']
-                mun = forma.cleaned_data['Municipio']
-                edo = forma.cleaned_data['Estado']
-                tips = forma.cleaned_data['Servicio']
-                tipi = forma.cleaned_data['Tipo']
-                mes = forma.cleaned_data['Mes']
-                anio = forma.cleaned_data['Anio']
-
-                avaluos = Avaluo.objects.all()
-
-                if foliok:
-                    avaluos = avaluos.filter(FolioK__icontains=foliok)
-                if ref:
-                    avaluos = avaluos.filter(Referencia__icontains=ref)
-                if calle:
-                    avaluos = avaluos.filter(Calle__icontains=calle)
-                if nume:
-                    avaluos = avaluos.filter(NumExt__icontains=nume)
-                if numi:
-                    avaluos = avaluos.filter(NumInt__icontains=numi)
-                if col:
-                    avaluos = avaluos.filter(Colonia__icontains=col)
-                if mun:
-                    avaluos = avaluos.filter(Municipio=mun)
-                if edo:
-                    avaluos = avaluos.filter(Estado=edo)
-                if ((tips) and (tips != "N/D")):
-                    avaluos = avaluos.filter(Servicio__icontains=tips)
-                if tipi:
-                    avaluos = avaluos.filter(Tipo__Tipo__icontains=tipi)
-                if mes and anio:
-                    inicio = str(anio)+"-"+str(mes)+"-01"
-                    mes = int(mes)
-                    if mes % 2 == 00:
-                        if mes == 02:
-                            dias = "28"
-                        else:
-                            dias = "30"
-                    elif mes % 2 != 0:
-                        dias = "31"
-                    fin = str(anio)+"-"+str(mes)+"-"+dias
-                    avaluos = avaluos.filter(Solicitud__range=(inicio, fin))
-                avaluos = avaluos.order_by('-Solicitud')
-                return render_to_response('home/consultas/lista_consultaS.html', {'forma': forma, 'avaluos': avaluos}, context_instance=RequestContext(request))
-    else:
-        forma = FormaConsultaSencilla()
-    return render_to_response('home/consultas/consulta_sencilla.html', {'forma': forma}, context_instance=RequestContext(request))
-'''
-
 @login_required
 def respuesta_consulta_sencilla(request, id):
         avaluo = Avaluo.objects.get(pk=id)
@@ -782,7 +693,7 @@ def visita_masiva(request):
     caller="1"
     visita_masiva = VisitaMasiva(request.POST)
     if visita_masiva.is_valid():
-        avaluo_visitado = request.POST.getlist('avaluo_visitado')
+        avaluo_visitado = request.POST.getlist('avaluo_checkbox')
         avaluos_visitados = (Avaluo.objects
             .filter(avaluo_id__in=avaluo_visitado)
             .update(LatitudG=visita_masiva.cleaned_data['LatitudG'],
@@ -795,13 +706,8 @@ def visita_masiva(request):
         for a1 in avaluo_visitado:
 
             a = Avaluo.objects.get(avaluo_id=a1)
-            r = redis.StrictRedis(host='localhost', port=6379, db=0)
-            accion = (' visitó el avalúo con FolioK: ').decode("UTF-8", "ignore")
-
-            r.publish('chat', request.user.username + accion + '<b>' + a.FolioK + '</b>')
-
-            #Crear evento
-            Eventos.objects.create(user=request.user, evento='VISITA',avaluo=a)
+            # Envía notificación a usuarios
+            lanza_notif('VISITA', a, request.user)
         return redirect('/SIAV/visita/')
 
     avaluos = Avaluo.objects.filter(Estatus__contains='PROCESO', Visita__isnull=True, Salida__isnull=True) | Avaluo.objects.filter(Estatus__contains='DETENIDO', Visita__isnull=True, Salida__isnull=True)
@@ -814,7 +720,7 @@ def captura_masiva(request):
     captura_masiva = CapturaMasiva(request.POST)
     caller='2'
     if captura_masiva.is_valid():
-        avaluo_capturado = request.POST.getlist('avaluo_capturado')
+        avaluo_capturado = request.POST.getlist('avaluo_checkbox')
         avaluo_capturados = (Avaluo.objects
             .filter(avaluo_id__in=avaluo_capturado)
             .update(Mterreno=captura_masiva.cleaned_data['Mterreno'],
@@ -822,13 +728,8 @@ def captura_masiva(request):
         for a1 in avaluo_capturado:
 
             a = Avaluo.objects.get(avaluo_id=a1)
-            r = redis.StrictRedis(host='localhost', port=6379, db=0)
-            accion = (' capturó el avalúo con FolioK: ').decode("UTF-8", "ignore")
-
-            r.publish('chat', request.user.username + accion + '<b>' + a.FolioK + '</b>')
-
-            #Crear evento
-            Eventos.objects.create(user=request.user, evento='CAPTURA',avaluo=a)
+            # Envía notificación a usuarios
+            lanza_notif('CAPTURA', a, request.user)
         return redirect('/SIAV/captura/')
 
     avaluos = (Avaluo.objects
@@ -844,7 +745,8 @@ def salida_masiva(request):
     caller='3'
     salida_masiva = SalidaMasiva(request.POST)
     if salida_masiva.is_valid():
-        avaluo_salida = request.POST.getlist('avaluo_salida')
+
+        avaluo_salida = request.POST.getlist('avaluo_checkbox')
         avaluo_salidas = (Avaluo.objects
             .filter(avaluo_id__in=avaluo_salida)
             .update(Valor=salida_masiva.cleaned_data['Valor'],
@@ -855,13 +757,8 @@ def salida_masiva(request):
         for a1 in avaluo_salida:
 
             a = Avaluo.objects.get(avaluo_id=a1)
-            r = redis.StrictRedis(host='localhost', port=6379, db=0)
-            accion = (' dió salida al avalúo con FolioK: ').decode("UTF-8", "ignore")
-
-            r.publish('chat', request.user.username + accion + '<b>' + a.FolioK + '</b>')
-
-            #Crear evento
-            Eventos.objects.create(user=request.user, evento='SALIDA',avaluo=a)
+            # Envía notificación a usuarios
+            lanza_notif('SALIDA', a, request.user)
         return redirect('/SIAV/salida/')
 
     avaluos = (Avaluo.objects

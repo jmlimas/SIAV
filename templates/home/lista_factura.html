@@ -101,6 +101,16 @@ $('#factura_masiva_button').click(function () {
   Excluir Paquete Infonavit: <input type='checkbox' id='onlyno' />
 <h1 style="padding-bottom:20px">Servicios por Facturar</h1>
 
+    <div class="panel panel-primary" data-collapsed="0">
+
+      <div class="panel-heading">
+        <div class="panel-title">Facturación por cliente</div>
+
+        <div class="panel-options"></div>
+      </div>
+
+      <div class="panel-body">
+
 <table class="table table-hover">
   <th>Cliente</th>
   <th>Importe</th>
@@ -115,6 +125,13 @@ $('#factura_masiva_button').click(function () {
     <td><b>{{total_general|currency}}</b></td>
   </tr>
 </table>
+
+    </div>
+
+  </div>
+
+
+
   <a id="factura_masiva_button"  title="captura" style="float:right" class="btn btn-primary" role="button">
     <span class="glyphicon glyphicon-ok"></span>
     FACTURAR

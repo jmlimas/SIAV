@@ -18,23 +18,15 @@
 	<link rel="stylesheet" href="{{ STATIC_URL }}/assets/css/neon-theme.css">
 	<link rel="stylesheet" href="{{ STATIC_URL }}/assets/css/neon-forms.css">
 	<link rel="stylesheet" href="{{ STATIC_URL }}/assets/css/custom.css">
-	<script src="{{ STATIC_URL }}/assets/js/jquery-1.11.0.min.js"></script>
-	<style>@import "{{ STATIC_URL }}CSS/sweet-alert.css";</style>
+	<script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/jquery-2.1.3.min.js"></script>
+	<style>@import "{{ STATIC_URL }}CSS/sweet-alert.css";@import "{{ STATIC_URL }}CSS/Style.css";</style>
 	<script>$.noConflict();</script>
-
-	<!--[if lt IE 9]><script src="{{ STATIC_URL }}/assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
-
-	<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-	<!--[if lt IE 9]>
-		<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-		<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-	<![endif]-->
-
-
+	{% block style %}
+	{% endblock %}
 </head>
-<body class="page-body  page-fade" data-url="http://neon.dev">
+<body class="page-body  page-fade">
 
-<div class="page-container sidebar-collapsed"><!-- add class "sidebar-collapsed" to close sidebar by default, "chat-visible" to make chat appear always -->
+<div id="main-page-container" class="page-container sidebar-collapsed"><!-- add class "sidebar-collapsed" to close sidebar by default, "chat-visible" to make chat appear always -->
 	
 	<div class="sidebar-menu">
 
@@ -68,62 +60,59 @@
 			
 									
 			<ul id="main-menu" class="main-menu">
-				<!-- add class "multiple-expanded" to allow multiple submenus to open -->
-				<!-- class "auto-inherit-active-class" will automatically add "active" class for parent elements who are marked already with class "active" -->
-
-				<li>
+				<li class="{% block alta %}{% endblock %}">
 					<a href="/SIAV/alta_avaluo">
 						<i class="glyphicon glyphicon-chevron-down"></i>
 						<span class="title">Alta</span>
 					</a>
 				</li>
-				<li>
+				<li class="{% block visita %}{% endblock %}">
 					<a href="/SIAV/visita">
 						<i class="glyphicon glyphicon-camera"></i>
 						<span class="title">Visita</span>
 						<span class="badge badge-secondary">{{por_visitar}}</span>
 					</a>
 				</li>
-				<li>
+				<li class="{% block captura %}{% endblock %}">
 					<a href="/SIAV/captura">
 						<i class="glyphicon glyphicon-home"></i>
 						<span class="title">Captura</span>
 						<span class="badge badge-secondary">{{por_capturar}}</span>
 					</a>
 				</li>
-				<li>
+				<li class="{% block salida %}{% endblock %}">
 					<a href="/SIAV/salida">
 						<i class="entypo-check"></i>
 						<span class="title">Salida</span>
 						<span class="badge badge-secondary">{{por_salida}}</span>
 					</a>
 				</li>
-				<li>
+				<li class="{% block consulta %}{% endblock %}">
 					<a href="/SIAV/consulta_master">
 						<i class="entypo-search"></i>
 						<span class="title">Consulta</span>
 					</a>
 				</li>
-				<li>
+				<li class="{% block calendario %}{% endblock %}">
 					<a href="/SIAV/calendario">
 						<i class="entypo-calendar"></i>
 						<span class="title">Calendario</span>
 					</a>
 				</li>
 				{% if user.is_staff %}
-				<li>
+				<li class="{% block facturar %}{% endblock %}">
 					<a href="/SIAV/facturar">
 						<i class="glyphicon glyphicon-list-alt"></i>
 						<span class="title">Facturar</span>
 					</a>
 				</li>
-				<li>
+				<li class="{% block liquidar %}{% endblock %}">
 					<a href="/SIAV/liquidar">
 						<i class="glyphicon glyphicon-usd"></i>
 						<span class="title">Liquidar</span>
 					</a>
 				</li>
-				<li>
+				<li class="{% block estadistico %}{% endblock %}">
 					<a href="/SIAV/estadistico/{%now "Y"%}/{%now "m"%}">
 						<i class="entypo-chart-bar"></i>
 						<span class="title">Estadístico</span>
@@ -149,22 +138,20 @@
 					<li class="profile-info dropdown"><!-- add class "pull-right" if you want to place this from right -->
 		
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-							<img src="{{ STATIC_URL }}/assets/images/thumb-1@2x.png" alt="" class="img-circle" width="44" />
+							<img src="/{{user.userprofile.picture}}" alt="" class="img-circle" width="44" />
 							{{user.first_name}} {{user.last_name}}
 						</a>
-		
+		<!-- 
 						<ul class="dropdown-menu">
 		
-							<!-- Reverse Caret -->
 							<li class="caret"></li>
 		
-							<!-- Profile sub-links -->
 							<li>
 								<a href="extra-timeline.html">
 									<i class="entypo-user"></i>
 									Edit Profile
 								</a>
-							</li>
+							</li> 
 		
 
 		
@@ -173,28 +160,44 @@
 									<i class="entypo-calendar"></i>
 									Calendar
 								</a>
-							</li>
+							</li> -
 
-						</ul>
+						</ul>-->
 					</li>
 		
-				</ul>
+				</ul>  
 				
 				<ul class="user-info pull-left pull-right-xs pull-none-xsm">
 		
 					<!-- Raw Notifications -->
-					<li class="notifications dropdown">
+					<li id="notif_btn" class="notifications dropdown">
 		
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
-							<i id="notif_link" class="entypo-attention"></i>
-							<span class="badge badge-info">{{conteo_eventos_usuario}}</span>
+							<i id="notif_link" class="entypo-globe"></i>
+							<span class="badge badge-danger">{{conteo_eventos_usuario}}</span>
 						</a>
 					<ul id="notif_dd" class="dropdown-menu">
 					</ul>
 					</li>
-		
 
+					<li id="toler_btn" class="notifications dropdown">
 		
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+							<i id="toler_link" class="entypo-clock"></i>
+						</a>
+					<ul id="toler_dd" class="dropdown-menu">
+					</ul>
+
+					</li>
+					<li id="proc_btn" class="notifications dropdown">
+		
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+							<i id="proc_link" class="entypo-eye"></i>
+						</a>
+					<ul id="proc_dd" class="dropdown-menu">
+					</ul>
+
+					</li>		
 				</ul>
 		
 			</div>
@@ -214,13 +217,23 @@
 						<a href="#" data-toggle="chat" data-collapse-sidebar="1">
 							<i class="entypo-chat"></i>
 							Chat
-		
 							<span class="badge badge-success chat-notifications-badge is-hidden">0</span>
 						</a>
 					</li>
 		
 					<li class="sep"></li>
-		
+           <li>
+                <a onclick="printDiv('printableArea')" href="#"> <i class="glyphicon glyphicon-print"></i>
+                </a>
+            </li>
+            <li class="sep"></li>
+            {% if user.is_staff %}
+            <li>
+                <a href="/SIAV/admin">Admin <i class="glyphicon glyphicon-wrench"></i>
+                </a>
+            </li>
+            {% endif %}		
+            <li class="sep"></li>
 					<li>
 						<a href="/SIAV/logout">
 							Log Out <i class="entypo-logout right"></i>
@@ -297,6 +310,7 @@
 	
 	
 	<!-- Chat Histories -->
+	<!--
 	<ul class="chat-history" id="sample_history">
 		<li>
 			<span class="user">Art Ramadani</span>
@@ -322,11 +336,13 @@
 			<span class="time">09:27</span>
 		</li>
 	</ul>
+-->
 	
 	
 	
 	
 	<!-- Chat Histories -->
+	<!--
 	<ul class="chat-history" id="sample_history_2">
 		<li class="opponent unread">
 			<span class="user">Daniel A. Pena</span>
@@ -340,82 +356,64 @@
 			<span class="time">08:27</span>
 		</li>
 	</ul>
-
+	-->
 	
 </div>
 
 	<!-- Imported styles on this page -->
-	<!-- <link rel="stylesheet" href="{{ STATIC_URL }}/assets/js/jvectormap/jquery-jvectormap-1.2.2.css"> -->
-	<link rel="stylesheet" href="{{ STATIC_URL }}/assets/js/rickshaw/rickshaw.min.css">
-
 	<!-- Bottom scripts (common) -->
 	<script src="{{ STATIC_URL }}/assets/js/gsap/main-gsap.js"></script>
 	<script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/jquery-ui-1.8.24.custom.min.js"></script>
+	<script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/jquery-datepicker-es.js"></script>
 	<script src="{{ STATIC_URL }}/assets/js/bootstrap.js"></script>
 	<!--  <script src="{{ STATIC_URL }}/assets/js/joinable.js"></script> -->
 	<script src="{{ STATIC_URL }}/assets/js/resizeable.js"></script> 
 	<script src="{{ STATIC_URL }}/assets/js/neon-api.js"></script>
-	<!--  <script src="{{ STATIC_URL }}/assets/js/jvectormap/jquery-jvectormap-1.2.2.min.js"></script> -->
 
-
-	<!-- Imported scripts on this page 
-	<script src="{{ STATIC_URL }}/assets/js/jvectormap/jquery-jvectormap-europe-merc-en.js"></script>
-	<script src="{{ STATIC_URL }}/assets/js/jquery.sparkline.min.js"></script>
-	<script src="{{ STATIC_URL }}/assets/js/rickshaw/vendor/d3.v3.js"></script>
-	<script src="{{ STATIC_URL }}/assets/js/rickshaw/rickshaw.min.js"></script>
-	<script src="{{ STATIC_URL }}/assets/js/raphael-min.js"></script>
-	<script src="{{ STATIC_URL }}/assets/js/morris.min.js"></script>-->
+	<!-- Imported scripts on this page -->
 	<script src="{{ STATIC_URL }}/assets/js/toastr.js"></script>
 	<script src="{{ STATIC_URL }}/assets/js/neon-chat.js"></script>
+
 	<script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/sweet-alert.min.js"></script>
 	<script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/autoNumeric.js"></script>
+	<script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/jquery.cookie.js"></script> 
+	<script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/socket.io.js"></script>
+
+
 	<script>
 
     jQuery( document ).on( 'focus', ':input', function(){
         jQuery( this ).attr( 'autocomplete', 'off' );
     });
 
-
-	    jQuery('#notif_link').click(function() {
+	    jQuery('#notif_btn').click(function() {
         jQuery('#notif_dd').html('&nbsp;').load('/get_notificaciones');
     });
+
+    	jQuery('#toler_btn').click(function() {
+       jQuery('#toler_dd').html('&nbsp;').load('/get_tolerancia');
+    });
+
+     	jQuery('#proc_btn').click(function() {
+       jQuery('#proc_dd').html('&nbsp;').load('/get_proceso');
+    });
+
 	    </script>
 <script type="text/javascript">
 jQuery(document).ready(function() {
 
     jQuery('#id_Solicitud').datepicker({ autoSize: true });
     jQuery('#id_Visita').datepicker({ autoSize: true });
+    jQuery('#id_Salida').datepicker({ autoSize: true });
     // Deprecated since Jquery 1.7
     // $(':input[type="text"]').live('focus', function() {
     //     $(this).attr('autocomplete', 'off');
     // });
 
 
-    jQuery('#submit-id-submit').click(function() {
-        jQuery("input[type=text]").each(function() {
-            this.value = this.value.toUpperCase();
 
-            jQuery("input[type=text]").each(function() {
-                var self = jQuery(this);
-                try {
-                    var v = self.autoNumeric('get');
-                    self.autoNumeric('destroy');
-                    self.val(v);
-                    console.log(self.val(v));
-                } catch (err) {
-                    //console.log("Not an autonumeric field: " + self.attr("name"));
-                }
-            });
-
-
-        });
-
-
-        jQuery("#id_Valor").autoNumeric('destroy');
-
-    });
-
-    jQuery('input[type=submit]').click(function() {
+    jQuery("input[type=submit],button[type=submit], #submit-id-submit").click(function(e) {
+   	
         jQuery("input[type=text]").each(function() {
             this.value = this.value.toUpperCase();
 
@@ -436,35 +434,15 @@ jQuery(document).ready(function() {
 
 
         jQuery("#id_Valor").autoNumeric('destroy');
-
-    });
-
-    jQuery('input[type=submit]').click(function() {
-        jQuery("input[type=text]").each(function() {
-            this.value = this.value.toUpperCase();
-
-            jQuery("input[type=text]").each(function() {
-                var self = jQuery(this);
-                try {
-                    var v = self.autoNumeric('get');
-                    self.autoNumeric('destroy');
-                    self.val(v);
-                    console.log(self.val(v));
-                } catch (err) {
-                    console.log("Not an autonumeric field: " + self.attr("name"));
-                }
-            });
-
-
-        });
-
-
-        jQuery("#id_Valor").autoNumeric('destroy');
+        jQuery("#id_formset_sencilla-Valor").autoNumeric('destroy');
 
     });
 
 
     jQuery('#id_Valor').autoNumeric('init', {
+        aSign: '$'
+    });
+    jQuery('#id_formset_sencilla-Valor').autoNumeric('init', {
         aSign: '$'
     });
     jQuery('#id_Gastos').autoNumeric('init', {
@@ -473,6 +451,15 @@ jQuery(document).ready(function() {
     jQuery('#id_Importe').autoNumeric('init', {
         aSign: '$'
     });
+
+
+   var sidebar_left = jQuery.cookie('sidebar_left');
+   if(sidebar_left == 'closed'){
+    jQuery("#main-page-container").addClass("sidebar-collapsed");
+   }else{
+    jQuery("#main-page-container").removeClass("sidebar-collapsed");
+   }
+
 });
 
 function printDiv(divName) {
@@ -483,17 +470,52 @@ function printDiv(divName) {
     window.print();
     document.body.innerHTML = originalContents;
 }
+
+
 </script>
+<script type="text/javascript">
+jQuery(document).ready(function($) {
+
+	var opts = {
+			"closeButton": true,
+			"debug": false,
+			"positionClass": "toast-top-right",
+			"toastClass": "black",
+			"onclick": null,
+			"showDuration": "300",
+			"hideDuration": "1000",
+			"timeOut": "5000",
+			"extendedTimeOut": "1000",
+			"showEasing": "swing",
+			"hideEasing": "linear",
+			"showMethod": "fadeIn",
+			"hideMethod": "fadeOut"
+		};
 
 
-	{% block scripts %} {% endblock %}
+    // Conexión a Socket.io
+
+	  var data = {{ users_json|safe }};  
+	  var current_user_id = {{user.id}};
+	  var socket = io.connect('{{ request.META.HTTP_HOST }}:4000', { query: "user_id={{user.id}}&sessionid={{request.session.session_key}}" });
+	socket.on('message_receive', function(message) {
+	    console.log("Recibido");	
+	    toastr.success(message,'', opts);	
+	    jQuery('#noti_ind').html('&nbsp;').load('/notificaciones_ind')
+	});
+
+
+
+});
+
+
+
+</script>
 
 	<!-- JavaScripts initializations and stuff -->
 	<script src="{{ STATIC_URL }}/assets/js/neon-custom.js"></script>
 
 
-	<!-- Demo Settings
-	<script src="{{ STATIC_URL }}/assets/js/neon-demo.js"></script>--> 
-
+	{% block scripts %} {% endblock %}
 </body>
 </html>

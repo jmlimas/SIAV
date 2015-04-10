@@ -212,7 +212,7 @@
 
 
 <script type="text/javascript">
-$(document).ready(function() {
+jQuery(document).ready(function() {
 
     // var objDiv = document.getElementById("comments");
     // objDiv.scrollTop = objDiv.scrollHeight+10;
@@ -222,38 +222,19 @@ $(document).ready(function() {
     var data = {{ users_json|safe }};  
     var current_user_id = {{user.id}};
 
+
     var socket = io.connect('{{ request.META.HTTP_HOST }}', {
         port: 4000
     });
-
-    socket.on('connect', function() {
-        console.log("connect");
-    });
-
-
-    var socket = io.connect();
     console.log('Chequeo 1', socket.socket.connected);
     socket.on('connect', function() {
         console.log('Conectado', socket.socket.connected);
     });
 
-    //var entry_el = $('#textBox');
-
     socket.on('message', function(message) {
         console.log("Recibido");
         generate('topRight', message);
-
-        //var regex = /(<([^>]+)>)/ig;
-        //var data = message.replace(regex, "");
-        //var user = data.substring(0, data.indexOf(":"));
-        //var data2 = data.substring(data.indexOf(":") + 1, data.length);
-        //$("#chat_div").chatbox("option", "boxManager").addMsg(user, data2);
-        // $('#comments').append('<li>' + data + '</li>');
-
-        $('#noti_ind').html('&nbsp;').load('/notificaciones_ind')
-
-
-        //entry_el.focus();
+        jQuery('#noti_ind').html('&nbsp;').load('/notificaciones_ind')
     });
 
 
@@ -263,17 +244,6 @@ $(document).ready(function() {
 
 
 
-function generate(layout, message) {
-    var n = noty({
-        text: message,
-        type: 'alert',
-        dismissQueue: true,
-        layout: 'topRight',
-        theme: 'defaultTheme',
-        timeout: '9000'
-    });
-    console.log('html: ' + n.options.id);
-}
 </script>
 {% block script %}{% endblock %}
 <script type="text/javascript">

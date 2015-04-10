@@ -4,147 +4,120 @@
 {% bootstrap_css %}
 {% bootstrap_javascript %}
 {% load crispy_forms_tags %}
+{% block facturar %}active{% endblock %}
+
 {% block content %}
+{% load currency %}
 
 
 
-  <a id="masiva_button"  title="captura" style="float:right" class="btn btn-primary mass_button" role="button">
-    <span class="glyphicon glyphicon-ok"></span>
-    	{% if caller = '1' %}
-			Visitar
-		{% elif caller = '2' %}
-		 	Capturar
-		{% elif caller = '3' %}
-		 	Salida
-		{% endif %}
-  </a>
+    <div class="panel panel-primary" data-collapsed="0">
+
+      <div class="panel-heading">
+        <div class="panel-title">Facturación por cliente</div>
+
+        <div class="panel-options"></div>
+      </div>
+
+      <div class="panel-body">
+
+<table class="table table-hover">
+  <th>Cliente</th>
+  <th>Importe</th>
+  {% for cliente in suma_de_monto %}
+  <tr>
+    <td>{{cliente.Cliente__Cliente}}</td>
+    <td>{{cliente.total|currency}}</td>
+  </tr>
+  {% endfor %}
+  <tr>
+    <td><b>Total:</td></b>
+    <td><b>{{total_general|currency}}</b></td>
+  </tr>
+</table>
+
+    </div>
+
+  </div>
+
+  
 	<h1>
-		{% if caller = '0' %}
-			Servicios en Proceso	 
-		{% elif caller = '1' %}
-			Visita
-		{% elif caller = '2' %}
-		 	Captura
-		{% elif caller = '3' %}
-		 	Salida
-		{% endif %}
+		Servicios por Facturar
 </h1>
+  <a style="float:right" id="masiva_button"  title="captura" class="btn btn-primary mass_button" role="button">
+    <span class="glyphicon glyphicon-ok"></span>
+      Facturar
+  </a>
 <h2 style="text-align:left"><span class="label label-danger" id='rowcount'></span> Servicios</h2>
 <div style="float:right">
   <input style="display:none;text-align:right" type="submit" value="Set Quick Find filter and refresh table" onclick="jQuery('#quickfind').val('12'); jQuery('#avaluos_table').tableFilterApplyFilterValues();">
   Excluir Paquete Infonavit: <input type='checkbox' id='onlyno' />
 </div>
 <br />
-<form id="modal-form" class="" method="post" action="
-    	{% if caller = '1' %}
-			/SIAV/salida_masiva/
-		{% elif caller = '2' %}
-		 	/SIAV/captura_masiva/
-		{% elif caller = '3' %}
-		 	/SIAV/salida_masiva/
-		{% endif %}
-
-">
-<table id='avaluos_table' class="table table-striped table-hover">
-	<thead>
-		<tr class='even'>
-			<th style="" filter='false' class="tabla_opciones"></th>
-			<th style="">Folio K</th>
-			<th style="" filter='true' >Referencia</th>
-			<th filter-type='ddl'>Cliente</th>
-			<th filter-type='ddl'>Depto</th>
-			<th>Calle</th>
-			<th filter='false'>Ext.</th>
-			<th filter='false'>Int.</th>
-			<th style="" filter-type='ddl'>Colonia</th>
-			<th filter-type='ddl'>Municipio</th>
-			<th filter-type='ddl'>Prioridad</th>
-			<th style="" filter-type='ddl'>Estatus</th>
-			<th filter='false'>Dias</th>
-			{% if caller != '0'%}
-			<th style="" filter='false' class="tabla_opciones"></th>
-			{% endif %}
-		</tr>
-	</thead>
-	<tbody>
-		{% for a in avaluos %}
-
-		<tr class="">
-			<td class="tabla_opciones">
-				<input class="form-checkbox" type="checkbox" value="{{ a.avaluo_id }}" name="avaluo_capturado"></td>
-			<td >{{a.FolioK}}</td>
-			<td style="">{{a.Referencia}}</td>
-			<td style="">{{a.Cliente}}</td>
-			<td style="">{{a.Depto}}</td>
-			<td style="">{{a.Calle}}</td>
-			<td style="">{{a.NumExt}}</td>
-			<td style="">{{a.NumInt}}</td>
-			<td style="">{{a.Colonia}}</td>
-			<td style="">{{a.Municipio}}</td>
-			<td style="">{{a.Prioridad}}</td>
-			<td >
-				<span class="label label-{%if a.Estatus = 'PROCESO'%}success{%elif a.Estatus = 'DETENIDO'%}default{%endif%}">{{a.Estatus}}</span>
-			</td>
-			<td style="">{{ a.Solicitud|dayssince }}</td>
-			{% if caller != '0'%}
-			<td class="tabla_opciones">
-				<a href="		
-						{% if caller = '1' %}
-							/SIAV/edita_visita/{{a.avaluo_id}}
-						{% elif caller = '2' %}
-						 	/SIAV/actualiza_avaluo/{{a.avaluo_id}}
-						{% elif caller = '3' %}
-						 	/SIAV/edita_salida/{{a.avaluo_id}}
-						{% else %}
-						{% endif %}">
-					<button type="button" class="btn btn-primary edit_button" id={{a.avaluo_id}}>
-						<span class="glyphicon glyphicon-edit"></span>
-					</button>
-				</a>
-			</td>
-			{% endif %}
-
-		</tr>
-		{% endfor %}
-	</tbody>
+<table id='avaluos_table' class="table table-striped table-hover col-md-20">
+  <thead>
+    <tr class='even'>
+      <th></th>
+      <th id="folio_type" filter-type="ddl" style="width:40px">Folio K</th>
+      <th style="width:150px" filter='true' >Referencia</th>
+      <th filter-type='ddl'>Cliente</th>
+      <th filter-type='ddl'>Depto</th>
+      <th filter="false">Calle</th>
+      <th filter='false'>Ext.</th>
+      <th filter='false'>Int.</th>
+      <th filter='false'>Municipio</th>
+      <th  filter='false'>Entrega</th>
+      <th filter='false'>Importe</th>
+      <th filter='false' class="tabla_opciones">Opciones</th>
+    </tr>
+  </thead>
+  <tbody>
+  <form action="/SIAV/facturar/" method="post">
+    {{example_formset.management_form }}
+    {% for a in avaluos %}
+    <tr class="{% cycle 'odd' 'even' %}">
+      <td><input class="form-checkbox" type="checkbox" value="{{ a.avaluo_id }}" name="avaluo_facturado"></td>
+     <td>{{a.FolioK}}</td>
+     <td>{{a.Referencia}}</td>
+     <td>{{a.Cliente}}</td>
+	   <td>{{a.Depto}}</td>
+     <td>{{a.Calle}}</td>
+     <td style="width:3px;">{{a.NumExt}}</td>
+     <td style="width:10px;">{{a.NumInt}}</td>
+     <td> {{a.Municipio}}</td>
+     <td> {{a.Salida|date:"d/m/y"}}</td>
+     <td><a href="#" class="importe" data-pk="{{a.avaluo_id}}" data-value="{{a.Importe}}">{{a.Importe|currency}}</a></td>		
+     <td class="tabla_opciones"> <a href="/SIAV/guarda_master/{{a.avaluo_id}}">Editar</a></td>
+   </tr>
+   {% endfor %} 
+</tbody>
 </table>
-
-<div class="modal fade" id="forma_masiva">
-
-<div class="modal-dialog modal-lg">
+<div class="modal fade" id="factura_masiva">
+<div class="modal-dialog">
 <div class="modal-content">
-  <div class="modal-header">
+  <div class="modal-body">
+
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-    <h2 style="text-align:center">
-    	{% if caller = '1' %}
-			Visita 
-		{% elif caller = '2' %}
-		 	Captura 
-		{% elif caller = '3' %}
-		 	Salida 
-		{% endif %}
-     Masiva</h2>
-   </div> <!-- /.modal-header -->
-    <div class="modal-body" style"min-height:500px">
+    <h2 style="text-align:center">Factura</h2>
+    <div class="modal-body">
+      <span style="display: block">
+        {% if not b.is_valid %}
+        <div class='hide'>invalid_form</div>
+        {% endif %}
           {% csrf_token %}
-    	{% if caller = '1' %}
-			{% crispy visita_masiva %}
-		{% elif caller = '2' %}
-		 	{% bootstrap_form captura_masiva layout='vertical'  %}
-		{% elif caller = '3' %}
-		 	{% bootstrap_form salida_masiva layout='vertical'  %}
-		{% endif %}
-
-          
-
+          {% bootstrap_form b layout='vertical'  %}
+      </span>
+    </div>
     <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-    <button type="submit" class="btn btn-success" id="enviar-masiva" style="float:right">Enviar</button>
+    <button type="submit" class="btn btn-success" id="submit-id-submit" style="float:right">Enviar</button>
   </form>
-    </div> <!-- /.modal-body -->
-
-</div> <!-- /.modal-content -->
-</div> <!-- /.modal-dialog -->
-</div> <!-- /.modal -->
+</div>
+</div>
+<!-- /.modal-content -->
+</div>
+<!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
 
 
 		{% endblock %}
@@ -159,10 +132,23 @@
 		<script src="{{ STATIC_URL }}/assets/js/joinable.js"></script>
 		<script src="{{ STATIC_URL }}/assets/js/select2/select2.min.js"></script>
 		<script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/picnet.table.filter.min.js"></script>
+ 		<link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet"/>
+		<script src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
 
-		<script type="text/javascript">
-	jQuery(document).ready(function () {
-	  {% include "snippets/avaluos_table.js" %}
+<script type="text/javascript">
+jQuery(document).ready(function () {
+  {% include "snippets/avaluos_table.js" %}
+
+jQuery('.importe').editable({
+    type: 'text',
+    url: '/monto_inline/',
+    title: 'Nuevo importe',
+    params: "{csrfmiddlewaretoken:'{{csrf_token}}'}"
+});
+
+
+
+
 
 jQuery('#masiva_button').click(function () {
 
@@ -172,7 +158,7 @@ jQuery('#masiva_button').click(function () {
 
       var selected = [];
       jQuery('input:checked').each(function() {
-          selected.push(jQuery(this).parent().next().next().next().next().next().next().next().next().html());
+          selected.push(jQuery(this).parent().next().next().next().next().html());
       });
       var bandera = true;
       for ( var i = 0; i < selected.length; i++ ) {
@@ -185,9 +171,9 @@ jQuery('#masiva_button').click(function () {
       }
 
       if(bandera == false){
-        sweetAlert("Todos los servicios deben pertenecer a la misma colonia.","","warning");
+        sweetAlert("Todos los servicios deben pertenecer al mismo cliente.","","error");
       }else{
-        jQuery('#forma_masiva').modal('show');
+        jQuery('#factura_masiva').modal('show');
         console.log( selected.toString());
       }
       
@@ -200,8 +186,10 @@ jQuery('#masiva_button').click(function () {
 
 });
 
-	});
-	</script>
+
+});
+
+</script>
 		{% endblock %}
 </body>
 	</html>

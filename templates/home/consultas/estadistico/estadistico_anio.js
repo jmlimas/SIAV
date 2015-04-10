@@ -1,4 +1,4 @@
-$(document).ready(function () {
+jQuery(document).ready(function ($) {
 
 colors: [
    '#4572A7', 
@@ -22,10 +22,12 @@ colors: [
                 type: 'line',
                 backgroundColor: '#FFFFFF',
                 borderColor: '#D5D5D5',
-                borderWidth: 2,
+                borderWidth: 0,
+                height: 300,
             },
             title: {
                 // text: 'Avaluos {{anio}}'
+                text: ''
             },
             xAxis: {
                    categories: [
@@ -88,11 +90,12 @@ colors: [
                 type: 'column',
                 backgroundColor: '#FFFFFF',
                 borderColor: '#D5D5D5',
-                borderWidth: 2,
+                borderWidth: 0,
+                height: 300,
 
             },
             title: {
-                text: 'Importes {{anio}}'
+                text: ''
             },
             xAxis: {
                    categories: [

@@ -148,6 +148,8 @@ TEMPLATE_LOADERS = (
 )
 
 
+
+
 MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -181,13 +183,12 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.humanize',
     'app',
+    'crispy_forms',
     'calendario',
     'kombu.transport.django',
     'djcelery',
     'websock',
     'endless_pagination',
-    'example_project',
-    'crispy_forms',
     #'django_socketio',
     #'debug_toolbar',
     'grappelli',
