@@ -158,7 +158,7 @@ def estadistico(request, anio=2013, mes=01):
     meses = MESES
     avaluos = Avaluo.objects.extra(select={'month': 'extract( month from Salida )'}).values('month').filter(Salida__year=anio).order_by('month').annotate(dcount=Count('Solicitud'), Total=Sum('Importe'))
     #cliente = Avaluo.objects.filter(Salida__year=anio).filter(Salida__month=mes).values('Cliente__Cliente').annotate(Total=Sum('Importe'), Cantidad=Count('Cliente'))
-    tiempo_respuesta = Avaluo.objects.filter(Salida__year=anio).values('Depto__Depto','Solicitud','Salida').annotate(Total=Sum('Importe'), Cantidad=Count('Cliente'))
+    #tiempo_respuesta = Avaluo.objects.filter(Salida__year=anio).values('Depto__Depto','Solicitud','Salida').annotate(Total=Sum('Importe'), Cantidad=Count('Cliente'))
     monto_todos_anios = Avaluo.objects.extra(select={'year': 'extract( year from Salida )'}).values('year').annotate(Total=Sum('Importe')).order_by('year')
 
     from django.db import connection, transaction
@@ -494,7 +494,7 @@ def guarda_master(request, id):
     return render_to_response('neon/forma.html', locals(), context_instance=RequestContext(request))
 
 
-@staff_member_required
+@login_required
 def consulta_master(request):
     if request.is_ajax():
         foliok = request.GET.get('foliok', '')
@@ -615,8 +615,10 @@ def consulta_comparable(request):
 
 @login_required
 def respuesta_consulta_sencilla(request, id):
+        caller = '5'
+        form = EmptyForm()
         avaluo = Avaluo.objects.get(pk=id)
-        return render_to_response('home/consultas/respuesta_consulta_sencilla.html', {'avaluo': avaluo}, context_instance=RequestContext(request))
+        return render_to_response('neon/forma.html', locals(), context_instance=RequestContext(request))
 
 
 @login_required

@@ -211,6 +211,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "django.core.context_processors.request",
     'django.contrib.messages.context_processors.messages',
     "app.views.processors.get_all_users", 
+    "app.views.processors.get_chat_messages", 
     "app.views.processors.cantidades_en_proceso", 
 )
 

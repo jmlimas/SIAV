@@ -68,13 +68,15 @@ def node_api(request):
  
         msg = {}
         msg['send_user_id'] = user.id
+        msg['send_user_first_name'] = user.first_name
+        msg['send_user_last_name'] = user.last_name
         msg['rec_user_id'] = user_to.id
         msg['message'] = message
         data = simplejson.dumps(msg)
 
 
         #Create comment
-        Comments.objects.create(user=user, text=data)
+        Comments.objects.create(envia=user,recibe=user_to,text=message,leido=0)
 
         socketio_emit(data)
         
@@ -88,6 +90,11 @@ def get_notificaciones(request,template='home/consultas/notificaciones.html'):
     response = render(request,template, locals())
     comments.update(leido=True)
     return response
+
+def chat_leido(request,user_leido):
+    comments = Comments.objects.filter(recibe_id=request.user,envia_id=user_leido,leido=False).order_by('-date')
+    comments.update(leido=True)
+    return HttpResponse('')
 
 #Envia tabla de tolerancia de servicios
 def get_tolerancia(request,template='home/consultas/tolerancia.html'):

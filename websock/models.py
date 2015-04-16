@@ -8,9 +8,11 @@ from django.utils.timezone import utc
 
 
 class Comments(models.Model):
-    user = models.ForeignKey(User)
-    text = models.CharField(max_length=255)
-    date = models.DateTimeField(auto_now_add=True, blank=True)
+	envia = models.ForeignKey(User, related_name="enviaUsuarioCmt")
+	recibe = models.ForeignKey(User, related_name="recibeUsuarioCmt")
+	text = models.CharField(max_length=255)
+	leido = models.BooleanField(null=False)
+	date = models.DateTimeField(auto_now_add=True, blank=True)
 
 class Eventos(models.Model):
 	user = models.ForeignKey(User)

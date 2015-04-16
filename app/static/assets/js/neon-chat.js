@@ -6,6 +6,8 @@
  *	www.laborator.co
  */
 
+console.log(data);
+
 var neonChat = neonChat || {
 	$current_user: null,
 	isOpen: false,
@@ -37,6 +39,7 @@ var neonChat = neonChat || {
 
 		init: function()
 		{
+
 			// Conversation Close
 			$conversation_window.on('click', '.conversation-close', neonChat.close);
 
@@ -55,7 +58,7 @@ var neonChat = neonChat || {
 
 				var animate = $(this).is('[data-animate]');
 
-				neonChat.showChat(animate);
+				neonChat.showChat(animate);g
 			});
 
 
@@ -243,6 +246,14 @@ var neonChat = neonChat || {
 				var id = this.$current_user.uniqueId().attr('id');
 
 				this.pushMessage(id, msg.replace( /<.*?>/g, '' ), $chat.data('current-user'), new Date());
+				var this_ = this;
+				var bounceMessage = {};
+				bounceMessage.UserToId = id;
+				bounceMessage.Message = msg.replace( /<.*?>/g, '' );
+			    socket.emit('send_message', bounceMessage, function(data) {
+			            console.log(bounceMessage.Message);
+			        });
+
 				this.renderMessages(id);
 			}
 		},

@@ -145,6 +145,8 @@ urlpatterns += patterns('',
     url(r'^get_proceso/', 'websock.views.get_proceso', name='get_proceso'),
     url(r'^notificaciones_ind/', 'websock.views.notificaciones_ind', name='notificaciones_ind'),
     url(r'^get_conversaciones/', 'websock.views.get_conversaciones', name='get_conversaciones'),
+    url(r'^chat_leido/(\d+)/$', 'websock.views.chat_leido', name='chat_leido'),
+
     #url(r'^marca_leidos/', 'websock.views.marca_leidos', name='marca_leidos'),
     url(r'^node_api$', 'websock.views.node_api', name='node_api'),
 

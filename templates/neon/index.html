@@ -8,7 +8,7 @@
 	<meta name="description" content="Neon Admin Panel" />
 	<meta name="author" content="" />
 
-	<title>SIAV</title>
+	<title>SIAV {% if avaluo.FolioK %} {{avaluo.FolioK}} {%endif%} {% if conteo_eventos_usuario > 0 %} ({{conteo_eventos_usuario}}) {% endif %}</title>
 
 	<link rel="stylesheet" href="{{ STATIC_URL }}/assets/js/jquery-ui/css/no-theme/jquery-ui-1.10.3.custom.min.css">
 	<link rel="stylesheet" href="{{ STATIC_URL }}/assets/css/font-icons/entypo/css/entypo.css">
@@ -174,7 +174,9 @@
 		
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
 							<i id="notif_link" class="entypo-globe"></i>
+							{% if conteo_eventos_usuario > 0 %} 
 							<span class="badge badge-danger">{{conteo_eventos_usuario}}</span>
+							{%endif%}
 						</a>
 					<ul id="notif_dd" class="dropdown-menu">
 					</ul>
@@ -258,7 +260,7 @@
 		</footer>
 	</div>
 
-		
+	
 	<div id="chat" class="fixed" data-current-user="{{user.first_name}} {{user.last_name}}" data-order-by-status="1" data-max-chat-history="25">
 	
 		<div class="chat-inner">
@@ -274,10 +276,9 @@
 	
 	
 			<div class="chat-group" id="group-1">
-				<strong>Favorites</strong>
-	
+				<strong>Favoritos</strong>
 				{% for u in users %}
-				<a href="#" id="sample-user-123" data-conversation-history="#sample_history"><span class="user-status is-online"></span> <em>{{u.first_name}}</em></a>
+				<a href="#" id="{{u.id}}" data-conversation-history="#{{u.id}}-hist" class="chat_user"><span class="user-status is-online"></span> <em>{{u.first_name}} {{u.last_name}}</em></a>
 				{% endfor %}
 			</div>
 	
@@ -285,6 +286,7 @@
 
 	
 		</div>
+
 	
 		<!-- conversation template -->
 		<div class="chat-conversation">
@@ -308,41 +310,34 @@
 	
 	</div>
 	
-	
-	<!-- Chat Histories -->
-	<!--
-	<ul class="chat-history" id="sample_history">
-		<li>
-			<span class="user">Art Ramadani</span>
-			<p>Are you here?</p>
-			<span class="time">09:00</span>
-		</li>
-	
-		<li class="opponent">
-			<span class="user">Catherine J. Watkins</span>
-			<p>This message is pre-queued.</p>
-			<span class="time">09:25</span>
-		</li>
-	
-		<li class="opponent">
-			<span class="user">Catherine J. Watkins</span>
-			<p>Whohoo!</p>
-			<span class="time">09:26</span>
-		</li>
-	
-		<li class="opponent unread">
-			<span class="user">Catherine J. Watkins</span>
-			<p>Do you like it?</p>
-			<span class="time">09:27</span>
-		</li>
-	</ul>
--->
-	
-	
+
 	
 	
 	<!-- Chat Histories -->
-	<!--
+
+  {% for key, values in comments_by_user.items %}
+    <ul class="chat-history" id="{{key}}-hist">
+        {% for val in values%}  
+        	<!-- val.3 - Boolean Leido , val.4  - Boolean Propio -->
+        	<li class="opponent {% if val.3 or val.4 %}read{%else%}unread{% endif %}">
+        	{% for v in val %}
+        		{%if forloop.counter = 1 %}
+        		<span class="user">{{v}}</span>
+        		{% elif forloop.counter = 2 %}
+        		<p>{{v}}</p>
+        		{% elif forloop.counter = 3 %}
+        		<span class="time">{{v}}</span>
+        		{%endif%}
+        	{% endfor %}
+        	</li>
+        {% endfor %}
+    </ul>
+    {% endfor %}
+
+
+	
+	<!-- Chat Histories 
+<!-- 
 	<ul class="chat-history" id="sample_history_2">
 		<li class="opponent unread">
 			<span class="user">Daniel A. Pena</span>
@@ -356,7 +351,7 @@
 			<span class="time">08:27</span>
 		</li>
 	</ul>
-	-->
+-->
 	
 </div>
 
@@ -372,7 +367,6 @@
 
 	<!-- Imported scripts on this page -->
 	<script src="{{ STATIC_URL }}/assets/js/toastr.js"></script>
-	<script src="{{ STATIC_URL }}/assets/js/neon-chat.js"></script>
 
 	<script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/sweet-alert.min.js"></script>
 	<script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/autoNumeric.js"></script>
@@ -398,6 +392,21 @@
        jQuery('#proc_dd').html('&nbsp;').load('/get_proceso');
     });
 
+     	jQuery('.chat_user').click(function($) {
+
+		jQuery.ajax({
+		  url: "/chat_leido/"+this.id,
+		  beforeSend: function( xhr ) {
+		    xhr.overrideMimeType( "text/plain; charset=x-user-defined" );
+		  }
+		})
+		  .done(function( data ) {
+		    if ( console && console.log ) {
+		      console.log( "Sample of data:", data.slice( 0, 100 ) );
+		    }
+		  });
+
+     	});
 	    </script>
 <script type="text/javascript">
 jQuery(document).ready(function() {
@@ -474,8 +483,11 @@ function printDiv(divName) {
 
 </script>
 <script type="text/javascript">
-jQuery(document).ready(function($) {
+var data = {{ users_json|safe }};  
+var current_user_id = {{user.id}};
+// Conexión a Socket.io
 
+var socket = io.connect('{{ request.META.HTTP_HOST }}:4000', { query: "user_id={{user.id}}&sessionid={{request.session.session_key}}" });
 	var opts = {
 			"closeButton": true,
 			"debug": false,
@@ -493,26 +505,28 @@ jQuery(document).ready(function($) {
 		};
 
 
-    // Conexión a Socket.io
 
-	  var data = {{ users_json|safe }};  
-	  var current_user_id = {{user.id}};
-	  var socket = io.connect('{{ request.META.HTTP_HOST }}:4000', { query: "user_id={{user.id}}&sessionid={{request.session.session_key}}" });
-	socket.on('message_receive', function(message) {
+// Recibe evento de proceso
+socket.on('message_receive', function(message) {
 	    console.log("Recibido");	
 	    toastr.success(message,'', opts);	
 	    jQuery('#noti_ind').html('&nbsp;').load('/notificaciones_ind')
 	});
 
-
-
-});
+//Recibe evento de chat
+socket.on('chat_receive', function(message) {
+	var sender_name = message.send_user_first_name +" "+ message.send_user_last_name;
+	    toastr.success(message.message,sender_name+" dice: ", opts);	
+	    neonChat.pushMessage(message.send_user_id, message.message.replace( /<.*?>/g, '' ),sender_name , new Date(), true, true);
+	    neonChat.renderMessages(message.send_user_id, false);
+	});
 
 
 
 </script>
 
 	<!-- JavaScripts initializations and stuff -->
+	<script src="{{ STATIC_URL }}/assets/js/neon-chat.js"></script>
 	<script src="{{ STATIC_URL }}/assets/js/neon-custom.js"></script>
 
 

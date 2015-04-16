@@ -145,39 +145,3 @@ box-shadow: inset 1px 1px 0 #fff, inset -1px -1px 0 #fff;
 .loading #container {opacity: 0;}
 .loading:before  { content: 'LOADING'; display: block; margin: 100px 0 0; text-align: center; color: #fff; font-weight: bold; font-size: 60px; opacity: 0.3; }
 body {width: 100%; float: left; opacity: 1; -webkit-transition: opacity 1s ease;}
-
-/* Layout
-***********************/
-#container {padding: 60px 40px 100px;}
-header {width: 420px; float: left;}
-/*#main {margin-left: 420px; margin-top: -25px;overflow: hidden;}
-*/aside h3 {float: left;}
-
-/* Header
-***********************/
-/*header .logo  { display: block; margin: 10px 0 30px; }
-header h1 { font-family: Geogrotesque-Semibold, Helvetica, Arial, sans-serif; margin: 0 0 10px; text-shadow: 0 1px 0 #2F4C63; color: #fff; font-size: 42px; }
-header h2 { margin: 0 0 30px; font: normal 20px Geogrotesque-regular, Helvetica, Arial, sans-serif; text-shadow: 0 1px 1px #555; color: #fff; }
-header .button { margin: 0 0 50px; padding: 10px 15px 10px 15px; position: relative; }
-h3.nav-header { width: 200px; margin: 0 0 10px; padding: 0 0 3px; font-size: 18px; text-shadow: 0 1px 1px #555; color: #fff; font-family: Geogrotesque-Regular, Helvetica, Arial, sans-serif; border-bottom: 1px solid #fff; border-bottom: 1px solid rgba(255,255,255,0.5); }
-nav li {margin: 0 0 7px; font-size: 15px; }
-nav li a:hover,
-nav li.active a  {border-bottom: 1px dotted #fff; border-bottom: 1px dotted rgba(255,255,255,0.3); background: none;}
-nav li.active a  { cursor: default; }*/
-
-/* Media Queries
-***********************/
-/*@media screen and (max-width: 960px) {
-  #container {padding: 35px;}
-  header {width: 380px;}
-  #main {margin-left: 380px;}
-  aside h3  {
-  	float: none;
-  	font-size: 20px;
-  }
-  .toggle  {
-  	margin-left: 0;
-  	float: none;
-  }
-}*/
-

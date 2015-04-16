@@ -5,97 +5,117 @@
 
 {% load crispy_forms_tags %}
 
-{% block consulta_master %}active{% endblock %}				
+{% block consulta_master %}active{% endblock %}       
 
-			{% block content %}		
+      {% block content %}
+<h2>Consulta</h2>
 
-		<h2>Consulta</h2>
-		<br />
-		
-		
-		<div class="row">
-			<div class="col-md-12">
-				
-				<div class="panel panel-primary" data-collapsed="0">
-				
-					<div class="panel-heading">
-						<div class="panel-title">
-							Búsqueda de Servicios
-						</div>
-						
-						<div class="panel-options">
+<ul id="tabs" class="nav nav-tabs" data-tabs="tabs">
+  <li class="active">
+    <a href="#servicios" data-toggle="tab">Servicios</a>
+  </li>
+  <li>
+    <a href="#comparable" data-toggle="tab">Comparables (Beta)</a>
+  </li>
+</ul>
+<div id="my-tab-content" class="tab-content">
+  <div class="tab-pane active" id="servicios">
+    <div class="row">
+      <div class="col-md-12">
 
-						</div>
-					</div>
-					
-					<div class="panel-body">
-						
+        <div class="panel panel-primary" data-collapsed="0">
+          <div class="panel-heading">
+            <div class="panel-title">Búsqueda de Servicios</div>
 
+            <div class="panel-options"></div>
+          </div>
+          <div class="panel-body">
+            {% if forma.errors %}
+            <p style="color: red;">Porfavor completa los campos faltantes.</p>
+            {% endif %}
 
-      {% if forma.errors %}
-        <p style="color: red;">
-            Porfavor completa los campos faltantes.
-        </p>
-    {% endif %}
-
-    {% crispy forma %}  
-   <br>
-
-  <div>
-    <input id="submit-id-submit" type="submit" value="Buscar" class="btn btn-primary"/>
-    <br/>
-    <div class="margin table-responsive" align="center">
-        <span id="spinner"><img src="{{ STATIC_URL }}spinner_large.gif"/ width="50px"></span>
-        <div id='printableArea'><div id="results"></div></div>
+            {% crispy forma %}
+            <br>
+            <div>
+              <input id="submit-id-submit" type="submit" value="Buscar" class="btn btn-primary"/>
+              <br/>
+              <div class="margin table-responsive" align="center">
+                <span id="spinner">
+                  <img src="{{ STATIC_URL }}spinner_large.gif"/ width="50px"></span>
+                <div id='printableArea'>
+                  <div id="results"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="tab-pane" id="comparable">
+  <div id="div_id_Zona" class="form-group">
+    <label for="id_Zona" class="control-label ">Zona</label>
+    <div class="controls">
+    <select name="BZona" id="cmbzona" class="select form-control" style="width:180px;">
+      <option value="" selected="">[Opcional]</option>
+      <option value="19">ALLENDE</option>
+      <option value="13">APODACA</option>
+      <option value="14">CADEREYTA</option>
+      <option value="21">CARRETERA NACIONAL</option>
+      <option value="1">CENTRO</option>
+      <option value="6">CONTRY</option>
+      <option value="9">CUMBRES</option>
+      <option value="5">ESCOBEDO</option>
+      <option value="24">FORÁNEOS</option>
+      <option value="16">GARCIA</option>
+      <option value="11">GUADALUPE</option>
+      <option value="23">JUAREZ</option>
+      <option value="22">MONTEMORELOS</option>
+      <option value="3" >SAN NICOLAS DE LOS GARZA</option>
+      <option value="26">SAN PEDRO CENTRO</option>
+      <option value="15">SANTA CATARINA</option>
+      <option value="8">VALLE</option>
+      <option value="28">VALLE ORIENTE</option>
+      <option value="27">VALLE PONIENTE</option>
+      <option value="20">ZUAZUA</option>
+    </select>
+    </div>
+  </div>
+    <div>
+      <input id="submit-id-submit_comparable" type="submit" value="Buscar" class="btn btn-primary"/>
+      <br/>
+      <div class="margin" align="center">
+        <span id="spinner_comparable">
+          <img src="{{ STATIC_URL }}spinner_large.gif"/ width="50px"></span>
+        <div id='printableArea'>
+          <div id="results_comparable"></div>
+        </div>
+      </div>
     </div>
 
-					
-					</div>
-				
-				</div>
-				
-			</div>
-		</div>
+  </div>
 </div>
-
-		{% endblock %}
-
-
-
-
-
-		
-
-	
-
-
+{% endblock %}
 
  {% block scripts %}
+<link rel="stylesheet" href="{{ STATIC_URL }}CSS/smoothness/jquery-ui-1.8.24.custom.css">
 
+<!-- Bottom scripts (common) -->
+<script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/jquery-ui-1.8.24.custom.min.js"></script>
+<script src="{{ STATIC_URL }}/assets/js/joinable.js"></script>
+<script src="{{ STATIC_URL }}/assets/js/select2/select2.min.js"></script>
 
-	<link rel="stylesheet" href="{{ STATIC_URL }}CSS/smoothness/jquery-ui-1.8.24.custom.css">
+<!-- <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/jquery-datepicker-es.js"></script>
+-->
+<script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/ajax_estados_municipios.js"></script>
+<!-- Incluye  sugerencia de colonias.-->
 
-
-
-
-	<!-- Bottom scripts (common) -->
-	<script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/jquery-ui-1.8.24.custom.min.js"></script>
-	<script src="{{ STATIC_URL }}/assets/js/joinable.js"></script>
-	<script src="{{ STATIC_URL }}/assets/js/select2/select2.min.js"></script>
-
-
-
-    
-    <!-- <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/jquery-datepicker-es.js"></script> -->
-    <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/ajax_estados_municipios.js"></script> <!-- Incluye  sugerencia de colonias.-->
-
-    
-    <script type="text/javascript"> 
+<script type="text/javascript"> 
    
-	jQuery("#id_Colonia").autocomplete({
-	source: "/api/get_colonias/",
-	minLength: 2,
-	});
+  jQuery("#id_Colonia").autocomplete({
+  source: "/api/get_colonias/",
+  minLength: 2,
+  });
 
     jQuery(document).ready( function() {
     var now = new Date();
@@ -115,16 +135,11 @@
 
 
     jQuery(function() {
-
-
-
-
       jQuery('#id_Solicitud').datepicker({ autoSize: true });
       jQuery('#id_Inicial').datepicker({ autoSize: true });
       jQuery('#id_Visita').datepicker({ autoSize: true });
       jQuery('#id_Salida').datepicker({ autoSize: true });
       jQuery('#id_Final').datepicker({ autoSize: true });
-
 
     jQuery(":input").blur(function() {
     
@@ -139,7 +154,7 @@
 
 <script type="text/javascript">
     jQuery(document).ready(function () {
-        jQuery('#spinner').hide();
+        jQuery('#spinner, #spinner_comparable').hide();
         jQuery('#submit-id-submit').click(function () {
             foliok = jQuery('#id_FolioK').val();
             ref = jQuery('#id_Referencia').val();
@@ -159,22 +174,37 @@
             tipo = jQuery('#id_Tipo').val();
             mes = jQuery('#id_Mes').val();
             anio = jQuery('#id_Anio').val();
-            
-            //jQuery('#results').html('&nbsp;').load('/SIAV/consulta_master/?q1=' + q1);
             jQuery('#results').html('&nbsp;').load('/SIAV/consulta_master/?foliok='+foliok+"&ref="+ref+"&calle="+calle+"&col="+col+"&edo="+edo+"&mun="+mun+"&factura="+factura+"&cli="+cli+"&dep="+dep+"&imp="+imp+"&val="+val+"&tipo="+tipo+"&mes="+mes+"&anio="+anio+"&est="+allVals);
         });
     });
         
     jQuery(document).ajaxStart(function () {
-        jQuery('#spinner').show();
+        jQuery('#spinner, #spinner_comparable').show();
     }).ajaxStop(function () {
-        jQuery('#spinner').hide();
+        jQuery('#spinner, #spinner_comparable').hide();
     });
 
 </script>
-    
- <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/mapas.js"></script>
-    
-      
-{%endblock%}
 
+<script type="text/javascript">
+    jQuery(document).ready(function ($) {
+        $('#spinner').hide();
+        $('#submit-id-submit_comparable').click(function () {
+            zona = $('#cmbzona').val();
+            if ($('#cmbcolonia').val()){
+            col = encodeURIComponent($('#cmbcolonia').val());
+          }else{
+            col = '';
+          }
+            //$('#results').html('&nbsp;').load('/SIAV/consulta_master/?q1=' + q1);
+            //$('#results').html('&nbsp;').load('/SIAV/consulta_master/?foliok='+foliok+"&ref="+ref+"&calle="+calle+"&col="+col+"&edo="+edo+"&mun="+mun+"&factura="+factura+"&cli="+cli+"&dep="+dep+"&imp="+imp+"&val="+val+"&tipo="+tipo+"&mes="+mes+"&anio="+anio);
+            $('#results_comparable').html('&nbsp;').load('/SIAV/consulta_comparable/?zona='+zona+"&col="+col);
+        });
+    });
+        
+
+
+</script>
+
+<script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/mapas.js"></script>
+{%endblock%}

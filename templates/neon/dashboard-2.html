@@ -19,7 +19,7 @@ jQuery(function($) {
 var pre_url = "/SIAV/estadistico_anio_js/?anio=" + {{anio}};
 $.getScript(pre_url, function() {});
 
-$('input[name="anio_check"]').each(function() {
+jQuery('input[name="anio_check"]').each(function($) {
     if ({{ anio }} == this.value) {
         jQuery(this).prop('checked', true);
     }
@@ -262,10 +262,43 @@ jQuery(document).ready(function($) {
 		</div>
 	</div>
 
-		<div class="row">
-			<div class="col-sm-12">
-				<div class="row">
-					<div class="col-sm-12">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="row">
+                    <div class="col-sm-2">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                            <div class="panel-title">Clientes</div>
+        
+                                <div class="panel-options">
+                                    <a href="#sample-modal" data-toggle="modal" data-target="#sample-modal-dialog-1" class="bg"><i class="entypo-cog"></i></a>
+                                    <a href="#" data-rel="collapse"><i class="entypo-down-open"></i></a>
+                                    <a href="#" data-rel="reload"><i class="entypo-arrows-ccw"></i></a>
+                                    <a href="#" data-rel="close"><i class="entypo-cancel"></i></a>
+                                </div>
+                                </div>
+                                <div class="panel-body">
+                                <table class="table table-hover" >
+                                    {% for a in cliente %}
+                                    <tr>
+                                        <td>
+                                            <a data-toggle="modal" href="/SIAV/estadistico_cliente_depto/{{anio}}/{{a.0}}/" data-target="#myModal{{a.0}}">{{a.1}}</a>
+                                        </td>
+                                    </tr>
+                        <!-- Modal -->
+                        <div >
+                            <div class="modal" id="myModal{{a.0}}" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                <div class="modal-dialog ">
+                                    <div class="modal-content"></div>
+                                    <!-- /.modal-content --> </div>
+                                <!-- /.modal-dialog --> </div>
+                            <!-- /.modal --> </div>
+                                    {% endfor %}
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+					<div class="col-sm-10">
 						<div class="panel panel-default">
 							<div class="panel-heading">
 								<div class="panel-title">Importe mensual de servicios por cliente</div>
@@ -308,7 +341,15 @@ jQuery(document).ready(function($) {
 {% endblock %}
 
 {% block scripts %}
+<script>
+{% for a in cliente %}
+jQuery("#myModal{{a.0}}").on('hidden.bs.modal', function($) {
+    jQuery(this).data('bs.modal', null);
+    jQuery(this).removeData('bs.modal');
+});
 
+{% endfor %}
+</script>
 
 	<script src="{{ STATIC_URL }}/assets/js/joinable.js"></script>
 	<script src="{{ STATIC_URL }}/assets/js/resizeable.js"></script>

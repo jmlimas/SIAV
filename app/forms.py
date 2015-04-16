@@ -706,34 +706,8 @@ class FormaConsultaSencilla(ModelForm):
         self.fields['Anio'].choices = [(i, i) for i in range(anios, year+1)]
 '''
 
-class AltaValuador(ModelForm):
-    Nombre = forms.CharField()
-    Apellido = forms.CharField()
-    Correo = forms.CharField()
-
-    class Meta:
-        model = Valuador
 
 
-class AltaUsuario(forms.Form):
-  #  Form for creating new login
-    Nombre = forms.CharField()
-    Correo = forms.CharField()
-    Usuario = forms.CharField()
-    Contrasena = forms.CharField(widget=forms.PasswordInput)
-    Repetir_Contrasena = forms.CharField(widget=forms.PasswordInput)
-    Repetir_Contrasena = forms.CharField(widget=forms.PasswordInput)
-    Grupo = forms.ChoiceField(choices=GRUPO)
-
-    def clean(self):
-        try:
-            if self.cleaned_data['Contrasena'] != self.cleaned_data['Repetir_Contrasena']:
-                raise forms.ValidationError("Las contrasenas no coinciden.")
-        except KeyError:
-          # didn't find what we expected in data - fields are blank on front end.  Fields
-          # are required by default so we don't need to worry about validation
-            pass
-        return self.cleaned_data
 
 
 class FacturaForm(ModelForm):
@@ -755,6 +729,19 @@ class FacturaForm(ModelForm):
                 css_class='row'))
         super(FacturaForm,  self).__init__(*args,  **kwargs)
 
+
+class EmptyForm(ModelForm):
+    class Meta:
+        model = Avaluo
+        fields = ('avaluo_id',)
+
+    def __init__(self,  *args,  **kwargs):
+        self.helper = FormHelper()
+        self.helper.form_id = 'id-EmptyForm'
+        self.helper.form_class = 'blueForms'
+        self.helper.form_method = 'POST'
+        self.helper.form_tag = False
+        super(EmptyForm,  self).__init__(*args,  **kwargs)
 
 class VisitaMasiva(ModelForm):
     LatitudG = forms.DecimalField(required=True, label="Lon.G.")

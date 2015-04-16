@@ -1,9 +1,7 @@
 {% load currency %}
-
-
-		<h1>{{objeto_cliente.Cliente}} {{anio}}</h1>
 		<div id="depto_container{{cliente}}"></div>
-		<table class="table table-hover" >
+        <!--
+		<table class="table" >
 			{% for a in deptos_importe %}
 			<tr>
 				<td>{{a.Depto__Depto}}</td>
@@ -12,15 +10,16 @@
 			</tr>
 			{% endfor%}
 		</table>
+    -->
 	
 <script>
-$(function () {
+jQuery(function ($) {
     $('#depto_container{{cliente}}').highcharts({
         chart: {
             type: 'bar'
         },
         title: {
-            text: 'Importe por Cliente'
+            text: '{{objeto_cliente.Cliente}} {{anio}} / Importe por Cliente'
         },
         subtitle: {
             text: ''
