@@ -6,6 +6,7 @@ import djcelery
 
 
 from datetime import timedelta
+BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 CELERYBEAT_SCHEDULE = {
     'add-every-5-seconds': {
@@ -33,7 +34,7 @@ CRISPY_TEMPLATE_PACK = 'bootstrap3'
 #DEBUG_TOOLBAR_PATCH_SETTINGS = False
 
 ALLOWED_HOSTS = ['*']
-DEBUG = False
+DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 THUMBNAIL_DEBUG = True 
 THUMBNAIL_PREFIX ='media/cache/'
@@ -121,8 +122,8 @@ MEDIA_URL = os.path.dirname("media")
 # Don't put anything in this directory yourself; store your static files
 # in apps' "static/" subdirectories and in STATICFILES_DIRS.
 # Example: "/home/media/media.lawrence.com/static/"
-STATIC_ROOT = 'C:/inetpub/wwwroot/static/'
-
+#STATIC_ROOT = 'C:/inetpub/wwwroot/static/'
+STATIC_ROOT = "/home/SIAV/app/static"
 # URL prefix for static files.
 # Example: "http://media.lawrence.com/static/"
 STATIC_URL = 'http://alluxi.mx:8000/'
@@ -177,13 +178,11 @@ ROOT_URLCONF = 'urls'
 # Python dotted path to the WSGI application used by Django's runserver.
 WSGI_APPLICATION = 'SIAV.wsgi.application'
 
-TEMPLATE_DIRS = (
-    # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
-    # Always use forward slashes, even on Windows.
-    # Don't forget to use absolute paths, not relative paths.
-    "/home/SIAV/templates",
-    "templates",
-)
+TEMPLATE_DIRS = [os.path.join(BASE_DIR, 'SIAV/app/templates')]
+
+
+
+
 
 INSTALLED_APPS = (
     'django.contrib.auth',

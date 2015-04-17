@@ -1,0 +1,181 @@
+{% extends "neon/index.html" %}
+{% load listutil %}
+{% block alta %}active{% endblock %}
+{% block inicio %}active{% endblock %}
+{% load crispy_forms_tags %}
+
+{% block consulta_master %}active{% endblock %}
+<h2>Alta Avalúo</h2>
+{% block content %}		
+ {% if formset.errors or formset_sencilla.errors  or forma.errors %}
+<p style="color: red;">Porfavor completa los campos faltantes.</p>
+{% endif %}
+<ul id="tabs" class="nav nav-tabs" data-tabs="tabs">
+	<li class="active">
+		<a href="#individual" data-toggle="tab">Individual</a>
+	</li>
+	<li>
+		<a href="#paquete" data-toggle="tab">Paquete</a>
+	</li>
+</ul>
+<br />
+
+<div class="row">
+	<div class="col-md-12">
+
+		<div class="panel panel-primary" data-collapsed="0">
+
+			<div class="panel-heading">
+				<div class="panel-title">Alta de Servicio</div>
+
+				<div class="panel-options"></div>
+			</div>
+
+			<div class="panel-body">
+
+				<div id="my-tab-content" class="tab-content">
+					<div class="tab-pane active" id="individual">
+						<h2>Individual</h2>
+						<br />
+						{% crispy forma %}
+						<br></div>
+					<div class="tab-pane" id="paquete">
+						<h2>Paquete</h2>
+						<br>
+						<form method="post" action="/SIAV/alta_avaluo_paquete/">
+							{% csrf_token %}
+        					{% crispy formset_sencilla %}
+							<br>
+              <br>
+							<h2 id="cant_servicios">1 Servicio</h2>
+
+							<br>
+							<input class="btn btn-success" type="submit" value="Enviar" />
+							<div id="printableArea">
+								{% for form in formset %}
+								<div id="{{ form.prefix }}-row"  class="formset-div-child container" style="padding-bottom:6px; border-bottom:1px dotted #ccc; margin-bottom:6px;" id="form-0-row">{% crispy form %}</div>
+								{% endfor %}
+							</div>
+							{{ formset.management_form}}
+							<br></p>
+					</form>
+
+				</div>
+			</div>
+
+		</div>
+
+	</div>
+</div>
+</div>
+{% endblock %}
+
+
+
+
+
+		
+
+	
+
+
+
+ {% block scripts %}
+<!-- Imported styles on this page -->
+<link rel="stylesheet" href="{{ STATIC_URL }}CSS/smoothness/jquery-ui-1.8.24.custom.css">
+
+<!-- Bottom scripts (common) -->
+<script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/jquery-datepicker-es.js"></script>
+<script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/ajax_estados_municipios.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}JS/jquery.formset.js"></script>
+
+<!-- Incluye  sugerencia de colonias.-->
+
+</script>
+<script type="text/javascript">
+    jQuery(function() {
+        jQuery('.formset-div-child').formset({
+            formCssClass: 'dynamic-contact-form',
+            prefix: "{{ formset.prefix }}"
+        });
+    });
+
+</script>
+
+<script type="text/javascript"> 
+	jQuery("#id_Colonia").autocomplete({
+	source: "/api/get_colonias/",
+	minLength: 2,
+	});
+jQuery(document).ready( function() {
+  var now = new Date();
+  var month = (now.getMonth() + 1);               
+  var day = now.getDate();
+  if(month < 10) 
+    month = "0" + month;
+  if(day < 10) 
+    day = "0" + day;
+  var today = day + '/' + month + '/' + now.getFullYear() ;
+  jQuery('#id_Solicitud').val(today);
+
+
+ {% if formset.errors or formset_sencilla.errors  %}
+    jQuery('a[href="#paquete"]').tab('show');
+  {% endif %}
+  
+});
+
+jQuery(function() {
+
+ jQuery('#id_Solicitud').datepicker({ autoSize: true });
+ jQuery('#id_formset_sencilla-Solicitud').datepicker({ autoSize: true });
+
+ jQuery(":input").blur(function() {
+   if(this.id != 'id_Observaciones') {
+     this.value = this.value.toUpperCase();
+   }
+ });
+
+ jQuery('#id_NumInt').attr('disabled', 'disabled');
+ jQuery('input').blur(function () {
+   if (jQuery('#id_NumExt').val()) {
+     jQuery('#id_NumInt').removeAttr('disabled');
+   } else {
+     jQuery('#id_NumInt').attr('disabled', 'disabled');
+   }
+ });
+ 
+
+   // jQuery('input[type=text]').addClass('form-control');
+   // jQuery('select').addClass('form-control');
+   // jQuery('select').width('174px');
+
+
+   
+
+});
+</script>
+<!-- Here's an example of how you can style add/delete buttons with CSS -->
+<style type="text/css">
+    .help-block{
+      color: #a94442;  
+    }
+    .add-row {
+        padding-left:18px;
+        background:url({{ STATIC_URL }}images/add.png) no-repeat left center;
+    }
+    .delete-row {
+        float:right;
+        display:block;
+        margin:5px 0 0 5px;
+        text-indent:-6000px;
+        background:url({{ STATIC_URL }}images/delete.png) no-repeat left center;
+        width:16px;
+        height:16px;
+    }
+    tr.row1 td { background-color: #eee; }
+    tr.row2 td { background-color: #eee; }
+    tr.row3 td { background-color: #eee; }
+    tr.row4 td { background-color: #eee; }
+</style>
+{%endblock%}

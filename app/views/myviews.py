@@ -287,7 +287,7 @@ def alta_avaluo(request):
             return redirect('/SIAV/alta_avaluo/')  # Redirect after POST
     else:
         forma = AltaAvaluo()  # An unbound form
-    return render_to_response('neon/forma_alta.html', {'forma': forma,'formset_sencilla': formset_sencilla,'formset': formset, }, context_instance=RequestContext(request))
+    return render_to_response('neon/forma_alta.html', locals(), context_instance=RequestContext(request))
 
 
 def alta_avaluo_paquete(request):

@@ -21,9 +21,6 @@ class Migration(migrations.Migration):
                 ('FolioK', models.CharField(max_length=255, null=True)),
                 ('file', models.FileField(upload_to=app.models.get_image_path, null=True, verbose_name=b'Archivo Avaluo', blank=True)),
             ],
-            options={
-            },
-            bases=(models.Model,),
         ),
         migrations.CreateModel(
             name='Avaluo',
@@ -58,9 +55,6 @@ class Migration(migrations.Migration):
                 ('Pagado', models.NullBooleanField()),
                 ('Observaciones', models.CharField(max_length=255, null=True)),
             ],
-            options={
-            },
-            bases=(models.Model,),
         ),
         migrations.CreateModel(
             name='Cliente',
@@ -68,9 +62,6 @@ class Migration(migrations.Migration):
                 ('cliente_id', models.AutoField(serialize=False, primary_key=True)),
                 ('Cliente', models.CharField(max_length=255)),
             ],
-            options={
-            },
-            bases=(models.Model,),
         ),
         migrations.CreateModel(
             name='Depto',
@@ -91,9 +82,6 @@ class Migration(migrations.Migration):
                 ('factor', models.DecimalField(null=True, max_digits=6, decimal_places=3)),
                 ('cliente_id', models.ForeignKey(to='app.Cliente')),
             ],
-            options={
-            },
-            bases=(models.Model,),
         ),
         migrations.CreateModel(
             name='Estado',
@@ -104,9 +92,6 @@ class Migration(migrations.Migration):
                 ('abrev', models.CharField(max_length=255, null=True)),
                 ('is_active', models.BooleanField(default=1)),
             ],
-            options={
-            },
-            bases=(models.Model,),
         ),
         migrations.CreateModel(
             name='ImagenAvaluo',
@@ -116,9 +101,6 @@ class Migration(migrations.Migration):
                 ('imagen', models.ImageField(upload_to=app.models.get_image_path, null=True, verbose_name=b'Imagen Avaluo', blank=True)),
                 ('avaluo', models.ForeignKey(related_name='avaluos', to='app.Avaluo')),
             ],
-            options={
-            },
-            bases=(models.Model,),
         ),
         migrations.CreateModel(
             name='Municipio',
@@ -129,9 +111,6 @@ class Migration(migrations.Migration):
                 ('is_active', models.BooleanField(default=1)),
                 ('estado_id', models.ForeignKey(to='app.Estado')),
             ],
-            options={
-            },
-            bases=(models.Model,),
         ),
         migrations.CreateModel(
             name='Tipo',
@@ -139,9 +118,6 @@ class Migration(migrations.Migration):
                 ('tipo_id', models.AutoField(serialize=False, primary_key=True)),
                 ('Tipo', models.CharField(max_length=255)),
             ],
-            options={
-            },
-            bases=(models.Model,),
         ),
         migrations.CreateModel(
             name='UserProfile',
@@ -152,9 +128,6 @@ class Migration(migrations.Migration):
                 ('color', models.CharField(max_length=50, blank=True)),
                 ('user', models.OneToOneField(to=settings.AUTH_USER_MODEL)),
             ],
-            options={
-            },
-            bases=(models.Model,),
         ),
         migrations.CreateModel(
             name='Valuador',
@@ -165,50 +138,40 @@ class Migration(migrations.Migration):
                 ('Correo', models.CharField(max_length=255, null=True)),
                 ('is_active', models.BooleanField()),
             ],
-            options={
-            },
-            bases=(models.Model,),
         ),
         migrations.AddField(
             model_name='avaluo',
             name='Cliente',
             field=models.ForeignKey(to='app.Cliente', null=True),
-            preserve_default=True,
         ),
         migrations.AddField(
             model_name='avaluo',
             name='Depto',
             field=models.ForeignKey(to='app.Depto', null=True),
-            preserve_default=True,
         ),
         migrations.AddField(
             model_name='avaluo',
             name='Estado',
             field=models.ForeignKey(to='app.Estado', null=True),
-            preserve_default=True,
         ),
         migrations.AddField(
             model_name='avaluo',
             name='Municipio',
             field=models.ForeignKey(to='app.Municipio', null=True),
-            preserve_default=True,
         ),
         migrations.AddField(
             model_name='avaluo',
             name='Tipo',
             field=models.ForeignKey(to='app.Tipo', null=True),
-            preserve_default=True,
         ),
         migrations.AddField(
             model_name='avaluo',
             name='Valuador',
             field=models.ForeignKey(to='app.Valuador', null=True),
-            preserve_default=True,
         ),
         migrations.AddField(
             model_name='archivoavaluo',
             name='avaluo',
             field=models.ForeignKey(to='app.Avaluo'),
-            preserve_default=True,
         ),
     ]
