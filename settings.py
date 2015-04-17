@@ -47,18 +47,28 @@ ADMINS = (
     # ('Your Name', 'your_email@example.com'),
 )
 
+file_path = ('/var/www/ghost/content/data/ghost.db')
+if not os.path.exists(file_path):
+    file_path = 'ghost.db'
+
 MANAGERS = ADMINS
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',  # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+         #'ENGINE': 'django.db.backends.postgresql_psycopg2',  # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+        'ENGINE': 'django.db.backends.mysql',
+        #'ENGINE': 'tenant_schemas.postgresql_backend',
         'NAME': 'siavdb',                      # Or path to database file if using sqlite3.
         'USER': 'root',                      # Not used with sqlite3.
         'PASSWORD': 'siavdb',                  # Not used with sqlite3.
         'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
-        'PORT': '3306',                      # Set to empty string for default.
-        'OPTIONS': {"init_command": "SET foreign_key_checks = 0;"}
-    }
+        'PORT': '',},
+     'sqlite': {
+        'NAME': file_path,
+        'ENGINE': 'django.db.backends.sqlite3',
+        'USER': '',
+        'PASSWORD': ''
+    }   
 }
 
 

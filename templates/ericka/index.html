@@ -1,150 +1,472 @@
- {% extends "ericka/ericka_base.html" %}
- {% block content %}
-
-<!-- Content strats -->
-
-<div class="content">
-   <div class="container">
-      <div class="row">
-         <div class="span12">
-         
-            
-            <div id="da-slider" class="da-slider">
-        <div class="da-slide">
-          <h2>Profesionalismo</h2>
-          <p>Valuadores capacitados para brindar servicio cumpliendo los mas altos estándares de calidad. Estamos avalados por la Federación Nacional de Valuación.</p>
-<!--          <a href="#" class="da-link">Read more</a> -->
-          <div class="da-img"><img src="{{ STATIC_URL }}/ericka_styles/img/parallax/1.png" alt="image01" /></div>
-        </div>
-        <div class="da-slide">
-          <h2>Experiencia</h2>
-          <p>Contamos con mas de 10 años de experiencia en la Valuación de Inmuebles.</p>
-<!--          <a href="#" class="da-link">Read more</a>
- -->          <div class="da-img"><img src="{{ STATIC_URL }}/ericka_styles/img/parallax/2.png" alt="image01" /></div>
-        </div>
-        <div class="da-slide">
-          <h2>Servicio</h2>
-          <p>Nuestra filosofía busca dar el mejor servicio a nuestros clientes.</p>
-<!--          <a href="#" class="da-link">Read more</a>
- -->          <div class="da-img"><img src="{{ STATIC_URL }}/ericka_styles/img/parallax/3.png" alt="image01" /></div>
-        </div>
-        <div class="da-slide">
-          <h2>Calidad</h2>
-          <p>El proceso de tu avalúo es supervisado paso a paso por profesionales, donde nos aseguramos de mantener al cliente informado paso a paso del estado en que se encuestra su servicio. Brindando asesoría confiable y eficiente a cada paso del proceso.</p>
-<!--          <a href="#" class="da-link">Read more</a>
- -->          <div class="da-img"><img src="{{ STATIC_URL }}/ericka_styles/img/parallax/4.png" alt="image01" /></div>
-        </div>
-        <nav class="da-arrows">
-          <span class="da-arrows-prev"></span>
-          <span class="da-arrows-next"></span>
-        </nav>
-      </div>
-            
-            <!-- Slider ends -->
-
-            <div class="bor"></div>
-
-            <div class="main-content">
-              <div class="row">
-                <div class="span7">
-                  <h2>Bienvenido</h2>
-                  <p class="main-meta">Expertos en Valuación</p>
-                  <p>En  Valuadores del Norte nos dedicamos a la realización de avalúos inmobiliarios. Contamos con un equipo de expertos listos para determinar el valor real de tus inmuebles.
-
-                  <p>La experiencia que tenemos en <strong>grandes proyectos</strong> es nuestra mejor carta de presentación.</p>
-                  <img src="{{ STATIC_URL }}/ericka_styles/img/photos/fundidora.jpg" style="height:175px;" alt="" />
-                </div>
-                <div class="span5">
-                  <div class="main-box">
-                    <h4>¿Porqué elegirnos?</h4>
-                    <p>Nos esforzamos cada día en ofrecer a nuestros clientes un excelente servicio de valuación, por eso seguimos rigurosamente normas y procedimientos nacionales e internacionales de valuación, así como un código de prácticas interno y una constante renovación en nuestros sistemas tecnológicos.</p>
-                    <ul>
-                      <li>Experiencia en el mercado respaldan nuestra calidad y profesionalismo.</li>
-                      <li>Habilidades Profesionales</li>
-                      <li>Capacidad Tecnológica</li>
-                      <li>Cumplimiento de las normas nacionales e internacionales de valuación.</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
+<!DOCTYPE html>
+<html lang="en-us" class="no-js">
+	
+<head>
+    	<meta charset="utf-8">
+      	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+      	<meta name="description" content="">
+      	<meta name="author" content="">
+      	<link rel="shortcut icon" href="{{ STATIC_URL }}/CSS/theme_images/favicon.ico">
+      	<title>alluxi</title>
+      	<!-- Core CSS -->
+      	<link href="{{ STATIC_URL }}/CSS/theme_css/bootstrap.css" rel="stylesheet">
+      	<link href="{{ STATIC_URL }}/CSS/theme_css/plugins.css" rel="stylesheet">
+      	<!-- Custom styles for this template -->
+      	<link href="{{ STATIC_URL }}/CSS/theme_css/style.css" rel="stylesheet">
+      	<!-- Google Fonts -->
+      	<link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800' rel='stylesheet' type='text/css'>
+   	</head>
+	<body class="home">
+        <div id="wrapper">
+            <!-- Page Loader -->
+            <div id="pageloader">
+                <div class="loader-item fa fa-circle-o-notch fa-spin fa-5x"></div>
             </div>
-
-
-            <div class="bor"></div>
-            
-                     <div class="row">
-                        <div class="span3">
-                           <div class="afeature">
-                              <div class="afmatter">
-                                 <i class="icon-home"></i>
-                                 <h4>Avalúo</h4>
-                                 <p>Estimación de valía monetaria o utilidad de un objeto para alguien para algún propósito. </p>
-                              </div>
-                           </div>                        
+            <!-- Slider -->
+            <section id="slides">
+                <ul class="slides-container">
+                    <!-- slide-item -->
+                    <li class="slide-item image1" >
+                        <div class="overlay-1"></div>
+                        <div class="caption-wrapper" >
+                            <div class="slide-caption" >
+                                <!-- <h1>alluxi</h1> -->
+                                    <img class="preserve" src="{{ STATIC_URL }}/CSS/theme_images/alluxi_white.png" alt="ALLUXI" />
+                            </div>
                         </div>
-                        <div class="span3">
-                           <div class="afeature">
-                              <div class="afmatter">
-                                 <i class="icon-home"></i>
-                                 <h4>Dictamen</h4>
-                                 <p> Opinión y juicio que se forma o emite sobre algo, especialmente el que hace un especialista </p>
-                              </div>
-                           </div>                        
+                    </li>
+                    <li class="slide-item image1" >
+                        <div class="overlay-1"></div>
+                        <div class="caption-wrapper" >
+                            <div class="slide-caption" >
+                                <!-- <h1>alluxi</h1> -->
+                                    <img class="preserve" src="{{ STATIC_URL }}/CSS/theme_images/alluxi_white.png" alt="ALLUXI" />
+                            </div>
                         </div>
-                        <div class="span3">
-                           <div class="afeature">
-                              <div class="afmatter">
-                                 <i class="icon-user"></i>
-                                 <h4>Activo</h4>
-                                 <p>Un activo es un bien tangible o intangible que posee una empresa o persona natural. </p>
-                              </div>
-                           </div>                        
-                        </div>                        
-                     </div>
-            
-
-            <div class="testimonial">
+                    </li>
+                    <li class="slide-item image1" >
+                        <div class="overlay-1"></div>
+                        <div class="caption-wrapper" >
+                            <div class="slide-caption" >
+                                <!-- <h1>alluxi</h1> -->
+                                    <img class="preserve" src="{{ STATIC_URL }}/CSS/theme_images/alluxi_white.png" alt="ALLUXI" />
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+                <!-- slide nav -->
+                <nav class="slides-navigation">
+                    <a href="#" class="next">
+                    <i class="fa fa-angle-right"></i>
+                    </a>
+                    <a href="#" class="prev">
+                    <i class="fa fa-angle-left"></i>
+                    </a>
+                </nav>
+            </section>
+            <!-- end slider -->
+            <!-- nav menu -->
+            <div class="sticky-wrap">
+                <div id="nav">
+                    <div class="navbar navbar-inverse" role="navigation">
+                        <div class="container">
+                            <div class="row">
+                                <!-- logo/title -->
+                                <div class="navbar-header">
+                                    <a class="navbar-brand" href="index-2.html">Alluxi</a>
+                                </div>
+                                <!-- mobile menu trigger -->
+                                <div class="open nav navbar-right">
+                                    <a id="toggle-menu" href="#mmenu-side-menu"><i class="fa fa-bars"></i></a>
+                                </div>
+                                <!-- menu links -->
+                                 <div id="side-menu" class="remove">
+                                    <ul class="nav home-nav navbar-nav navbar-right" id="top-nav">
+                                        <li class="active">
+                                            <a href="#slides">Inicio</a>
+                                        </li>
+                                        <li>
+                                            <a href="#about">Quiénes Somos</a>
+                                        </li>
+                                        <li>
+                                            <a href="#services">Servicios</a>
+                                        </li>
+                                        <li>
+                                            <a href="#blog">Blog</a>
+                                        </li>
+                                         <li>
+                                            <a href="#contact-section" class="external">Contacto</a>
+                                         </li>
+                                     </ul>
+                                </div>
+                                <!--end menu links -->
+                            </div>
+                            <!-- end row -->
+                        </div>
+                        <!-- end container -->
+                    </div>
+                    <!-- end navbar -->
+                </div>
+                <!-- end nav -->
+            </div>
+            <!-- end nav menu -->
+            <!-- services section -->
+            <section id="services" class="space slide">
                 <div class="container">
-                     <div class="row">
-                        <div class="span4">
-                        </div>                    
-                        <div class="span4">
-                        </div>
-
-                        <div class="span4">
-                        </div>                        
+                    <div class="row">
+                        <div class="col-sm-8 col-sm-offset-2 client-intro text-center">
+                            <h1 class="section-head">Nuestros <strong>Servicios</strong></h1>
+<!--                             <hr class="" style="width:10%;">
+ -->                        </div>
                      </div>
-                  </div>
+                     <!-- end row -->
+                     <div class="row animated" data-animation="fadeInDown">
+                        <!-- col-4 -->
+                        <div class="col-md-4 col-sm-4 col-xs-12">
+                            <article>
+                                <div class="services-box">
+                                    <img src="{{ STATIC_URL }}/CSS/theme_images/network1.png" alt="">
+                                    <h3>Administración de Procesos de Negocio</h3>
+                                    <p>A través de las herramientas tecnológicas más avanzadas te ayudamos en el desarrollo de tus procesos de negocio. <!-- Realizamos análisis, desarrollo, implmentación y despliegue de nuevos procesos para crear nuevos procesos u optimizar tus procesos existentes. --></p>
+                                    <!-- <p><a href="#" class="btn">View More</a></p> -->
+                                </div>
+                            </article>
+                        </div>
+                        <!-- col-4 -->
+                        <div class="col-md-4 col-sm-4 col-xs-12">
+                            <article>
+                                <div class="services-box">
+                                    <img src="{{ STATIC_URL }}/CSS/theme_images/desktop.png" alt="">
+                                    <h3>Diseño y Desarrollo Web</h3>
+                                    <p>Realizamos desarrollo web ágil y a la medida. Desarrollamos desde páginas web sencillas hasta sistemas transaccionales complejos.</p>
+                                    <!-- <p><a href="#" class="btn">View More</a></p> -->
+                                </div>
+                            </article>
+                        </div>
+                        <!-- col-4 -->
+                        <div class="col-md-4 col-sm-4 col-xs-12">
+                            <article>
+                                <div class="services-box">
+                                    <img src="{{ STATIC_URL }}/CSS/theme_images/shopping66.png" alt="">
+                                    <h3>Comercio Electrónico</h3>
+                                    <p>¿Deseas establecer una tienda en línea? Nosotros te ayudamos a que sea una realidad para que puedas comercializar tus productos.</p>
+                                    <!-- <p><a href="#" class="btn">View More</a></p> -->
+                                </div>
+                            </article>
+                        </div>
+                    </div>
+                    <!-- end row -->
                 </div>
+                <!-- end container -->
+            </section>
+            <!-- end services section -->
+            <!-- about section -->
+            <section id="about" class="space">
+                <div class="container">
+                    <div class="row">
+                        <div class=" col-sm-8 col-sm-offset-2 client-intro text-center">
+                            <h1 class="section-head">Sobre <strong>nosotros</strong></h1>
+<!--                             <hr class="style" style="width:13%;">
+ -->                            <p>Somos una empresa joven fundada en Monterrey, Nuevo León y buscamos proveer soluciones eficientes basadas en tecnología. </p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <!-- Tabs -->
+                        <div class="col-sm-12 tabbed animated" data-animation="fadeIn">
+                            <!-- tabs headers -->
+                            <ul class="nav nav-tabs">
+                                <li class="active"><a href="#philosophy" data-toggle="tab">Filosofía</a></li>
+                                <li><a href="#history" data-toggle="tab">Historia</a></li>
+                                <li><a href="#knowledge" data-toggle="tab">Conocimiento</a></li>
+                                <li><a href="#experience" data-toggle="tab">Experiencia</a></li>
+                            </ul>
+                            <!-- end tabs headers -->
+                            <!-- Tab panels -->
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="philosophy">
+                                    <p>Somos perfeccionistas, buscamos siempre cumplir con los más altos estándares de calidad que tu negocio requiere.</p>
+                                </div>
+                                <div class="tab-pane" id="knowledge">
+                                    <p>Utilizamos las tecnologías más avanzadas en desarrollo web y contamos con un equipo altamente capacitado que nos permite satisfacer las necesidades del mercado con desarrollos de calidad. </p>
+                                </div>
+                                <div class="tab-pane" id="experience">
+                                    <p>Tenemos experiencia en diseño y desarrollo web. Alluxi ha desarrollado proyectos exitosos para empresas inmobiliarias en Monterrey N.L.</p>
+                                </div>
+                                <div class="tab-pane" id="history">
+                                    <p>Alluxi nace el 2014 en Monterrey Nuevo León.</p>
+                                </div>
+                            </div>
+                            <!-- end tab panels -->
+                        </div>
+                        <!-- end tabs -->
+                    </div>
+                    <!-- end row -->
+                </div>
+                <!-- end container -->
+            </section>
+            <!-- end about section -->
 
-                <div class="bor"></div>
-            
-            <!-- Recent post starts. Note down the class name before editing. -->
-            
+            <!-- end members section-->
 
-            
-            <!-- Recent post ends -->            
-            
-            
-            <!-- Clients starts -->
-               
-            <div class="row">
-               <div class="span12">
-                  <div class="clients">
-                     <img src="{{ STATIC_URL }}/ericka_styles/img/clients/fecoval.jpg" alt="" />
-                     <img src="{{ STATIC_URL }}/ericka_styles/img/clients/fecoval2.jpg" alt="" />
-                     <img src="{{ STATIC_URL }}/ericka_styles/img/clients/infonavit.jpg" alt="" />
-                     <img src="{{ STATIC_URL }}/ericka_styles/img/clients/appraisal.jpg" alt="" />
-                     <img src="{{ STATIC_URL }}/ericka_styles/img/clients/ampi.jpg" alt="" />
-                     <img src="{{ STATIC_URL }}/ericka_styles/img/clients/metros.jpg" alt="" />
-                  </div>
-               </div>
+    <section data-stellar-background-ratio="0.5" style="background-position: 0% -79.5px;">
+                    <div class="container">
+                    <div class="row">
+                        <!-- col 8 -->
+                        <div class="col-md-8 col-md-offset-2 text-center">
+                            <h1 class="section-head">CÓMO <strong>TRABAJAMOS</strong></h1>
+                            <hr class="style" style="width:18%;">
+                        </div>
+                        <!-- end col 8 offset -->
+                    </div>
+                    <!-- end row-->
+                </div>
+                <div id="work-section" >
+                <div class="overlay-4 parallax space">
+                    <div class="row">
+                        <div class="col-md-3 margin20">
+                            <div class="process-box">
+                                <i class="fa fa-lightbulb-o"></i>
+                                <h3>Lluvia de Ideas</h3>
+                            </div><!--process box-->
+                        </div><!--process col-->
+                        <div class="col-md-3 margin20">
+                            <div class="process-box">
+                                <i class="fa fa-pencil"></i>
+                                <h3>Análisis y Diseño</h3>
+                            </div><!--process box-->
+                        </div><!--process col-->
+                        <div class="col-md-3 margin20">
+                            <div class="process-box">
+                                <i class="fa fa-code"></i>
+                                <h3>Desarrollo</h3>
+                            </div><!--process box-->
+                        </div><!--process col-->
+                        <div class="col-md-3 margin20">
+                            <div class="process-box">
+                                <i class="fa fa-plane"></i>
+                                <h3>Lanzamiento</h3>
+                            </div><!--process box-->
+                        </div><!--process col-->
+                    </div>
+                </div>
             </div>
-            
-            <!-- Clients ends -->
-            
-         </div>
-      </div>
-   </div>
+            </section>
 
-   {% endblock %}
+            <!-- features section -->
+            <section id="features" class="space slide">
+                <div class="container">
+                    <div class="row">
+                        <div class=" col-sm-8 col-sm-offset-2 client-intro text-center">
+                            <h1 class="section-head">Nos <strong>distingue</strong></h1>
+<!--                             <hr class="style" style="width:10%;">
+ -->                        </div>
+                    </div>
+                    <!-- end row --> 
+                    <div class="row features-wrapper">
+                        <!--col 6 -->
+                        <div class="feature feature-left animated col-sm-6 col-xs-6 col-ts-12" data-animation="fadeInLeft">
+                            <span class="circular"><i class="fa fa-rocket"></i></span>
+                            <div class="features-box">
+                                <h3>Desarrollo Ágil</h3>
+                                <p>Desarrollamos de manera ágil prototipos funcionales para nuestros clientes hasta llegar al producto final.</p>
+                            </div>
+                        </div>
+                        <!--col 6 -->
+                        <div class="feature animated feature-right col-sm-6 col-xs-6 col-ts-12" data-animation="fadeInRight">
+                            <span class="circular"><i class="fa fa-users"></i></span>
+                            <div class="features-box">
+                                <h3>Interacción con el Cliente</h3>
+                                <p>Mantenemos siempre al cliente informado del avance de su desarrollo.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- row -->
+                </div>
+                <!-- end container -->
+            </section>
+            <!-- end features section -->
+            <!-- quote section -->
+            <section id="quote-section">
+                <div class="parallax space">
+                    <!-- overlay -->
+                    <div class="overlay-3"></div>
+                    <div class="container">
+                        <div class="row">
+                            <!-- quote slider -->
+                            <div id="quote-slider" class="owl-carousel">
+                                    <!-- item -->
+                                    <div class="item">
+                                        <p><!-- <span class="circular animated" data-animation="pulse"></span> --></p>
+                                        <div class="quote">
+                                            <p>"When You Catch a Glimpse of Your Potential, That’s When Passion is Born."</p>
+                                        </div>
+                                        <div class="attribution">
+                                        </div>
+                                    </div>               
+                            </div>
+                            <!-- quote slider -->
+                        </div>
+                        <!-- row-->
+                    </div>
+                    <!-- container -->
+                </div>
+                <!-- parallax -->
+            </section> 
+            <!-- end quote section -->
+
+            <!-- blog section 
+
+                    <!-- end row -->                    
+                </div>
+                <!-- end container -->
+            </section>
+            <!-- end blog section -->
+            <!-- contact section -->
+            <section id="contact-section" class="space">
+                <div class="container">
+                    <div class="row">
+                        <!-- col 8 -->
+                        <div class="col-md-8 col-md-offset-2 text-center">
+                            <h1 class="section-head"> <strong>CONTACTO</strong></h1>
+                            <hr class="style" style="width:18%;">
+                            <p>Nos encantaría saber de ti. ¿Quieres trabajar con nosotros? </p>
+                            <p>Compártenos un poco de información sobre tu proyecto y te contactaremos lo antes posible.</p>
+                        </div>
+                        <!-- end col 8 offset -->
+                    </div>
+                    <!-- end row-->
+                </div>
+                <!-- end container-->
+                <div id="contact-info">
+                    <div class="parallax space">
+                        <div class="overlay-2"></div>
+                        <div class="container">
+                            <div class="row">
+                                <!-- col 3 -->
+                                <div id="SkypeButton_Call_gus_reyes01_1" class="col-sm-2 col-xs-2 text-center">
+                                    <p><span class="circular"><i class="fa fa-skype fa-2x"></i></span></p>
+                                    <h4>Skype</h4>
+                                    <p>Alluxi_mx</p>                                  
+                                </div>
+                                <!-- col 3 -->
+                                <div class="col-sm-3 col-xs-6 text-center">
+                                    <p><span class="circular"><i class="fa fa-map-marker fa-2x"></i></span></p>
+                                    <h4>Dirección</h4>
+                                    <p>Miguel Nieto,442 Sur</p>
+                                </div>
+                                <!-- end col 3 -->
+                                <!-- col 3 -->
+                                <div class="col-sm-3 col-xs-6 text-center">
+                                    <p><span class="circular"><i class="fa fa-mobile fa-2x"></i></span></p>
+                                    <h4>Teléfono</h4>
+                                    <p>+52-(811)-500-1600</p>
+                                </div>
+                                <!-- col 3 -->
+                                <a href="mailto:hola@alluxi.mx?Subject=Hola!" target="_top">
+                                <div class="col-sm-3 col-xs-6 text-center">
+                                    <p><span class="circular"><i class="fa fa-inbox fa-2x"></i></span></p>
+                                    <h4>Email</h4>
+                                    <p>hola@alluxi.mx</p>
+                                </div>
+                                </a>
+                                <!-- end col 3 -->
+                            </div>
+                            <!-- end row -->
+                        </div>
+                        <!-- end container -->
+                    </div>
+                    <!-- end parallax -->
+                </div>
+                <!--end contact-info-->
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-8 col-md-offset-2 space">
+                        <div id="message"></div>
+                            <form method="POST" action="/contacto/" id="contactform">
+                                
+                                <!-- col 6 -->
+                                <div class="col-md-6">
+                                    <div class="form-group text-left animated" data-animation="fadeInDown">
+                                        {{forma.Nombre}}
+                                    </div>
+                                    <div class="form-group text-left animated" data-animation="fadeInDown">
+                                        {{forma.Correo}}
+                                    </div>
+                                    <div class="form-group text-left animated" data-animation="fadeInDown">
+                                        {{forma.Telefono}}
+                                    </div>
+                                    <div class="form-group text-left animated" data-animation="fadeInDown">
+                                        {{forma.Captcha}}
+                                    </div>
+                                </div>
+                                <!--end col 6-->
+                                <!-- col 6 -->
+                                <div class="col-md-6">
+                                    <div class="form-group text-left animated" data-animation="fadeInDown">
+                                        {{forma.Mensaje}}
+                                    </div>
+                                </div>
+                                <!-- end col 6-->
+                                <!-- col 12 -->
+                                <div class="actions col-md-12 text-center">
+                                    <input type="submit" value="Enviar" name="submit" id="submit" class="btn" title="" />
+                                </div>
+                                <!-- end col 12 --> 
+                                {% csrf_token %}        
+                            </form>
+                        </div>
+                        <!-- end parallax -->
+                    </div>
+                    <!-- end row -->
+                </div>
+                <!-- end container -->
+            </section>
+            <!-- end contact section -->
+        	<!-- footer -->
+    		<footer id="footer" class="bg-dark">
+        		<div class="container">
+            		<div class="row">
+                    	<!-- col-12 -->
+               			<div class="col-sm-12 text-center space">
+<!--                 			<a id="back-top" href="#top"><i class="fa fa-arrow-up fa-2x"></i></a>
+ -->                			<h2>Alluxi</h2>
+                			<p>Todos los derechos reservados. Copyright ©2015.</p>
+                            <!-- social-icons -->
+            				<div class="footer-social">
+                   				<ul class="socials list-unstyled">
+                                    <li>
+                                        <a href="https://www.facebook.com/alluxi">
+                                            <i class="fa fa-facebook"></i>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="https://twitter.com/alluximx">
+                                            <i class="fa fa-twitter"></i>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <i class="fa fa-google-plus"></i>
+                                        </a>
+                                    </li>
+                   				</ul>
+            				</div>
+                            <!-- end social-icons -->
+                  		</div>
+                        <!-- end col 12 -->
+               		</div>
+                    <!-- end row -->
+            	</div>
+            	<!-- end container -->
+      		</footer>
+        	<!-- end footer -->
+      		<!-- CORE JAVASCRIPTS -->  
+      		<script type="text/javascript" src="{{ STATIC_URL }}JS/theme_js/jquery.js"></script>
+            <script type="text/javascript" src="{{ STATIC_URL }}JS/theme_js/bootstrap.min.js"></script>
+      		<script type="text/javascript" src="{{ STATIC_URL }}JS/theme_js/plugins.js"></script>
+            <script type="text/javascript" src="{{ STATIC_URL }}JS/theme_js/modernizr.min.js"></script>
+      		<script type="text/javascript" src="{{ STATIC_URL }}JS/theme_js/main.js"></script>
+            <script type="text/javascript" src="http://www.skypeassets.com/i/scom/js/skype-uri.js"></script>
+        </div>
+	</body>
+</html>

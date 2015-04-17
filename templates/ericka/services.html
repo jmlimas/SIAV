@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Servicios</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Styles -->
+    <style type="text/css" title="currentStyle">
+      @import "{{ STATIC_URL }}CSS/bootstrap/css/bootstrap.css";
+      @import "{{ STATIC_URL }}CSS/bootstrap/css/bootstrap-responsive.css";
+      @import "{{ STATIC_URL }}CSS/bootstrap/css/bootstrap-overrides.css";
+      @import "{{ STATIC_URL }}CSS/bootstrap/css/theme.css";
+      @import "{{ STATIC_URL }}CSS/bootstrap/css/contact.css";
+      @import "{{ STATIC_URL }}CSS/bootstrap/css/lib/animate.css";
+     </style>	
+    <!-- Styles -->
+    <link href='http://fonts.googleapis.com/css?family=Lato:300,400,700,900,300italic,400italic,700italic,900italic' rel='stylesheet' type='text/css'>
+
+    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}CSS/bootstrap/css/animate.css" media="screen, projection">
+    <link rel="stylesheet" href="{{ STATIC_URL }}CSS/bootstrap/css/services.css" type="text/css" media="screen" />
+    <link rel="stylesheet" href="{{ STATIC_URL }}CSS/bootstrap/css/lib/flexslider.css" type="text/css" media="screen" />
+
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-static-top">
+      <div class="navbar-inner">
+        <div class="container">
+            <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </a>
+            <a class="brand" href="index.html">
+                <strong><img src="{{ STATIC_URL }}/CSS/images/alluxi_logo.png" style="width:80px" /></strong>
+            </a>
+            <div class="nav-collapse collapse">
+                <ul class="nav pull-right">
+                    <li><a href="/">INICIO</a></li>
+                    <li><a href="/servicios" class="active">SERVICIOS</a></li>
+<!--                     <li><a href="about-us.html">ABOUT US</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            PAGES
+                            <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="features.html">Features</a></li>
+                            <li><a href="services.html">Services</a></li>
+                            <li><a href="portfolio.html">Portfolio</a></li>
+                            <li><a href="portfolio-item.html">Portfolio Item</a></li>
+                            <li><a href="coming-soon.html">Coming Soon</a></li>
+                            <li><a href="sign-in.html">Sign in</a></li>
+                            <li><a href="sign-up.html">Sign up</a></li>
+                            <li><a href="backgrounds.html">Backgrounds</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="pricing.html">PRICING</a></li> -->
+                    <li><a href="/contacto" >CONTACTO</a></li>
+                    <li><a class="btn-header" href="/SIAV">DEMO</a></li>
+<!--                     <li><a href="blog.html">BLOG</a></li>
+                    <li><a class="btn-header" href="sign-up.html">Sign up</a></li>
+                    <li><a class="btn-header" href="sign-in.html">Sign in</a></li> -->
+                </ul>
+            </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Service Option 1 -->
+    <div id="service_1">
+        <div class="container">
+            <div class="section_header">
+                <h3>Nuestros Servicios</h3>
+            </div>            
+            <div class="row service_wrapper">
+                <!-- Features Row -->
+                <div class="features_op1_row">
+                    <!-- Feature -->
+                    <div class="span4 feature first">
+                        <div class="img_box">
+                            <a href="/servicios">
+                                <img src="{{ STATIC_URL }}CSS/images/tailored.png">
+                                <span class="circle"> 
+                                    <span class="plus">&#43;</span>
+                                </span>
+                            </a>
+                        </div>
+                        <div class="text">
+                            <h6>A la medida</h6>
+                            <p>
+                                Sabemos de negocios y de tecnología por lo que desarrollamos sistemas que se adapten a la medida de tu negocio usando las tendencias mas avanzadas en tecnología.
+                            </p>
+                        </div>
+                    </div>
+                    <!-- Feature -->
+                    <div class="span4 feature">
+                        <div class="img_box">
+                            <a href="/servicios">
+                                <img src="{{ STATIC_URL }}CSS/images/service3.png">
+                                <span class="circle"> 
+                                    <span class="plus">&#43;</span>
+                                </span>
+                            </a>
+                        </div>
+                        <div class="text">
+                            <h6>Customizables</h6>
+                            <p>
+                                Nuestras aplicaciones son administrables y customizables para cada uno de nuestros clientes. Ahorrando tiempo y dinero mediante la mejora de procesos.
+                            </p>
+                        </div>
+                    </div>
+                    <!-- Feature -->
+                    <div class="span4 feature last">
+                        <div class="img_box">
+                            <a href="/servicios">
+                                <img src="{{ STATIC_URL }}CSS/images/Support1.png">
+                                <span class="circle"> 
+                                    <span class="plus">&#43;</span>
+                                </span>
+                            </a>
+                        </div>
+                        <div class="text">
+                            <h6>Soporte</h6>
+                            <p>
+                                Sabemos de la importancia de tu negocio por lo que ofrecemos servicio de soporte especializado.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> 
+
+    <!-- Service Option 2 -->
+    <div id="service_2">
+        <div class="container">
+            <div class="section_header">
+                <h3>Servicios <span>(Opción 2)</span></h3>
+            </div>
+            <div class="row perk">
+                <div class="span1 circle">
+                    <img style="margin-top: 39px; margin-left: 2px; "src="{{ STATIC_URL }}img/develop_2.png" alt="">
+                </div>
+
+                <div class="span10 description_wrapper">
+                    <h4>Administración de procesos de negocio</h4>
+                    <br>
+                        <p>
+                            Administramos el proceso de tu negocio para hacer más eficiente tu organización, identificamos las areas de oportunidad y desarrollamos los componentes que se requieren para agilizar tareas.</p>
+                </div>
+            </div>
+
+            <div class="row perk">
+                <div class="span2 circle">
+                    <img src="{{ STATIC_URL }}img/web_2.png" alt="">
+                </div>
+
+                <div class="span10 description_wrapper">
+                    <h4>Diseño y Desarrollo Web</h4>
+                    <br>
+                        <p>Realizamos desarrollo web ágil y a la medida. Desarrollamos desde páginas web hasta sistemas complejos.</p>
+                </div>
+            </div>
+
+            <div class="row perk last">
+                <div class="span2 circle">
+                    <img src="{{ STATIC_URL }}img/mobile.png" alt="">
+                </div>
+
+                <div class="span10 description_wrapper">
+                    <h4>Aplicaciones Móviles</h4>
+                    <br>
+                        <p>¿Tienes una idea que te gustaría llevar a dispositivos Móviles?</p>
+                        <p> Desarrollamos IOS, Android y Windows Phone.</p>
+                </div>
+            </div>
+        </div>
+    </div> 
+
+    <!-- Service Option 3 -->
+    <div id="process">
+        <div class="container">
+            <div class="section_header">
+                <h3>¿Cómo trabajamos? </h3>
+            </div>
+            <div class="row services_circles">
+                <div class="span3 description">
+                    <div class="text active">
+                        <h4>Plan</h4>
+                        <p>
+                            Desarrollamos junto con nuestros clientes un plan de trabajo que se ajuste a sus horarios.
+                            </p>
+                    </div>
+                    <div class="text">
+                        <h4>Diseño</h4>
+                        <p>
+                            Contamos con una amplia variedad de plantillas para que eligas la que mas te agrada o realizamos el diseño de tu aplicación a tu gusto.</p>
+                    </div>
+                   
+                    <div class="text">
+                        <h4>Desarrollo</h4>
+                        <p>
+                            Una ves establecido el plan de trabajo, ponemos manos a la obra y comenzamos a desarrollar tu idea. Realizando muestras que te permitan monitorear el avance tu proyecto.</p>
+                </div>
+                    <div class="text">
+                        <h4>Entrega</h4>
+                        <p>
+                            Una ves que nos aseguramos que estás contento con el resultado realizamos la entrega final.</p>
+                </div>
+ </div>
+                <div class="span9 areas">
+                    <div class="circle active">
+                        <img src="{{ STATIC_URL }}img/plan.png" />
+                        <span>Plan</span>
+                    </div>
+                    <div class="circle last_circle">
+                        <img src="{{ STATIC_URL }}img/design.png" />
+                        <span>Diseño</span>
+                    </div>
+                    <div class="circle">
+                        <img src="{{ STATIC_URL }}img/develop.png" />
+                        <span>Desarrollo</span>
+                    </div>
+                    <div class="circle">
+                        <img src="{{ STATIC_URL }}img/box.png" />
+                        <span>Entrega</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- starts footer -->
+    <footer id="footer">
+        <div class="container">
+            <div class="row info">
+                <div class="span6 residence">
+                    <ul>
+                        <li>Monterrey, Nuevo Léon.</li>
+                        <li>México, C.P 64920.</li>
+                    </ul>
+                </div>
+                <div class="span5 touch">
+                    <ul>
+                        <li><strong>Cel.</strong> 811-500-1600</li>
+                        <li><strong>Correo.</strong><a href="#"> gusreyes01@gmail.com</a></li>
+                    </ul>
+                </div>
+            </div>
+           <div class="row credits">
+                <div class="span12">
+                    <div class="row social">
+                        <div class="span12">
+                          <a href="https://www.facebook.com/alluxi" class="facebook">
+                                <span class="socialicons ico1"></span>
+                                <span class="socialicons_h ico1h"></span>
+                            </a>
+<!--                             <a href="https://twitter.com/gus_reyes01" class="twitter">
+                                <span class="socialicons ico2"></span>
+                                <span class="socialicons_h ico2h"></span>
+                            </a> -->
+                            <a href="https://plus.google.com/communities/102763752205942984510" class="gplus">
+                                <span class="socialicons ico3"></span>
+                                <span class="socialicons_h ico3h"></span>
+                            </a>
+<!--                             <a href="#" class="flickr">
+                                <span class="socialicons ico4"></span>
+                                <span class="socialicons_h ico4h"></span>
+                            </a>
+                            <a href="#" class="pinterest">
+                                <span class="socialicons ico5"></span>
+                                <span class="socialicons_h ico5h"></span>
+                            </a>
+                            <a href="#" class="dribble">
+                                <span class="socialicons ico6"></span>
+                                <span class="socialicons_h ico6h"></span>
+                            </a>
+                            <a href="#" class="behance">
+                                <span class="socialicons ico7"></span>
+                                <span class="socialicons_h ico7h"></span>
+                            </a> -->
+                        </div>
+                    </div>
+                    <div class="row copyright">
+                        <div class="span12">
+                            © 2014 <a href="alluxi.mx"> alluxi.mx </a>Todos los derechos reservados. Tema por Detail Canvas.
+                        </div>
+                    </div>
+                </div>            
+            </div>
+        </div>
+    </footer>
+
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+    <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/bootstrap.min.js"></script>
+    <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/theme.js"></script>
+    <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/index-slider.js"></script> 
+</body>
+</html>
