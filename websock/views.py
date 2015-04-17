@@ -10,7 +10,6 @@ from django.core.serializers.json import DjangoJSONEncoder
 import json
 import redis
 import json as simplejson
-from socketIO_client import SocketIO, LoggingNamespace
 import urllib2
 
 
