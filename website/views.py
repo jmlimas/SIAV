@@ -83,7 +83,7 @@ def contacto(request):
 			return HttpResponse('Parece que hubo un error. Prueba llenando todos los campos.')
 	else:
 		forma = FormaContacto()  # An unbound form
-		return render_to_response('ericka/index2.html', {'forma':forma}, context_instance=RequestContext(request))
+		return render_to_response('ericka/index.html', {'forma':forma}, context_instance=RequestContext(request))
 
 
 

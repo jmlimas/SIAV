@@ -8,8 +8,8 @@ from django.conf import settings
 class Migration(migrations.Migration):
 
     dependencies = [
+        ('app', '__first__'),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('app', '0003_cliente_is_active'),
     ]
 
     operations = [
@@ -18,8 +18,10 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('text', models.CharField(max_length=255)),
+                ('leido', models.BooleanField()),
                 ('date', models.DateTimeField(auto_now_add=True)),
-                ('user', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
+                ('envia', models.ForeignKey(related_name='enviaUsuarioCmt', to=settings.AUTH_USER_MODEL)),
+                ('recibe', models.ForeignKey(related_name='recibeUsuarioCmt', to=settings.AUTH_USER_MODEL)),
             ],
         ),
         migrations.CreateModel(
