@@ -33,7 +33,16 @@
 </div>
 {% if caller != '5' %}
 <div class="row">
-  <div class="col-md-4">{% include "widgets/widget_imagenes.html" %}</div>
+  <div class="col-md-10">{% include "widgets/widget_imagenes.html" %}</div>
+  {% if caller = '1' %}
+  <div class="col-md-2">
+        <a style="float:right" href="/SIAV/show_visita_pdf/{{avaluo.avaluo_id}}/" >
+    <input class="btn btn-info button white" type="button" id="slick-toggle" value="Reporte de Visita" />
+  </a>
+  </div>
+  {%endif%}
+</div>
+<div class="row">
   <div class="col-md-4">
     {% for item in archivos %}
     <a href="/{{item.file}}" target="_blank" >{{item.file}}</a>

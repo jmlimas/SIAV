@@ -25,7 +25,7 @@ div.ui-datepicker{
 {% endblock %}
 
 {% block content %}
-
+{% if caller = '1' or caller = '2' or caller = '3' %}
 <a id="masiva_button"  title="captura" style="float:right" class="btn btn-primary mass_button" role="button">
 	<span class="glyphicon glyphicon-ok"></span>
 	{% if caller = '1' %}
@@ -36,6 +36,7 @@ div.ui-datepicker{
 		 	Salida
 		{% endif %}
 </a>
+{% endif %}
 <h1>
 	{% if caller = '0' %}
 			Servicios en Proceso	 

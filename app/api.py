@@ -5,8 +5,10 @@ from django.contrib.auth.models import User
 from websock.models import Eventos
 from tastypie.serializers import Serializer
 from tastypie.resources import ALL
+from tastypie.authorization import DjangoAuthorization
 from tastypie import fields
 from django.db.models import Sum, Count, Q
+from app.authentication import OAuth20Authentication
 
 
 class UserResource(ModelResource):
@@ -27,6 +29,8 @@ class DeptoResource(ModelResource):
         resource_name = 'depto'
         serializer = Serializer(formats=['json', 'jsonp', 'xml', 'yaml', 'html', 'plist'])
         excludes = ['depto_id', 'is_active', 'Razon', 'RFC', 'Calle', 'Colonia', 'CP', 'Ciudad', 'Metodo', 'Digitos', 'Tolerancia', 'base', 'factor', 'resource_uri']
+        authorization = DjangoAuthorization()
+        authentication = OAuth20Authentication()
 
 class ImagenAvaluoResource(ModelResource):
     class Meta:
@@ -35,6 +39,8 @@ class ImagenAvaluoResource(ModelResource):
         serializer = Serializer(formats=['json', 'jsonp', 'xml', 'yaml', 'html', 'plist'])
         excludes = ['resource_uri','imagen_id']
         filtering = { "FolioK": ALL }
+        authorization = DjangoAuthorization()
+        authentication = OAuth20Authentication()
 
 class AvaluoResource(ModelResource):
     depto = fields.ToOneField( DeptoResource, 'Depto', full = True )
@@ -44,6 +50,8 @@ class AvaluoResource(ModelResource):
         resource_name = 'avaluo'
         serializer = Serializer(formats=['json', 'jsonp', 'xml', 'yaml', 'html', 'plist'])
         filtering = { "FolioK": ALL }
+        authorization = DjangoAuthorization()
+        authentication = OAuth20Authentication()
 
 
 
@@ -53,6 +61,8 @@ class EstadisticoAsignaResource(ModelResource):
         resource_name = 'estadistico_asigna'
         serializer = Serializer(formats=['json', 'jsonp', 'xml', 'yaml', 'html', 'plist'])
         excludes = ['Servicio','Salida','Valor','Solicitud','avaluo_id','Visita','Referencia','Calle','Colonia','NumExt','NumInt','Prioridad','Pagado','LatitudG','LatitudM','LatitudS','LongitudG','LongitudM','LongitudS','Declat','Declon','Estatus','Mterreno','Mconstruccion']
+        authorization = DjangoAuthorization()
+        authentication = OAuth20Authentication()
 
     def dehydrate(self, bundle):
         transaction = Avaluo.objects.extra(select={'month': 'extract( month from Salida)'}).values('month').filter(Salida__year=2015).order_by('month').annotate(dcount=Count('Solicitud'), Total=Sum('Importe')).distinct()
@@ -67,3 +77,5 @@ class EventoResource(ModelResource):
         resource_name = 'evento'
         queryset = Eventos.objects.all().order_by('-date')    
         serializer = Serializer(formats=['json', 'jsonp', 'xml', 'yaml', 'html', 'plist'])
+        authorization = DjangoAuthorization()
+        authentication = OAuth20Authentication()

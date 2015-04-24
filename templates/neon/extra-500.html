@@ -1,0 +1,119 @@
+{% extends "neon/index.html" %}
+{% load crispy_forms_tags %}
+{% load dayssince %}
+{% load bootstrap3 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+
+
+{% block visita %}{% if caller = '1' %}active{% else %}{{ block.super }}{%endif%}{%endblock%}
+{% block captura %}{% if caller = '2' %}active{% else %}{{ block.super }}{%endif%}{%endblock%}
+{% block salida %}{% if caller = '3' %}active{% else %}{{ block.super }}{%endif%}{%endblock%}
+
+{% block style %}
+<style type="text/css" title="currentStyle">
+@import "{{ STATIC_URL }}CSS/smoothness/jquery-ui-1.8.24.custom.css";
+</style>
+
+<!-- <style>
+div.ui-datepicker{
+  font-size:10px;
+}
+
+</style> -->
+{% endblock %}
+
+{% block content %}
+				<div class="page-error-404">
+			
+			
+			<div class="error-symbol">
+				<i class="entypo-attention"></i>
+			</div>
+			
+			<div class="error-text">
+				<h2>500</h2>
+				<p>Hubo un error en el servidor.</p> 
+				<br>
+				<p>Contacta al administrador</p>
+				<p> <a href="mailto:hola@alluxi.mx">hola@alluxi.mx</a></p>
+			</div>
+			
+			<hr />
+			
+			<!-- <div class="error-text">
+				
+				Search Pages:
+				
+				<br />
+				<br />
+				
+				<div class="input-group minimal">
+					<div class="input-group-addon">
+						<i class="entypo-search"></i>
+					</div>
+					
+					<input type="text" class="form-control" placeholder="Search anything..." />
+				</div>
+				
+			</div> -->
+			
+		</div>
+
+{% endblock %}
+
+		{% block scripts %}
+<!-- Imported styles on this page -->
+<link rel="stylesheet" href="{{ STATIC_URL }}/assets/js/datatables/responsive/css/datatables.responsive.css">
+<link rel="stylesheet" href="{{ STATIC_URL }}/assets/js/select2/select2-bootstrap.css">
+<link rel="stylesheet" href="{{ STATIC_URL }}/assets/js/select2/select2.css">
+
+<!-- Imported scripts on this page -->
+<script src="{{ STATIC_URL }}/assets/js/joinable.js"></script>
+<script src="{{ STATIC_URL }}/assets/js/select2/select2.min.js"></script>
+<script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/picnet.table.filter.min.js"></script>
+
+<script type="text/javascript">
+	jQuery(document).ready(function () {
+	  {% include "snippets/avaluos_table.js" %}
+
+jQuery('#masiva_button').click(function () {
+
+    // Some code
+
+    if(jQuery(".form-checkbox").is(':checked')) {
+
+      var selected = [];
+      jQuery('input:checked').each(function() {
+          selected.push(jQuery(this).parent().next().next().next().next().next().next().next().next().html());
+      });
+      var bandera = true;
+      for ( var i = 0; i < selected.length; i++ ) {
+          // Logs "try 0", "try 1", ..., "try 4".
+          if(selected[0] != selected[i]){
+              bandera = false;
+              console.log( selected[i] );
+              //console.log( bandera );
+          }
+      }
+
+      if(bandera == false){
+        sweetAlert("Todos los servicios deben pertenecer a la misma colonia.","","warning");
+      }else{
+        jQuery('#forma_masiva').modal('show');
+        console.log( selected.toString());
+      }
+      
+      var selected = [];
+
+       // jQuery('#visita_masiva').modal('show');
+    }else{
+        sweetAlert("Selecciona al menos una casilla.","","warning");
+    }
+
+});
+
+	});
+	</script>{% endblock %}</body>
+</html>		

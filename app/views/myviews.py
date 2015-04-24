@@ -55,6 +55,7 @@ def genera_foliok(avaluo_id, colonia):
         return folio_k
 
 #   Eliminar Imagenes
+@login_required
 def elimina_imagen_captura(request,folio,imagen_id):
     imagen = ImagenAvaluo.objects.get(imagen_id=imagen_id)
     url_imagen = str(imagen.imagen)
@@ -289,7 +290,7 @@ def alta_avaluo(request):
         forma = AltaAvaluo()  # An unbound form
     return render_to_response('neon/forma_alta.html', {'forma': forma,'formset_sencilla': formset_sencilla,'formset': formset, }, context_instance=RequestContext(request))
 
-
+@login_required
 def alta_avaluo_paquete(request):
     conteo = 0
     forma = AltaAvaluo() 
@@ -565,7 +566,7 @@ def consulta_master(request):
         return render_to_response('neon/consulta.html', {'forma': forma}, context_instance=RequestContext(request))
 
 
-
+@login_required
 def consulta_comparable(request):
     if request.is_ajax():
         zona = request.GET.get('zona', '')
@@ -690,7 +691,7 @@ def mobile(request):
     avaluos = avaluos.order_by('-Solicitud')
     return render_to_response('mobile/page.html', {'avaluos':avaluos}, context_instance=RequestContext(request))
 '''
-
+@login_required
 def visita_masiva(request):
     caller="1"
     visita_masiva = VisitaMasiva(request.POST)
@@ -717,7 +718,7 @@ def visita_masiva(request):
     return render_to_response('neon/tables-datatable.html', locals(), context_instance=RequestContext(request))
 
 
-
+@login_required
 def captura_masiva(request):
     captura_masiva = CapturaMasiva(request.POST)
     caller='2'
@@ -742,7 +743,7 @@ def captura_masiva(request):
     avaluos = avaluos.order_by('-Solicitud')
     return render_to_response('neon/tables-datatable.html', locals(), context_instance=RequestContext(request))
 
-
+@login_required
 def salida_masiva(request):
     caller='3'
     salida_masiva = SalidaMasiva(request.POST)
@@ -772,6 +773,7 @@ def salida_masiva(request):
     avaluos = avaluos.order_by('-Solicitud')
     return render_to_response('neon/tables-datatable.html', locals(), context_instance=RequestContext(request))
 
+@login_required
 def cambia_estatus(request, match):
     pieces = match.split('/')
     param = pieces[0]
@@ -795,6 +797,27 @@ def cambia_estatus(request, match):
     return HttpResponseRedirect('Hubo un error :( intenta de nuevo.') 
 
 
-
+@login_required
 def swf(request):
     return ""
+
+@login_required
+def handler404(request):
+    response = render_to_response('neon/extra-404.html', {},
+                                  context_instance=RequestContext(request))
+    response.status_code = 404
+    return response
+
+@login_required
+def handler500(request):
+    response = render_to_response('neon/extra-500.html', {},
+                                  context_instance=RequestContext(request))
+    response.status_code = 500
+    return response
+
+@login_required
+def handler401(request):
+    response = render_to_response('neon/extra-404.html', {},
+                                  context_instance=RequestContext(request))
+    response.status_code = 500
+    return response
