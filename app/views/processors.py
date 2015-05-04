@@ -34,7 +34,7 @@ def cantidades_en_proceso(request):
 
     #Conteo avaluos de Captura
     avaluos = (Avaluo.objects
-               .values('FolioK')
+               .values('Folio')
                .filter(Q(Estatus__in=['PROCESO','DETENIDO']))
                .filter(Q(Salida__isnull=True))
                .filter(Q(Visita__isnull=False))
@@ -42,12 +42,12 @@ def cantidades_en_proceso(request):
     por_capturar = avaluos.count()
 
     #Conteo avaluos por Visitar
-    avaluos = Avaluo.objects.values('FolioK').filter(Estatus__in=['PROCESO','DETENIDO'], Visita__isnull=True, Salida__isnull=True)
+    avaluos = Avaluo.objects.values('Folio').filter(Estatus__in=['PROCESO','DETENIDO'], Visita__isnull=True, Salida__isnull=True)
     por_visitar = avaluos.count()
 
     #Conteo avaluos por Salida
     avaluos = (Avaluo.objects
-               .values('FolioK')
+               .values('Folio')
                .filter(Q(Estatus__in=['PROCESO','DETENIDO']))
                .filter(Q(Visita__isnull=False))
                .filter(Q(Salida__isnull=True))
@@ -56,7 +56,7 @@ def cantidades_en_proceso(request):
     por_salida = avaluos.count()
 
     #Conteo avaluos en proceso
-    avaluos = Avaluo.objects.values('FolioK').filter(Estatus__in=['PROCESO','DETENIDO'], Salida__isnull=True)
+    avaluos = Avaluo.objects.values('Folio').filter(Estatus__in=['PROCESO','DETENIDO'], Salida__isnull=True)
     en_proceso = avaluos.count()
 
     #Eventos usuario

@@ -1,0 +1,398 @@
+{% load round_hunded %}
+
+<html>
+<head>
+	<style type="text/css">
+	td,th {
+		text-align: center;
+		font-family: arial;
+		font-size:75%
+	}
+	td li {
+		text-align: left;
+	}
+	li { list-style:none; }
+	ul { padding:0px; }
+	body { margin: 5cm 0px 0px 0.9cm; }
+	td.dark{
+		background-color: #151515;
+		color: #FFFFFF;
+		font-family: arial;
+		font-weight:bold;
+		font-size:75%
+
+	}
+	td.gray{
+		background-color: #D8D8D8;
+		color: #000000;
+		font-family: arial;
+		font-size:75%
+
+	}
+
+	.checkboxes label
+	{
+		display: block;
+		float: left;
+		padding-right: 10px;
+		white-space: nowrap;
+	}
+
+	.checkboxes input
+	{
+		vertical-align: middle;
+	}
+
+	.checkboxes label span
+	{
+		vertical-align: middle;
+	}
+	.blackEdge {
+
+		border:1;
+   	    border-spacing:0;
+        border-collapse:collapse;
+		border-color:000000;
+	}
+
+	</style>
+	<script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/jquery-1.8.2.min.js"></script>
+	<script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/autoNumeric.js"></script>
+	<script type="text/javascript">
+
+
+function roundHundred(value){
+   return Math.round(value/100)*100
+}
+
+	$(document).ready(function(){
+	  $('.oferta').autoNumeric('init', {aSign: '$',"mDec":2 });
+	  $('.unitario').autoNumeric('init', {aSign: '$',"mDec":2 });
+	  $('.unitario').autoNumeric('init', {aSign: '$',"mDec":2 });
+	});
+
+
+
+
+	</script>
+
+	
+</head>
+<body>
+	<table border="1" cellspacing=0 cellpadding=2 bordercolor="000000" width="700px">
+		<tr >
+			<td colspan="4" class="dark">
+				FICHA TÉCNICA DE VALUACIÓN
+			</td>
+		</tr>
+		<tr >
+			<td colspan="3" style="text-align:right">
+				<div class="fieldWrapper">
+					{{ form.subject.errors }}
+					<label for="id_folio"><b>Folio No.</b></label>		        
+				</div>
+			</td>
+			<td>
+				{{ ficha.folio }}
+			</td>
+		</tr>
+		<tr>
+			<td class="dark" colspan="4">UBICACIÓN</td>
+		</tr>
+		<tr>
+			<td class="gray">
+				<div class="fieldWrapper">
+					{{ form.subject.errors }}
+					<label for="id_region">Región:</label>		        
+				</div>
+			</td>
+			<td>
+				{{ ficha.region }}
+			</td>
+			<td class="gray">
+				<div class="fieldWrapper">
+					{{ form.subject.errors }}
+					<label for="id_colonia">Colonia:</label>		        
+				</div>
+			</td>
+			<td>
+				{{ ficha.colonia }}
+			</td>
+		</tr>
+		<tr>
+			<td class="gray">
+				<div class="fieldWrapper">
+					{{ form.subject.errors }}
+					<label for="id_limite_norte">Limite Norte:</label>		        
+				</div>
+			</td>
+			<td class="gray">
+				<div class="fieldWrapper">
+					{{ form.subject.errors }}
+					<label for="id_limite_sur">Limite Sur:</label>
+
+				</div>
+			</td>
+			<td class="gray">
+				<div class="fieldWrapper">
+					{{ form.subject.errors }}
+					<label for="id_limite_oriente">Limite Oriente:</label>
+
+				</div>
+			</td>
+			<td class="gray">
+				<div class="fieldWrapper">
+					{{ form.subject.errors }}
+					<label for="id_limite_poniente">Limite Poniente:</label>
+
+				</div>
+			</td>
+			<tr>
+				<td width="25%">
+					{{ ficha.limite_norte }}
+				</td>
+				<td width="25%">
+					{{ ficha.limite_sur }}
+				</td>
+				<td width="25%">
+					{{ ficha.limite_oriente }}
+				</td>
+				<td width="25%">
+					{{ ficha.limite_poniente }}
+				</td>
+			</tr>
+			<tr>
+				<td class="dark" colspan="3">
+					SERVICIOS PÚBLICOS E INFRAESTRUCTURA
+				</td>
+				<td class="dark" >
+					EQUIPAMIENTO URBANO
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<div class="controls">
+						{{ form.servicio_1 }}
+					</div>
+				</td>
+				<td>
+					{{ form.servicio_2 }}
+				</td>
+				<td>
+					{{ form.servicio_3 }}
+				</td>
+				<td>
+					{{ form.equipamiento }}
+				</td>
+			</tr>
+			<tr>
+				<td class="dark" colspan="4">
+					USO DEL SUELO
+				</td>	
+			</tr>
+			<tr>
+				<td  colspan="4">
+					<div class="checkboxes">
+						{{ form.uso_suelo }}
+					</div>
+				</td>
+			</tr>
+			<!-- <tr>
+				<td colspan="3">
+					SEGÚN PLAN DE DESARROLLO URBANO
+				</td>
+			</tr>
+			<tr>
+				<td class="dark" colspan="2">
+					NIVEL SOCIOECONÓMICO
+				</td>
+				<td class="dark" colspan="2">
+					CALIDAD DE LA CONSTRUCCIÓN
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2">
+					<div class="checkboxes">
+						{{ form.socioeconomico }}
+					</div>
+				</td>
+				<td colspan="2">
+					<div class="checkboxes">
+						{{ form.calidad }}
+					</div>
+				</td>				
+			</tr> -->
+<!-- 			<tr >
+				<td class="dark">
+					<div   class="fieldWrapper">
+						{{ form.subject.errors }}
+						<label for="id_limite_oriente">No. De Niveles</label> 
+					</div>
+				</td>
+				<td colspan="3">
+					<div class="checkboxes">
+						{{ form.niveles }}
+					</div>
+				</td>
+			</tr> -->
+			<tr>
+				<td class="dark" colspan="2">
+					CARACTERÍSTICAS DEL ENTORNO URBANO
+				</td>
+				<td class="dark" colspan="2">
+					FACTORES DE RIESGO
+				</td>										
+			</tr>
+			<tr>
+				<td>
+					{{ form.entorno_urbano_1 }}
+				</td>
+				<td >
+					{{ form.entorno_urbano_2 }}
+				</td>
+				<td>
+					{{ form.riesgo_1 }}
+				</td>
+				<td >
+					{{ form.riesgo_2 }}
+				</td>
+			</tr>
+	</table>
+	<table border="1" cellspacing=0 cellpadding=2 bordercolor="000000" width="700px" margin-top="15px">
+		<tr>
+				<td class="dark" colspan="5" >
+					INVESTIGACIÓN DE MERCADO
+				</td>
+			</tr>
+			<tr>
+				<td class="gray">
+					REFERENCIA
+				</td>	
+				<td class="gray">
+					USO SUELO
+				</td>
+				<td class="gray">
+					M.TERR.
+				</td>
+				<td class="gray">
+					VALOR OFERTA
+				</td>
+				<td class="gray">
+					VALOR VENTA
+				</td>				
+			</tr>
+			{% for im in im_formset %}
+			<tr>
+				<td>	
+					{{im.calle}}
+				</td>		
+				<td>	
+					{{im.uso}}
+				</td>
+				<td>
+					<label class="area">
+						{{im.m_terreno}}
+					</label>
+				</td>
+				<td>	
+					<label class="oferta">
+						{{im.oferta|default_if_none:"0.00" }}
+					</label>
+				</td>
+				<td>
+					<label class="oferta">
+						'0.00'
+					</label>
+				</td>
+			</tr>			
+			{% endfor %}
+
+		</tr>
+
+	</table>
+	<table  border="1" cellspacing=0 cellpadding=2 bordercolor="000000" width="700px">
+		<tr>
+			<td class="gray">
+				VALORES UNITARIOS DE SUELO DE OPERACIONES REALIZADAS
+			</td>
+			<td class="gray">
+				VALORES UNITARIOS DE SUELO DE SEGUN MERCADOS
+			</td>
+		</tr>
+			{% for vu in vu_formset %}
+			<tr>
+				<td>
+					<label class="oferta">
+					{% if ficha.municipio_id == 978 %}	
+						{{vu.valor_operacion|round_hunded_10|default_if_none:"0.00" }}
+					{% else %}
+						{{vu.valor_operacion|round_hunded|default_if_none:"0.00" }}
+					{% endif %}
+					</label>
+				</td>		
+				<td>
+					<label class="oferta">
+					{% if ficha.municipio_id == 978 %}	
+						{{vu.valor_mercado|round_hunded_10|default_if_none:"0.00" }}
+					{% else %}
+						{{vu.valor_mercado|round_hunded|default_if_none:"0.00" }}
+					{% endif %}
+					</label>
+				</td>
+			</tr>			
+			{% endfor %}
+
+
+
+	</table>
+	<br>
+		<label style="margin-left:120px;"><b>Valor propuesto resultante: 
+			<u><label class="oferta">
+				{% if ficha.folio == 44 %}
+					{{ficha.valor_propuesto}}
+				{% else %}
+					{% if ficha.municipio_id == 978 %}
+						{{ficha.valor_propuesto|round_hunded_10}}
+					{% else %}
+						{{ficha.valor_propuesto|round_hunded}}
+					{% endif %}
+				{% endif %}
+			</label>
+		 m2 </u> *Según datos de la ficha</b>
+	</label>
+		{% for item in imagenes %}
+
+		<table style="width:654px" cellspacing=0 cellpadding=2>
+			   {% if not forloop.counter|divisibleby:2 %}
+			   		<br>
+					<br>
+					<br>
+					<br>
+					<br>
+					<br>
+					<br>
+					<br>
+					<br>
+					<br>
+					<br>
+			   	<tr>
+					<td class="dark" colspan="4">REPORTE FOTOGRÁFICO &nbsp&nbsp - &nbsp&nbsp FICHA {{ficha.folio}}</td>
+				</tr>
+    			{% endif %}
+			<tr>
+			<br>
+			<br>
+			<br>
+			<br>
+				<td>
+					<img src="/{{item.imagen}}" style="width:400;height:300"/>
+				</td>
+			</tr>	
+		</table>		
+		{% endfor %}
+
+
+
+
+</body>
+</html>

@@ -7,8 +7,8 @@ from app.models import *
 
 
 class adminAvaluo(admin.ModelAdmin):
-	list_display = ('FolioK', 'avaluo_id', 'Cliente','Depto','Valor','Solicitud','Visita','Salida','Importe')
-	search_fields = ('FolioK', 'avaluo_id','Referencia')
+	list_display = ('Folio', 'avaluo_id', 'Cliente','Depto','Valor','Solicitud','Visita','Salida','Importe')
+	search_fields = ('Folio', 'avaluo_id','Referencia')
 
 class adminEstado(admin.ModelAdmin):
 	list_display = ('Nombre','clave','abrev',)
@@ -29,7 +29,6 @@ class adminTipo(admin.ModelAdmin):
 class adminUserProfile(admin.ModelAdmin):
 	list_display = ('user','website','picture','color')
 	search_fields = ('user',)
-
 
 
 admin.site.register(Avaluo, adminAvaluo)

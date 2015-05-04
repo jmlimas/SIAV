@@ -56,10 +56,10 @@ def find_closest(avaluo):
     cercanos = []
     if avaluo.LatitudG and avaluo.LatitudM and avaluo.LatitudS and avaluo.LongitudG and avaluo.LongitudM and avaluo.LongitudS:
         #Encuentra los 10 puntos mas cercanos 
-        #avaluo = Avaluo.objects.get(FolioK='OLI20032')
+        #avaluo = Avaluo.objects.get(Folio='OLI20032')
         orig = decimal_conversion(avaluo)
         avaluos_todos = (Avaluo.objects
-                        .only("FolioK","LatitudG","LatitudM","LatitudS","LongitudG","LongitudM","LongitudS","Declat","Declon","Valor","Mterreno","Mconstruccion")
+                        .only("Folio","LatitudG","LatitudM","LatitudS","LongitudG","LongitudM","LongitudS","Declat","Declon","Valor","Mterreno","Mconstruccion")
                         .exclude(LatitudM__gte=avaluo.LatitudM+2)
                         .exclude(LatitudM__lte=avaluo.LatitudM-2)
                         .exclude(LongitudM__gte=avaluo.LongitudM+2)
@@ -75,11 +75,11 @@ def find_closest(avaluo):
                         dest = decimal_conversion(a)
                     distancia = haversine(orig['declat'], orig['declon'], dest['declat'], dest['declon'])
                     if len(cercanos) <= 10:
-                        cercanos.append((round(distancia,3),a.avaluo_id, dest['declon'], dest['declat'], a.FolioK, a.Valor, ImagenAvaluo.last_photo(a.avaluo_id),a.Mterreno,a.Mconstruccion))
+                        cercanos.append((round(distancia,3),a.avaluo_id, dest['declon'], dest['declat'], a.Folio, a.Valor, ImagenAvaluo.last_photo(a.avaluo_id),a.Mterreno,a.Mconstruccion))
                     else:
                         if distancia < max(cercanos) and distancia > 0.0:
                             cercanos.remove(max(cercanos))
-                            cercanos.append((round(distancia,3),a.avaluo_id, dest['declon'], dest['declat'], a.FolioK, a.Valor, ImagenAvaluo.last_photo(a.avaluo_id),a.Mterreno,a.Mconstruccion))
+                            cercanos.append((round(distancia,3),a.avaluo_id, dest['declon'], dest['declat'], a.Folio, a.Valor, ImagenAvaluo.last_photo(a.avaluo_id),a.Mterreno,a.Mconstruccion))
         #for x in cercanos:
             #print x
         #print "El mas grande", max(cercanos)   

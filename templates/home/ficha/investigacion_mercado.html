@@ -1,0 +1,89 @@
+{% extends "home/ficha/captura_base.html" %}
+
+{% load listutil %}
+
+{% load currency %}
+
+{% load humanize %}
+
+{% load thumbnail %}
+
+{% load crispy_forms_tags %}
+
+
+
+
+{% block style %}
+
+<style type="text/css" title="currentStyle">
+@import "{{ STATIC_URL }}CSS/smoothness/jquery-ui-1.8.24.custom.css";
+</style>
+<script type="text/javascript"
+src="https://maps.google.com/maps/api/js?sensor=true">
+</script>  
+
+<style>
+div.ui-datepicker{
+  font-size:10px;
+}
+th{
+  padding: 10px;
+
+}
+</style>
+{% endblock %}
+
+{% block script %}
+
+
+<script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/jquery-ui-1.8.24.custom.min.js"></script> 
+<script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/jquery-datepicker-es.js"></script>
+
+
+
+{% endblock %}     
+
+{% block content %}
+<h1>Investigaciones de Mercado</h1>
+<br>
+<table id='avaluos_table' class="table table-striped">
+ <thead>
+  <tr class='even'>
+  	<th style="width:10px">Id</th>
+  	<th style="width:10px">Domicilio</th>
+  	<th style="width:10px">Fuente</th>
+  	<th style="width:10px">Teléfono</th>
+    <th style="width:10px" filter-type='ddl'>Municipio</th>
+  	<th style="width:10px" filter-type='ddl'>Uso</th>
+    <th style="width:10px">M. Terr</th>
+    <th style="width:10px">M. Const</th>
+  	<th style="width:10px">V. Oferta</th>
+  	<th style="width:10px">V. Unitario</th>
+  </tr>
+</thead>
+<body>
+  {% for i in investigaciones %}
+ <tr class="{% cycle 'odd' 'even' %}">
+  <td style="width:10px;"> {{i.investigacion_id}} </td>
+  <td style="width:10px;"> {{i.calle}} </td>
+  <td style="width:10px;"> {{i.fuente}} </td>
+  <td style="width:10px;"> {{i.telefono}} </td>
+  <td style="width:10px;"> {{i.ficha_id.municipio}} </td>
+  <td style="width:10px;"> {{i.uso}} </td>
+  <td style="width:10px;"> {{i.m_terreno|default_if_none:"0"}} </td>
+  <td style="width:10px;"> {{i.m_construccion|default_if_none:"0"}} </td>
+   <td style="width:10px;"> {{i.oferta|default_if_none:"0.00" }} </td>
+    <td style="width:10px;"> {{i.unitario|default_if_none:"0.00" }} </td>
+</tr>
+{% endfor %}
+</body>
+</table>
+
+<script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/picnet.table.filter.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function () {
+  $('#avaluos_table').tableFilter();
+});
+</script>
+
+{% endblock %}

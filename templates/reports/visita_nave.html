@@ -41,7 +41,7 @@ border-spacing:10px; }
 <!-- Be sure to place the above styles (i.e. everything between the <style></style> tags) into the document 'head' (i.e. between the <head></head> tags. Everything below goes inside the <body></body> tags) -->
 <table width="801" height="699" class="myTable">
 <tr align="justify">
-<td width="728" height="120" align="center"><div><img src="{{STATIC_URL}}CSS/images/logo.png" width="59" height="58" style="float: left; font-size: 9px;" /></div>
+<td width="728" height="120" align="center"><div><img src="{{STATIC_URL}}CSS/images/logo.png" width="59" height="78" style="float: left; font-size: 9px;" /></div>
   <p class="title"><span class="myTable" style="text-align: center"><strong style=""> Reporte de Visita </strong>({{avaluo.Tipo}})</span>
   <p class="title">
   <span class="myTable" style="text-align: center">Fecha:
@@ -75,7 +75,8 @@ border-spacing:10px; }
   </td>
 </tr>
 <tr>
-<td height="68" align="center"><p><span><span class="myTable">
+<td height="68" align="center"><p><span><span class="myTable">Avl.Id:
+        <input name="132" type="text" id="132" value="{{avaluo.avaluo_id}}" size="3" />
       <span class="myTable1"> Ref:
       <input name="1343" type="text" id="1343" value=" {{avaluo.Referencia}}" size="20" />
       </span>
@@ -251,12 +252,30 @@ FolioK:
     <th width="91">TIPO 5B</th>
   </tr>
   <tr>
-    <td width="165">Puertas:</td>
+    <td width="165">Ap.Interiores:</td>
     <td width="88">&nbsp;</td>
     <td width="85">&nbsp;</td>
     <td width="85">&nbsp;</td>
     <td width="86">&nbsp;</td>
     <td width="110">&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>Ap.Exteriores:</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>Plafones:</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
     <td>&nbsp;</td>
   </tr>
   <tr>
@@ -269,7 +288,7 @@ FolioK:
     <td>&nbsp;</td>
   </tr>
   <tr>
-    <td>Marcos:</td>
+    <td>Pisos:</td>
     <td>&nbsp;</td>
     <td>&nbsp;</td>
     <td>&nbsp;</td>
@@ -278,7 +297,7 @@ FolioK:
     <td>&nbsp;</td>
   </tr>
   <tr>
-    <td>Ventanería:</td>
+    <td>Zoclos:</td>
     <td>&nbsp;</td>
     <td>&nbsp;</td>
     <td>&nbsp;</td>
@@ -287,7 +306,7 @@ FolioK:
     <td>&nbsp;</td>
   </tr>
   <tr>
-    <td>Vidriería:</td>
+    <td>Pinturas:</td>
     <td>&nbsp;</td>
     <td>&nbsp;</td>
     <td>&nbsp;</td>
@@ -296,7 +315,7 @@ FolioK:
     <td>&nbsp;</td>
   </tr>
   <tr>
-    <td>Cerrajería:</td>
+    <td>R Expeciales</td>
     <td>&nbsp;</td>
     <td>&nbsp;</td>
     <td>&nbsp;</td>
@@ -308,9 +327,7 @@ FolioK:
 <p><span class="myTable2"><span class="myTabl2e">Sub Estación:
       <span class="myTable1">
       <input name="13423" type="text" id="13423" value="                       kVa" size="16" />
-      </span>
-
-	  Patio de Maniobras:
+      </span> Patio de Maniobras:
       <span class="myTable1">
       <input name="134232" type="text" id="134232" value="                         m²" size="16" />
       </span> Aire Acond.:<span class="myTable1">

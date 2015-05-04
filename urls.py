@@ -40,7 +40,7 @@ handler401 = 'app.views.handler401'
 urlpatterns = patterns(
 
 
-    '', url(r'^SIAV/ajax_upload/(\w*\d+)/(\@*\w*\d+)/$', 'app.uploads.ajax_upload', name="ajax_upload"),
+    '', url(r'^SIAV/ajax_upload/(\w*\d+)/([\w\-]+)/$', 'app.uploads.ajax_upload', name="ajax_upload"),
 
     url(r'^oauth2/', include('provider.oauth2.urls', namespace = 'oauth2')),
     url(r'^grappelli/', include('grappelli.urls')),
@@ -137,6 +137,27 @@ urlpatterns = patterns(
 
     #Urls del sitio movil
     #url(r'^SIAV/mobile/', 'app.views.mobile', name='mobile'),
+
+    #Urls de ficha_tecnica
+
+     url(r'^SIAV/ficha/(?P<municipio>\w+)/$', 'ficha.views.ficha', name='ficha'),
+     #url(r'^SIAV/ficha/', 'ficha.views.ficha', name='ficha'),
+     url(r'^SIAV/ficha_preliminar/', 'ficha.views.ficha_preliminar', name='ficha_preliminar'),
+     url(r'^SIAV/captura_ficha/(\d+)/$', 'ficha.views.captura_ficha', name='captura_ficha'),
+     url(r'^SIAV/captura_ficha/$', 'ficha.views.captura_ficha', name='captura_ficha'),
+
+     url(r'^SIAV/elimina_imagen/(\d+)/(\d+)/$', 'ficha.views.elimina_imagen', name='elimina_imagen'),
+     
+     # Simple Ficha para imprimir
+     url(r'^SIAV/simple_ficha/$', 'ficha.views.simple_ficha', name='simple_ficha'),
+     url(r'^SIAV/simple_ficha/(\d+)', 'ficha.views.simple_ficha', name='simple_ficha'),
+     # Resumen Ficha para imprimir
+     url(r'^SIAV/resumen_ficha/$', 'ficha.views.resumen_ficha', name='resumen_ficha'),
+     url(r'^SIAV/resumen_ficha/(\d+)/(\d+)', 'ficha.views.resumen_ficha', name='resumen_ficha'),
+
+     # Investigaciones de Mercado
+     url(r'^SIAV/investigacion_mercado/$', 'ficha.views.investigacion_mercado', name='investigacion_mercado'),
+
 
     url(r'^swf/', 'app.views.swf', name='swf'),
 )

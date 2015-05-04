@@ -1,6 +1,7 @@
 from django import template
 from app.models import *
 from django.db.models import Sum, Count, Q
+import numbers 
 
 register = template.Library()
 
@@ -19,7 +20,8 @@ def grafica_por_facturar(dollars):
             total_general += 0.00
             x['Total'] = 0.00
         else:
-            total_general += float(str(x['total']))    
+            if isinstance(x['total'], numbers.Real):    
+                total_general += float(str())    
 
     return suma_de_monto
 
@@ -39,7 +41,8 @@ def grafica_por_liquidar(dollars):
             total_general += 0.00
             x['total'] = 0.00
         else:
-            total_general += float(str(x['total']))
+            if isinstance(x['total'], numbers.Real):  
+                total_general += float(str(x['total']))
 
 
     return suma_de_monto

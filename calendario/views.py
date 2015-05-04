@@ -44,7 +44,7 @@ def creaEventos(request):
 
     title = request.POST.get("title", "")
     if (title is not None and title != ''):
-        event['title'] = title[0:(title.index('-')-1)]
+        event['title'] = title[0:(title.rfind('-')-1)]
     else:
         event['title'] = ""
 
@@ -95,7 +95,7 @@ def creaEventos(request):
         output['id'] = record_id
     else: 
         #record_id = collection.insert(event) # Insert record
-        avaluo = Avaluo.objects.get(FolioK=event['title'])
+        avaluo = Avaluo.objects.get(Folio=event['title'])
         insert_id = Evento(None,event['start'],event['end'],event['allDay'],avaluo.avaluo_id,request.user.id,'')
         insert_id.save()
         obj = Evento.objects.latest('evento_id')
@@ -119,7 +119,7 @@ def cargaEventos(request):
     for e in eventos:
         data['id'] = int(e.evento_id)
         #data['avaluo_id'] = int(e.avaluo.avaluo_id)
-        data['title'] = str(e.avaluo.FolioK) + " - "+ smart_str(e.avaluo.Colonia)
+        data['title'] = str(e.avaluo.Folio) + " - "+ smart_str(e.avaluo.Colonia)
         data['start'] = e.Inicio.strftime("%Y-%m-%dT%H:%M:%S")
         data['end'] = e.Fin.strftime("%Y-%m-%dT%H:%M:%S")
         data['allDay'] = e.diaEntero

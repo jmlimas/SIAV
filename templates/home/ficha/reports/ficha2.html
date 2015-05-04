@@ -1,0 +1,174 @@
+{% load round_hunded %}
+
+<html>
+<head>
+	<style type="text/css">
+	td,th {
+		text-align: center;
+		font-family: arial;
+		font-size:75%
+	}
+	td li {
+		text-align: left;
+	}
+	li { list-style:none; }
+	ul { padding:0px; }
+	body { margin: 5cm 0px 0px 0.9cm; }
+	td.dark{
+		background-color: #151515;
+		color: #FFFFFF;
+		font-family: arial;
+		font-weight:bold;
+		font-size:75%
+
+	}
+	td.gray{
+		background-color: #D8D8D8;
+		color: #000000;
+		font-family: arial;
+		font-size:75%
+
+	}
+
+	.checkboxes label
+	{
+		display: block;
+		float: left;
+		padding-right: 10px;
+		white-space: nowrap;
+	}
+
+	.checkboxes input
+	{
+		vertical-align: middle;
+	}
+
+	.checkboxes label span
+	{
+		vertical-align: middle;
+	}
+	.blackEdge {
+
+		border:1;
+   	    border-spacing:0;
+        border-collapse:collapse;
+		border-color:000000;
+	}
+
+	</style>
+	<script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/jquery-1.8.2.min.js"></script>
+	<script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/autoNumeric.js"></script>
+	<script type="text/javascript">
+
+
+function roundHundred(value){
+   return Math.round(value/100)*100
+}
+
+	$(document).ready(function(){
+	  $('.oferta').autoNumeric('init', {aSign: '$',"mDec":2 });
+	  $('.unitario').autoNumeric('init', {aSign: '$',"mDec":2 });
+	  $('.unitario').autoNumeric('init', {aSign: '$',"mDec":2 });
+	});
+
+
+
+
+	</script>
+
+	
+</head>
+<body>
+	<table border="1" cellspacing=0 cellpadding=2 bordercolor="000000" width="700px">
+		<tr >
+			<td colspan="4" class="dark">
+				RESUMEN DE REGIÓN CATASTRAL
+			</td>
+		</tr>
+		<tr>
+			<td class="gray" width="13%">
+				<div class="fieldWrapper">
+					
+					<label for="id_limite_norte">REGIÓN</label>		        
+				</div>
+			</td>
+			<td class="gray" width="53%">
+				<div class="fieldWrapper">
+					
+					<label for="id_limite_sur">COLONIA</label>
+
+				</div>
+			</td>
+			<td class="gray" width="33%">
+				<div class="fieldWrapper">
+					
+					<label for="id_limite_oriente">VALOR POR METRO CUADRADO</label>
+
+				</div>
+			</td>
+		</tr>
+
+			{% for f in ficha %}
+			<tr>
+				<td>
+					<label>
+						{{f.region}}
+					</label>
+				</td>		
+				<td>
+					<label>	
+						{{f.colonia}}
+					</label>
+				</td>
+				<td>
+					<label class="oferta" >	
+						{% if f.folio == 44 %}
+							{{f.valor_propuesto|default_if_none:"0.00" }}
+						{% else %}
+							{% if f.municipio_id == 978 %}	
+								{{f.valor_propuesto|round_hunded_10|default_if_none:"0.00" }}
+							{% else %}
+								{{f.valor_propuesto|round_hunded|default_if_none:"0.00" }}
+							{% endif %}
+						{% endif %}
+					</label>
+				</td>
+			</tr>			
+			{% endfor %}
+
+	</table>
+	<table border="1" cellspacing=0 cellpadding=2 bordercolor="#FFFFFFF" width="700px">
+	<tr border-color="#FFFFFFF;">
+		<td colspan="4" border-color="#FFFFFFF;">
+		<b>El Colegio Mexicano de Valuación de Nuevo León A. C. </b>, certifica el presente estudio de valores el cual  fue analizado y ratificado en las Juntas técnicas celebradas para tal efecto el día 19 de Septiembre de 2013.
+		</td>
+	</tr>
+	<br>
+	<br>
+	<br>
+	<tr><td></td></tr>
+	<tr><td></td></tr>
+	<tr><td></td></tr>
+	<tr><td></td></tr>
+	<tr><td></td></tr>
+	<tr><td></td></tr>
+	<tr>
+		<td colspan="2">
+			__________________________<br>
+			     Secretario Técnico<br>
+			Ing. Adolfo A. Garza Salazar
+		</td>
+		<td colspan="2">
+			__________________________<br>
+			         Presidente<br>
+			Arq. Gustavo A. Reyes Aguiar
+		</td>
+	</tr>
+	</table>
+
+	<p>
+	</p>
+
+
+</body>
+</html>

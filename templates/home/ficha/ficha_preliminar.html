@@ -1,0 +1,69 @@
+{% extends "home/ficha/captura_base.html" %}
+
+{% load dayssince %}
+
+{% block captura %}active{% endblock %}
+
+{% load currency %}
+
+{% load dic_length %}
+
+{% block script %}
+
+<script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/picnet.table.filter.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function () {
+  $('#avaluos_table').tableFilter();
+  valor = 0;
+
+  var rowCount = { p: $('#avaluos_table tbody tr:visible').length };
+  valor = ($('#avaluos_table tbody tr:visible').length);
+
+  $('#cantidad_tabla').html(valor);
+
+  $('#avaluos_table thead').on("change", function () {
+    setTimeout(function () {
+      window.location = '/SIAV/captura/';
+    }, 1000);
+  });
+});
+
+
+</script>
+
+{% endblock %}      
+{% block content %}
+
+<h1>Fichas Tecnicas</h1>
+<h2 style="text-align:left"><span id="cantidad_tabla"></span>  Fichas</h2>
+<table id='avaluos_table' class="table table-striped">
+ <thead>
+  <tr class='even'><th style="width:10px">Folio</th><th style="width:10px" filter='false' >Región</th><th filter-type='ddl'>Colonia</th><th>Lote Tipo</th><th filter='false'>L. Norte</th><th filter='false'>L. Sur</th><th style="width:10px"  filter='false'>L. Oriente</th><th  filter='false'>L. Poniente</th><th filter='false'>Densidad</th><th filter='false'>Valor</th></tr>
+</thead>
+<body>
+  {% for a in fichas %}
+
+  {% if a.valor_propuesto > "0" %}
+  <tr class="success">
+  {% else %}
+  <tr class="{% cycle 'odd' 'even' %}">
+  {% endif %}
+
+  <td style="width:10px;"> {{a.folio}} </td>
+  <td style="width:10px;"> {{a.region}} </td>
+  <td style="width:10px;"> {{a.colonia}} </td>
+  <td style="width:80px"> {{a.lote_tipo}} </td>
+  <td style="width:3px;"> {{a.limite_norte}} </td>
+  <td style="width:10px;">{{a.limite_sur}}</td>
+  <td style="width:10px;">{{a.limite_oriente}}</td>
+  <td style="width:10px;">{{a.limite_poniente}}</td>
+  <td style="width:10px;">{{a.densidad|default_if_none:"0" }}% </td>
+  <td style="width:35px;">{{a.valor_propuesto|currency}}</td> 	
+</tr>
+{% endfor %}
+</body>
+</table>
+
+
+
+{% endblock %}

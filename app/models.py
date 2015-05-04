@@ -4,6 +4,9 @@ import os
 from PIL import Image
 from django.contrib.auth.models import User
 
+#1. Registrar los cambios con migrate.py makemigrations app
+#2. Modificar y realizar nueva migracion
+
 def get_image_path(folder, filename):
     return os.path.join('media/',str(folder), filename)
 
@@ -73,6 +76,32 @@ class Cliente(models.Model):
         else:
             return self.Cliente
 
+class Servicio(models.Model):
+    servicio_id = models.AutoField(primary_key=True)
+    Servicio = models.CharField(null=False, max_length=255)
+    is_active = models.BooleanField(null=False, default=1)
+
+    def __unicode__(self):
+        if self.Servicio is None:
+            return "N/D"
+        else:
+            return self.Servicio
+
+
+class Contacto(models.Model):
+    contacto_id = models.AutoField(primary_key=True)
+    Nombre = models.CharField(null=True, max_length=255)
+    Apellido = models.CharField(null=True, max_length=255)
+    Correo = models.CharField(null=True, max_length=255)
+    Telefono = models.CharField(null=True, max_length=255)
+    is_active = models.BooleanField(null=False)
+
+    def __unicode__(self):
+        if self.Nombre is None:
+            return "N/D"
+        else:
+            return unicode(self.Nombre) or u''
+
 
 class Tipo(models.Model):
     tipo_id = models.AutoField(primary_key=True)
@@ -113,7 +142,7 @@ class Depto(models.Model):
 class Avaluo(models.Model):   
     avaluo_id = models.AutoField(primary_key=True)
     Referencia = models.CharField(null=True, max_length=255, unique=True)
-    FolioK = models.CharField(null=True, max_length=255, unique=True)
+    Folio = models.CharField(null=True, max_length=255, unique=True)
     Calle = models.CharField(null=True, max_length=255)
     NumExt = models.CharField(null=True, max_length=255)
     NumInt = models.CharField(null=True, max_length=255)
@@ -122,16 +151,24 @@ class Avaluo(models.Model):
     Municipio = models.ForeignKey(Municipio, null=True)
     #Estado = models.CharField(null=True, max_length=255)
     Estado = models.ForeignKey(Estado, null=True)
-    Servicio = models.CharField(null=True, max_length=255)
+    Servicio = models.ForeignKey(Servicio, null=True)
     Tipo = models.ForeignKey(Tipo, null=True)
     Estatus = models.CharField(null=True, max_length=255)
     Prioridad = models.CharField(null=True, max_length=255)
     Cliente = models.ForeignKey(Cliente, null=True)
     Depto = models.ForeignKey(Depto, null=True)
-    Valuador = models.ForeignKey(Valuador, null=True)
+    Valuador = models.ForeignKey(User, null=True,blank=True)
+    Contacto = models.ForeignKey(Contacto, null=True,blank=True)
     Solicitud = models.DateField(null=True)
-    Mterreno = models.DecimalField(null=True, max_digits=12, decimal_places=2)
-    Mconstruccion = models.DecimalField(null=True, max_digits=12, decimal_places=2)
+    Lote_Tipo = models.CharField(null=True, max_length=255,blank=True)          
+    Valor_Mterreno = models.CharField(null=True, max_length=255,blank=True)   
+    Valor_Mconstruccion = models.CharField(null=True, max_length=255,blank=True)            
+    Factor_Terreno = models.CharField(null=True, max_length=255,blank=True)         
+    Factor_Construccion = models.CharField(null=True, max_length=255,blank=True)            
+    Valor_Terreno_Concluido = models.CharField(null=True, max_length=255,blank=True)            
+    Valor_Construccion_Concluido = models.CharField(null=True, max_length=255,blank=True)
+    Mterreno = models.DecimalField(null=True, max_digits=12, decimal_places=2,blank=True)
+    Mconstruccion = models.DecimalField(null=True, max_digits=12, decimal_places=2,blank=True)
     LatitudG = models.DecimalField(null=True, max_digits=12, decimal_places=3)
     LatitudM = models.DecimalField(null=True, max_digits=12, decimal_places=3)
     LatitudS = models.DecimalField(null=True, max_digits=12, decimal_places=3)
@@ -149,14 +186,53 @@ class Avaluo(models.Model):
     Pagado = models.NullBooleanField(null=True)
     Observaciones = models.CharField(null=True, max_length=255)
 
+
+class Avaluo2(models.Model):
+    avaluo_id = models.AutoField(primary_key=True)
+    Referencia = models.CharField(null=True, max_length=255)
+    Folio = models.CharField(null=True, max_length=255)
+    Calle = models.CharField(null=True, max_length=255,blank=True)
+    NumExt = models.CharField(null=True, max_length=255,blank=True)
+    NumInt = models.CharField(null=True, max_length=255,blank=True)
+    Colonia = models.CharField(null=True, max_length=255,blank=True)
+    Municipio = models.CharField(null=True, max_length=255,blank=True)
+    Estado = models.CharField(null=True, max_length=255,blank=True)
+    Servicio = models.CharField(null=True, max_length=255,blank=True)
+    Tipo = models.CharField(null=True, max_length=255,blank=True)
+    Estatus = models.CharField(null=True, max_length=255,blank=True)
+    Prioridad = models.CharField(null=True, max_length=255,blank=True)
+    Cliente = models.CharField(null=True, max_length=255,blank=True)
+    Depto = models.CharField(null=True, max_length=255,blank=True)
+    Valuador = models.CharField(null=True, max_length=255,blank=True)
+    Contacto = models.CharField(null=True, max_length=255,blank=True)
+    Solicitud = models.CharField(null=True, max_length=255,blank=True)
+    Lote_Tipo = models.CharField(null=True, max_length=255,blank=True)
+    Valor_Mterreno = models.CharField(null=True, max_length=255,blank=True)
+    Valor_Mconstruccion = models.CharField(null=True, max_length=255,blank=True)
+    Factor_Terreno =models.CharField(null=True, max_length=255,blank=True)
+    Factor_Construccion = models.CharField(null=True, max_length=255,blank=True)
+    Valor_Terreno_Concluido = models.CharField(null=True, max_length=255,blank=True)
+    Valor_Construccion_Concluido = models.CharField(null=True, max_length=255,blank=True)
+    Mconstruccion = models.CharField(null=True, max_length=255,blank=True)
+    Mterreno = models.CharField(null=True, max_length=255,blank=True)
+    LatitudG = models.CharField(null=True, max_length=255,blank=True)
+    LatitudM = models.CharField(null=True, max_length=255,blank=True)
+    LatitudS = models.CharField(null=True, max_length=255,blank=True)
+    LongitudG = models.CharField(null=True, max_length=255,blank=True)
+    LongitudM = models.CharField(null=True, max_length=255,blank=True)
+    LongitudS = models.CharField(null=True, max_length=255,blank=True)
+    Visita = models.CharField(null=True, max_length=255,blank=True)
+    Valor = models.CharField(null=True, max_length=255,blank=True)
+    Observaciones = models.CharField(null=True, max_length=255,blank=True)
+
 class ImagenAvaluo(models.Model):
     imagen_id = models.AutoField(primary_key=True)
-    FolioK = models.CharField(null=True, max_length=255)
+    Folio = models.CharField(null=True, max_length=255)
     avaluo = models.ForeignKey(Avaluo, related_name='avaluos')
     imagen = models.ImageField("Imagen Avaluo", upload_to=get_image_path, blank=True, null=True)
 
     def __unicode__(self):
-        return unicode(self.FolioK)
+        return unicode(self.Folio)
     def save(self):
         if not self.imagen:
             return            
@@ -183,12 +259,12 @@ class ImagenAvaluo(models.Model):
 
 class ArchivoAvaluo(models.Model):
     archivo_id = models.AutoField(primary_key=True)
-    FolioK = models.CharField(null=True, max_length=255)
+    Folio = models.CharField(null=True, max_length=255)
     avaluo = models.ForeignKey(Avaluo)
     file = models.FileField("Archivo Avaluo", upload_to=get_image_path, blank = True, null=True)
 
     def __unicode__(self):
-        return unicode(self.FolioK)
+        return unicode(self.Folio)
     def save(self):
         if not self.imagen:
             return            

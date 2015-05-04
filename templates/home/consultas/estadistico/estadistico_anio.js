@@ -76,7 +76,7 @@ colors: [
             data: [
             
             {% for data in anio %}
-                    {{data.dcount}},
+                    {{data.dcount|default_if_none:"0"}},
                {% endfor %}
 
             ]

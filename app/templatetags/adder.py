@@ -1,4 +1,5 @@
 from django import template
+import numbers
 
 register = template.Library()
 
@@ -8,7 +9,8 @@ def adder(avaluo):
     #    return '0'
  	for a in avaluo:
  		if a.Importe:
- 			total_general += float(str(a.Importe))
+ 			if isinstance(a.Importe, numbers.Real):  
+ 				total_general += float(str(a.Importe))
  	return total_general
 
 
@@ -17,7 +19,8 @@ def importe_adder(avaluo):
     #if avaluo is None:
     #    return '0'
  	for a in avaluo:
- 		total_general += float(str(a['total']))
+ 		if isinstance(a['total'], numbers.Real):  
+ 			total_general += float(str(a['total']))
  	return total_general
 
 

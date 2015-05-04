@@ -36,23 +36,23 @@ current_directory = os.path.dirname(os.path.abspath(__file__))
 
 
 #   Recibe el id y la colonia.
-def genera_foliok(avaluo_id, colonia):
-    #Generar el FolioK
-    if(len(colonia.split()) > 1):
-        primera = colonia.split()[0]
-        ultima = colonia.split()[-1]
+def genera_folio():
+    #Generar el Folio
+    avaluo_reciente = Avaluo.objects.all().order_by('-avaluo_id')[1].Folio
+    anio = str(date.today().year)
+    anio = anio[-2:]
 
-        folio_k = ultima[:2] + primera[:1] + str(avaluo_id)
-        return folio_k
-    elif(len(colonia.split()) == 1):
-        primera = colonia.split()[0]
-        ultima = colonia.split()[-1]
-
-        folio_k = primera[:3] + str(avaluo_id)
-        return folio_k
+    if (avaluo_reciente is not None):
+        if (anio != avaluo_reciente[:2]):
+            ident = 1
+        else:     
+            avaluo_reciente = int(avaluo_reciente[-4:])+1
+            ident = avaluo_reciente
     else:
-        folio_k = ""
-        return folio_k
+        ident = 1
+    ident_final = ("%04d" % ident)
+    folio = anio+"-"+str(ident_final)
+    return folio
 
 #   Eliminar Imagenes
 @login_required
@@ -88,7 +88,8 @@ def facturar(request):
                .filter(Estatus='CONCLUIDO')
                .filter(Q(Salida__isnull=False))
                .filter(Q(Factura='') | Q(Factura__isnull=True))
-               .filter(Q(Pagado=False) | Q(Pagado__isnull=True)))
+               .filter(Q(Pagado=False) | Q(Pagado__isnull=True))
+               .filter(Q(Salida__gt=datetime.date(2014, 1, 1))))
     avaluos = avaluos.order_by('Referencia')
 
     if request.method == 'POST':
@@ -278,8 +279,8 @@ def alta_avaluo(request):
             forma.save()
 
             reciente = Avaluo.objects.latest('avaluo_id')
-            folio_k = genera_foliok(reciente.avaluo_id, reciente.Colonia)
-            reciente.FolioK = folio_k
+            folio_k = genera_folio()
+            reciente.Folio = folio_k
             reciente.save()
 
             # Enviar notificación a usuarios
@@ -326,20 +327,20 @@ def alta_avaluo_paquete(request):
                 avaluo.NumExt = form.cleaned_data["NumExt"]
                 avaluo.NumInt = form.cleaned_data["NumInt"]
 
-                #FolioK
+                #Folio
                 avaluo.save()
                 conteo += 1
 
                 reciente = Avaluo.objects.latest('avaluo_id')
-                folio_k = genera_foliok(reciente.avaluo_id, reciente.Colonia)
-                reciente.FolioK = folio_k
+                folio_k = genera_folio()
+                reciente.Folio = folio_k
                 reciente.save()
 
                 # Enviar notificación a usuarios
                 r = redis.StrictRedis(host='localhost', port=6379, db=0)
-                accion = (' dió de alta el avalúo con FolioK: ').decode("UTF-8", "ignore")
+                accion = (' dió de alta el avalúo con Folio: ').decode("UTF-8", "ignore")
 
-                r.publish('chat', request.user.username + accion + '<b>' + reciente.FolioK + '</b>')
+                r.publish('chat', request.user.username + accion + '<b>' + reciente.Folio + '</b>')
 
                 #Crear evento
                 Eventos.objects.create(user=request.user, evento='ALTA',avaluo=reciente)
@@ -362,30 +363,16 @@ def edita_visita(request, id):
         colonia = avaluo.Colonia
         avaluo_id = avaluo.avaluo_id
 
-        folio_k = genera_foliok(avaluo_id, colonia)
+        #folio_k = genera_folio()
 
     if request.method == 'POST':
         form = VisitaAvaluo(request.POST, instance=avaluo)
         form.helper.form_action = reverse('edita_visita', args=[id])
         if form.is_valid():
             obj = form.save(commit=False)
-            obj.FolioK = folio_k
+            #obj.Folio = folio_k
             form.save()
-            a = Avaluo.objects.get(FolioK=folio_k)
-            rendered = render_to_string('email/template_visita.html', {'a': a})
-            #return HttpResponse(rendered)
-            if (form.cleaned_data['Contacto']):
-                if not (a.Referencia):
-                    a.Referencia = ""
-
-                r1 = requests.post(
-                "https://api.mailgun.net/v2/alluxi.mx/messages",
-                auth=("api", "key-9snzu8gopo2vt5zdlay-e6ggboizrf27"),
-                data={"from": "Valuadores del Norte <gustavo@alluxi.mx>",
-                      "to": [form.cleaned_data['Contacto']],
-                      "subject": ("Visita Servicio : "+a.Referencia),
-                      "html": rendered})
-
+            a = Avaluo.objects.get(pk=id)
             # Enviar notificación a usuarios
             lanza_notif('VISITA', a, request.user)
             return redirect('/SIAV/visita/')
@@ -406,14 +393,14 @@ def actualiza_avaluo(request, id):
         colonia = avaluo.Colonia
         avaluo_id = avaluo.avaluo_id
 
-        folio_k = genera_foliok(avaluo_id, colonia)
+        #folio_k = genera_folio()
 
     if request.method == 'POST':
         form = CapturaAvaluo(request.POST, instance=avaluo)
         form.helper.form_action = reverse('actualiza_avaluo', args=[id])
         if form.is_valid():
             obj = form.save(commit=False)
-            obj.FolioK = folio_k
+            #obj.Folio = folio_k
             form.save()
 
             # Enviar notificación a usuarios
@@ -437,7 +424,7 @@ def edita_salida(request, id):
         avaluo = Avaluo.objects.get(pk=id)
         colonia = avaluo.Colonia
         avaluo_id = avaluo.avaluo_id
-        folio_k = genera_foliok(avaluo_id, colonia)
+        #folio_k = genera_folio()
 
     if request.method == 'POST':
         form = SalidaAvaluo(request.POST, instance=avaluo)
@@ -445,7 +432,7 @@ def edita_salida(request, id):
 
         if form.is_valid():
             obj = form.save(commit=False)
-            obj.FolioK = folio_k
+            #obj.Folio = folio_k
             obj.Estatus = 'CONCLUIDO'
             form.save()
 
@@ -478,10 +465,10 @@ def guarda_master(request, id):
 
         form = RespuestaConsultaMaster(request.POST, instance=avaluo)
         form.helper.form_action = reverse('guarda_master', args=[id])
-        folio_k = genera_foliok(avaluo_id, colonia)
+        folio_k = genera_folio()
         if form.is_valid():
             obj = form.save(commit=False)
-            obj.FolioK = folio_k
+            #obj.Folio = folio_k
             form.save()
 
             # Enviar notificación a usuarios
@@ -498,7 +485,7 @@ def guarda_master(request, id):
 @login_required
 def consulta_master(request):
     if request.is_ajax():
-        foliok = request.GET.get('foliok', '')
+        Folio = request.GET.get('Folio', '')
         ref = request.GET.get('ref', '')
         calle = request.GET.get('calle', '')
         col = request.GET.get('col', '')
@@ -514,8 +501,8 @@ def consulta_master(request):
         anio = request.GET.get('anio', '')
 
         results = Avaluo.objects.all()
-        if foliok:
-            results = results.filter(Q(FolioK__contains=foliok))
+        if Folio:
+            results = results.filter(Q(Folio__contains=Folio))
         if ref:
             results = results.filter((Q(Referencia__contains=ref)))
         if calle:

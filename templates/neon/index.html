@@ -7,6 +7,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<meta name="description" content="Neon Admin Panel" />
 	<meta name="author" content="" />
+	<link rel="shortcut icon" href="/static/img/favicon.ico" />
 
 	<title>SIAV {% if avaluo.FolioK %} {{avaluo.FolioK}} {%endif%} {% if conteo_eventos_usuario > 0 %} ({{conteo_eventos_usuario}}) {% endif %}</title>
 
@@ -99,6 +100,12 @@
 						<span class="title">Calendario</span>
 					</a>
 				</li>
+				<li class="{% block ficha %}{% endblock %}">
+					<a href="/SIAV/ficha/986">
+						<i class="entypo-star"></i>
+						<span class="title">Fichas Técnicas</span>
+					</a>
+				</li>
 				{% if user.is_staff %}
 				<li class="{% block facturar %}{% endblock %}">
 					<a href="/SIAV/facturar">
@@ -138,7 +145,7 @@
 					<li class="profile-info dropdown"><!-- add class "pull-right" if you want to place this from right -->
 		
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-							<img src="/{{user.userprofile.picture}}" alt="" class="img-circle" width="44" />
+							<img src="{%if user.userprofile.picture %}{{user.userprofile.picture}}{% else %}{{ STATIC_URL }}/CSS/images/logo.png{% endif %}" alt="" class="img-circle" width="44" />
 							{{user.first_name}} {{user.last_name}}
 						</a>
 		<!-- 

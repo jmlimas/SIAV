@@ -84,7 +84,7 @@ jQuery(document).ready(function($) {
         series: [{
                 name: 'Año',
                 data: [{% for anio in monto_todos_anios %} {% if anio.year %} 
-                {{anio.Total}}, {% endif %} {% endfor %}]
+                {{anio.Total|default_if_none:"0"}}, {% endif %} {% endfor %}]
             },
 
             /*{

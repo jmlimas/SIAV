@@ -40,7 +40,7 @@
         jQuery("#fine-uploader").fineUploader({
             debug: true,
             request: {
-                endpoint: "{% url "app.uploads.ajax_upload" avaluo.avaluo_id avaluo.FolioK %}",
+                endpoint: "{% url "app.uploads.ajax_upload" avaluo.avaluo_id avaluo.Folio %}",
             },
             retry: {
                enableAuto: false

@@ -33,7 +33,7 @@ table.myTable td, table.myTable th { border:3px solid black;padding:5px; }
 <table width="783" height="951" class="myTable">
   <tr align="justify">
 <td align="center" width="453"><div></div>
-  <p class="title"><span class="myTable" style="text-align: center"><strong style=""><span class="myTable1" style="text-align: center"><span class="myTable1" style="text-align: center"><strong style=""><span class="myTable1" style="text-align: center"><span class="myTable1" style="text-align: center"><strong style=""><span class="myTable1" style="text-align: center"><span class="myTable1" style="text-align: center"><strong style=""><span class="myTable1" style="text-align: center"><span class="myTable1" style="text-align: center"><strong style=""><span class="myTable1" style="text-align: center"><span class="myTable1" style="text-align: center"><strong style=""><span class="myTable1" style="text-align: center"><span class="myTable1" style="text-align: center"><strong style=""><span class="myTable1" style="text-align: center"><span class="myTable1" style="text-align: center"><strong style=""><span class="myTable1" style="text-align: center"><strong style=""><img src="{{STATIC_URL}}CSS/images/logo.png" width="85" height="85" style= "position: absolute; font-size: 9px; left: 15px; top: 11px; width: 108px; height: 102px;" /></strong></span></strong></span></span></strong></span></span></strong></span></span></strong></span></span></strong></span></span></strong></span></span></strong></span></span>Reporte de Visita </strong>({{avaluo.Tipo}})</span>
+  <p class="title"><span class="myTable" style="text-align: center"><strong style=""><span class="myTable1" style="text-align: center"><span class="myTable1" style="text-align: center"><strong style=""><span class="myTable1" style="text-align: center"><span class="myTable1" style="text-align: center"><strong style=""><span class="myTable1" style="text-align: center"><span class="myTable1" style="text-align: center"><strong style=""><span class="myTable1" style="text-align: center"><span class="myTable1" style="text-align: center"><strong style=""><span class="myTable1" style="text-align: center"><span class="myTable1" style="text-align: center"><strong style=""><span class="myTable1" style="text-align: center"><span class="myTable1" style="text-align: center"><strong style=""><span class="myTable1" style="text-align: center"><span class="myTable1" style="text-align: center"><strong style=""><span class="myTable1" style="text-align: center"><strong style=""><img src="{{STATIC_URL}}CSS/images/logo.png" width="85" height="105" style= "position: absolute; font-size: 9px; left: 15px; top: 11px; width: 108px; height: 102px;" /></strong></span></strong></span></span></strong></span></span></strong></span></span></strong></span></span></strong></span></span></strong></span></span></strong></span></span>Reporte de Visita </strong>({{avaluo.Tipo}})</span>
   <p><span class="myTable" style="text-align: center">Fecha:
     <input type="text" name="1" id="1" /> 
     Hora:
@@ -72,7 +72,8 @@ table.myTable td, table.myTable th { border:3px solid black;padding:5px; }
   </td>
 </tr>
 <tr>
-<td align="center"><p><span><span class="myTable">
+<td align="center"><p><span><span class="myTable">Avl.Id:
+          <input name="132" type="text" id="132" value="{{avaluo.avaluo_id}}" size="3" />
        <span class="myTable1">Ref:  
        <input name="1343" type="text" id="1343" value=" {{avaluo.Referencia}}" size="20" />
       </span>
@@ -84,10 +85,10 @@ FolioK:
 </span></span></p>
   <p><span class="myTable"><span class="myTable">Calle: 
     <input name="134" type="text" id="134" value=" {{avaluo.Calle}}" size="27" />
-    NumE:
-<input name="1323" type="text" id="1323" value="{{avaluo.NumExt}}" size="2" />
+    Num:
+<input name="1323" type="text" id="1323" value="{{avaluo.NumInt}}" size="2" />
     NumI:
-    <input name="1324" type="text" id="1324" value="{{avaluo.NumInt}}" size="2" />
+    <input name="1324" type="text" id="1324" value="{{avaluo.NumExt}}" size="2" />
   Colonia:
   <input name="1342" type="text" id="1342" value=" {{avaluo.Colonia}}" size="25" />
   </span></span></p>

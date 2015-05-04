@@ -33,7 +33,7 @@ CRISPY_TEMPLATE_PACK = 'bootstrap3'
 #DEBUG_TOOLBAR_PATCH_SETTINGS = False
 
 ALLOWED_HOSTS = ['*']
-DEBUG = False
+DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 THUMBNAIL_DEBUG = True 
 THUMBNAIL_PREFIX ='media/cache/'
@@ -52,7 +52,7 @@ MANAGERS = ADMINS
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',  # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'siavdb',                      # Or path to database file if using sqlite3.
+        'NAME': 'siavdb2',                      # Or path to database file if using sqlite3.
         'USER': 'root',                      # Not used with sqlite3.
         'PASSWORD': 'siavdb',                  # Not used with sqlite3.
         'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
@@ -193,6 +193,7 @@ INSTALLED_APPS = (
     'endless_pagination',
     #'django_socketio',
     #'debug_toolbar',
+    'ficha',
     'grappelli',
     'sorl.thumbnail',
     'tastypie',

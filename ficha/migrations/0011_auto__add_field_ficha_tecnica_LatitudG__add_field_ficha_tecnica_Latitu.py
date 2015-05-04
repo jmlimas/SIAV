@@ -1,0 +1,192 @@
+# -*- coding: utf-8 -*-
+import datetime
+from south.db import db
+from south.v2 import SchemaMigration
+from django.db import models
+
+
+class Migration(SchemaMigration):
+
+    def forwards(self, orm):
+        # Adding field 'Ficha_Tecnica.LatitudG'
+        db.add_column('ficha_ficha_tecnica', 'LatitudG',
+                      self.gf('django.db.models.fields.DecimalField')(null=True, max_digits=12, decimal_places=3),
+                      keep_default=False)
+
+        # Adding field 'Ficha_Tecnica.LatitudM'
+        db.add_column('ficha_ficha_tecnica', 'LatitudM',
+                      self.gf('django.db.models.fields.DecimalField')(null=True, max_digits=12, decimal_places=3),
+                      keep_default=False)
+
+        # Adding field 'Ficha_Tecnica.LatitudS'
+        db.add_column('ficha_ficha_tecnica', 'LatitudS',
+                      self.gf('django.db.models.fields.DecimalField')(null=True, max_digits=12, decimal_places=3),
+                      keep_default=False)
+
+        # Adding field 'Ficha_Tecnica.LongitudG'
+        db.add_column('ficha_ficha_tecnica', 'LongitudG',
+                      self.gf('django.db.models.fields.DecimalField')(null=True, max_digits=12, decimal_places=3),
+                      keep_default=False)
+
+        # Adding field 'Ficha_Tecnica.LongitudM'
+        db.add_column('ficha_ficha_tecnica', 'LongitudM',
+                      self.gf('django.db.models.fields.DecimalField')(null=True, max_digits=12, decimal_places=3),
+                      keep_default=False)
+
+        # Adding field 'Ficha_Tecnica.LongitudS'
+        db.add_column('ficha_ficha_tecnica', 'LongitudS',
+                      self.gf('django.db.models.fields.DecimalField')(null=True, max_digits=12, decimal_places=3),
+                      keep_default=False)
+
+
+    def backwards(self, orm):
+        # Deleting field 'Ficha_Tecnica.LatitudG'
+        db.delete_column('ficha_ficha_tecnica', 'LatitudG')
+
+        # Deleting field 'Ficha_Tecnica.LatitudM'
+        db.delete_column('ficha_ficha_tecnica', 'LatitudM')
+
+        # Deleting field 'Ficha_Tecnica.LatitudS'
+        db.delete_column('ficha_ficha_tecnica', 'LatitudS')
+
+        # Deleting field 'Ficha_Tecnica.LongitudG'
+        db.delete_column('ficha_ficha_tecnica', 'LongitudG')
+
+        # Deleting field 'Ficha_Tecnica.LongitudM'
+        db.delete_column('ficha_ficha_tecnica', 'LongitudM')
+
+        # Deleting field 'Ficha_Tecnica.LongitudS'
+        db.delete_column('ficha_ficha_tecnica', 'LongitudS')
+
+
+    models = {
+        'app.estado': {
+            'Meta': {'object_name': 'Estado'},
+            'Nombre': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
+            'abrev': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True'}),
+            'clave': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True'}),
+            'estado_id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'is_active': ('django.db.models.fields.BooleanField', [], {'default': 'True'})
+        },
+        'app.municipio': {
+            'Meta': {'object_name': 'Municipio'},
+            'Nombre': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
+            'clave': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True'}),
+            'estado_id': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['app.Estado']"}),
+            'is_active': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
+            'municipio_id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'})
+        },
+        'auth.group': {
+            'Meta': {'object_name': 'Group'},
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'name': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '80'}),
+            'permissions': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['auth.Permission']", 'symmetrical': 'False', 'blank': 'True'})
+        },
+        'auth.permission': {
+            'Meta': {'ordering': "('content_type__app_label', 'content_type__model', 'codename')", 'unique_together': "(('content_type', 'codename'),)", 'object_name': 'Permission'},
+            'codename': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
+            'content_type': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['contenttypes.ContentType']"}),
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'name': ('django.db.models.fields.CharField', [], {'max_length': '50'})
+        },
+        'auth.user': {
+            'Meta': {'object_name': 'User'},
+            'date_joined': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now'}),
+            'email': ('django.db.models.fields.EmailField', [], {'max_length': '75', 'blank': 'True'}),
+            'first_name': ('django.db.models.fields.CharField', [], {'max_length': '30', 'blank': 'True'}),
+            'groups': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['auth.Group']", 'symmetrical': 'False', 'blank': 'True'}),
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'is_active': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
+            'is_staff': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
+            'is_superuser': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
+            'last_login': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now'}),
+            'last_name': ('django.db.models.fields.CharField', [], {'max_length': '30', 'blank': 'True'}),
+            'password': ('django.db.models.fields.CharField', [], {'max_length': '128'}),
+            'user_permissions': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['auth.Permission']", 'symmetrical': 'False', 'blank': 'True'}),
+            'username': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '30'})
+        },
+        'contenttypes.contenttype': {
+            'Meta': {'ordering': "('name',)", 'unique_together': "(('app_label', 'model'),)", 'object_name': 'ContentType', 'db_table': "'django_content_type'"},
+            'app_label': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'model': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
+            'name': ('django.db.models.fields.CharField', [], {'max_length': '100'})
+        },
+        'ficha.archivoficha': {
+            'Meta': {'object_name': 'ArchivoFicha'},
+            'archivo_id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'ficha': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['ficha.Ficha_Tecnica']"}),
+            'file': ('django.db.models.fields.files.FileField', [], {'max_length': '100', 'null': 'True', 'blank': 'True'}),
+            'folio': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True'})
+        },
+        'ficha.ficha_tecnica': {
+            'LatitudG': ('django.db.models.fields.DecimalField', [], {'null': 'True', 'max_digits': '12', 'decimal_places': '3'}),
+            'LatitudM': ('django.db.models.fields.DecimalField', [], {'null': 'True', 'max_digits': '12', 'decimal_places': '3'}),
+            'LatitudS': ('django.db.models.fields.DecimalField', [], {'null': 'True', 'max_digits': '12', 'decimal_places': '3'}),
+            'LongitudG': ('django.db.models.fields.DecimalField', [], {'null': 'True', 'max_digits': '12', 'decimal_places': '3'}),
+            'LongitudM': ('django.db.models.fields.DecimalField', [], {'null': 'True', 'max_digits': '12', 'decimal_places': '3'}),
+            'LongitudS': ('django.db.models.fields.DecimalField', [], {'null': 'True', 'max_digits': '12', 'decimal_places': '3'}),
+            'Meta': {'object_name': 'Ficha_Tecnica'},
+            'calidad': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True', 'blank': 'True'}),
+            'colonia': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True', 'blank': 'True'}),
+            'condicion': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True', 'blank': 'True'}),
+            'densidad': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True', 'blank': 'True'}),
+            'entorno_urbano_1': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True', 'blank': 'True'}),
+            'entorno_urbano_2': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True', 'blank': 'True'}),
+            'equipamiento': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True', 'blank': 'True'}),
+            'factor': ('django.db.models.fields.DecimalField', [], {'default': 'None', 'null': 'True', 'max_digits': '12', 'decimal_places': '2', 'blank': 'True'}),
+            'folio': ('django.db.models.fields.IntegerField', [], {'primary_key': 'True'}),
+            'folio_2': ('django.db.models.fields.IntegerField', [], {'default': 'None', 'null': 'True', 'blank': 'True'}),
+            'limite_norte': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True', 'blank': 'True'}),
+            'limite_oriente': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True', 'blank': 'True'}),
+            'limite_poniente': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True', 'blank': 'True'}),
+            'limite_sur': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True', 'blank': 'True'}),
+            'lote_tipo': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True', 'blank': 'True'}),
+            'municipio': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['app.Municipio']"}),
+            'niveles': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True', 'blank': 'True'}),
+            'observaciones': ('django.db.models.fields.CharField', [], {'default': 'None', 'max_length': '255', 'null': 'True', 'blank': 'True'}),
+            'region': ('django.db.models.fields.IntegerField', [], {'null': 'True', 'blank': 'True'}),
+            'riesgo_1': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True', 'blank': 'True'}),
+            'riesgo_2': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True', 'blank': 'True'}),
+            'servicio_1': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True', 'blank': 'True'}),
+            'servicio_2': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True', 'blank': 'True'}),
+            'servicio_3': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True', 'blank': 'True'}),
+            'socioeconomico': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True', 'blank': 'True'}),
+            'uso_suelo': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True', 'blank': 'True'}),
+            'valor_propuesto': ('django.db.models.fields.CharField', [], {'default': 'None', 'max_length': '255', 'null': 'True', 'blank': 'True'}),
+            'valuador': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['auth.User']", 'null': 'True'})
+        },
+        'ficha.imagenficha': {
+            'Meta': {'object_name': 'ImagenFicha'},
+            'ficha': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['ficha.Ficha_Tecnica']"}),
+            'folio': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True'}),
+            'imagen': ('django.db.models.fields.files.ImageField', [], {'max_length': '100', 'null': 'True', 'blank': 'True'}),
+            'imagen_id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'})
+        },
+        'ficha.investigacion_mercado': {
+            'Meta': {'object_name': 'Investigacion_Mercado'},
+            'calle': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True'}),
+            'colonia': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True'}),
+            'factor': ('django.db.models.fields.DecimalField', [], {'null': 'True', 'max_digits': '12', 'decimal_places': '2'}),
+            'ficha_id': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['ficha.Ficha_Tecnica']"}),
+            'fuente': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True'}),
+            'investigacion_id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'm_construccion': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True'}),
+            'm_terreno': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True'}),
+            'oferta': ('django.db.models.fields.DecimalField', [], {'null': 'True', 'max_digits': '12', 'decimal_places': '2'}),
+            'telefono': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True'}),
+            'unitario': ('django.db.models.fields.DecimalField', [], {'null': 'True', 'max_digits': '12', 'decimal_places': '2'}),
+            'unitario_0': ('django.db.models.fields.DecimalField', [], {'null': 'True', 'max_digits': '12', 'decimal_places': '2'}),
+            'uso': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True'})
+        },
+        'ficha.valores_unitarios': {
+            'Meta': {'object_name': 'Valores_Unitarios'},
+            'activo': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True'}),
+            'ficha_id': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['ficha.Ficha_Tecnica']"}),
+            'valor_mercado': ('django.db.models.fields.DecimalField', [], {'null': 'True', 'max_digits': '12', 'decimal_places': '2'}),
+            'valor_operacion': ('django.db.models.fields.DecimalField', [], {'null': 'True', 'max_digits': '12', 'decimal_places': '2'}),
+            'valores_id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'})
+        }
+    }
+
+    complete_apps = ['ficha']

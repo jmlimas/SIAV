@@ -1,0 +1,288 @@
+{% extends "home/ficha/captura_base.html" %}
+
+{% load listutil %}
+
+{% load currency %}
+
+{% load thumbnail %}
+
+{% load crispy_forms_tags %}
+
+{% load google_flags %}
+
+
+
+
+{% block style %}
+
+<style type="text/css" title="currentStyle">
+@import "{{ STATIC_URL }}CSS/smoothness/jquery-ui-1.8.24.custom.css";
+</style>
+<script type="text/javascript"
+src="https://maps.google.com/maps/api/js?sensor=true">
+</script>  
+
+<style>
+div.ui-datepicker{
+  font-size:10px;
+}
+th{
+  padding: 10px;
+
+}
+body #myModal {
+    /* new custom width */
+    width: 1260px;
+/*    height: 860px;*/
+    /* must be half of the width, minus scrollbar on the left (30px) */
+    margin-left: -680px;
+}
+</style>
+{% endblock %}
+
+{% block script %}
+
+
+<script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/jquery-ui-1.8.24.custom.min.js"></script> 
+<script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/jquery-datepicker-es.js"></script>
+<script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/fileuploader.js"></script>
+<script type="text/javascript" src="http://google-maps-utility-library-v3.googlecode.com/svn/trunk/infobox/src/infobox.js"></script>
+
+<script>        
+function createUploader(){            
+  var uploader = new qq.FileUploader( {
+    action: "{% url "app.uploads.ajax_upload" ficha.folio ficha.folio %}",
+    element: $('#file-uploader')[0],
+    multiple: true,
+    onComplete: function( id, fileName, responseJSON ) {
+      if( responseJSON.success )
+        alert( "success!" ) ;
+      else
+        alert( "upload failed!" ) ;
+    },
+    onAllComplete: function( uploads ) {
+                    // uploads is an array of maps
+                    // the maps look like this: { file: FileObject, response: JSONServerResponse }
+                    alert( "All complete!" ) ;
+                  },
+                  params: {
+                    'csrf_token': '{{ csrf_token }}',
+                    'csrf_name': 'csrfmiddlewaretoken',
+                    'csrf_xname': 'X-CSRFToken',
+                  },
+                } ) ;
+}         
+
+
+</script> 
+
+<script type="text/javascript" language="javascript" src="{{ STATIC_URL }}JS/mapas.js"></script>
+
+<script type="text/javascript">
+
+  function initialize() {
+
+   var latlng = new google.maps.LatLng({{decimal.declon}},({{decimal.declat}}*-1));
+   var myOptions = {
+      zoom: 14,
+      center: latlng,
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    };
+    var map = new google.maps.Map(document.getElementById("map_canvas"),
+        myOptions);
+  
+
+  marker = new google.maps.Marker({
+    position: latlng,
+    map: map
+  });
+  
+  marker.setMap(map);
+
+     {% for x in cercanos %}
+  var latlng = new google.maps.LatLng({{x.2}},({{x.3}}*-1));
+  marker_{{x.1}} = new google.maps.Marker({
+    position: latlng,
+    map: map,
+    icon:'{{x.5|google_flags}}'
+  });
+  marker_{{x.1}}.setMap(map);
+
+        var boxText = document.createElement("div");
+        boxText.style.cssText = "border: 1px solid black; margin-top: 8px; background: yellow; padding: 5px;font-size:15px;";
+        boxText.innerHTML = "{{x.6}}<br><b>Valor Propuesto: {{x.5|currency}}</b>";
+                
+        var myOptions_{{x.1}} = {
+                 content: boxText
+                ,disableAutoPan: false
+                ,maxWidth: 0
+                ,pixelOffset: new google.maps.Size(-140, 0)
+                ,zIndex: null
+                ,boxStyle: { 
+                  background: "url('http://google-maps-utility-library-v3.googlecode.com/svn/trunk/infobox/examples/tipbox.gif') no-repeat"
+                  ,opacity: 0.75
+                  ,width: "280px"
+                 }
+                ,closeBoxMargin: "10px 2px 2px 2px"
+                ,closeBoxURL: "http://www.google.com/intl/en_us/mapfiles/close.gif"
+                ,infoBoxClearance: new google.maps.Size(1, 1)
+                ,isHidden: false
+                ,pane: "floatPane"
+                ,enableEventPropagation: false
+        };
+
+
+        var ib = new InfoBox();
+
+    google.maps.event.addListener(marker_{{x.1}}, "mouseover", function (e) {
+      ib.close();
+      ib.setOptions(myOptions_{{x.1}})
+      ib.open(map, this);
+    });
+
+    google.maps.event.addListener(marker_{{x.1}}, "mouseout", function (e) {
+      ib.close();
+      ib.setOptions(myOptions_{{x.1}})
+      ib.close(map, this);
+    });
+
+
+  {% endfor %}
+}
+</script>
+
+
+<script>
+$(function() {
+ window.onload = createUploader;   
+ $('#myDiv').click(function(){
+  function myFunction()
+  {
+    alert("I am an alert box!");
+  }
+});
+
+
+     $('#slickbox').hide();
+            // toggles the slickbox on clicking the noted link  
+            $('#slick-toggle').click(function() { 
+              $('#slickbox').toggle(400);
+              initialize();
+              return false;
+            });
+
+});
+
+</script>
+
+{% endblock %}     
+
+{% block content %}
+
+<!-- Button to trigger modal -->
+<a data-target="#myModal"href="/SIAV/investigacion_mercado" role="button" class="btn btn-primary button white pull-right" style="inline-block"data-toggle="modal">Buscar Comparable</a>
+<br>
+
+<h1 style="text-align:center">Ficha Técnica de Valuación</h1>
+
+<div style=display:block>
+  {% for item in imagenes %}
+  {% thumbnail item.imagen "100x100" crop="center" as small %}
+  {# <a href="/{{item.imagen}}" title="{{item.FolioK}}"> <img src="{{small.imagen}}" ></a> #}
+  <a href="/SIAV/elimina_imagen/{{item.folio}}/{{item.imagen_id}}/" title="{{item.folio}}"><img src="{{ STATIC_URL }}CSS/images/delete.png" style='width:15px;height:15px;padding-bottom:70px;' style="padding:5px;"></a>
+  <a href="/{{item.imagen}}" title="{{item.folio}}"><img src="/{{ small.url }}" style="padding:5px"></a>
+  {% endthumbnail %}
+  {% endfor %}
+</div>
+
+<br>
+
+<input class="btn btn-primary button white" type="button" id="slick-toggle" value="Mapas" />
+ 
+  <div id="slickbox" >
+    <table style="float:right;max-width:547px;">
+    <th>Folio Ficha</th>
+    <th>Distancia</th>
+    <th>Municipio</th>
+    <th>Colonia</th>
+    <th>Valor Propuesto</th>
+   {% for x in cercanos %}
+    <tr>
+      
+      <td><a href='/SIAV/simple_ficha/{{x.1}}' target='_blank' >{{x.1}}</a></td>
+      <td>{{x.0}}</td>
+      <td>{{x.4}}</td>
+       <td>{{x.6}}</td>
+      <td>{{x.5|currency}}</td>
+    </tr>
+    {%endfor%}
+   </table>
+   <div id="map_canvas" style="width: 630px; height: 500px;"  ></div>
+ </div>
+
+<div id="file-uploader" style="float:left;padding-top:3px">		
+ <noscript>			
+  <p>Please enable JavaScript to use file uploader.</p>
+  <!-- or put a simple form for upload here -->
+</noscript>         
+</div>
+  <div class="offset1 span9 row-fluid">
+   <table class="table table-striped" id="datos_texto">
+    <tr>
+     <td>Folio : <b>{{ ficha.folio_2 }}</b></td>
+     <td>Region: <b>{{ ficha.region }}</b></td>
+     <td>Colonia: <b>{{ ficha.colonia  }}</b></td>
+     <td>Valuador : <b>{{ ficha.valuador.first_name }} {{ ficha.valuador.last_name }}</b></td>
+   </tr>
+   <tr>		</tr>
+ </table>
+</div>
+<br>
+<br>
+<form action="/SIAV/captura_ficha/{{ficha.folio}}/" method="post" accept-charset="utf-8">
+<!--  <div class="offset1 span11"> -->  
+{% crispy form %} 
+<!-- </div> -->
+<!-- <div class="span12"> -->  
+ <h1>Investigación de Mercado</h1>
+  <br>
+  {{im_formset.management_form }}
+  {% for form in im_formset %}
+  {% crispy form %}
+  {% endfor %}
+  <br>
+  <br>
+   {{vu_formset.management_form }}
+
+  {% for form in vu_formset%}
+  {% crispy form %}
+  {% endfor %}
+<!-- </div> -->
+<!--  <div class="span14"> -->	
+  <br>
+  <br>
+{% crispy valor_propuesto %}
+<!-- </div> -->
+<br>
+<br>
+<!-- <div style="padding-left:900px"> -->  
+ <input class='btn btn-success btn-large'  id="submit-id_submit" type="submit" name="submit" value="Enviar" />
+<!-- </div> -->
+
+
+
+<!-- Modal -->
+<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-body">
+  </div>
+  <div class="modal-footer" height="20px">
+    <button class="btn" data-dismiss="modal" aria-hidden="true">Cerrar</button>
+  </div>
+</div>
+
+
+</form>
+<br>
+<br>
+
+{% endblock %}

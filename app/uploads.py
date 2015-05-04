@@ -37,7 +37,7 @@ def ajax_upload( request,avaluo_id,folio_k ):
             file_contents = SimpleUploadedFile(upload.name, upload.read())
             imagen_avaluo = ImagenAvaluo()
             imagen_avaluo.avaluo_id = avaluo_id
-            imagen_avaluo.FolioK = folio_k
+            imagen_avaluo.Folio = folio_k
             imagen_avaluo.imagen.save(upload.name, file_contents)
             import json
             ret_json = { 'success': 'success',}
@@ -54,14 +54,14 @@ def ajax_upload( request,avaluo_id,folio_k ):
       if (ext == ".png")|(ext == ".jpg")|(ext == ".jpeg")|(ext == ".PNG")|(ext == ".JPG")|(ext == ".JPEG"):
         imagen_avaluo = ImagenAvaluo()
         imagen_avaluo.avaluo_id = avaluo_id
-        imagen_avaluo.FolioK = folio_k
+        imagen_avaluo.Folio = folio_k
         imagen_avaluo.imagen.save(filename.replace(' ','_'), file_contents)
       else:
         archivo_avaluo = ArchivoAvaluo()
         archivo_avaluo.avaluo_id = avaluo_id
-        archivo_avaluo.FolioK = folio_k
+        archivo_avaluo.Folio = folio_k
         archivo_avaluo.file.save(filename.replace(' ','_'), file_contents)
-      a = Avaluo.objects.get(FolioK=folio_k)
+      a = Avaluo.objects.get(Folio=folio_k)
     else:
       is_raw = False
       if len( request.FILES ) == 1:

@@ -28,24 +28,24 @@ def socketio_emit(data):
 @csrf_exempt
 def lanza_notif(tipo,avaluo,user):
     if tipo == 'ALTA':
-        accion = (' dió de alta el avalúo con FolioK ').decode("UTF-8", "ignore")
+        accion = (' dió de alta el avalúo con Folio ').decode("UTF-8", "ignore")
     elif tipo == 'VISITA':
-        accion = (' visitó el avalúo con FolioK ').decode("UTF-8", "ignore")
+        accion = (' visitó el avalúo con Folio ').decode("UTF-8", "ignore")
     elif tipo == 'CAPTURA':
-        accion = (' capturó el avalúo con FolioK ').decode("UTF-8", "ignore")
+        accion = (' capturó el avalúo con Folio ').decode("UTF-8", "ignore")
     elif tipo == 'SALIDA':
-        accion = (' dió salida al avalúo con FolioK ').decode("UTF-8", "ignore")
+        accion = (' dió salida al avalúo con Folio ').decode("UTF-8", "ignore")
     elif tipo == 'CONSULTA_SENCILLA':
-        accion = (' consultó el avalúo con FolioK ').decode("UTF-8", "ignore")
+        accion = (' consultó el avalúo con Folio ').decode("UTF-8", "ignore")
     elif tipo == 'CONSULTA_MASTER':
-        accion = (' editó el avalúo con FolioK ').decode("UTF-8", "ignore")
+        accion = (' editó el avalúo con Folio ').decode("UTF-8", "ignore")
     else:
         accion = 'NULL'
 
     msg = {}
     msg['send_user_id'] = user.id
     #msg['rec_user_id'] = user_to.id  # This events are for all users
-    msg['message'] = (user.username + accion + '<b>' + avaluo.FolioK + '</b>')
+    msg['message'] = (user.username + accion + '<b>' + avaluo.Folio + '</b>')
     data = simplejson.dumps(msg)
 
     #Publica en Redis para generar notificación
@@ -100,7 +100,7 @@ def chat_leido(request,user_leido):
 def get_tolerancia(request,template='home/consultas/tolerancia.html'):
     from django.db import connection, transaction
     cursor = connection.cursor()
-    cursor.execute('SELECT t1.avaluo_id, IFNULL(t3.Cliente, "TOTAL") AS name, COUNT(*), SUM(IF(DATEDIFF(CURDATE(),DATE_ADD(t1.Solicitud,INTERVAL t2.tolerancia DAY)) <= 0,1, 0)) as "= 0", SUM(IF(DATEDIFF(CURDATE(),DATE_ADD(t1.Solicitud,INTERVAL t2.tolerancia DAY)) BETWEEN 1 AND 3,1, 0) )as "< 3", SUM(IF(DATEDIFF(CURDATE(),DATE_ADD(t1.Solicitud,INTERVAL t2.tolerancia DAY)) > 3,1, 0)) as "> 3" FROM siavdb.app_avaluo t1 LEFT JOIN siavdb.app_depto t2 on t1.Depto_id = t2.Depto_id LEFT JOIN siavdb.app_cliente t3 on t2.Cliente_id_id = t3.Cliente_id WHERE t1.Estatus in ("PROCESO","DETENIDO") AND (FACTURA IS NULL OR FACTURA = "")  AND (SALIDA IS NULL ) GROUP BY t3.Cliente WITH ROLLUP;')
+    cursor.execute('SELECT t1.avaluo_id, IFNULL(t3.Cliente, "TOTAL") AS name, COUNT(*), SUM(IF(DATEDIFF(CURDATE(),DATE_ADD(t1.Solicitud,INTERVAL t2.tolerancia DAY)) <= 0,1, 0)) as "= 0", SUM(IF(DATEDIFF(CURDATE(),DATE_ADD(t1.Solicitud,INTERVAL t2.tolerancia DAY)) BETWEEN 1 AND 3,1, 0) )as "< 3", SUM(IF(DATEDIFF(CURDATE(),DATE_ADD(t1.Solicitud,INTERVAL t2.tolerancia DAY)) > 3,1, 0)) as "> 3" FROM siavdb2.app_avaluo t1 LEFT JOIN siavdb2.app_depto t2 on t1.Depto_id = t2.Depto_id LEFT JOIN siavdb2.app_cliente t3 on t2.Cliente_id_id = t3.Cliente_id WHERE t1.Estatus in ("PROCESO","DETENIDO") AND (FACTURA IS NULL OR FACTURA = "")  AND (SALIDA IS NULL ) GROUP BY t3.Cliente WITH ROLLUP;')
     en_tiempo = cursor.fetchall()
     response = render(request,template, locals())
     return response

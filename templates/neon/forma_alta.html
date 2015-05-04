@@ -8,15 +8,16 @@
 <h2>Alta Avalúo</h2>
 {% block content %}		
  {% if formset.errors or formset_sencilla.errors  or forma.errors %}
+ {% for e in forma.errors %}
+ {{e}}
+ {%endfor%}
 <p style="color: red;">Porfavor completa los campos faltantes.</p>
 {% endif %}
 <ul id="tabs" class="nav nav-tabs" data-tabs="tabs">
 	<li class="active">
 		<a href="#individual" data-toggle="tab">Individual</a>
 	</li>
-	<li>
-		<a href="#paquete" data-toggle="tab">Paquete</a>
-	</li>
+
 </ul>
 <br />
 
@@ -39,28 +40,7 @@
 						<br />
 						{% crispy forma %}
 						<br></div>
-					<div class="tab-pane" id="paquete">
-						<h2>Paquete</h2>
-						<br>
-						<form method="post" action="/SIAV/alta_avaluo_paquete/">
-							{% csrf_token %}
-        					{% crispy formset_sencilla %}
-							<br>
-              <br>
-							<h2 id="cant_servicios">1 Servicio</h2>
 
-							<br>
-							<input class="btn btn-success" type="submit" value="Enviar" />
-							<div id="printableArea">
-								{% for form in formset %}
-								<div id="{{ form.prefix }}-row"  class="formset-div-child container" style="padding-bottom:6px; border-bottom:1px dotted #ccc; margin-bottom:6px;" id="form-0-row">{% crispy form %}</div>
-								{% endfor %}
-							</div>
-							{{ formset.management_form}}
-							<br></p>
-					</form>
-
-				</div>
 			</div>
 
 		</div>

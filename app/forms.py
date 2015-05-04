@@ -86,29 +86,45 @@ ANIOS = (
     ('2014', '2014'),
 )
 
+class UserFullName(User):
+    class Meta:
+        proxy = True
+
+    def __unicode__(self):
+        return self.get_full_name()
 
 class AltaAvaluo(ModelForm):
 
-    Referencia = forms.CharField(required=False)
+    Referencia = forms.CharField(required=False, label="Expediente Catastral")
     Calle = forms.CharField()
     NumExt = forms.CharField(label="Num. Ext.", required=False)
     NumInt = forms.CharField(label="Num. Int.", required=False)
     Colonia = forms.CharField()
-    Tipo = forms.ModelChoiceField(required=True, label="Tipo Inmueble",  queryset=Tipo.objects.all())
+    Tipo = forms.ModelChoiceField(queryset=Tipo.objects.filter(is_active='True'),label="Tipo de Bien")
     Municipio = forms.ModelChoiceField(queryset=Municipio.objects.filter(estado_id__is_active='True'))
     Estado = forms.ModelChoiceField(queryset=Estado.objects.filter(is_active='True'))
-    Servicio = forms.ChoiceField(choices=SERVICIOS, label="Tipo Servicio")
+    Servicio = forms.ModelChoiceField(queryset=Servicio.objects.filter(is_active='True'),label="Tipo de Servicio")    
     Estatus = forms.ChoiceField(choices=ESTATUS)
     Prioridad = forms.ChoiceField(choices=PRIORIDAD)
     Depto = forms.ModelChoiceField(queryset=Depto.objects.filter(is_active='True'))
     Solicitud = forms.DateField(label="Fecha Solicitud", widget=forms.DateInput(format='%d/%m/%Y'),  input_formats=['%d/%m/%Y'])
+    Lote_Tipo = forms.CharField(required=False)
+    LatitudG = forms.DecimalField(required=False, label="Lon.G.")
+    LatitudM = forms.DecimalField(required=False, label="Lon.M.",)
+    LatitudS = forms.DecimalField(required=False, label="Lon.S.")
+    LongitudG = forms.DecimalField(required=False, label="Lat.G.")
+    LongitudM = forms.DecimalField(required=False, label="Lat.M.")
+    LongitudS = forms.DecimalField(required=False, label="Lat.S.")  
     Observaciones = forms.CharField(widget=forms.Textarea, required=False)
     Valor = forms.DecimalField(required=False, widget=forms.TextInput())
-    Valuador = forms.ModelChoiceField(queryset=Valuador.objects.filter(is_active='True'))
+    Valuador = forms.ModelChoiceField(queryset=UserFullName.objects.filter(groups__name='Valuadores'))
+    Contacto = forms.ModelChoiceField(queryset=Contacto.objects.filter(is_active='True'),label="Contacto para visita",required=False)
 
     class Meta:
         model = Avaluo
-        exclude = ('avaluo_id', 'FolioK', 'LatitudG', 'LatitudM', 'LatitudS', 'LongitudG', 'LongitudM', 'LongitudS', 'Mterreno', 'Mconstruccion', 'Visita', 'Gastos', 'Importe', 'Salida', 'Pagado', 'Factura','Declat','Declon')
+        exclude = ('avaluo_id','Folio', 
+                   'Visita','Gastos', 'Importe', 'Salida', 'Pagado', 'Factura', 'Prioridad','Valor_Construccion_Concluido','Valor_Terreno_Concluido','Factor_Terreno',
+                   'Factor_Construccion','Valor_Mterreno','Valor_Mconstruccion','Declat','Declon' )
     def clean_Referencia(self):
         return self.cleaned_data['Referencia'] or None
     def __init__(self,  *args,  **kwargs):
@@ -124,16 +140,31 @@ class AltaAvaluo(ModelForm):
                     'Referencia',
                     'Tipo',
                     'Calle',
-                    'NumExt', css_class='col-md-3'),
-                Div(
+                    'NumExt',
                     'NumInt',
+                    'Estatus', css_class='col-md-3'),
+                Div(
+                    'Lote_Tipo',
                     'Colonia',
                     'Estado',
-                    'Municipio', css_class='col-md-3'),
+                    'Municipio',
+                    'Contacto',
+                    'Prioridad', css_class='col-md-3'),
+                Div(
+                    Div(
+                        Div(Field('LatitudG',  css_class='col-md-20 input-small'),  css_class='col-md-4'),
+                        Div(Field('LatitudM',  css_class='col-md-20 input-small'),  css_class='col-md-4'),
+                        Div(Field('LatitudS',  css_class='col-md-20 input-small'),  css_class='col-md-4')),
+                    Div(
+                        Div(Field('LongitudG',  css_class='col-md-20 input-small'),  css_class='col-md-4'),
+                        Div(Field('LongitudM',  css_class='col-md-20 input-small'),  css_class='col-md-4'),
+                        Div(Field('LongitudS',  css_class='col-md-20 input-small'),  css_class='col-md-4')),
+                    css_class='col-md-6'),
                 Div(
                     'Servicio',
-                    'Estatus',
-                    'Prioridad',
+                    'Mterreno',
+                    'Mconstruccion',
+                    
                     'Cliente', css_class='col-md-3'),
                 Div(
                     'Depto',
@@ -156,7 +187,7 @@ class AltaAvaluo(ModelForm):
 ################################
 
 class FormaSencillaPaquete(forms.Form):
-    Referencia = forms.CharField(required=False)
+    Referencia = forms.CharField(required=False, label="Expediente Catastral")
     # Calle = forms.CharField()
     NumExt = forms.CharField(label="Num. Ext.", required=False)
     NumInt = forms.CharField(label="Num. Int.", required=False)
@@ -213,7 +244,7 @@ class FormaSencillaPaquete(forms.Form):
         self.fields['Depto'] = forms.ModelChoiceField(queryset=Depto.objects.filter(is_active='True'))
 
 class FormaPaquete(forms.Form):
-    Referencia = forms.CharField(required=False)
+    Referencia = forms.CharField(required=False, label="Expediente Catastral")
     Calle = forms.CharField(required=True)
     NumExt = forms.CharField(label="Num. Ext.", required=False)
     NumInt = forms.CharField(label="Num. Int.", required=False)
@@ -252,19 +283,31 @@ class VisitaAvaluo(ModelForm):
     NumExt = forms.CharField( label="Num. Ext.", required=False)
     NumInt = forms.CharField( label="Num. Int.", required=False)
     Estatus = forms.ChoiceField( choices=ESTATUSV)
-    Visita = forms.DateField(required=False, label="Fecha Visita", widget=forms.DateInput(format='%d/%m/%Y'),  input_formats=['%d/%m/%Y'])
+    Visita = forms.DateField(label="Fecha Visita", widget=forms.DateInput(format='%d/%m/%Y'),  input_formats=['%d/%m/%Y'])
+    Tipo = forms.ModelChoiceField(queryset=Tipo.objects.filter(is_active='True'),label="Tipo de Bien")
+    Lote_Tipo = forms.CharField( label="Tipo de Lote", required=False)
     LatitudG = forms.DecimalField(required=False, label="Lon.G.")
     LatitudM = forms.DecimalField(required=False, label="Lon.M.",)
     LatitudS = forms.DecimalField(required=False, label="Lon.S.")
     LongitudG = forms.DecimalField(required=False, label="Lat.G.")
     LongitudM = forms.DecimalField(required=False, label="Lat.M.")
     LongitudS = forms.DecimalField(required=False, label="Lat.S.")
-    Contacto = forms.CharField( label="Contacto", required=False)
+    Mterreno = forms.DecimalField(required=False, label="Mts. Terreno")
+    Mconstruccion = forms.DecimalField(required=False, label="Mts. Construcción")
+    Factor_Terreno = forms.DecimalField( label="Fct.", required=True)
+    Factor_Construccion = forms.DecimalField( label="Fct.", required=True)
+    Valor_Mterreno = forms.DecimalField( label="Val.M.Terreno", required=True)
+    Valor_Mconstruccion = forms.DecimalField( label="Val.M.Constr.", required=True)
+    Valor_Terreno_Concluido = forms.DecimalField( label="Va.T.Concluido", required=True)
+    Valor_Construccion_Concluido = forms.DecimalField( label="Val.C.Concluido", required=True)
     Observaciones = forms.CharField(widget=forms.Textarea, required=False)
 
     class Meta:
         model = Avaluo
-        exclude = ('avaluo_id', 'Solicitud', 'FolioK', 'Referencia', 'Prioridad', 'Colonia', 'Municipio', 'Estado', 'Servicio', 'Salida', 'Factura', 'Cliente', 'Depto', 'Valuador', 'Solicitud', 'Mterreno', 'Mconstruccion', 'Valor', 'Gastos', 'Importe', 'Pagado','Declat','Declon')
+        exclude = ('avaluo_id', 'Solicitud', 'Folio', 'Referencia', 'Prioridad', 'Colonia', 
+                   'Municipio', 'Estado', 'Servicio', 'Salida', 'Factura', 'Cliente', 'Depto', 
+                   'Valuador', 'Solicitud', 'Valor', 'Gastos', 
+                   'Importe', 'Pagado','Contacto','Declat','Declon')
     def clean_Referencia(self):
         return self.cleaned_data['Referencia'] or None
     def __init__(self,  *args,  **kwargs):
@@ -279,28 +322,43 @@ class VisitaAvaluo(ModelForm):
                     'Calle',
                     'NumExt',
                     'NumInt',
+                    'Tipo',
                     css_class='col-md-3'),
                 Div(
                     'Visita',
                     'Estatus',
-                    'Tipo',
+                    'Mterreno',
+                    'Mconstruccion',
                     css_class='col-md-3'),
                 Div(
                     Div(
-                        Div(Field('LatitudG',  css_class='col-md-20 input-large form-control'),  css_class='col-md-4'),
-                        Div(Field('LatitudM',  css_class='col-md-16 input-medium form-control'),  css_class='col-md-4'),
-                        Div(Field('LatitudS',  css_class='col-md-16 input-medium form-control'),  css_class='col-md-4')),
+                        Div(Field('LongitudG',  css_class='span16 input-medium'),  css_class='col-md-4'),
+                        Div(Field('LongitudM',  css_class='span16 input-medium'),  css_class='col-md-4'),
+                        Div(Field('LongitudS',  css_class='span16 input-medium'),  css_class='col-md-4')),
                     Div(
-                        Div(Field('LongitudG',  css_class='col-md-16 input-medium form-control'),  css_class='col-md-4'),
-                        Div(Field('LongitudM',  css_class='col-md-16 input-medium form-control'),  css_class='col-md-4'),
-                        Div(Field('LongitudS',  css_class='col-md-16 input-medium form-control'),  css_class='col-md-4')),
-                    'Contacto',
+                        Div(Field('LatitudG',  css_class='span20 input-large'),  css_class='col-md-4'),
+                        Div(Field('LatitudM',  css_class='span16 input-medium'),  css_class='col-md-4'),
+                        Div(Field('LatitudS',  css_class='span16 input-medium'),  css_class='col-md-4')),
+                     Div(
+                        Div(Field('Valor_Mterreno',  css_class='col-md-4'),  css_class='col-md-4'),
+                        Div(Field('Factor_Terreno',  css_class='col-md-2'),  css_class='col-md-3'),
+                        Div(HTML("""<h3>=</h3>"""),  css_class='col-md-1'),
+                        Div(Field('Valor_Terreno_Concluido',  css_class='col-md-5'),  css_class='col-md-4')),
+                     Div(
+                        Div(Field('Valor_Mconstruccion',  css_class='col-md-5'),  css_class='col-md-4'),
+                        Div(Field('Factor_Construccion',  css_class='col-md-1'),  css_class='col-md-3'),
+                        Div(HTML("""<h3>=</h3>"""),  css_class='col-md-1'),
+                        Div(Field('Valor_Construccion_Concluido',  css_class='col-md-5'),  css_class='col-md-4')),
                     css_class='col-md-6'), css_class='row-fluid'),
             'Observaciones',
             ButtonHolder(
                 Submit('submit',  'Enviar',  css_class='btn-success')
             ))
         super(VisitaAvaluo,  self).__init__(*args,  **kwargs)
+        for k, field in self.fields.items():
+            if 'required' in field.error_messages:
+                field.error_messages['required'] = ''
+
 
 
 class CapturaAvaluo(ModelForm):
@@ -311,28 +369,30 @@ class CapturaAvaluo(ModelForm):
     NumInt = forms.CharField(label="Num. Int.", required=False)
     Colonia = forms.CharField()
     Municipio = forms.ModelChoiceField( queryset=Municipio.objects.filter(estado_id__is_active='True'))
+    Servicio = forms.ModelChoiceField( queryset=Servicio.objects.filter(is_active='True'))
     Estado = forms.ModelChoiceField( queryset=Estado.objects.filter(is_active='True'))
+    Tipo = forms.ModelChoiceField(queryset=Tipo.objects.filter(is_active='True'),label="Tipo de Bien")
     Estatus = forms.ChoiceField(choices=ESTATUS)
-    Prioridad = forms.ChoiceField(choices=PRIORIDAD)
-    Referencia = forms.CharField(required=False)
+    #Prioridad = forms.ChoiceField(choices=PRIORIDAD)
+    Referencia = forms.CharField(required=False, label="Expediente Catastral")
     Solicitud = forms.DateField(label="Fecha Solicitud", widget=forms.DateInput(format='%d/%m/%Y'),  input_formats=['%d/%m/%Y'])
-    Mterreno = forms.DecimalField(required=False, widget=forms.TextInput())
-    Mconstruccion = forms.DecimalField(required=False, widget=forms.TextInput())
+    Mterreno = forms.DecimalField(required=False)
+    Mconstruccion = forms.DecimalField(required=False)
     LatitudG = forms.DecimalField(required=False, label="Lon.G.")
     LatitudM = forms.DecimalField(required=False, label="Lon.M.")
     LatitudS = forms.DecimalField(required=False, label="Lon.S.")
     LongitudG = forms.DecimalField(required=False, label="Lat.G.")
     LongitudM = forms.DecimalField(required=False, label="Lat.M.")
     LongitudS = forms.DecimalField(required=False, label="Lat.S.")
-    #Valor = forms.DecimalField(required=False)
-    #Gastos = forms.DecimalField(required=False)
-    #Importe = forms.DecimalField(required=False)
+    Valor = forms.DecimalField(required=True,  widget=forms.TextInput())
+    Gastos = forms.DecimalField(required=False,  widget=forms.TextInput())
+    Importe = forms.DecimalField(required=False,  widget=forms.TextInput())
     Observaciones = forms.CharField(widget=forms.Textarea, required=False)
-    Valuador = forms.ModelChoiceField(queryset=Valuador.objects.filter(is_active='True'))
+   # Valuador = forms.ModelChoiceField(queryset=Valuador.objects.filter(is_active='True'))
 
     class Meta:
         model = Avaluo
-        exclude = ('Salida', 'Visita', 'Pagado', 'Cliente', 'Depto', 'Factura', 'FolioK','Valor','Gastos','Importe','Declat','Declon')
+        exclude = ('Salida', 'Visita', 'Pagado', 'Cliente', 'Depto', 'Factura', 'Folio','Valuador','Declat','Declon','Prioridad')
     def clean_Referencia(self):
         return self.cleaned_data['Referencia'] or None
     def __init__(self,  *args,  **kwargs):
@@ -349,48 +409,45 @@ class CapturaAvaluo(ModelForm):
                     'NumExt',
                     'NumInt',
                     'Colonia',
-                    'Estado',
+                    
                     css_class='col-md-3'),
                 Div(
                     'Municipio',
+                    'Estado',
                     'Servicio',
                     'Tipo',
                     'Estatus',
-                    'Prioridad',
-                    'Valuador',
+                    #'Prioridad',
+                    #'Valuador',
                     css_class='col-md-3'),
                 Div(
                     Div(
-                        Div(Field('LatitudG',  css_class='col-md-20 input-large'),  css_class='col-md-4'),
-                        Div(Field('LatitudM',  css_class='col-md-16 input-medium'),  css_class='col-md-4'),
-                        Div(Field('LatitudS',  css_class='col-md-16 input-medium'),  css_class='col-md-4')),
-                    Div(
-                        Div(Field('LongitudG',  css_class='col-md-16 input-medium'),  css_class='col-md-4'),
-                        Div(Field('LongitudM',  css_class='col-md-16 input-medium'),  css_class='col-md-4'),
-                        Div(Field('LongitudS',  css_class='col-md-16 input-medium'),  css_class='col-md-4')),
-                    css_class='col-md-6'),
+                        Div(Field('LongitudG',  css_class='span16 input-medium'),  css_class='col-md-4'),
+                        Div(Field('LongitudM',  css_class='span16 input-medium'),  css_class='col-md-4'),
+                        Div(Field('LongitudS',  css_class='span16 input-medium'),  css_class='col-md-4')),
+                    Div( 
+                        Div(Field('LatitudG',  css_class='span20 input-large'),  css_class='col-md-4'),
+                        Div(Field('LatitudM',  css_class='span16 input-medium'),  css_class='col-md-4'),
+                        Div(Field('LatitudS',  css_class='span16 input-medium'),  css_class='col-md-4')),
+                    css_class='col-md-4'),
                 Div('Solicitud',
                     'Mterreno',
                     'Mconstruccion',
-                    css_class='col-md-4'),
+                    css_class='col-md-3'),
                 Div(
-                    #'Valor',
-                    #'Gastos',
-                    #'Importe',
-                    css_class='col-md-4'),
-                'Observaciones',
+                    'Valor',
+                    'Gastos',
+                    'Importe',
+                    css_class='col-md-3'),
                 css_class='row-fluid'),
-            
+            'Observaciones',
             ButtonHolder(
                 Submit('submit',  'Enviar',  css_class='btn-success')
             ))
         super(CapturaAvaluo,  self).__init__(*args,  **kwargs)
-        if self.instance:
-            estado = self.instance.Estado
-        self.fields['Municipio'] = forms.ModelChoiceField(queryset=Municipio.objects.filter(estado_id__is_active='True',estado_id=estado))
-
+        self.fields['Municipio'] = forms.ModelChoiceField(queryset=Municipio.objects.filter(estado_id__is_active='True'))
 class SalidaAvaluo(ModelForm):
-    Referencia = forms.CharField(required=True)
+    Referencia = forms.CharField(required=True, label="Expediente Catastral")
     Mterreno = forms.DecimalField(required=True, widget=forms.TextInput())
     Gastos = forms.DecimalField(required=True, widget=forms.TextInput())
     Mconstruccion = forms.DecimalField(required=True, widget=forms.TextInput())
@@ -401,7 +458,7 @@ class SalidaAvaluo(ModelForm):
 
     class Meta:
         model = Avaluo
-        fields = ('Mterreno', 'Mconstruccion', 'Observaciones', 'Salida', 'Importe', 'Referencia','Valor','Gastos')
+        fields = ('Mterreno', 'Mconstruccion', 'Observaciones', 'Salida', 'Importe', 'Referencia','Valor','Gastos','Factura',)
     def clean_Referencia(self):
         return self.cleaned_data['Referencia'] or None
     def __init__(self,  *args,  **kwargs):
@@ -419,6 +476,7 @@ class SalidaAvaluo(ModelForm):
                 Div('Solicitud',
                     'Mterreno',
                     'Mconstruccion',
+                    'Factura',
                     css_class='col-md-4'),
                 Div('Valor',
                     'Importe',
@@ -434,8 +492,8 @@ class SalidaAvaluo(ModelForm):
 
 
 class FormaConsultaMaster(ModelForm):
-    FolioK = forms.CharField(required=False)
-    Referencia = forms.CharField(required=False)
+    FolioK = forms.CharField(required=False, label="Folio")
+    Referencia = forms.CharField(required=False, label="Expediente Catastral")
     Calle = forms.CharField(required=False)
     #NumExt = forms.CharField(label="Num. Ext.", required=False)
     #NumInt = forms.CharField(label="Num. Int.", required=False)
@@ -522,7 +580,7 @@ class FormaConsultaMaster(ModelForm):
 
 class RespuestaConsultaMaster(ModelForm):
     FolioK = forms.CharField( required=False)
-    Referencia = forms.CharField(required=False)
+    Referencia = forms.CharField(required=False, label="Expediente Catastral")
     Calle = forms.CharField( required=False)
     NumExt = forms.CharField( label="Num. Ext.", required=False)
     NumInt = forms.CharField( label="Num. Int.", required=False)
