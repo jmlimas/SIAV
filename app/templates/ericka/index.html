@@ -83,20 +83,54 @@
                                  <div id="side-menu" class="remove">
                                     <ul class="nav home-nav navbar-nav navbar-right" id="top-nav">
                                         <li class="active">
+                                            {% if request.session.lang == 'es'%}
                                             <a href="#slides">Inicio</a>
+                                            {% else %}
+                                            <a href="#slides">Home</a>
+                                            {% endif %}
                                         </li>
+
                                         <li>
+                                            {% if request.session.lang == 'es'%}
                                             <a href="#about">Quiénes Somos</a>
+                                            {% else %}
+                                            <a href="#about">About Us</a>
+                                            {% endif %}
                                         </li>
                                         <li>
+                                            {% if request.session.lang == 'es'%}
                                             <a href="#services">Servicios</a>
+                                            {% else %}
+                                            <a href="#services">Services</a>
+                                            {% endif %}
                                         </li>
                                         <li>
                                             <a href="#blog">Blog</a>
                                         </li>
                                          <li>
+                                            {% if request.session.lang == 'es'%}
                                             <a href="#contact-section" class="external">Contacto</a>
+                                            {% else %}
+                                            <a href="#contact-section" class="external">Contact us</a>
+                                            {% endif %}
                                          </li>
+                                        <li class="btn-group">
+                                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                                {% if request.session.lang == 'es'%}
+                                                Idioma
+                                                {% else %}
+                                                Language
+                                                {% endif %}
+                                                <span class="caret"></span>
+                                            </a>
+                                            <ul class="dropdown-menu">
+                                                {% if request.session.lang == 'es'%}
+                                                <li><a href="/language_session"><img style="width:20px" src="{{STATIC_URL}}/img/united_states_of_america_round_icon_64.png" />  English</a></li>
+                                                {% else %}
+                                                <li><a href="/language_session"><img style="width:20px" src="{{STATIC_URL}}/img/mexico_640.png" />  Español</a></li>
+                                                {% endif %}
+                                            </ul>
+                                        </li>
                                      </ul>
                                 </div>
                                 <!--end menu links -->
@@ -111,11 +145,17 @@
             </div>
             <!-- end nav menu -->
             <!-- services section -->
+
             <section id="services" class="space slide">
+
                 <div class="container">
                     <div class="row">
                         <div class="col-sm-8 col-sm-offset-2 client-intro text-center">
+                            {% if request.session.lang == 'es'%}
                             <h1 class="section-head">Nuestros <strong>Servicios</strong></h1>
+                            {% else %}
+                             <h1 class="section-head">Our <strong>Services</strong></h1>
+                            {% endif %}
 <!--                             <hr class="" style="width:10%;">
  -->                        </div>
                      </div>
@@ -126,9 +166,15 @@
                             <article>
                                 <div class="services-box">
                                     <img src="{{ STATIC_URL }}/CSS/theme_images/network1.png" alt="">
+                                    {% if request.session.lang == 'es'%}
                                     <h3>Administración de Procesos de Negocio</h3>
                                     <p>A través de las herramientas tecnológicas más avanzadas te ayudamos en el desarrollo de tus procesos de negocio. <!-- Realizamos análisis, desarrollo, implmentación y despliegue de nuevos procesos para crear nuevos procesos u optimizar tus procesos existentes. --></p>
                                     <!-- <p><a href="#" class="btn">View More</a></p> -->
+                                    {% else %}
+                                    <h3>Business Process Management</h3>
+                                    <p>We help you develop business processes from scratch. Using the most advanced technology on the market. <!-- Realizamos análisis, desarrollo, implmentación y despliegue de nuevos procesos para crear nuevos procesos u optimizar tus procesos existentes. --></p>
+                                    <!-- <p><a href="#" class="btn">View More</a></p> -->
+                                    {% endif %}
                                 </div>
                             </article>
                         </div>
@@ -137,9 +183,15 @@
                             <article>
                                 <div class="services-box">
                                     <img src="{{ STATIC_URL }}/CSS/theme_images/desktop.png" alt="">
+                                    {% if request.session.lang == 'es'%}
                                     <h3>Diseño y Desarrollo Web</h3>
                                     <p>Realizamos desarrollo web ágil y a la medida. Desarrollamos desde páginas web sencillas hasta sistemas transaccionales complejos.</p>
                                     <!-- <p><a href="#" class="btn">View More</a></p> -->
+                                    {% else %}
+                                     <h3>Web Design and Development</h3>
+                                    <p>Agile and tailored development for your business. From simple websites to transactional fully customizable systems.</p>
+                                    <!-- <p><a href="#" class="btn">View More</a></p> -->                                   
+                                    {% endif %}
                                 </div>
                             </article>
                         </div>
@@ -148,9 +200,15 @@
                             <article>
                                 <div class="services-box">
                                     <img src="{{ STATIC_URL }}/CSS/theme_images/shopping66.png" alt="">
+                                    {% if request.session.lang == 'es'%}
                                     <h3>Comercio Electrónico</h3>
                                     <p>¿Deseas establecer una tienda en línea? Nosotros te ayudamos a que sea una realidad para que puedas comercializar tus productos.</p>
                                     <!-- <p><a href="#" class="btn">View More</a></p> -->
+                                    {% else %}
+                                    <h3>E-commerce</h3>
+                                    <p>Are you planning on starting an online store? We help you make it a reality so you can focus on marketing your products.</p>
+                                    <!-- <p><a href="#" class="btn">View More</a></p> -->
+                                    {% endif %}
                                 </div>
                             </article>
                         </div>
@@ -165,9 +223,15 @@
                 <div class="container">
                     <div class="row">
                         <div class=" col-sm-8 col-sm-offset-2 client-intro text-center">
+                            {% if request.session.lang == 'es'%}
                             <h1 class="section-head">Sobre <strong>nosotros</strong></h1>
 <!--                             <hr class="style" style="width:13%;">
  -->                            <p>Somos una empresa joven fundada en Monterrey, Nuevo León y buscamos proveer soluciones eficientes basadas en tecnología. </p>
+                            {% else %}
+                          <h1 class="section-head">About <strong>Us</strong></h1>
+<!--                             <hr class="style" style="width:13%;">
+ -->                            <p>We are a young startup founded in Monterrey, Mexico seeking to provide technology based solutions to empower your business.</p>
+                            {% endif %}
                         </div>
                     </div>
                     <div class="row">
@@ -175,25 +239,48 @@
                         <div class="col-sm-12 tabbed animated" data-animation="fadeIn">
                             <!-- tabs headers -->
                             <ul class="nav nav-tabs">
+                                {% if request.session.lang == 'es'%}
                                 <li class="active"><a href="#philosophy" data-toggle="tab">Filosofía</a></li>
                                 <li><a href="#history" data-toggle="tab">Historia</a></li>
                                 <li><a href="#knowledge" data-toggle="tab">Conocimiento</a></li>
                                 <li><a href="#experience" data-toggle="tab">Experiencia</a></li>
+                                {% else %}
+                                <li class="active"><a href="#philosophy" data-toggle="tab">Philosophy</a></li>
+                                <li><a href="#history" data-toggle="tab">History</a></li>
+                                <li><a href="#knowledge" data-toggle="tab">Knowledge</a></li>
+                                <li><a href="#experience" data-toggle="tab">Experience</a></li>
+                                {% endif %}
                             </ul>
                             <!-- end tabs headers -->
                             <!-- Tab panels -->
                             <div class="tab-content">
                                 <div class="tab-pane active" id="philosophy">
+                                    {% if request.session.lang == 'es'%}
                                     <p>Somos perfeccionistas, buscamos siempre cumplir con los más altos estándares de calidad que tu negocio requiere.</p>
+                                    {% else %}
+                                    <p>We are perfectionists, always looking forward to meet the requirements your business demands.</p>                                    
+                                    {% endif %}
                                 </div>
                                 <div class="tab-pane" id="knowledge">
+                                    {% if request.session.lang == 'es'%}
                                     <p>Utilizamos las tecnologías más avanzadas en desarrollo web y contamos con un equipo altamente capacitado que nos permite satisfacer las necesidades del mercado con desarrollos de calidad. </p>
+                                    {% else %}
+                                      <p>We develop using the most advanced technology in web development, such as AngularJS, Python and Django.  </p>                                  
+                                    {% endif %}
                                 </div>
                                 <div class="tab-pane" id="experience">
+                                    {% if request.session.lang == 'es'%}
                                     <p>Tenemos experiencia en diseño y desarrollo web. Alluxi ha desarrollado proyectos exitosos para empresas inmobiliarias en Monterrey N.L.</p>
+                                    {% else %}
+                                    <p>We have experience in web design and development. Alluxi has developed diverse proyects for enterprises in Mexico.</p>
+                                    {% endif %}
                                 </div>
                                 <div class="tab-pane" id="history">
+                                    {% if request.session.lang == 'es'%}
                                     <p>Alluxi nace el 2014 en Monterrey Nuevo León.</p>
+                                    {% else %}
+                                    <p>Alluxi was born on year 2014 in Monterrey, Nuevo León.</p>
+                                    {% endif %}
                                 </div>
                             </div>
                             <!-- end tab panels -->
@@ -213,8 +300,13 @@
                     <div class="row">
                         <!-- col 8 -->
                         <div class="col-md-8 col-md-offset-2 text-center">
+                            {% if request.session.lang == 'es'%}
                             <h1 class="section-head">CÓMO <strong>TRABAJAMOS</strong></h1>
                             <hr class="style" style="width:18%;">
+                            {% else %}
+                            <h1 class="section-head">HOW <strong>WE WORK</strong></h1>
+                            <hr class="style" style="width:18%;">
+                            {% endif %}
                         </div>
                         <!-- end col 8 offset -->
                     </div>
@@ -226,25 +318,41 @@
                         <div class="col-md-3 margin20">
                             <div class="process-box">
                                 <i class="fa fa-lightbulb-o"></i>
+                                {% if request.session.lang == 'es'%}
                                 <h3>Lluvia de Ideas</h3>
+                                {% else %}
+                                <h3>Brainstorming</h3>
+                                {% endif %}
                             </div><!--process box-->
                         </div><!--process col-->
                         <div class="col-md-3 margin20">
                             <div class="process-box">
                                 <i class="fa fa-pencil"></i>
+                                {% if request.session.lang == 'es'%}
                                 <h3>Análisis y Diseño</h3>
+                                {% else %}
+                                <h3>Analysis and Design</h3>
+                                {% endif %}
                             </div><!--process box-->
                         </div><!--process col-->
                         <div class="col-md-3 margin20">
                             <div class="process-box">
                                 <i class="fa fa-code"></i>
+                                {% if request.session.lang == 'es'%}
                                 <h3>Desarrollo</h3>
+                                {% else %}
+                                <h3>Development</h3>
+                                {% endif %}
                             </div><!--process box-->
                         </div><!--process col-->
                         <div class="col-md-3 margin20">
                             <div class="process-box">
                                 <i class="fa fa-plane"></i>
+                                {% if request.session.lang == 'es'%}
                                 <h3>Lanzamiento</h3>
+                                {% else %}
+                                <h3>Launching</h3>
+                                {% endif %}
                             </div><!--process box-->
                         </div><!--process col-->
                     </div>
@@ -257,7 +365,11 @@
                 <div class="container">
                     <div class="row">
                         <div class=" col-sm-8 col-sm-offset-2 client-intro text-center">
+                            {% if request.session.lang == 'es'%}
                             <h1 class="section-head">Nos <strong>distingue</strong></h1>
+                            {% else %}
+                            <h1 class="section-head">What makes us<strong> different</strong></h1>
+                            {% endif %}
 <!--                             <hr class="style" style="width:10%;">
  -->                        </div>
                     </div>
@@ -267,16 +379,26 @@
                         <div class="feature feature-left animated col-sm-6 col-xs-6 col-ts-12" data-animation="fadeInLeft">
                             <span class="circular"><i class="fa fa-rocket"></i></span>
                             <div class="features-box">
+                                {% if request.session.lang == 'es'%}
                                 <h3>Desarrollo Ágil</h3>
                                 <p>Desarrollamos de manera ágil prototipos funcionales para nuestros clientes hasta llegar al producto final.</p>
+                                {% else %}
+                                <h3>Agile Development</h3>
+                                <p>We develop iterating over fully functional prototypes for our clients unitil devilering the final product.</p>
+                                {% endif %}
                             </div>
                         </div>
                         <!--col 6 -->
                         <div class="feature animated feature-right col-sm-6 col-xs-6 col-ts-12" data-animation="fadeInRight">
                             <span class="circular"><i class="fa fa-users"></i></span>
                             <div class="features-box">
+                                {% if request.session.lang == 'es'%}
                                 <h3>Interacción con el Cliente</h3>
                                 <p>Mantenemos siempre al cliente informado del avance de su desarrollo.</p>
+                                {% else %}
+                                <h3>Customer interaction</h3>
+                                <p>We keep our clients informed of their proyect progress. Giving the opportunity to adjust it to their needs.</p>
+                                {% endif %}
                             </div>
                         </div>
                     </div>
@@ -327,10 +449,17 @@
                     <div class="row">
                         <!-- col 8 -->
                         <div class="col-md-8 col-md-offset-2 text-center">
+                            {% if request.session.lang == 'es'%}
                             <h1 class="section-head"> <strong>CONTACTO</strong></h1>
                             <hr class="style" style="width:18%;">
                             <p>Nos encantaría saber de ti. ¿Quieres trabajar con nosotros? </p>
                             <p>Compártenos un poco de información sobre tu proyecto y te contactaremos lo antes posible.</p>
+                            {% else %}
+                            <h1 class="section-head">CONTACT <strong>US</strong></h1>
+                            <hr class="style" style="width:18%;">
+                            <p>We would love to hear from you. Have an idea you would like to share? </p>
+                            <p>Share your proyect with is about and we will contact you shortly.</p>
+                            {% endif %}
                         </div>
                         <!-- end col 8 offset -->
                     </div>
@@ -351,14 +480,22 @@
                                 <!-- col 3 -->
                                 <div class="col-sm-3 col-xs-6 text-center">
                                     <p><span class="circular"><i class="fa fa-map-marker fa-2x"></i></span></p>
+                                    {% if request.session.lang == 'es'%}
                                     <h4>Dirección</h4>
-                                    <p>Miguel Nieto,442 Sur</p>
+                                    {% else %}
+                                    <h4>Address</h4>
+                                    {% endif %}
+                                    <p>América 327 Sur, Centro </p>
                                 </div>
                                 <!-- end col 3 -->
                                 <!-- col 3 -->
                                 <div class="col-sm-3 col-xs-6 text-center">
                                     <p><span class="circular"><i class="fa fa-mobile fa-2x"></i></span></p>
+                                     {% if request.session.lang == 'es'%}
                                     <h4>Teléfono</h4>
+                                    {% else %}
+                                    <h4>Phone</h4>
+                                    {% endif %}
                                     <p>+52-(811)-500-1600</p>
                                 </div>
                                 <!-- col 3 -->
@@ -409,7 +546,11 @@
                                 <!-- end col 6-->
                                 <!-- col 12 -->
                                 <div class="actions col-md-12 text-center">
+                                    {% if request.session.lang == 'es'%}
                                     <input type="submit" value="Enviar" name="submit" id="submit" class="btn" title="" />
+                                    {% else %}
+                                    <input type="submit" value="Send" name="submit" id="submit" class="btn" title="" />
+                                    {% endif %}
                                 </div>
                                 <!-- end col 12 --> 
                                 {% csrf_token %}        
@@ -430,7 +571,11 @@
                			<div class="col-sm-12 text-center space">
 <!--                 			<a id="back-top" href="#top"><i class="fa fa-arrow-up fa-2x"></i></a>
  -->                			<h2>Alluxi</h2>
+                            {% if request.session.lang == 'es'%}
                 			<p>Todos los derechos reservados. Copyright ©2015.</p>
+                            {% else %}
+                            <p>Alluxi all rights reserved. Copyright ©2015.</p>
+                            {%endif%}
                             <!-- social-icons -->
             				<div class="footer-social">
                    				<ul class="socials list-unstyled">
@@ -467,6 +612,15 @@
             <script type="text/javascript" src="{{ STATIC_URL }}JS/theme_js/modernizr.min.js"></script>
       		<script type="text/javascript" src="{{ STATIC_URL }}JS/theme_js/main.js"></script>
             <script type="text/javascript" src="http://www.skypeassets.com/i/scom/js/skype-uri.js"></script>
+            <script>
+            {% if request.session.lang == 'en'%}
+            $("#id_Nombre").attr("placeholder", "Name");
+            $("#id_Correo").attr("placeholder", "Email");
+            $("#id_Telefono").attr("placeholder", "Phone");
+            $("#id_Mensaje").attr("placeholder", "Write your message here...");
+
+            {% endif %}
+            </script>
         </div>
 	</body>
 </html>

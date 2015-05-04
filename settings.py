@@ -72,6 +72,7 @@ DATABASES = {
     }   
 }
 
+LANGUAGE_SESSION_KEY = 'es'
 
 ROOT_URLCONF = '/SIAV/'
 
@@ -126,7 +127,7 @@ MEDIA_URL = os.path.dirname("media")
 STATIC_ROOT = "/home/SIAV/app/static"
 # URL prefix for static files.
 # Example: "http://media.lawrence.com/static/"
-STATIC_URL = 'http://alluxi.mx:8000/'
+STATIC_URL = 'http://alluxi:8000/'
 #STATIC_URL = 'http://localhost:100/'
 # Url para desarrollo
 #STATIC_URL = '/static/'
@@ -167,6 +168,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     #'debug_toolbar.middleware.DebugToolbarMiddleware',
     #'django_pdb.middleware.PdbMiddleware',
     # Uncomment the next line for simple clickjacking protection:

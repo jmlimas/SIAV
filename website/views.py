@@ -11,6 +11,21 @@ import requests
 import sqlite3
 import re
 from django.conf import settings
+
+#   Cambia idioma de las vistas
+def language_session (request):
+	if not request.session['lang']:
+		request.session['lang'] = 'es'
+		return redirect('index')
+	elif request.session['lang'] == 'es':
+		request.session['lang'] = 'en'
+		return redirect('index')
+	elif request.session['lang'] == 'en':
+		request.session['lang'] = 'es'
+		return redirect('index')
+
+
+
 # Create your views here.
 @csrf_exempt
 def index(request):  
