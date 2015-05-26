@@ -50,7 +50,7 @@ Email:
 * 
 
 
-# Screenthots
+# Screenshots
 
 ![](http://c1.staticflickr.com/9/8817/17941900958_4b46027a42_h.jpg)
 ![](http://c4.staticflickr.com/8/7673/18126232132_3c429452a7_b.jpg)
