@@ -22,7 +22,7 @@ Entre sus características están:
 * Calendario de eventos
 * KPI e Indicadores de Negocio
 
-Compatible con **Django 1.7+**
+Compatible con **Django 1.8+**
 
 Requerimientos:
 
@@ -37,7 +37,7 @@ Javascript:
 * [Fineuploader 5](http://fineuploader.com/)
 * [Autonumeric](http://www.decorplanit.com/plugin/)
 
- BD:
+BD:
 * [MySQL](http://www.mysql.com/)
 * [Redis](http://redis.io/)
 
