@@ -53,6 +53,6 @@ Email:
 # Screenthots
 
 ![](http://c1.staticflickr.com/9/8817/17941900958_4b46027a42_h.jpg)
-![](http://c4.staticflickr.com/8/7673/18126232132_3c429452a7_h.jpg)
+![](http://c4.staticflickr.com/8/7673/18126232132_3c429452a7_n.jpg)
 ![](http://c1.staticflickr.com/9/8772/17510742683_2600877568_h.jpg)
 
