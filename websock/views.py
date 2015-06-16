@@ -24,7 +24,7 @@ def socketio_emit(data):
     r = redis.StrictRedis(host='127.0.0.1', port=6379, db=0)
     r.publish('chat', data) 
 
-#   Enviar notificación de evento a usuarios 
+#   Enviar notificacion de evento a usuarios 
 @csrf_exempt
 def lanza_notif(tipo,avaluo,user):
     if tipo == 'ALTA':

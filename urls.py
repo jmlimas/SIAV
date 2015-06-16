@@ -19,10 +19,13 @@ admin.autodiscover()
 
 v1_api = Api(api_name='v1')
 v1_api.register(AvaluoResource())
+v1_api.register(UserResource())
 v1_api.register(DeptoResource())
 v1_api.register(ImagenAvaluoResource())
 v1_api.register(EstadisticoAsignaResource())
 v1_api.register(EventoResource())
+v1_api.register(EventoCalendarioResource())
+v1_api.register(FacturaResource())
     # Examples:
     # url(r'^$', 'SIAV.views.home', name='home'),
     #url(r'^SIAV/', include('SIAV.foo.urls')),
@@ -43,6 +46,7 @@ urlpatterns = patterns(
     '', url(r'^SIAV/ajax_upload/(\w*\d+)/(\@*\w*\d+)/$', 'app.uploads.ajax_upload', name="ajax_upload"),
 
     url(r'^oauth2/', include('provider.oauth2.urls', namespace = 'oauth2')),
+    #url(r'^o/', include('oauth2_provider.urls', namespace='oauth2_provider')),
     url(r'^grappelli/', include('grappelli.urls')),
     url(r'^api/', include(v1_api.urls)),
     url(r'^SIAV/admin/', include(admin.site.urls)),

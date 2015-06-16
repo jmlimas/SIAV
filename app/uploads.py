@@ -38,13 +38,13 @@ def ajax_upload( request,avaluo_id,folio_k ):
             imagen_avaluo = ImagenAvaluo()
             imagen_avaluo.avaluo_id = avaluo_id
             imagen_avaluo.FolioK = folio_k
-            imagen_avaluo.imagen.save(upload.name, file_contents)
+            imagen_uavaluo.imagen.save(upload.name, file_contents)
             import json
             ret_json = { 'success': 'success',}
             return HttpResponse( json.dumps( ret_json ) )
           else:
-              filename = request.GET['qqfile']
-              file_contents = SimpleUploadedFile(filename, request.body)
+            upload = request.FILES.values( )[ 0 ]
+            file_contents = SimpleUploadedFile(upload.name, upload.read())
       except KeyError: 
         return HttpResponse("Ajax request error.");
     # not an ajax upload, so it was the "basic" iframe version with submission via form
@@ -72,7 +72,16 @@ def ajax_upload( request,avaluo_id,folio_k ):
         # so FILES should only have one entry.
         # Thus, we can just grab the first (and only) value in the dict.
         upload = request.FILES.values( )[ 0 ]
-        #file_contents = SimpleUploadedFile(filename, upload.content)
+        filename = upload.name
+        ext = os.path.splitext(filename)[1]
+        file_contents = SimpleUploadedFile(filename, upload.read())
+        if (ext == ".png")|(ext == ".jpg")|(ext == ".jpeg")|(ext == ".PNG")|(ext == ".JPG")|(ext == ".JPEG"):
+          imagen_avaluo = ImagenAvaluo()
+          imagen_avaluo.avaluo_id = avaluo_id
+          imagen_avaluo.FolioK = folio_k
+          imagen_avaluo.imagen.save(filename.replace(' ','_'), file_contents)
+
+
       # save the file
         success = save_upload( upload, filename, is_raw, folio_k)
       else:
@@ -84,7 +93,7 @@ def ajax_upload( request,avaluo_id,folio_k ):
 
     # let Ajax Upload know whether we saved it or not
     import json
-    ret_json = { 'success': 'test','ext':ext }
+    ret_json = { 'success': success,'filename':filename, 'is_raw':is_raw, 'upload':"" ,'ext':ext}
     return HttpResponse( json.dumps( ret_json ) )
 
 def save_upload( uploaded, filename, raw_data, folio_k ):

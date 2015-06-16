@@ -3,7 +3,12 @@
 import os
 import django 
 import djcelery
+import socket
 
+try:
+    HOSTNAME = socket.gethostname()
+except:
+    HOSTNAME = 'localhost'
 
 from datetime import timedelta
 
@@ -33,11 +38,11 @@ CRISPY_TEMPLATE_PACK = 'bootstrap3'
 #DEBUG_TOOLBAR_PATCH_SETTINGS = False
 
 ALLOWED_HOSTS = ['*']
-DEBUG = False
+DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 THUMBNAIL_DEBUG = True 
 THUMBNAIL_PREFIX ='media/cache/'
-
+CORS_ORIGIN_ALLOW_ALL = False
 DEFAULT_CHARSET = 'utf-8' 
 FILE_CHARSET = 'utf-8' 
 
@@ -151,6 +156,7 @@ TEMPLATE_LOADERS = (
 
 
 MIDDLEWARE_CLASSES = (
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -184,6 +190,8 @@ INSTALLED_APPS = (
     'django.contrib.humanize',
     'provider',
     'provider.oauth2',
+    #'oauth2_provider',
+    'corsheaders',
     'app',
     'crispy_forms',
     'calendario',

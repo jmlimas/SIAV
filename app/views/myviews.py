@@ -31,9 +31,22 @@ from django.db.models import F
 import requests
 from celery.task.schedules import crontab
 from celery.task import periodic_task
+from django.dispatch import receiver
+from app.signals import post_viewed
+
 
 current_directory = os.path.dirname(os.path.abspath(__file__))
 
+@receiver(post_viewed)
+def handle_post_viewed(sender, **kwargs):
+    lat = kwargs.get("a")
+    lon = kwargs.get("b")
+    FolioK = kwargs.get("c")
+    a = Avaluo.objects.filter(FolioK=FolioK)
+    if (a.first().LatitudG is None or a.first().LatitudG == "") :
+        a.update(LatitudG=lon[0],LatitudM=lon[1],LatitudS=lon[2],LongitudG=lat[0],LongitudM=lat[1],LongitudS=lat[2])
+    #if post:
+        # Increment a redis key or kick off a background task or whatever here
 
 #   Recibe el id y la colonia.
 def genera_foliok(avaluo_id, colonia):
